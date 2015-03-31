@@ -1,4 +1,5 @@
 function j = Simpson(f, a, b, n)
+% Returns the definite integral of the function f by Simpson's 3/8 rule
 h=(b-a)/n;
 xi=a;
 sum=0;
@@ -10,5 +11,5 @@ for i=1:n-1
         sum=sum+3*f(xi);
     end
 end
-j=3*h/8*(f(a)+sum+f(b));
+j=3*h*(f(a)+sum+f(b))/8;
 end

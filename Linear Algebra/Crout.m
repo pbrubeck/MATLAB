@@ -1,4 +1,5 @@
 function [L, U, x] = Crout(A, b)
+% Returns the LU decomposition of A and optionally solves Ax=b.
 n=size(A,1);
 L=zeros(n,n);
 U=eye(n);

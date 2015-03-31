@@ -1,6 +1,6 @@
 function m = Illinois(f, a, b)
-% Solves for f(m)=0 over an initial interval [a,b]
-
+% Solves for f(m)=0 over an initial interval [a,b].
+% Modified false position.
 ii=0;
 side=0;
 ya=f(a);

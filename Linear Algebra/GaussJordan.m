@@ -1,4 +1,5 @@
 function A = GaussJordan(A)
+% Reduced row echelon form.
 n=size(A,1);
 for i=1:n
     r=i;

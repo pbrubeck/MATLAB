@@ -1,4 +1,5 @@
 function poly = polyRegression(data, deg)
+% Returns the polynomial that fits best the data.
 A=ones(length(data),deg+1);
 for i=1:length(data)
     for j=1:deg

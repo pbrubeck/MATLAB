@@ -1,4 +1,5 @@
 function x=Jacobi(A, b, x0)
+% Solves Ax=b by iteration.
 n=size(A,1);
 D=diag(diag(A),0);
 A=eye(n)-D\A;
@@ -10,5 +11,4 @@ while(err>=1E-10 && ii<20)
     err=max(abs((x-x0)./x));
     x0=x;
     ii=ii+1;
-    fprintf('i=%d\t err=%f\n', ii, err);
 end

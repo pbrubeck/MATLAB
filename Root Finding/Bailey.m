@@ -1,6 +1,5 @@
 function xi = Bailey(f, ff, fff, xi)
-% Solves f(x)=0 for x, requires f'(x), f''(x) and initial aproximation.
-
+% Solves f(x)=0, requires f'(x), f''(x) and an initial aproximation.
 ii=0;
 yi=0;
 while(ii==0 || abs(yi)>1E-15)

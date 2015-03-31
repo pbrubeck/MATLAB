@@ -1,6 +1,5 @@
 function b = secant(f, a, b)
 % Solves f(x)=0 for x, requires two initial aproximations.
-
 ii=0;
 yb=0;
 ya=f(a);

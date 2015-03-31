@@ -1,4 +1,5 @@
 function Q=GivensRotation(i, j, theta)
+% Returns a rotation matrix along the axis that is not present(i>j).
     k=3-mod(i+j, 3);
     cosine=cos(theta);
     sine=sign(i-j)*sin(theta);

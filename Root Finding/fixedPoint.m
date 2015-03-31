@@ -1,12 +1,12 @@
-function xi = fixedPoint(f, xi)
-%Solves x=f(x) for x
+function x = fixedPoint(f, x0)
+% Solves a system of non-linear equations of the kind x=f(x).
 ii=0;
-prev=0;
-while(ii==0 || abs(xi-prev)>(1E-15)*xi)
-    fprintf('i=%d \t xi=%f \t err=%f \n', ii, xi, 100*abs((xi-prev)/xi));
-    prev=xi;
-    xi=f(xi);
+err=1;
+while(err>=1E-6 && ii<30)
+    x=f(x0);
+    err=max(abs((x-x0)./x));
+    x0=x;
     ii=ii+1;
+    disp(x);
+end  
 end
-end
-

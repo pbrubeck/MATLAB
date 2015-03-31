@@ -1,4 +1,5 @@
 function A = Montante(A)
+% Reduced row echelon form for integer matrices.
 n=size(A,1);
 p=1;
 for i=1:n

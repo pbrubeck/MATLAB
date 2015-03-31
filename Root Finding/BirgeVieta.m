@@ -1,4 +1,5 @@
 function roots = BirgeVieta(P)
+% Returns all the real roots of a given polynomial.
 n=length(P);
 if(P(n)~=1)
     for i=1:n

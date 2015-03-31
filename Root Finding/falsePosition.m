@@ -1,5 +1,5 @@
 function m = falsePosition(f, a, b)
-% Solves for f(m)=0 over an initial interval [a,b]
+% Solves for f(m)=0 over an initial interval [a,b].
 
 ii=0;
 ym=0;

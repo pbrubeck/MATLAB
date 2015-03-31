@@ -1,4 +1,5 @@
 function y=RungeKuta(f, yi, ti, h, n)
+% Solves an initial value problem of the form dy/dt=f(t, y).
 y=zeros(n);
 for ii=1:n   
     k1=f(ti, yi);

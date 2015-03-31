@@ -1,6 +1,5 @@
 function m = bisection(f, a, b)
-% Solves for f(m)=0 over an initial interval [a,b]
-
+% Solves for f(m)=0 over an initial interval [a,b].
 ii=0;
 ya=f(a);
 yb=f(b);
