@@ -9,7 +9,10 @@ for i=1:n
     end
 end
 for i=1:n
-    Q(:,i)=Q(:,i)./norm(Q(:,i));
+    n=norm(Q(:,i));
+    if(n>1E-15)
+        Q(:,i)=Q(:,i)/n;
+    end
 end
 R=Q'*A;
 if nargin > 1

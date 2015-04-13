@@ -1,4 +1,4 @@
 function p=proj(u, v)
-% Returns the projection vector of u over v.
-p=(v'*v)\(u'*v)*v;
+% Returns the projection of u over v.
+p=v*((v'*v)\(v'*u));
 end
