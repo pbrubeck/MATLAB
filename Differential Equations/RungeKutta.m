@@ -1,4 +1,4 @@
-function y=RungeKutta(f, yi, ti, h, n)
+ function y=RungeKutta(f, yi, ti, h, n)
 % Solves an initial value problem of the form dy/dt=f(t, y).
 y=zeros(n);
 for ii=1:n

@@ -1,29 +1,25 @@
 function [p] = Lagrange(x, y, t)
-% Uses barycentric interpolation formula
+% Evaluates the Lagrange interpolation polynomial.
 n=length(x);
-w=ones(n,1);
-
-% Compute barycentric reciprocal weights
+w=ones(size(x));
 for i=1:n
     for j=1:n
         if j~=i
-            w(i)=w(i)*(x(j)-x(i)); 
+            w(i)=w(i)*(x(i)-x(j)); 
         end  
     end
 end
 g=1;
 p=0;
 for k=1:n
-    if t==x(k)
+    d=t-x(k);
+    if d==0
         p=y(k);
-        g=1;
-        break;
+        return;
     else
-        p=p+y(k)/(w*(t-x(k)));
-        g=g*(t-x(k));
+        p=p+y(k)/(w(k)*d);
+        g=g*d;
     end
 end
 p=g*p;
-
 end
-
