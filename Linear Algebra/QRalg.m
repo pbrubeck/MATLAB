@@ -1,4 +1,4 @@
-function L=QRalg(A)
+function L = QRalg(A)
 % Returns the eigenvalues of A.
 for i=1:20
     Q=GramSchmidt(A);

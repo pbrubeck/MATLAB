@@ -13,13 +13,8 @@ g=1;
 p=0;
 for k=1:n
     d=t-x(k);
-    if d==0
-        p=y(k);
-        return;
-    else
-        p=p+y(k)/(w(k)*d);
-        g=g*d;
-    end
+    p=p+y(k)./(w(k)*d);
+    g=g.*d;
 end
-p=g*p;
+p=g.*p;
 end
