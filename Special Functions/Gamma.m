@@ -1,15 +1,13 @@
 function y=Gamma(z)
-%Computes the gamma function of a complex number
-
+% Computes the gamma function of a complex number.
 re=real(z);
-
 if(re<0.5)
     y=pi/(sin(pi*z)*Gamma(1-z));
 else
     z=z-1;
     g=7;
     k=10;
-    C=Chebyshev(k);
+    C=Chebyshev(2*k+1);
     p=zeros(k);
     for i=0:k-1
         p(i+1)=0;
@@ -28,6 +26,4 @@ else
     t=z+g+0.5;
     y=sqrt(2*pi)*t^(z+0.5)*exp(-t)*sum;
 end
-
 end
-

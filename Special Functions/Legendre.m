@@ -1,5 +1,5 @@
 function P = Legendre(n)
-%Returns the coeficient matrix of the first n Legendre Polinomials
+% Returns the coeficient matrix of the first n Legendre polynomials.
 P=zeros(n,n);
 P(1,1)=1;
 P(2,2)=1;
