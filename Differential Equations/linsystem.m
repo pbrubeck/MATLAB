@@ -5,7 +5,7 @@ PC=P*diag(P\x0);
 if nargin==3
     out=PC*exp(d*in1);
 else
-    t=0;
+    t=2;
     it=0;
     err=1;
     PCD=PC*D;
@@ -18,5 +18,9 @@ else
     end
     out=t;
 end
+
+t=linspace(0, 50, 100);
+xt=PC*exp(d*t);
+plot(t,xt);
 
 end

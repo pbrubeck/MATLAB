@@ -15,6 +15,7 @@ for i=1:2*n
     end
     xn=xn.*x;
 end
+disp(A);
 A=rref(A);
 p=A(:,n+1);
 end
