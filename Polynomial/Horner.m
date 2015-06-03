@@ -1,7 +1,7 @@
- function y = Horner(A, x)
+function y = Horner(P, x)
 % Efficient polynomial evaluation method.
-y=zeros(size(A,1), length(x));
-for j=size(A,2):-1:1
-    y=bsxfun(@plus, A(:,j), bsxfun(@times, x, y));
+y=zeros(size(P,1), length(x));
+for j=size(P,2):-1:1
+    y=bsxfun(@plus, P(:,j), bsxfun(@times, x, y));
 end
 end

@@ -1,4 +1,4 @@
-function D = polyDerive(A, n)
+function D = polyD(A, n)
 % Returns the nth derivate of a set of polynomials.
 if n==0
     D=A;

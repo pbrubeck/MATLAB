@@ -7,7 +7,7 @@ s=sin(theta);
 
 % Evaluate Legendre associated polynomial
 P=Legendre(l+1);
-Pml=polyDerive(P(l+1,:), m);
+Pml=polyD(P(l+1,:), m);
 A=Horner(Pml,c).*(s.^m);
 
 figure(1);
