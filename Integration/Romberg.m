@@ -22,7 +22,6 @@ while(true)
         R(j)=(m*R(j-1)-R0(j-1))/(m-1);
         if(abs(R(j)-R(j-1))<=1E-15)
             J=R(j);
-            disp(n);
             return;
         end
         m=m*4;
