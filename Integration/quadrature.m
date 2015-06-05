@@ -1,3 +1,3 @@
 function J = quadrature(f, x, w)
-J=w*arrayfun(@(s) f(s), x)';
+J=arrayfun(@(s) f(s), x)*w';
 end

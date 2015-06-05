@@ -1,5 +1,8 @@
-function D = polyD(P, n=1)
+function D = polyD(P, n)
 % Returns the nth derivate of a set of polynomials.
+if(nargin==1)
+    n=1;
+end
 if n==0
     D=P;
     return;

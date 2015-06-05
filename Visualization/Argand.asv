@@ -1,0 +1,9 @@
+function [] = Argand(f, x0, x1, y0, y1, n)
+cmap=vertcat(jet, flipud(jet));
+colormap(cmap);
+figure(1);
+z=(x0+1i*y0)+cplxgrid(60);
+image(f(z));
+colorbar;
+end
+

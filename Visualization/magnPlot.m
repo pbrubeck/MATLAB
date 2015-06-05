@@ -1,4 +1,4 @@
-function [] = complexPlot(f, x0, x1, y0, y1, n)
+function [] = magnPlot(f, x0, x1, y0, y1, n)
 %Generates a complex plot.
 x=linspace(x0, x1, n);
 y=linspace(y0, y1, n);
