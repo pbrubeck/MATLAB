@@ -4,10 +4,11 @@ x=linspace(x0, x1, n);
 y=linspace(y0, y1, n);
 
 [re, im]=meshgrid(x, y);
-
 s=re+1i*im;
-z=arrayfun(@(u) abs(f(u)), s);
-surf(x,y,z,'EdgeColor','none','LineStyle','none','FaceLighting','phong');
-shading interp
+C=(re+1i*im);
+z=abs(f(reshape(C,[1,n*n])));
+z=reshape(z,[n,n]);
+surf(x,y,z,'EdgeColor','none','LineStyle','none');
+shading interp;
 end
 

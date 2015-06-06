@@ -10,17 +10,19 @@ C=(re+1i*im);
 
 z=f(reshape(C,[1,n*n]));
 z=reshape(z,[n,n]);
-
 image(angle(z),'CDataMapping','scaled');
-xlabel('Re(z)');
-ylabel('Im(z)');
 caxis([-pi,pi]);
-colorbar('YTick', linspace(-pi, pi,5), ...
-         'YTickLabel', {'-\pi','-\pi/2','0','\pi/2','\pi'});
+cb=colorbar;
+
+set(cb,'YTick',linspace(-pi,pi,5));
+
 
 ax = gca;
 ax.XTick = linspace(0,n,5);
 ax.YTick = linspace(0,n,5);
 ax.XTickLabel = linspace(x0,x1,5);
 ax.YTickLabel = linspace(y1,y0,5);
+
+xlabel('Re(z)');
+ylabel('Im(z)');
 end
