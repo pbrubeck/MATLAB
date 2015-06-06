@@ -1,6 +1,5 @@
 function y=Zeta(s)
 %Computes the Riemman Zeta function by the Lanczos approximation
-
 if(real(s)<0)
     w=1-s;
     w=Gamma(w)*Zeta(w)*sin(pi/2*s);
@@ -24,6 +23,4 @@ else
     end
     y=z/(sum*(1-2^(1-s)));
 end
-
 end
-
