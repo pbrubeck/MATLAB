@@ -1,6 +1,7 @@
 function y=Gamma(z)
 % Computes the gamma function of a complex number.
 b=real(z)<0.5;
+disp(b);
 z=b+(1-2*b).*z-1;
 g=7;
 k=10;
