@@ -6,7 +6,7 @@ function [] = nbody( n )
 p=zeros(3, 2, n);
 
 a=1.0;
-b=1.4;
+b=1.0;
 
 % Initial state
 for i=1:n

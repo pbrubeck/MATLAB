@@ -48,7 +48,7 @@ dP=dP*xi+Q(2);
 if(abs(Q(1))>eps)
     G=dP/Q(1);
     H=G*G-2*r/Q(1);
-    s=2*(G>=0)+1;
+    s=2*(G>=0)-1;
     a=n/(G+s*sqrt((n-1)*(n*H-G*G)));
 else
     a=0;
