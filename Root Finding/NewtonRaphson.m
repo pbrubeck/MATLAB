@@ -1,5 +1,5 @@
 function x = NewtonRaphson(f, J, x0)
-% Solves a system of non-linear f(x)=0 equations given the Jacobian matrix.
+% Solves a system of non-linear equations given the Jacobian matrix.
 i=0;
 err=1;
 while(err>eps && i<30)

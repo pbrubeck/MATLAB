@@ -11,8 +11,8 @@ if(n>1)
     Q=zeros(1, n+1);
     xi=max(abs(P));
     if(all(imag(P)==0) && ~(P(n)==0 && P(n-1)==0))
-        s=2*(P(n)>=0)-1;
-        xi=(-P(n)+s*(n-1)*sqrt(P(n)^2-2*n/(n-1)*P(n-1)))/n;
+        sgn=2*(P(n)>=0)-1;
+        xi=(-P(n)+sgn*(n-1)*sqrt(P(n)^2-2*n/(n-1)*P(n-1)))/n;
     end
     while(n>1)
         [Q, a, dP]=LaguerreStep(P, Q, n, xi);
@@ -45,11 +45,11 @@ end
 Q(2)=Q(3)*xi+P(2);
 Q(1)=Q(2)*xi+P(1);
 dP=dP*xi+Q(2);
-if(abs(Q(1))>eps)
+if(Q(1)>eps)
     G=dP/Q(1);
     H=G*G-2*r/Q(1);
-    s=2*(G>=0)-1;
-    a=n/(G+s*sqrt((n-1)*(n*H-G*G)));
+    sgn=2*(G>=0)-1;
+    a=n/(G+sgn*sqrt((n-1)*(n*H-G*G)));
 else
     a=0;
 end
