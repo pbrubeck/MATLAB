@@ -1,4 +1,6 @@
 function [x, w] = GaussLegendre(a, b, n)
+% Returns abscissas and weights for the corresponding Gauss-Legendre
+% n-point quadrature over the interval [a, b].
 m=(b-a)/2;
 c=(a+b)/2;
 P=Legendre(n+1);

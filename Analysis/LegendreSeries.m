@@ -1,6 +1,8 @@
-function [c, Q] = polyProj(f, P, a, b)
-% Computes the projection of f over P on the interval [a,b]
+function [c, Q] = LegendreSeries(f, a, b, n)
+% Calculates the Legendre expansion of f over the interval [a,b].
+% Additionally returns the equivalent polynomial.
 [x, w]=GaussLegendre(-1,1,20);
+P=Legendre(n);
 y1=Horner(P, x);
 y2=arrayfun(f, ((b-a)*x+b+a)/2);
 J=polyInt(polyMult(P,P), -1, 1);

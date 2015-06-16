@@ -1,4 +1,5 @@
 function R=polyComp(P, Q)
+% Calculates P(Q(x)) by appliying Horner's Method.
 m=size(P,2);
 R=P(:,m);
 for j=m-1:-1:1
