@@ -20,7 +20,7 @@ while(true)
     R(1)=J;
     for j=2:i
         R(j)=(m*R(j-1)-R0(j-1))/(m-1);
-        if(abs(R(j)-R(j-1))<=1E-15)
+        if(abs(R(j)-R(j-1))<eps)
             J=R(j);
             return;
         end

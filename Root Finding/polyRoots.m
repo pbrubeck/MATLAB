@@ -17,7 +17,7 @@ if(n>1)
     while(n>1)
         [Q, a, dP]=LaguerreStep(P, Q, n, xi);
         xi=xi-a;
-        if(abs(a)<eps)
+        if(abs(a/xi)<eps)
             % Root found, deflate polynomial
             rts(n)=xi;
             P=Q(2:n);
@@ -25,7 +25,7 @@ if(n>1)
             % Choose next target
             if(abs(dP)>eps)
                 xi=-xi;
-            end  
+            end
         end
         it=it+1;
     end
@@ -45,7 +45,7 @@ end
 Q(2)=Q(3)*xi+P(2);
 Q(1)=Q(2)*xi+P(1);
 dP=dP*xi+Q(2);
-if(Q(1)>eps)
+if(abs(10*Q(1))>eps)
     G=dP/Q(1);
     H=G*G-2*r/Q(1);
     sgn=2*(G>=0)-1;
@@ -59,12 +59,14 @@ end
 function rts = polish(P, rts)
 n=length(rts);
 Q=zeros(1,n+1);
+it=0;
 for i=1:n
     a=1;
     xi=rts(i);
-    while(abs(a)>eps)
+    while(abs(a/xi)>eps)
         [Q, a, ~]=LaguerreStep(P, Q, n, xi);
         xi=xi-a;
+        it=it+1;
     end
     rts(i)=xi;
 end

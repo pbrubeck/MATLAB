@@ -4,5 +4,5 @@ if(nargin==2)
 else
     y=Horner(P,y);
 end
-plot(x,y,'linewidth',2);
+plot(x,y);
 end
