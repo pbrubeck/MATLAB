@@ -1,0 +1,13 @@
+function J = ClenshawCurtis(f, a, b, n)
+% Returns abscissas and weights for the corresponding Clenshaw_Curtis
+% n-point quadrature over the interval [a, b].
+th=((0:n/2-1)+1/2)*pi/n;
+x=((b-a)*cos(th)+(a+b))/2;
+x=[x, -fliplr(x)];
+c=sqrt(2/n)*dct(f(x));
+J=c(1)*sqrt(2)+c(k+1)/(1-4*k);;
+for k=1:n/2-2
+    J=J+2*c(k+1)/(1-4*k*k);
+end
+J=J*(b-a)/2;
+end

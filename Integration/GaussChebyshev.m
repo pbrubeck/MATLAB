@@ -4,5 +4,5 @@ function [x, w] = GaussChebyshev(a, b, n)
 m=(b-a)/2;
 th=(1:2:2*n-1)*pi/(2*n);
 x=m*cos(th)+(a+b)/2;
-w=m*pi/n;
+w=m*pi/n*ones(size(x));
 end

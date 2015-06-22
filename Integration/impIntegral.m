@@ -1,6 +1,5 @@
 function J = impIntegral(f, a, b)
-a=atan(a);
-b=atan(b);
+% Allows evaluation of improper integrals using Romberg's method.
 g=@(u) f(tan(u))*(sec(u))^2;
-J=Romberg(g, a, b);
+J=Romberg(g, atan(a), atan(b));
 end
