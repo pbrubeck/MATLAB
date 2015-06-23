@@ -8,5 +8,4 @@ d=1./(1-k.*k);
 d(1)=sqrt(2)/2;
 w=idct(d)*(b-a)/sqrt(n);
 w=[w, fliplr(w)];
-stem(x,w);
 end
