@@ -45,7 +45,7 @@ end
 Q(2)=Q(3)*xi+P(2);
 Q(1)=Q(2)*xi+P(1);
 dP=dP*xi+Q(2);
-if(abs(10*Q(1))>eps)
+if(abs(Q(1))>eps)
     G=dP/Q(1);
     H=G*G-2*r/Q(1);
     sgn=2*(G>=0)-1;

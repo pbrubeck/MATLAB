@@ -4,28 +4,28 @@ P=polyClean(P);
 n=length(P);
 P=P/P(n);
 i=0;
-xi=-P(1);
+x=-P(1);
 Q=zeros(1,n);
 rts=NaN(1,n-1);
 while(n>2 && i<40)
-    Q(n)=q=r=1;
+    Q(n)=1;q=1;r=1;
     for j=n-1:-1:3
-        Q(j)=Q(j+1)*xi+P(j);
-        q=q*xi+Q(j);
-        r=r*xi+q;
+        Q(j)=Q(j+1)*x+P(j);
+        q=q*x+Q(j);
+        r=r*x+q;
     end
-    Q(2)=Q(3)*xi+P(2);
-    p=Q(2)*xi+P(1);
+    Q(2)=Q(3)*x+P(2);
+    p=Q(2)*x+P(1);
     b=abs(p)>eps;
     if(b)
-        q=q*xi+Q(2);
+        q=q*x+Q(2);
         num=p*q;
         den=q*q-p*r;
         if(num==0 || den==0)
-            xi=xi-rand();
+            x=x-rand();
         else
             delta=num/den;
-            xi=xi-delta;
+            x=x-delta;
             b=abs(delta)>eps;
         end
     end
@@ -33,7 +33,7 @@ while(n>2 && i<40)
     if(~b)
         P=Q(2:n);
         n=n-1;
-        rts(n)=xi;
+        rts(n)=x;
         i=0;
     end
 end

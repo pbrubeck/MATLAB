@@ -6,7 +6,7 @@ xn=ones(size(x));
 for i=1:2*n
     sx=sum(xn);
     if i<=n
-        A(i, n+1)=sum(xn.*y);
+        A(i, n+1)=xn*y(:);
     end
     row=min(i,n);
     col=1+i-row;
@@ -15,7 +15,6 @@ for i=1:2*n
     end
     xn=xn.*x;
 end
-disp(A);
 A=rref(A);
-p=A(:,n+1);
+p=transpose(A(:,n+1));
 end

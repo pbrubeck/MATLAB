@@ -8,7 +8,7 @@ C=log(f(z(1:end)));
 C=reshape(C,[n,n]);
 
 map=hsv(256);
-A=ind2rgb(uint8(128*(1+imag(C)/pi)), map);
+A=ind2rgb(uint8(128*(1-imag(C)/pi)), map);
 B=mat2gray(real(C));
 B=cat(3,B,B,B);
 

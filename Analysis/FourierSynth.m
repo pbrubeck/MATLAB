@@ -1,7 +1,7 @@
 function y = FourierSynth(c, P, x)
-% Evaluates Fourier series for a given set of coeficients and period
+% Evaluates the Fourier series for a given set of coeficients with period P
 % using Horner's method.
-n=floor(length(c)/2);
+n=(length(c)-1)/2;
 th=2i*pi/P*x;
 w=exp(th);
 z=exp(-n*th);
