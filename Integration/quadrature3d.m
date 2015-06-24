@@ -1,33 +1,44 @@
 function J = quadrature3d(f, x, y, z, t, w)
 % Integrates f over the 3D region bounded by the functions x, y(x), z(x,y)
 % using a standard quadrature rule for the [-1, 1] interval.
-n=length(t);
-n3=n*n*n;
-ndx=zeros(1, n3);
-ndy=zeros(1, n3);
-ndz=zeros(1, n3);
-wgt=zeros(1, n3);
-x0=(x(2)+x(1))/2;
+n=length(t); n2=n*n; n3=n2*n;
+xi=(x(2)+x(1))/2;
 dx=(x(2)-x(1))/2;
-for i=1:n
-    xi=x0+dx*t(i);
-    lim=y(xi); a=lim(1); b=lim(2);
-    y0=(b+a)/2;
-    dy=(b-a)/2;
-    dA=w(i)*dx*dy;
-    ndx((i-1)*n*n+1:i*n*n)=xi;
-    for j=1:n
-        yj=y0+dy*t(j);
-        lim=z(xi, yj); a=lim(1); b=lim(2);
-        z0=(b+a)/2;
-        dz=(b-a)/2;
-        dV=w(j)*dA*dz;
-        start=(i*n-n+j-1)*n+1;
-        finish=(i*n-n+j)*n;
-        ndy(start:finish)=yj;
-        ndz(start:finish)=z0+dz*t;
-        wgt(start:finish)=w*dV;
-    end
+xi=xi+dx*t;
+
+lim=y(xi);
+yj=(lim(2,:)+lim(1,:))/2;
+dy=(lim(2,:)-lim(1,:))/2;
+
+xi=repeat(xi, n2);
+yj=repeat(yj, n2);
+dy=repeat(dy, n);
+yj=yj+kron(dy,t);
+
+lim=z(xi, yj);
+zk=(lim(2,:)+lim(1,:))/2;
+dz=(lim(2,:)-lim(1,:))/2;
+
+if(n>32)
+    xi=gpuArray(xi);
+    yj=gpuArray(yj);
+    zk=gpuArray(zk);
+    dz=gpuArray(dz);
 end
-J=f(ndx, ndy, ndz)*wgt(:);
+
+xi=repeat(xi, n3);
+yj=repeat(yj, n3);
+zk=repeat(zk, n3);
+dz=repeat(dz, n2);
+zk=zk+kron(dz,t);
+
+dA=kron(dx*dy.*w, w);
+dV=kron(dA.*dz, w);
+
+J=gather(f(xi, yj, zk)*dV(:));
+end
+
+function X = repeat(x, N)
+X=repmat(x, N/length(x), 1);
+X=X(:).';
 end
