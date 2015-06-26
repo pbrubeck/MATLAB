@@ -35,6 +35,7 @@ zk=zk+kron(dz,t);
 dA=kron(dx*dy.*w, w);
 dV=kron(dA.*dz, w);
 
+stem(dV);
 J=gather(f(xi, yj, zk)*dV(:));
 end
 

@@ -1,7 +1,6 @@
 function J = quadrature2d(f, x, y, t, w)
 % Integrates f over the 2D region bounded by the functions x, y(x)
 % using a standard quadrature rule for the [-1, 1] interval.
-tic
 n=length(t); n2=n*n;
 xi=(x(2)+x(1))/2;
 dx=(x(2)-x(1))/2;
@@ -24,7 +23,6 @@ yj=yj+kron(dy,t);
 
 dA=kron(dx*dy.*w, w);
 J=gather(f(xi, yj)*dA(:));
-toc
 end
 
 function X = repeat(x, N)
