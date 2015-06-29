@@ -1,21 +1,12 @@
 function u = LaplacePDE(g, L, n)
-%LAPLACEPDE Summary of this function goes here
-%   Detailed explanation goes here
-k=1:128;
-x=linspace(0,L,n);
+% Solves Laplace's equation in 2D subject to a boundary condition u(x,L)=g(x).
+k=1:192;
 y=linspace(0,L,n);
-X=sin(pi/L*k(:)*x);
 Y=sinh(pi/L*k(:)*y);
+r=csch(pi*k);
 c=sineSeries(g, L, 1024);
-c=c(k);
-r=csch(pi*k(:));
-u=zeros(n,n);
-for i=1:n
-    for j=1:n
-        u(n-j+1,i)=c*(X(:,i).*Y(:,j).*r);
-    end
-end
-colormap(jet(64));
-image(u,'CDataMapping','scaled');
+u=dst(diag(c(k).*r)*Y, n);
+image([0,L], [L,0], u','CDataMapping','scaled');
+colormap(jet(256));
 colorbar();
 end
