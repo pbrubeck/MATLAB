@@ -4,7 +4,7 @@ function [x, w] = GaussLegendre(a, b, n)
 
 %% Roots of the Legendre polynomial
 %P=Legendre(n+1);
-%x=polyRoots(P(n+1,:));
+%x=sort(polyRoots(P(n+1,:)));
 %dP=polyD(P(n+1,:));
 %w=(b-a)./((1-x.^2).*(Horner(dP, x)).^2);
 
