@@ -10,10 +10,11 @@ C=reshape(C,[n,n]);
 map=hsv(256);
 A=ind2rgb(uint8(128*(1-imag(C)/pi)), map);
 B=mat2gray(real(C));
-B=cat(3,B,B,B);
+B=cat(3, B, B, B);
 
 colormap(map);
 image([x0,x1], [y0,y1], A.*B);
+set(gca, 'YDir', 'normal');
 
 xlabel('Re(z)');
 ylabel('Im(z)');
