@@ -17,4 +17,3 @@ for j=2:n
     end
 end
 end
-

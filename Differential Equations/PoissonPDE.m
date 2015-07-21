@@ -5,13 +5,14 @@ t=linspace(0, L, n);
 A=f(x(1:end), y(1:end));
 A=fft2(reshape(A,n,n));
 
-[j,k]=meshgrid(0:n-1, 0:n-1);
-A=A./(-j.*j-k.*k);
-A(1,1)=1;
+i2=[0:n/2, -n/2+1:-1].^2;
+[j2,k2]=meshgrid(i2, i2);
+A=A./(-j2-k2);
+A(1,1)=0;
 
 u=real(ifft2(A));
-imagesc([L,0], [L,0], u');
-set(gca, 'YDir', 'normal');
+surf(x,y,u,'Edgecolor','none');
+view(0, 90);
 colormap(jet(128));
 colorbar();
 end
