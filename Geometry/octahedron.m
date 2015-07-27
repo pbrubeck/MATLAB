@@ -22,6 +22,7 @@ for k=0:3
             v=j/(m);
             idx=(k*n+i)*m+j+1;
             p=quadFace(q(:,:,k+1), v, u);
+            p=p/norm(p);
             x(idx)=p(1);
             y(idx)=p(2);
             z(idx)=p(3);
