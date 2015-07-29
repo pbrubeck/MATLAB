@@ -1,69 +1,65 @@
 function u=NavierStokes(n)
 % Solves for the velocity field assuming periodic boundary conditions.
 
-nu=0.7978;
-dt=0.005;
-u=zeros(n,n,n,3);
+nu=0.75;
+dt=0.001;
 
-N=size(u);
-i=[0:N(1)/2-1, 0, -N(1)/2+1:-1];
-j=[0:N(2)/2-1, 0, -N(2)/2+1:-1];
-k=[0:N(3)/2-1, 0, -N(3)/2+1:-1];
+i=[0:n/2-1, 0, -n/2+1:-1];
+j=[0:n/2-1, 0, -n/2+1:-1];
+k=[0:n/2-1, 0, -n/2+1:-1];
+[Dx,Dy,Dz]=meshgrid(1i*i, 1i*j, 1i*k);
 [i2,j2,k2]=meshgrid(i.^2, j.^2, k.^2);
-D2=-i2-j2-k2;
-op=nu*D2;
+D2=-nu*(i2+j2+k2);
 
-x=2*pi*(0:N(1)-1)/N(1);
-y=2*pi*(0:N(2)-1)/N(2);
-z=2*pi*(0:N(3)-1)/N(3);
+x=2*pi*(0:n-1)/n;
+y=2*pi*(0:n-1)/n;
+z=2*pi*(0:n-1)/n;
 [xx,yy,zz]=meshgrid(x, y, z);
 
-u(:,:,:,1)=cos(zz+yy);
-u(:,:,:,2)=sin(zz+xx);
-u(:,:,:,3)=cos(yy+xx);
+u=cat(4, sin(xx), cos(yy).*sin(zz), sin(yy));
+
 figure(1);
 h=quiver3(xx, yy, zz, u(:,:,:,1), u(:,:,:,2), u(:,:,:,3));
-axis equal;
+axis equal; view(-26, 32);
 
-nframes=10000;
+nframes=1000;
 for t=1:nframes
     tic
-    u=solveRK4(u, dt, op);
+    u=solveRK4(u, dt, Dx, Dy, Dz, D2);
     title(sprintf('Calculation time %.0f ms', 1000*toc));
     if(mod(t,10)==0)
         set(h, 'UData', u(:,:,:,1));
         set(h, 'VData', u(:,:,:,2));
         set(h, 'WData', u(:,:,:,3));
-        drawnow; 
+        drawnow;
     end
 end
-
 end
 
-function A=advection(u)
-A = bsxfun(@times, u(:,:,:,1), spectralD(u,1,1));
-A=A+bsxfun(@times, u(:,:,:,2), spectralD(u,1,2));
-A=A+bsxfun(@times, u(:,:,:,3), spectralD(u,1,3));
+function ut=partialTime(u, Dx, Dy, Dz, D2)
+u_hat=fftn(u(:,:,:,1));
+v_hat=fftn(u(:,:,:,2));
+w_hat=fftn(u(:,:,:,3));
+
+% Laplacian
+lap=cat(4, ifftn(D2.*u_hat), ifftn(D2.*v_hat), ifftn(D2.*w_hat));
+
+% Jacobian
+Jx=cat(4, ifftn(Dx.*u_hat), ifftn(Dx.*v_hat), ifftn(Dx.*w_hat));
+Jy=cat(4, ifftn(Dy.*u_hat), ifftn(Dy.*v_hat), ifftn(Dy.*w_hat));
+Jz=cat(4, ifftn(Dz.*u_hat), ifftn(Dz.*v_hat), ifftn(Dz.*w_hat));
+
+% Advection
+adv  =  bsxfun(@times, u(:,:,:,1), Jx);
+adv=adv+bsxfun(@times, u(:,:,:,2), Jy);
+adv=adv+bsxfun(@times, u(:,:,:,3), Jz);
+ut=lap-adv;
 end
 
-function L=specLaplacian(u, op)
-L(:,:,:,1)=ifftn(op.*fftn(u(:,:,:,1)));
-L(:,:,:,2)=ifftn(op.*fftn(u(:,:,:,2)));
-L(:,:,:,3)=ifftn(op.*fftn(u(:,:,:,3)));
-end
-
-function ut=partialTime(u, op)
-ut=specLaplacian(u, op)-advection(u);
-end
-
-function u=solveRK4(u, dt, op)
-k1=dt*partialTime(u, op);
-k2=dt*partialTime(u+k1/2, op);
-k3=dt*partialTime(u+k2/2, op);
-k4=dt*partialTime(u+k3, op);
+function u=solveRK4(u, dt, Dx, Dy, Dz, D2)
+k1=dt*partialTime(u,      Dx, Dy, Dz, D2);
+k2=dt*partialTime(u+k1/2, Dx, Dy, Dz, D2);
+k3=dt*partialTime(u+k2/2, Dx, Dy, Dz, D2);
+k4=dt*partialTime(u+k3,   Dx, Dy, Dz, D2);
 u=u+(k1+2*k2+2*k3+k4)/6;
-end
-
-function u=solveEuler(u, dt, op)
-u=u+dt*partialTime(u, op);
 end

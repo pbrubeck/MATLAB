@@ -9,5 +9,4 @@ h(1)=(h(1)+h(end))/2;
 H=fft(h(1:end-1));
 c=exp(-2i*pi*a/P*(0:n-1))/n.*H;
 c=[c(mid:end), c(1:mid)];
-c=[c(n/2+1:end), c(1:n/2+1)];
 end
