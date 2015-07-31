@@ -6,5 +6,6 @@ i=[0:N(1)/2-1, 0, -N(1)/2+1:-1];
 j=[0:N(2)/2-1, 0, -N(2)/2+1:-1];
 k=[0:N(3)/2-1, 0, -N(3)/2+1:-1];
 [ii,jj,kk]=meshgrid(i, j, k);
-div=1i*ifftn(ii.*fftn(u(:,:,:,1))+jj.*fftn(u(:,:,:,2))+kk.*fftn(u(:,:,:,3)));
+omega=cat(4, ii, jj, kk);
+div=spDot(1i*omega, u);
 end

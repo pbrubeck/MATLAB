@@ -7,12 +7,10 @@ end
 if(nargin==2)
     dim=1;
 end
-N=size(u,dim);
+N=size(u, dim);
 k=1i*[0:N/2-1, 0, -N/2+1:-1]';
-w=ifft(multdim(k.^n, fft(u, [], dim), dim), [], dim);
+if(dim>1)
+    k=reshape(k, [ones(dim-1), N]);
 end
-
-function C=multdim(A, B, dim)
-order=[dim, 1:dim-1, dim+1:ndims(B)];
-C=ipermute(bsxfun(@times, A, permute(B, order)), order);
+w=ifft(bsxfun(@times, k.^n, fft(u, [], dim)), [], dim);
 end
