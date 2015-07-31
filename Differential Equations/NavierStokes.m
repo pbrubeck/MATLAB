@@ -40,18 +40,19 @@ end
 
 function ut=partialTime(u, Dx, Dy, Dz, D2)
 u1=u(:,:,:,1); u2=u(:,:,:,2); u3=u(:,:,:,3);
-% Jacobian Tensor: parital derivates on each direction
+% Jacobian tensor = parital derivates on each direction
 Jx=ifft(bsxfun(@times, Dx, fft(u, [], 1)), [], 1);
 Jy=ifft(bsxfun(@times, Dy, fft(u, [], 2)), [], 2);
 Jz=ifft(bsxfun(@times, Dz, fft(u, [], 3)), [], 3);
-% Advection
+% Advection = Matrix product of Jacobian with the field
 adv=bsxfun(@times, u1, Jx)+bsxfun(@times, u2, Jy)+bsxfun(@times, u3, Jz);
+% Laplacian = Sum of second partial derivatives
 lap=cat(4, ifftn(D2.*fftn(u1)), ifftn(D2.*fftn(u2)), ifftn(D2.*fftn(u3)));
 ut=lap-adv;
 end
 
 function u=solveRK4(u, dt, Dx, Dy, Dz, D2)
-% Time-stepping by classic Runge Kutta (4th order) 
+% Time-stepping by Runge Kutta 4th order
 k1=dt*partialTime(u,      Dx, Dy, Dz, D2);
 k2=dt*partialTime(u+k1/2, Dx, Dy, Dz, D2);
 k3=dt*partialTime(u+k2/2, Dx, Dy, Dz, D2);
