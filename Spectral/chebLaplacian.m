@@ -1,9 +1,9 @@
-function [ L ] = chebLaplacian( N )
-%CHEBLAPLACIAN Summary of this function goes here
-%   Detailed explanation goes here
+function [L, xx, yy] = chebLaplacian( N )
+% Returns Laplacian matrix and tensor product grid
 [D, x]=chebD(N);
 D2=D^2; 
 D2=sparse(D2(2:N, 2:N));
-I=speye(N-1);
+I=eye(N-1);
 L=kron(I,D2)+kron(D2,I);
+[xx,yy]=meshgrid(x);
 end

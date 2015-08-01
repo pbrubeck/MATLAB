@@ -1,7 +1,7 @@
 function G=metric(S)
 % Computes the metric tensor of a smooth surface
-Su=spectralD(S,1,1);
-Sv=spectralD(S,1,2);
+Su=spPartialD(S,1);
+Sv=spPartialD(S,2);
 
 xuu=dot(Su, Su, 3);
 xuv=dot(Su, Sv, 3);

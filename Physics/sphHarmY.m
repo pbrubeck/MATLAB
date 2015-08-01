@@ -20,5 +20,5 @@ figure(2);
 [meshPh,meshTh]=meshgrid(phi, pi/2-theta);
 [x,y,z]=sph2cart(meshPh, meshTh, real(rho).^2);
 surf(x,y,z,'EdgeColor','none','LineStyle','none','FaceLighting','phong');
-shading interp
+shading interp; axis equal;
 end

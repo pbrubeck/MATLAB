@@ -3,14 +3,11 @@ function [V, A] = surfVolume(S)
 du=2*pi/size(S,1);
 dv=2*pi/size(S,2);
 
-Su=spectralD(S,1,1);
-Sv=spectralD(S,1,2);
+N=cross(spPartialD(S,1), spPartialD(S,2));
+dA=sqrt(dot(N, N, 3));
+A=sum(dA(:))*du*dv;
 
-N=cross(Su, Sv);
-dA=sqrt(sum(N.*conj(N), 3));
-A=abs(sum(dA(:)))*du*dv;
-
-uN=bsxfun(@ldivide, dA, N);
+uN=bsxfun(@rdivide, N, dA);
 dV=dot(uN, S, 3);
 V=abs(sum(dV(:)))*du*dv/3;
 end
