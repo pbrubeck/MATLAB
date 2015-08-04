@@ -9,8 +9,7 @@ if(dim>1)
     th=reshape(th, [ones(1, dim-1), N-1]);
 end
 index=repmat({':'}, 1, ndims(u)); index{dim}=2:N;
-v=cat(dim, u, flip(u(index{:}), dim));
-v_hat=fft(v, [], dim);
+v_hat=fft(cat(dim, u, flip(u(index{:}), dim)), [], dim);
 W1=ifft(bsxfun(@times, D, v_hat), [], dim);
 W2=ifft(bsxfun(@times, D.^2, v_hat), [], dim);
 w=zeros(size(u));

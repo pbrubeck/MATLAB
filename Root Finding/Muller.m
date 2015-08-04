@@ -15,3 +15,4 @@ while(abs(y(3))>2*eps)
     y(2)=y(3);
     y(3)=f(x2);
 end
+end
