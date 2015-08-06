@@ -1,6 +1,6 @@
 function w = chebfftD(u, dim)
 % Calculates the partial derivative of u along the dimension dim of 
-% a Chebyshev grid. Becomes undefined at the borders.
+% a Chebyshev grid. Becomes undefined at the boundary.
 N=size(u, dim)-1;
 th=(1:N-1)'*pi/N;
 D=1i*[0:N-1, 0, 1-N:-1]';
