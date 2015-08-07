@@ -8,9 +8,9 @@ if(nargin==2)
     n=1;
 end
 N=size(u, dim);
-Dn=(1i*[0:N/2-1, 0, -N/2+1:-1]').^n;
+D=1i*[0:N/2-1, 0, -N/2+1:-1]';
 if(dim>1)
-    Dn=reshape(Dn, [ones(1, dim-1), N]);
+    D=reshape(D, [ones(1, dim-1), N]);
 end
-w=ifft(bsxfun(@times, Dn, fft(u, [], dim)), [], dim);
+w=ifft(bsxfun(@times, D.^n, fft(u, [], dim)), [], dim);
 end

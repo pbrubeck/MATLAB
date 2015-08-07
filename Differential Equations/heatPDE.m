@@ -4,10 +4,10 @@ t=linspace(-1, 1, n);
 [x,y]=meshgrid(t, t);
 x=gpuArray(x);
 y=gpuArray(y);
-u=reshape(f(x(1:end), y(1:end)), n, n);
+u=reshape(f(x(1:end), y(1:end)), size(x));
 u(srcx,srcy)=src;
 
-filter=[0,1,0;1,-4,1;0,1,0];
+filter=[0,1,0; 1,-4,1; 0,1,0];
 
 map=jet(128);
 h=imagesc(u);
@@ -25,8 +25,7 @@ nframes=10000;
 for i=1:nframes
     lap=conv2(u, filter);
     u=u+c*lap(2:end-1, 2:end-1);
-    u([1 end],:)=0;
-    u(:,[1 end])=0;
+    u([1 end],:)=0; u(:,[1 end])=0;
     u(srcx,srcy)=src;
     if(mod(i,10)==1)
         set(h, 'CData', gather(u));

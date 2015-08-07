@@ -6,12 +6,14 @@ function u = wavePDE(N)
 u(:,:,1)=exp(-40*((xx-.4).^2+yy.^2));
 u(:,:,2)=0;
 dt=6/N^2;
+figure(1);
 h=surf(xx, yy, u(:,:,1), 'EdgeColor', 'none');
+shading interp
 colormap(jet);
 nframes=10000;
 for i=1:nframes
     u=solveRK4(u,dt);
-    u([1 end],:,1)=0; u(:,[1 end],1)=0;
+    u([1 end],:,:)=0; u(:,[1 end],:)=0;
     if(mod(i,10)==1)
         set(h, 'ZData', u(:,:,1));
         drawnow;

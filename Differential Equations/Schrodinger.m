@@ -1,29 +1,28 @@
-function [u] = wavePolar(N, M)
-% Solves the wave equation in 2D polar coordinates
-
+function u = Schrodinger(N, M)
+% Solves the Schrodinger equation in 2D polar coordinates
 rho=chebGrid(N);
 phi=2*pi*(0:M-1)/M;
 [pp, rr]=meshgrid(phi, rho);
 [xx, yy]=pol2cart(pp, rr);
-u(:,:,1)=sin().*exp(-40*((rr).^2));
-u(:,:,2)=0;
-dt=6/N^2;
-figure(1);
+u=exp(-10*(abs(rr)-0.4).^2);
+dt=6/(N*M);
 n=N/2;
-h=surf(xx(n:end,:), yy(n:end,:), u(n:end,:,1), 'EdgeColor', 'none');
+figure(1);
+h=surf(xx(n:end,:), yy(n:end,:), real(u(n:end,:)), 'EdgeColor', 'none');
+shading interp
 colormap(jet);
 nframes=10000;
 for i=1:nframes
-    u=solveRK4(u, dt, rho);
-    u([1 end],:,1)=0;
+    u=solveRK4(u, dt);
+    u([1 end],:)=0;
     if(mod(i,10)==1)
-        set(h, 'ZData', u(n:end,:,1));
+        set(h, 'ZData', real(u(n:end,:)));
         drawnow;
     end
 end
 end
 
-function lap=polarDel2(u, rho)
+function lap=polarDel2(u)
 N=size(u, 1)-1;
 Dr=1i*[0:N-1, 0, 1-N:-1]';
 th=(1:N-1)'*pi/N; c=cos(th); s=sin(th);
@@ -39,20 +38,18 @@ Dp=1i*[0:M/2-1, 0, -M/2+1:-1];
 u_hat=fft(u, [], 2);
 u_phi=ifft(bsxfun(@times, Dp.^2, u_hat), [], 2);
 
-lap=w2+bsxfun(@times, rho.^-1, w1)+bsxfun(@times, rho.^-2, u_phi);
+lap=w2+bsxfun(@times, c.^-1, w1)+bsxfun(@times, c.^-2, u_phi);
 end
 
-function v=partialTime(u, rho)
-% Returns the vector with the first and second temporal derivatives.
-v(:,:,1)=u(:,:,2);
-v(:,:,2)=0.5*polarDel2(u(:,:,1), rho);
+function v=partialTime(u)
+v=0.01*polarDel2(u);
 end
 
-function u=solveRK4(u, dt, rho)
+function u=solveRK4(u, dt)
 % Time-stepping by Runge Kutta 4th order.
-k1=dt*partialTime(u     , rho);
-k2=dt*partialTime(u+k1/2, rho);
-k3=dt*partialTime(u+k2/2, rho);
-k4=dt*partialTime(u+k3  , rho);
+k1=dt*partialTime(u);
+k2=dt*partialTime(u+k1/2);
+k3=dt*partialTime(u+k2/2);
+k4=dt*partialTime(u+k3);
 u=u+(k1+2*k2+2*k3+k4)/6;
 end

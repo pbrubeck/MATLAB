@@ -1,5 +1,4 @@
 function x=chebGrid(n)
-%CHEBNODES Summary of this function goes here
-%   Detailed explanation goes here
+% Returns the extrema grid of the nth Chebyshev polynomial.
 x=cos((0:n-1)'*pi/(n-1));
 end
