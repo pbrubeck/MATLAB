@@ -36,7 +36,7 @@ else
     G=real(ifftn(op.*u_hat));
     figure(1); axis equal
     M=a+(b-a)*(1/2-1./N);
-    contourslice(xx,yy,zz,G,M(1),M(2),M(3),N(1));
+    contourslice(xx,yy,zz,G,0,0,0,N(1));
     colormap(jet(128)); colorbar();
 end
 view(3);
