@@ -1,20 +1,16 @@
-n=256; p=0;
-[x, w]=GaussLegendre(-4, 4, n);
-
+n=512; p=0; a=-4; b=4;
+[x,w]=GaussLegendre(a,b,n);
 
 x2 = x.^2;
-b=exp(0.5i*x2);
-K = (besselj(p, x*x').*(b*b.'))*diag(x.*exp(-x2))*diag(w);
-[V,D]=eig(K,'nobalance');
+r=exp(0.5i*x2);
+K=diag(r)*besselj(p, x'*x)*diag(w.*r.*x.*exp(-x2));
+
+[V,D]=eig(K);
 lambda=diag(D);
-norm(K-V*D/V, 'fro')
 
-
-m=6;
-disp(lambda(1:m));
+m=3;
 figure(1);
+disp(lambda(1:m));
 plot(x,abs(V(:,1:m)));
 figure(2);
 plot(x,angle(V(:,1:m)));
-
-mesh(x,x,real(K))
