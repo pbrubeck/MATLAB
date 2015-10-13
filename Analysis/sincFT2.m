@@ -14,10 +14,10 @@ omega=2*pi/(b-a)*k;
 
 u=A.*fft2(z(1:end-1, 1:end-1));
 u=[u(ii, ii), u(ii, jj); u(jj, ii), u(jj, jj)];
-u=-u./(kx.^2+ky.^2); u(N+1,N+1)=0;
-
-v=(2*pi/(b-a))^2*(sgn'*sgn).*ifft2(u(1:end-1, 1:end-1));
-v=[v(ii, ii), v(ii, jj); v(jj, ii), v(jj, jj)];
+% u=-u./(kx.^2+ky.^2); u(N+1,N+1)=0;
+% 
+% v=(2*pi/(b-a))^2*(sgn'*sgn).*ifft2(u(1:end-1, 1:end-1));
+% v=[v(ii, ii), v(ii, jj); v(jj, ii), v(jj, jj)];
 
 colormap(gray(256));
 figure(1);
