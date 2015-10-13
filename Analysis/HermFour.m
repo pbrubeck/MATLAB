@@ -30,6 +30,6 @@ Ex=G*(1i*kx./(kx.^2+ky.^2).*Z)*G.';
 Ey=G*(1i*ky./(kx.^2+ky.^2).*Z)*G.';
 figure(1);
 mesh(kx, ky, real(u));
-%quiver(kx, ky, real(Ex), real(Ey), 'Linewidth', 2);
+quiver(kx, ky, real(Ex), real(Ey), 'Linewidth', 2);
 colormap(jet);
 end
