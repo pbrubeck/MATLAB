@@ -1,0 +1,17 @@
+function [ u ] = LaplaceCartBC(N)
+%LAPLACECARTBC Summary of this function goes here
+%   Detailed explanation goes here
+[D,x]=chebD(N);
+[xx, yy]=meshgrid(x); xx=xx(:); yy=yy(:);
+D2=D^2; I=eye(n);
+L=kron(D2, I)+kron(I, D2);
+
+b=find(abs(xx)==1 | abss(yy)==1);
+L(b,:)=zeros(4*(N-1), N^2);
+L(b,b)=eye(4*(N-1));
+rhs=zeros(N^2, 1);
+rh
+u=L\rhs; uu=reshape(u, N, N);
+surf(xx, yy, uu);
+end
+
