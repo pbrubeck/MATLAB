@@ -1,4 +1,4 @@
-function [ out ] = RCcircuit(R, C, signal, t, mode)
+function [out]=RCcircuit(R, C, signal, t, mode)
 % Returns the response of an RC to an input voltage signal
 h=t(2)-t(1);
 r=exp(-t/(R*C));
