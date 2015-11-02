@@ -82,7 +82,7 @@ j=1:NPTS; % indexes for main diagonal
 L=b-a;
 h=L/(NPTS-1); % space step
 x=j*h+a;
-V=cell2mat(f_pot_handle(x));
+V=f_pot_handle(x);
 
 main_diag=2/h^2+V(j);
 sub_diag=-1/h^2*ones(1,NPTS-1);
