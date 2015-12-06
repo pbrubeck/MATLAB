@@ -4,8 +4,8 @@ h=(b-a)/n;
 xi=a;
 J=(f(a)+f(b))/2;
 for j=1:1:n-1
-   J=J+f(xi);
    xi=xi+h;
+   J=J+f(xi);
 end
 J=h*J;
 end
