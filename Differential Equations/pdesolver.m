@@ -2,9 +2,7 @@ function [uu]=pdesolver(n)
 % Solves 2D boundary-value problem specified over the region [-1,1]^2
 [D,x]=chebD(n); y=x';
 [yy, xx]=meshgrid(x);
-D2=D*D; 
-d1=D2(:, 1);
-dn=D2(:, end);
+D2=D*D; d1=D2(:, 1); dn=D2(:, end);
 % Boundary conditions
 ua=0*y;
 ub=0.2*sin(3*pi*y);
