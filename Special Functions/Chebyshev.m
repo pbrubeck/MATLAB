@@ -2,6 +2,9 @@ function C = Chebyshev(n)
 % Returns the coeficient matrix of the first n Chebyshev polynomials.
 C=zeros(n,n);
 C(1,1)=1;
+if(n<2) 
+    return; 
+end
 C(2,2)=1;
 for i=3:n
     C(i,1)=-C(i-2,1);
