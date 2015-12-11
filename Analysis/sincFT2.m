@@ -1,25 +1,21 @@
-function [u] = sincFT2(f, a, b, N)
-% Computes the semidiscrete Fourier transform
-x0=(b+a)/2;
-h=(b-a)/(2*N);
-k=(-N:N);
-x=k*h-x0;
+function [u] = sincFT2(f, N)
+% Computes the semidiscrete 2D Fourier transform
+L=sqrt(2*pi*N);
+h=L/N;
+n=-N/2:N/2-1;
+x=h*n;
+k=2*pi/L*n;
 [xx, yy]=meshgrid(x);
+[kx, ky]=meshgrid(k);
+
 z=f(xx, yy);
-sgn=(-1).^k(1:end-1); 
-A=h^2/(2*pi)*(sgn'*sgn);
-ii=N+1:-1:1; jj=2*N:-1:N+1;
-omega=2*pi/(b-a)*k;
-[kx, ky]=meshgrid(omega);
+A=h^2/(2*pi);
+u=fftshift(fft2(fftshift(z)).*A); 
+%uu=-u./(kx.^2+ky.^2); uu(N/2+1,N/2+1)=0;
+v=fftshift(ifft2(fftshift(z))./A);
 
-u=A.*fft2(z(1:end-1, 1:end-1));
-u=[u(ii, ii), u(ii, jj); u(jj, ii), u(jj, jj)];
-% u=-u./(kx.^2+ky.^2); u(N+1,N+1)=0;
-% 
-% v=(2*pi/(b-a))^2*(sgn'*sgn).*ifft2(u(1:end-1, 1:end-1));
-% v=[v(ii, ii), v(ii, jj); v(jj, ii), v(jj, jj)];
 
-colormap(gray(256));
-figure(1);
-imagesc(omega, omega, real(log(u)));
+clf; figure(1); colormap(jet(256));
+subplot(1,2,1); imagesc(x,x,angle(z)/pi.*abs(z).^2); colorbar();
+subplot(1,2,2); imagesc(k,k,angle(u)/pi.*abs(u).^2); colorbar();
 end
