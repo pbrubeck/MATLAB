@@ -6,7 +6,7 @@ k=9;
 D2=D^2+(k^2/2)*eye(n); D2=D2(2:end-1, 2:end-1);
 
 f=exp(-10*((xx-.5).^2+(yy-1).^2));
-A=sylvester(D2, D2', f);
+A=lyap(D2, -f);
 
 surf(xx, yy, A, 'EdgeColor', 'none');
 view(0, 90);

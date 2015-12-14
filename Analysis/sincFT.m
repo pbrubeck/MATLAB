@@ -1,14 +1,13 @@
-function [u] = sincFT(f, a, b, N)
-% Computes the semidiscrete Fourier transform
-x0=(b+a)/2;
-h=(b-a)/(2*N);
-k=(-N:N);
-x=k*h-x0;
-y=f(x);
-u=h/sqrt(2*pi)*((-1).^k(1:end-1)).*(fft(y(1:end-1))+y(end));
-u=[u(N+1:-1:1) u(2*N:-1:N+1)];
-omega=2*pi/(b-a)*k;
+function [u_hat] = sincFT(u, L)
+% Computes the semidiscrete Fourier transform on [-L/2, L/2)
+N=length(u);
+h=L/N;
+n=-N/2:N/2-1;
+
+u=fftshift(u);
+u_hat=h/sqrt(2*pi)*fftshift(fft(u));
+omega=2*pi/L*n;
 
 figure(1);
-plot(omega, [real(u); imag(u)]);
+plot(omega, [real(u_hat); imag(u_hat)]);
 end

@@ -1,4 +1,6 @@
 #include "mex.h"
+#include "stdio.h"
+
 
 /*   TRIDEIGs Eigenvalues an egien vectors of symmetric tridiagonal matrix.   */
 
@@ -96,7 +98,7 @@ void mexFunction( int nlhs, mxArray *plhs[],
   W_arr = mxCreateDoubleMatrix(1, M, mxREAL);
   W=mxGetPr(W_arr);
   /* Append _ for some platforms */
-  if (nlhs=2) {
+  if (nlhs==2) {
 	  JOBZ="V";
 	  Z_arr = mxCreateDoubleMatrix(LDZ,(1<M?M:1), mxREAL);
 	  Z=mxGetPr(Z_arr);
@@ -118,9 +120,13 @@ void mexFunction( int nlhs, mxArray *plhs[],
   mxFree(IWORK);
   mxFree(WORK);
   plhs[0]=W_arr;
-  if (nlhs=2){
+  if (nlhs==2){
     plhs[1]=Z_arr;
   }
-  if (INFO)
-    mexErrMsgTxt("No convergence in DSTEQR.");
+
+  if(INFO){
+      char err[64];
+      sprintf(err, "dstevx INFO=%d", INFO);
+      mexErrMsgTxt(err);
+  }
 }
