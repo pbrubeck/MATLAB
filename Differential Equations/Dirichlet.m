@@ -10,7 +10,7 @@ uc=0*x;
 ud=(x<0).*sin(pi*x).^4;
 
 % Poisson
-F=0*16*pi^2*sin(4*pi*yy).*sin(4*pi*xx);
+F=zeros(n);
 rhs=F-dn*ua-d1*ub-uc*dn'-ud*d1';
 
 tic;
@@ -22,5 +22,5 @@ toc
 disp(norm(D2*uu+uu*D2'-F, 'fro'));
 
 figure(1); surfl(xx,yy,uu,'light'); 
-shading interp; colormap(jet(256)); whitebg('k');
+shading interp; colormap(jet(256));
 end

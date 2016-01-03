@@ -1,7 +1,7 @@
-function [] = spharmY(l, m, k)
+function [] = spharmY(l, m, n)
 % Plots the Yml spherical harmonic.
-theta=linspace(0, pi, k);
-phi=linspace(0, 2*pi, 2*k);
+theta=(1:2:2*n-1)*pi/(2*n);
+phi=linspace(0, 2*pi, 2*n);
 ct=cos(theta(:));
 st=sin(theta(:));
 

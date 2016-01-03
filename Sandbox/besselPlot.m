@@ -1,6 +1,11 @@
-[x, w]=GaussLegendre(0,2*pi,128);
-m=1;
-r=linspace(-10,10,2048)';
-f=exp(1i*(m*ones(size(r))*x+(2*r)*cos(x)));
-J=1i^-m/(2*pi)*(f*w');
-plot(r,real(J));
+m=0;
+rlim=100;
+r=linspace(-rlim,rlim,2048)';
+[tau,w]=ClenshawCurtis(-pi,pi,4096);
+f=exp(1i*(m*ones(size(r))*tau-r*sin(tau)));
+J=1/(2*pi)*f*w';
+
+gold=besselj(m,r);
+disp(norm(J-gold));
+subplot(2,1,1); plot(r, real(J-gold));
+subplot(2,1,2); plot(r, BesselJ(m,r)-gold);
