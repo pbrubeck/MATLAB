@@ -7,12 +7,16 @@ function [f] = fpt(a,b,c,g)
 % polynomial expressed as a Chebyshev series.
 % The resulting Chebyshev series may be evaluated at arbitrary points via a
 % non-uniform discrete cosine transform (ndct).
+%
+% Input examples:
+% LegendreP k=0:2^N, a=(2*k+1)./(k+1), b=0*k, c=-k./(k+1)
+% LaguerreL k=0:2^N, a=-1./(k+1), b=(2*k+1)./(k+1), c=-k./(k+1)
 
 N=length(g)-1; t=log2(N);
 gg=[g(:), zeros(N+1,1)]; gg(N+1,:)=[];
 gg(N-1,1)=g(N-1)+c(N)*g(N+1);
 gg(N,:)=[g(N)+b(N)*g(N+1), a(N)*g(N+1)];
-ggg=zeros(size(gg));
+ggg=zeros(N,2);
 for tau=1:t-1
    step=2^(tau+1);
    hstep=2^tau;
@@ -29,10 +33,12 @@ for tau=1:t-1
    end
    gg=ggg;
 end
-%T=diag([1; ones(N-1,1)/2], 1)+diag([ones(N-1,1)/2; 1], -1);
-%f=[gg(1,:)'; 0]+(a(1)*T'+b(1)*eye(N+1))*[gg(2,:)'; 0];
-mid=gg(1,2:end)+b(1)*gg(2,2:end)+a(1)/2*(gg(2,1:end-1)+[gg(2,3:end), 0]);
-f=[gg(1,1)+b(1)*gg(2,1)+a(1)/2*gg(2,2); mid(:); a(1)/2*gg(2,end)];
+f=zeros(size(g)); % f=gg(1,:)+(b(1)I+a(1)T')*gg(2,:)
+f(1)=gg(1,1)+b(1)*gg(2,1)+a(1)*gg(2,2)/2;
+f(2)=gg(1,2)+b(1)*gg(2,2)+a(1)*(gg(2,1)+gg(2,3)/2);
+f(3:N-1)=gg(1,3:end-1)+b(1)*gg(2,3:end-1)+a(1)/2*(gg(2,2:end-2)+gg(2,4:end));
+f(end-1)=gg(1,end)+b(1)*gg(2,end)+a(1)/2*gg(2,end-1);
+f(end)=a(1)*gg(2,end)/2;
 end
 
 function [u11, u12, u21, u22] = calculateU(a,b,c,n,j,x)
