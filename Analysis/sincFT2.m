@@ -10,9 +10,9 @@ k=2*pi/L*n;
 
 z=f(xx, yy);
 A=h^2/(2*pi);
-u=fftshift(fft2(fftshift(z)).*A); 
+u=fftshift(fft2(fftshift(z))*A); 
 %uu=-u./(kx.^2+ky.^2); uu(N/2+1,N/2+1)=0;
-v=fftshift(ifft2(fftshift(z))./A);
+v=fftshift(ifft2(fftshift(z))/A);
 
 
 figure(1); colormap(jet(256));

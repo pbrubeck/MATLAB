@@ -1,5 +1,5 @@
 function [] = HermFour(f, n, m)
-[x, w]=GaussHermite(n); ww=log(sqrt(2)*w);
+[x, w]=GaussHermite(n,0,1); ww=log(sqrt(2)*w);
 H=zeros(m, n);
 H(1,:)=pi^(-1/4)*exp(-x.^2);
 H(2,:)=H(1,:).*(2*x);
@@ -20,6 +20,7 @@ for i=1:m-2
     [h_i_2, h_i_1]=deal(h_i_1.*scale, h_i.*scale);
     sum_log_scale=sum_log_scale+log_scale;
 end
+
 
 F=H'*diag(1i.^(0:m-1))*W;
 G=conj(F);
