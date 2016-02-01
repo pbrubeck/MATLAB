@@ -9,7 +9,8 @@ elseif(nargin==3)
     a=varargin{2};
 end
 n=length(c);
-y=(n>1)*c(n); yy=zeros(size(x));
+y=(n>1)*c(n);
+yy=zeros(size(x));
 for k=n-2:-1:1
     temp=y;
     y=c(k+1)+(2*k+1+a-x)/(k+1).*y-(k+1+a)/(k+2)*yy;
