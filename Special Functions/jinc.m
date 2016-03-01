@@ -1,5 +1,5 @@
-function [j] = jinc(a,x)
+function [j] = jinc(x)
 t=(x==0);
-j=(besselj(a,x)+t)./(x+t);
+j=(besselj(1,x)+t)./(x+t);
 end
 
