@@ -16,6 +16,6 @@ v=fftshift(ifft2(fftshift(z))/A);
 
 
 figure(1); colormap(jet(256));
-subplot(1,2,1); imagesc(x,x,angle(z)/pi.*abs(z).^2); colorbar();
-subplot(1,2,2); imagesc(k,k,angle(u)/pi.*abs(u).^2); colorbar();
+subplot(1,2,1); imagesc(x,x,real(z)); colorbar();
+subplot(1,2,2); imagesc(k,k,real(u)); colorbar();
 end
