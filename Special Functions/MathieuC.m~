@@ -13,5 +13,5 @@ A=A(:,k);
 A=(2*(A(k)>0)-1)*A/sqrt(1+(1-j)*A(1)^2);
 AA=zeros(1,2*n);
 AA(1+j:2:end)=A;
-cem=real(fft(AA,numel(z)));
+cem=real(fft(AA,numel(z)))+(A(1)-A(end))/2;
 end
