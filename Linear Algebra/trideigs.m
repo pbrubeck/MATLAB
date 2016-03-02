@@ -2,7 +2,9 @@ function [W, Z] = trideigs(D, E)
 % Calculates the eigenvalues and eigenvectors of a symmetric tridiagonal matrix.
 
 N=numel(D);
-IL=1; IU=N; M=N; LDZ=N; LWORK=20*N; LIWORK=10*N; INFO=0;
+IL=1; IU=N;
+M=N; LDZ=N;
+LWORK=20*N; LIWORK=10*N; INFO=0;
 VL=0.0; VU=1.0; ABSTOL=0.0;
 
 ISUPPZ=zeros(2*M, 1);

@@ -15,7 +15,7 @@ T=dot(r1*(A\B), r1, 2);
 
 parfor n=1:numel(E)
     r2=[xx(n);yy(n)];
-    K=r2
+    K=r2;
     G(n)=ww*(E.*exp(-1i*k/2*(T)));
 end
 end

@@ -12,7 +12,7 @@ h=imagesc(I);
 colormap(hot(256));
 colorbar();
 
-Nframes=20;
+Nframes=30;
 for m=1:Nframes
     E=zeros(n);
     for i=0:m-1
