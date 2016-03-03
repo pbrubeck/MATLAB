@@ -1,7 +1,7 @@
 function [sem] = MathieuS(m, n, z, q)
 j=mod(m,2);
 k=(m+j)/2;
-E=q*ones(1,n-1);
+E(1:n-1)=q;
 if j==0
     D=(2:2:2*n).^2;
 else
