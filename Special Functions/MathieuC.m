@@ -10,9 +10,15 @@ else
 end
 [~,A]=trideigs(D,E);
 A=A(:,k);
-A=(2*(A(k)>0)-1)*A;
+A=sign(A(k))*A;
 A(1)=A(1)*(1-(1-j)/(2+sqrt(2)));
-AA=zeros(1,2*n);
+AA=zeros(2*n,1);
 AA(1+j:2:end)=A;
-cem=real(fft(AA, numel(z)));
+
+plan=nfft(1,length(AA),numel(z));
+plan.x=z(:)/(2*pi);
+nfft_precompute_psi(plan);
+plan.fhat=fftshift(AA);
+nfft_trafo(plan);
+cem=reshape(real(plan.f), size(z));
 end
