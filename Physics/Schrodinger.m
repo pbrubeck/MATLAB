@@ -37,7 +37,7 @@ a=normc(1./E);
 figure(3);
 h=plot(x, zeros(size(x)));
 ylim([0, 5]);
-for t=0:0.0005:10
+for t=0:0.0001:10
     h.YData=abs(Psi2*(a.*exp(-1i*E*t))).^2;
     drawnow();
 end
