@@ -14,9 +14,8 @@ Psi=zeros(n+2, m);
 Psi(2:end-1,:)=S;
 
 % Normalization
-w=(pi*L/(n+2))*sqrt(1-(x/L).^2);
-r=sqrt(diag(Psi'*diag(w)*Psi));
-Psi=bsxfun(@rdivide, Psi, r');
+w=(pi*L/(n+1))*sqrt(1-(x/L).^2);
+Psi=bsxfun(@rdivide, Psi, sqrt(w'*(Psi.^2)));
 
 plot(x, Psi); 
 disp(E);

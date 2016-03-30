@@ -20,7 +20,7 @@ py=exp(-a*j);
 pz=exp(-a*k);
 phase=reshape(kron(kron(px,py),pz), N(1:3));
 op=phase./D2; op(1,1,1)=0;
-
+u=(u);
 
 if(ndims(u)==4)
     u_hat(:,:,:,1)=fftn(u(:,:,:,1));
@@ -34,7 +34,8 @@ if(ndims(u)==4)
 else
     u_hat=fftn(u);
     G=real(ifftn(op.*u_hat));
-    figure(1); axis equal
+    G=fftshift(G);
+    figure(1); clf; axis equal
     M=a+(b-a)*(1/2-1./N);
     contourslice(xx,yy,zz,G,0,0,0,N(1));
     colormap(jet(128)); colorbar();

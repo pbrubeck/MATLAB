@@ -1,4 +1,4 @@
-function [] = HermFour(f, n, m)
+function [] = HermFT(f, n, m)
 [x, w]=GaussHermite(n,0,1); ww=log(sqrt(2)*w);
 H=zeros(m, n);
 H(1,:)=pi^(-1/4)*exp(-x.^2);
