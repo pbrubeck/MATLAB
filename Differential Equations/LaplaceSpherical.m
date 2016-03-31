@@ -2,7 +2,7 @@ function [] = LaplaceSpherical(N)
 % Solves Laplace's equation on a sphere
 
 % Initialize adjoint transform
-[x,w]=gl(N); % Gauss-Legendre guadrature nodes
+[x,w]=gl(N); % Gauss-Legendre quadrature nodes
 M=size(x,2);
 kappa = 1000;
 nfsft_precompute(N,kappa);
@@ -24,7 +24,7 @@ figure(1); clf;
 depth=256;
 colormap(jet(depth));
 [h,th,ph]=sphericalPlot(2*N,N);
-shading interp;
+%shading interp;
 alpha(0.6);
 lightangle(-45,30);
 h.FaceLighting = 'gouraud';
