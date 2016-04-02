@@ -24,9 +24,11 @@ figure(1); clf;
 depth=256;
 colormap(jet(depth));
 [h,th,ph]=sphericalPlot(2*N,N);
-%shading interp;
+shading interp;
+
 alpha(0.6);
 lightangle(-45,30);
+h.LineStyle = 'none';
 h.FaceLighting = 'gouraud';
 h.AmbientStrength = 0.3;
 h.DiffuseStrength = 0.8;
@@ -36,7 +38,7 @@ h.BackFaceLighting = 'unlit';
 
 % Obtain evaluation nodes
 dim=[2*N, N];
-x=[th(:),ph(:)]';
+x=[th(1:end); ph(1:end)];
 
 % Initialize transform
 M=size(x,2);
@@ -71,6 +73,9 @@ end
 
 % Potential at r=1 (Imposed Boundary Condition)
 function y = potential(x)
-a=pi/5;
-y = ((x(2,:)<a).*sign(cos(2*x(1,:)))-(x(2,:)>pi-a).*sign(cos(4*x(1,:))));
+A=0.5;
+gamma=0.5;
+t=sin(2*x(1,:));
+u=sign(t).*(A*abs(t).^gamma);
+y=sign(2/pi*x(2,:)-1-u);
 end
