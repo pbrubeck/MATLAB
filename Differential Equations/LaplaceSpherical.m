@@ -73,9 +73,8 @@ end
 
 % Potential at r=1 (Imposed Boundary Condition)
 function y = potential(x)
-A=0.5;
-gamma=0.5;
-t=sin(2*x(1,:));
-u=sign(t).*(A*abs(t).^gamma);
-y=sign(2/pi*x(2,:)-1-u);
+y=sign((sin(x(2,:)).*cos(x(1,:))).^2-0.5);
+y2=-sign((sin(x(2,:)).*sin(x(1,:))).^2-0.5);
+idx=x(2,:)<pi/2;
+y(idx)=y2(idx);
 end
