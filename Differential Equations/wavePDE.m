@@ -10,11 +10,14 @@ figure(1);
 h=surf(xx, yy, u(:,:,1), 'EdgeColor', 'none');
 shading interp
 colormap(jet);
+zlim([-1,1]);
+set(gca, 'zlimmode','manual');
+
 nframes=10000;
 for i=1:nframes
     u=solveRK4(u,dt);
     u([1 end],:,:)=0; u(:,[1 end],:)=0;
-    if(mod(i,10)==1)
+    if(mod(i,2)==1)
         set(h, 'ZData', u(:,:,1));
         drawnow;
     end
