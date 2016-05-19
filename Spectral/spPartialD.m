@@ -8,7 +8,7 @@ if(nargin==2)
     n=1;
 end
 N=size(u, dim);
-D=1i*[0:N/2-1, 0, -N/2+1:-1]';
+D=1i*sqrt(2)/N*(0:N-1)';
 if(dim>1)
     D=reshape(D, [ones(1, dim-1), N]);
 end

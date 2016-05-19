@@ -33,7 +33,7 @@ toc()
 figure(2); plot(x, Psi2);
 v=[1:m; E']; title(sprintf('E%i=%f ', v(:)));
 
-a=normc(1./E);
+a=normc(1./(E.^2));
 figure(3);
 h=plot(x, zeros(size(x)));
 ylim([0, 5]);
