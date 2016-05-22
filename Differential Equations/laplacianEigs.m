@@ -20,14 +20,14 @@ figure(1);
 [Vf,mu]=eigs(Dff, k, 'sm');
 mu=diag(mu);
 for j=1:k
-    [Vr,lam]=eigs(Drr+mu(j)*eye(size(Drr))-200*diag(r.^4), diag(r.^2), k, 'sm');
+    [Vr,lam]=eigs(Drr+mu(j)*eye(size(Drr)), diag(r.^2), k, 'sm');
     lam=diag(lam);
     for i=1:k
         vv=zeros(N);
         vv(2:end-1,:)=Vr(:,i)*Vf(:,j)';
         vv=[vv(:,end), vv];
         subplot(k,k,(i-1)*k+j);
-        surfl(xx,yy,abs(vv).^2,'light'); 
+        surfl(xx,yy,real(vv),'light'); 
         shading interp;
         colormap(jet(256));
         title(sprintf('%f', lam(i)));

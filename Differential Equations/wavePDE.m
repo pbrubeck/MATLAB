@@ -18,7 +18,7 @@ for i=1:nframes
     u=solveRK4(u,dt);
     u([1 end],:,:)=0; u(:,[1 end],:)=0;
     if(mod(i,2)==1)
-        set(h, 'ZData', u(:,:,1));
+        set(h, 'ZData', real(u(:,:,1)));
         drawnow;
     end
 end

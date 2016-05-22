@@ -18,7 +18,7 @@ figure(2); plot(r,V);
 
 [Phi,mu]=eigs(Dtt, k, 'sm');
 mu=diag(mu);
-Phi=Phi/sqrt((th(end)-th(2))/(N-1));
+Phi=Phi/sqrt(2*pi/N);
 
 [x,w]=GaussChebyshev(-1,1,N);
 W=diag((R2-R1)*sqrt(1-x(2:end-1).^2).*w(2:end-1));
@@ -30,7 +30,7 @@ for j=1:k
     E(:,j)=-diag(lam); 
     RR(2:end-1,:,j)=R*diag(1./sqrt(r'*W*(R.^2)));
 end
-c=rand(size(E))./E;
+c=(rand(size(E))+1i*rand(size(E)))./E;
 c=c/norm(c,'fro');
 
 frames=5000;

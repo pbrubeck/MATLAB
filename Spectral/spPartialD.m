@@ -1,16 +1,14 @@
 function w=spPartialD(u, dim, n)
 % Calculates the spectral n-th partial derivate of a peridic sample along 
-% the dimension dim. Must to be scaled by 2pi/L.
-if(nargin==1)
-    n=1; dim=1;
-end
-if(nargin==2)
-    n=1;
-end
-N=size(u, dim);
-D=1i*sqrt(2)/N*(0:N-1)';
+% the dimension dim. Must to be scaled by (2pi/L)^n.
+M=size(u,dim);
+D=1i*[0:M/2-1 -M/2:-1]';
 if(dim>1)
-    D=reshape(D, [ones(1, dim-1), N]);
+    D=reshape(D, [ones(1, dim-1), M]);
 end
-w=ifft(bsxfun(@times, D.^n, fft(u, [], dim)), [], dim);
+u_hat=fft(u, [], dim);
+w=ifft(bsxfun(@times, u_hat, D.^n), [], dim);
+if(isreal(u))
+    w=real(w);
+end
 end

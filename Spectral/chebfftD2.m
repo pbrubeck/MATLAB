@@ -3,7 +3,7 @@ function w = chebfftD2(u, dim)
 % a Chebyshev grid. Becomes undefined at the boundary.
 N=size(u, dim)-1;
 th=(1:N-1)'*pi/N;
-D=1i*[0:N-1, 0, 1-N:-1]';
+D=1i*[0:N, 1-N:-1]';
 if(dim>1)
     D=reshape(D, [ones(1, dim-1), 2*N]);
     th=reshape(th, [ones(1, dim-1), N-1]);

@@ -1,7 +1,7 @@
 function u=NavierStokes(n)
 % Solves for the velocity field assuming periodic boundary conditions.
 nu=1.00;
-dt=0.01;
+dt=0.0001;
 
 % Construct 3D grid
 gv=2*pi*(0:n-1)/n;
@@ -11,9 +11,9 @@ gv=2*pi*(0:n-1)/n;
 u=cat(4, -sin(xx-pi), -cos(yy-pi), -sin(zz-pi));
 
 % Initialize spectral differential operators
-ii=[0:n/2-1, 0, -n/2+1:-1]';
-jj=[0:n/2-1, 0, -n/2+1:-1]';
-kk=[0:n/2-1, 0, -n/2+1:-1]';
+ii=[0:n/2-1, -n/2:-1]';
+jj=[0:n/2-1, -n/2:-1]';
+kk=[0:n/2-1, -n/2:-1]';
 Dx=1i*ii;
 Dy=1i*reshape(jj, [1 n]);
 Dz=1i*reshape(kk, [1 1 n]);
@@ -26,7 +26,7 @@ nframes=10000;
 for t=1:nframes
     tic
     u=solveRK4(u, Dx, Dy, Dz, nu, dt); 
-    title(sprintf('Calculation time %.0f ms', 1000*toc));
+    title(sprintf('%.0f fps', 1./toc));
     if(mod(t,10)==0)
         set(h, 'UData', u(:,:,:,1));
         set(h, 'VData', u(:,:,:,2));

@@ -1,6 +1,4 @@
 function [] = wavefft(N)
-%WAVEFFT Summary of this function goes here
-%   Detailed explanation goes here
 c=1;
 L=1;
 x=linspace(0,L,N);
@@ -12,7 +10,6 @@ f=zeros(N,N);
 f(hypot(xx-L/2,yy-L/2)<L/4)=1;
 g=0*f;
 
-
 a=4/N^2*dst(dst(f)')';
 b=4/N^2*dst(dst(g)')'./w;
 
@@ -23,7 +20,6 @@ colormap(jet);
 zlim([-2,2]);
 set(gca, 'zlimmode','manual');
 
-
 frames=512;
 tf=10;
 dt=tf/frames;
@@ -33,6 +29,4 @@ for t=0:dt:tf
     set(h, 'ZData', u);
     drawnow;
 end
-
 end
-
