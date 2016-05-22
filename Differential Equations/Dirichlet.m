@@ -1,4 +1,4 @@
-function [uu]=Dirichlet(n)
+function []=Dirichlet(n)
 % Solves 2D boundary-value problem specified over the region [-1,1]^2
 [D,x]=chebD(n); y=x';
 [yy, xx]=meshgrid(x);
