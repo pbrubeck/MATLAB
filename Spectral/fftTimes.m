@@ -1,4 +1,4 @@
-function w=spTimes(filter, u)
+function w=fftTimes(filter, u)
 % Returns element wise multiplication in the Fourier space.
 u_hat=fftn(u);
 w_hat=bsxfun(@times, filter, u_hat);

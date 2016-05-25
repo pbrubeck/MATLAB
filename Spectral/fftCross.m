@@ -1,4 +1,4 @@
-function w=spCross(filter, u)
+function w=fftCross(filter, u)
 % Returns the cross product in the Fourier space.
 u_hat(:,:,:,1)=fftn(u(:,:,:,1));
 u_hat(:,:,:,2)=fftn(u(:,:,:,2));

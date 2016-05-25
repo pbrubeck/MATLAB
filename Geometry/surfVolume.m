@@ -3,7 +3,7 @@ function [V, A] = surfVolume(S)
 du=2*pi/size(S,1);
 dv=2*pi/size(S,2);
 
-N=cross(spPartialD(S,1), spPartialD(S,2));
+N=cross(fftD(S,1,1), fftD(S,2,1));
 dA=sqrt(dot(N, N, 3));
 A=sum(dA(:))*du*dv;
 

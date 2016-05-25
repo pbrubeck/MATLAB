@@ -1,4 +1,4 @@
-function curl = spCurl(u)
+function curl = fftCurl(u)
 % Calculates the spectral curl of a vector field, actual curl
 % must be scaled by 2pi/L.
 N=size(u);

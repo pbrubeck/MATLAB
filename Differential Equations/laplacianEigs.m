@@ -1,6 +1,6 @@
 function [] = laplacianEigs(N,k)
-R1=0;
-R2=1;
+R1=2;
+R2=4;
 [D,x]=chebD(N);
 r=(R2+R1)/2+(R2-R1)/2*x;
 D=2/(R2-R1)*D;
@@ -12,9 +12,6 @@ yy=r*sin([0, phi]);
 
 Drr=Drr(2:end-1,2:end-1);
 r=r(2:end-1);
-% Laplacian (long method)
-% Lap=kron(eye(N),diag(r.^-2)*Drr)+kron(Dff,diag(r.^-2));
-% [V,d]=eigs(Lap,k,'sm');
 
 figure(1);
 [Vf,mu]=eigs(Dff, k, 'sm');

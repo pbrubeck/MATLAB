@@ -1,4 +1,4 @@
-function w=spDot(filter, u)
+function w=fftDot(filter, u)
 % Returns the dot product in the Fourier space.
 u_hat(:,:,:,1)=fftn(u(:,:,:,1));
 u_hat(:,:,:,2)=fftn(u(:,:,:,2));
