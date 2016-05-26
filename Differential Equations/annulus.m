@@ -29,5 +29,5 @@ xx=[xx(:,end), xx];
 yy=[yy(:,end), yy];
 uu=[uu(:,end), uu];
 figure(1); surfl(xx,yy,uu,'light'); 
-shading interp; colormap(jet(256)); axis equal;
+shading interp; colormap(jet(256)); axis square;
 end

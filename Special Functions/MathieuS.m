@@ -1,4 +1,4 @@
-function [sem] = MathieuS(m, n, z, q)
+function [sem] = MathieuS(m, n, q, z)
 j=mod(m,2);
 k=(m+j)/2;
 E(1:n-1)=q;

@@ -1,4 +1,4 @@
-function [cem] = MathieuC(m, n, z, q)
+function [cem] = MathieuC(m, n, q, z)
 j=mod(m,2);
 k=(m-j+2)/2;
 E(1:n-1)=q;

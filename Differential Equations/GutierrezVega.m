@@ -28,5 +28,5 @@ xx=[xx(:,end), xx];
 yy=[yy(:,end), yy];
 Psi=[Psi(:,end), Psi];
 figure(1); surfl(xx,yy,Psi,'light'); 
-shading interp; colormap(jet(256)); axis equal;
+shading interp; colormap(jet(256)); axis square;
 end

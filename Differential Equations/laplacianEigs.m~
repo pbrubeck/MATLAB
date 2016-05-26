@@ -19,11 +19,11 @@ for j=1:k
     for i=1:k
         vv(2:end,:)=real(Vr(:,i)*Vf(:,j).');
         subplot(k,k,(i-1)*k+j);
-        surf(xx,yy,[vv(:,end), vv]);
+        surfl(xx,yy,[vv(:,end), vv],'light');
         axis square; axis off;
         shading interp;
         colormap(gray(256));
-        text(-1,1.3,sprintf('%f', lam(i)));
+        text(-1.8,-1.2,sprintf('%f', lam(i)));
         view(0,90);
     end
 end
