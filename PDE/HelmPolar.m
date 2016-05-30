@@ -16,14 +16,14 @@ vv=zeros(N,N);
 for j=1:k
     [Vr,lam]=eigs(Drr+mu(j)*I, R2, k, 'sm');
     lam=sqrt(-diag(lam));
-    Vr=bsxfun(@times, conj(Vr(1,:))./abs(Vr(1,:)), Vr);
+    Vr=bsxfun(@times, conj(Vr(end,:))./abs(Vr(end,:)), Vr);
     for i=1:k
         vv(2:end,:)=real(Vr(:,i)*Vf(:,j).');
         subplot(k,k,(i-1)*k+j);
         surf(xx,yy,[vv(:,end), vv]);
         axis square; axis off;
         shading interp;
-        colormap(gray(256));
+        colormap(jet(256));
         text(-1,1.3,sprintf('%f', lam(i)));
         view(0,90);
     end

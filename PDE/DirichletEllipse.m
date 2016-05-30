@@ -3,12 +3,12 @@ function [] = DirichletEllipse(N,M)
 [Gu,Gv,Duu,Dvv,u,v]=chebLapEll(N,M);
 d1=Duu(:,1);
 dn=Duu(:,N);
-f=2; % focal distance/2
+f=1; % focal distance/2
 xx=f*cosh(u)*cos(v);
 yy=f*sinh(u)*sin(v);
 
 % Boundary conditions
-g=5*cos(5*v);
+g=1*cos(5*v);
 F=zeros(N,M);
 RHS=f^2*(Gu*F+F*Gv)-(d1+dn)*g;
 

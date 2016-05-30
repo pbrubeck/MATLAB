@@ -7,8 +7,8 @@ d1=D2(:,1);
 D2=D2(2:end,2:end);
 
 % Boundary conditions
-va=1;
-ub=0;
+va=5;
+ub=2;
 
 f=exp(4*x);
 f(end)=va;
