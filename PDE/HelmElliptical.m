@@ -6,7 +6,7 @@ Gu=Gu(2:end-1,2:end-1);
 
 a=m^2;
 lam=-2*a;
-Vu=cos(pi*u(2:end-1));
+Vu=cos(0*pi*u(2:end-1));
 Vv=cos(m*v(:));
 [Vu,Vv,lam,a]=mpep(Duu,Dvv,Gu,Gv,Vu,Vv,lam,a);
 q=-lam/4;
