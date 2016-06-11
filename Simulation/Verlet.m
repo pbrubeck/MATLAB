@@ -7,7 +7,7 @@ p=zeros(3, n, 2);
 
 a=1.0;
 b=1.0;
-h=0.001; h2=h*h;
+h=3/n^2; h2=h*h;
 
 % Initial state
 for i=1:n

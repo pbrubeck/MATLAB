@@ -1,10 +1,10 @@
 function [] = Young(n)
 k=40*pi;
 R=1e-3;
-d=0.3;
+d=0.4;
 z=1;
 
-[xx,yy]=meshgrid(linspace(-1,1,n));
+[xx,yy]=ndgrid(linspace(-1,1,n));
 
 I=zeros(n);
 figure(1);

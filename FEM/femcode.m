@@ -19,7 +19,7 @@ N=size(p,1);T=size(t,1); % number of nodes, number of triangles
 % p lists x,y coordinates of N nodes, t lists triangles by 3 node numbers
 K=sparse(N,N); % zero matrix in sparse format: zeros(N) would be "dense"
 F=zeros(N,1); % load vector F to hold integrals of phi's times load f(x,y)
-f=@(x,y) 0*x+0*y;
+f=@(x,y) 1+0*x+0*y;
 
 for e=1:T  % integration over one triangular element at a time
   nodes=t(e,:); % row of t = node numbers of the 3 corners of triangle e
@@ -41,7 +41,7 @@ end   % all T element matrices and vectors now assembled into K and F
 
 % [Kb,Fb] = dirichlet(K,F,b) % assembled K was singular! K*ones(N,1)=0
 % Implement Dirichlet boundary conditions U(b)=g(x,y) at nodes in list b
-K(b,:)=0; F(b)=sin(3*pi*x(b))-sin(3*pi*y(b)); % put zeros in boundary rows/columns of K and F 
+K(b,:)=0; F(b)=0*(sin(3*pi*x(b))-sin(3*pi*y(b))); % put zeros in boundary rows/columns of K and F 
 K(b,b)=speye(length(b),length(b)); % put I into boundary submatrix of K
 Kb=K; Fb=F; % Stiffness matrix Kb (sparse format) and load vector Fb
 

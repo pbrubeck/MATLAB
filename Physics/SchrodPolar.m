@@ -39,7 +39,6 @@ dt=1/frames;
 Psi=zeros(N,N);
 zz=zeros(N,N+1);
 
-figure(1);
 h=surf(xx,yy,zz); view(0,90);
 shading interp; colormap(jet(256));
 zlim([0, 0.4]);

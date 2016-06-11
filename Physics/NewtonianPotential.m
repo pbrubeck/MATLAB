@@ -1,26 +1,21 @@
-function G = NewtonianPotential(u, a, b)
+function [] = NewtonianPotential(u, a, b)
 % Solves Laplace equation for the scalar potential given the field's density 
-% Assumes periodic boundary conditions
+% Assumes periodic boundary conditions due to rapid decay
 N=size(u);
 P=b-a;
 th=2i*pi/P;
-gx=a+P/N(1)*(0:N(1)-1);
-gy=a+P/N(2)*(0:N(2)-1);
-gz=a+P/N(3)*(0:N(3)-1);
-[xx,yy,zz]=meshgrid(gx, gy, gz);
+x=a+P/N(1)*(0:N(1)-1);
+y=a+P/N(2)*(0:N(2)-1);
+z=a+P/N(3)*(0:N(3)-1);
+[xx,yy,zz]=meshgrid(x, y, z);
 
 i=th*[0:N(1)/2, -N(1)/2+1:-1];
 j=th*[0:N(2)/2, -N(2)/2+1:-1];
 k=th*[0:N(3)/2, -N(3)/2+1:-1];
-[i2,j2,k2]=meshgrid(i.^2, j.^2, k.^2);
+[i2,j2,k2]=ndgrid(i.^2, j.^2, k.^2);
 D2=i2+j2+k2;
 
-px=exp(-a*i);
-py=exp(-a*j);
-pz=exp(-a*k);
-phase=reshape(kron(kron(px,py),pz), N(1:3));
-op=phase./D2; op(1,1,1)=0;
-u=(u);
+op=-1./D2; op(1,1,1)=0;
 
 if(ndims(u)==4)
     u_hat(:,:,:,1)=fftn(u(:,:,:,1));
@@ -34,9 +29,7 @@ if(ndims(u)==4)
 else
     u_hat=fftn(u);
     G=real(ifftn(op.*u_hat));
-    G=fftshift(G);
-    figure(1); clf; axis equal
-    M=a+(b-a)*(1/2-1./N);
+    figure(1); clf; axis equal;
     contourslice(xx,yy,zz,G,0,0,0,N(1));
     colormap(jet(128)); colorbar();
 end

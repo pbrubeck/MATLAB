@@ -2,11 +2,10 @@ function u = wavePDE(N)
 % Solves the wave equation in 2D.
 % Example on how to use Chebyshev spectral methods in two spatial dimensions
 % and classic Runge-Kutta for time evolution of second order PDE.
-[xx,yy]=meshgrid(chebGrid(N));
+[xx,yy]=ndgrid(chebGrid(N));
 u(:,:,1)=exp(-40*((xx-.4).^2+yy.^2));
 u(:,:,2)=0;
 dt=6/N^2;
-figure(1);
 h=surf(xx, yy, u(:,:,1), 'EdgeColor', 'none');
 colormap(jet(256)); alpha(0.85); shading interp;
 view(2); zlim([-1,1]); axis square; 

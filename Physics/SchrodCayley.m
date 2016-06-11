@@ -34,7 +34,6 @@ AA=conj(A);
 BB=conj(B);
 
 W=W(2:end-1,2:end-1);
-figure(1);
 h=surf(xx,yy,zz);
 shading interp; colormap(jet(256));
 zlim([0, 0.6]); view(0,90);

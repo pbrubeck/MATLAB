@@ -8,7 +8,6 @@ u(:,:,1)=exp(-40*((xx-.4).^2+yy.^2));
 u(:,:,2)=0;
 dt=6/(N*M);
 n=N/2;
-figure(1);
 h=surf(xx(n:end,:), yy(n:end,:), u(n:end,:,1), 'EdgeColor', 'none');
 shading interp
 colormap(jet);
