@@ -8,10 +8,8 @@ u(:,:,2)=0;
 dt=6/N^2;
 figure(1);
 h=surf(xx, yy, u(:,:,1), 'EdgeColor', 'none');
-shading interp
-colormap(jet);
-zlim([-1,1]);
-set(gca, 'zlimmode','manual');
+colormap(jet(256)); alpha(0.85); shading interp;
+view(2); zlim([-1,1]); axis square; 
 
 nframes=10000;
 for i=1:nframes

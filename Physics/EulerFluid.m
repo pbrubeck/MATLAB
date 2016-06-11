@@ -14,7 +14,7 @@ u=zeros(N,N,2);
 dt=2/N^2;
 figure(1);
 h=quiver(xx, yy, ux, uy);
-nframes=400;
+nframes=2000;
 for i=1:nframes
     u=solveRK4(u,Dr,r,dt);
     u(1,:,:)=0;
@@ -42,14 +42,15 @@ function [m]=materialD(u, Dr, r)
 ur=u(:,:,1);
 uf=u(:,:,2);
 m=zeros(size(u));
-m(:,:,1)=ur.*(Dr*ur)+(diag(1./r)*uf).*(fftD(ur,2,1)-uf);
-m(:,:,2)=ur.*(Dr*uf)+(diag(1./r)*uf).*(fftD(uf,2,1)+ur);
+m(:,:,1)=ur.*(Dr*ur)+diag(1./r)*(uf.*(fftD(ur,2,1)-uf));
+m(:,:,2)=ur.*(Dr*uf)+diag(1./r)*(uf.*(fftD(uf,2,1)+ur));
 end
 
 function [v]=timeD(u, Dr, r)
+N=size(u,2);
 F=zeros(size(u));
-F(:,:,1)=-0.1*repmat(1-r,[1,size(u,2)]);
-F(:,:,2)=0.1*repmat(1-r,[1,size(u,2)]);
+F(:,:,1)=-0.2*repmat(1-r,[1,size(u,2)]);
+F(:,:,2)=repmat(1-r,[1,size(u,2)]);
 v=-materialD(u, Dr, r)+F;
 end
 

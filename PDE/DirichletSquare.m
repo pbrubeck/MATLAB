@@ -11,13 +11,13 @@ ud=(x<0).*sin(pi*x).^4;
 
 % Poisson
 F=zeros(n);
-rhs=F-dn*ua-d1*ub-uc*dn'-ud*d1';
+RHS=F-dn*ua-d1*ub-uc*dn'-ud*d1';
 
 tic;
 uu=zeros(n);
 uu(n,:)=ua; uu(1,:)=ub;
 uu(:,n)=uc; uu(:,1)=ud;
-uu(2:end-1, 2:end-1)=lyap(D2(2:end-1, 2:end-1), -rhs(2:end-1, 2:end-1));
+uu(2:end-1, 2:end-1)=lyap(D2(2:end-1, 2:end-1), -RHS(2:end-1, 2:end-1));
 toc
 disp(norm(D2*uu+uu*D2'-F, 'fro'));
 
