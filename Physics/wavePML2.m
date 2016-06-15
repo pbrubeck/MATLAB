@@ -22,8 +22,9 @@ phi=zeros(N);
 w=cat(3,u0,vx,vy,phi);
 
 dt=6/N^2;
+figure(1);
 h=surf(xx(roi,roi), yy(roi,roi), w(roi,roi,1), 'EdgeColor', 'none');
-colormap(jet(256)); alpha(0.85); shading interp;
+colormap(jet(256)); shading interp;
 view(2); zlim([-1,1]); axis square; 
 
 nframes=10000;
@@ -31,8 +32,8 @@ for i=1:nframes
     w=solveRK4(w,dt);
     w([1 end],:,:)=0;
     w(:,[1 end],:)=0;
-    if(mod(i,2)==1)
-        set(h, 'ZData', w(roi,roi,1));
+    if(mod(i,4)==1)
+        h.ZData=w(roi,roi,1);
         drawnow;
     end
 end

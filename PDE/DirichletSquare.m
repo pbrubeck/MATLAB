@@ -1,7 +1,7 @@
 function []=DirichletSquare(n)
 % Solves 2D boundary-value problem specified over the region [-1,1]^2
 [D,x]=chebD(n); y=x';
-[yy, xx]=meshgrid(x);
+[yy, xx]=ndgrid(x);
 D2=D*D; d1=D2(:,1); dn=D2(:,end);
 % Boundary conditions
 ua=0*y;
@@ -17,7 +17,7 @@ tic;
 uu=zeros(n);
 uu(n,:)=ua; uu(1,:)=ub;
 uu(:,n)=uc; uu(:,1)=ud;
-uu(2:end-1, 2:end-1)=lyap(D2(2:end-1, 2:end-1), -RHS(2:end-1, 2:end-1));
+uu(2:end-1, 2:end-1)=kronsolve(D2(2:end-1, 2:end-1), RHS(2:end-1, 2:end-1));
 toc
 disp(norm(D2*uu+uu*D2'-F, 'fro'));
 

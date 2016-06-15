@@ -2,12 +2,12 @@ function [] = fdmwave(N)
 x=linspace(-1,1,N); x=x(:);
 dx=2/(N-1);
 global Dx;
-Dx=[-1 0 1]/(2*dx);
+Dx=[1 0 -1]/(2*dx);
 
 % Initial conditions
-u0=exp(-40*(x).^2);
-v=-u0;
-w=[u0, v];
+u0=exp(-40*(x-0.5).^2)-exp(-40*(x+0.5).^2);
+v0=sign(x).*u0;
+w=[u0,v0];
 % du/dt=dv/dx
 % dv/dt=du/dx
 

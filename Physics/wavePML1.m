@@ -14,13 +14,13 @@ sigma=zeros(N,1);
 sigma(layer)=smax*((abs(x(layer))-x(width+1))/(1-x(width+1))).^3;
 
 % Initial conditions
-u0=exp(-40*(x).^2);
-v=-u0;
-w=[u0,v];
+u0=exp(-40*(x-0.5).^2)-exp(-40*(x+0.5).^2);
+v0=sign(x).*u0;
+w=[u0,v0];
 
 dt=6/N^2;
 h=plot(x(roi), w(roi,1));
-%ylim([-1,1]);
+ylim([-1,1]);
 
 nframes=10000;
 for i=1:nframes
