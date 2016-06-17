@@ -17,9 +17,12 @@ b=[1:m,m+1:m:m*n,2*m:m:m*n,m*n-m+2:m*n-1]; % bottom, left, right, top
 % [K,F] = assemble(p,t) % K and F for any mesh of triangles: linear phi's
 N=size(p,1);T=size(t,1); % number of nodes, number of triangles
 % p lists x,y coordinates of N nodes, t lists triangles by 3 node numbers
-K=sparse(N,N); % zero matrix in sparse format: zeros(N) would be "dense"
 F=zeros(N,1); % load vector F to hold integrals of phi's times load f(x,y)
 f=@(x,y) 1+0*x+0*y;
+
+i=zeros(9*T,1);
+j=zeros(9*T,1);
+K=zeros(9*T,1);
 
 for e=1:T  % integration over one triangular element at a time
   nodes=t(e,:); % row of t = node numbers of the 3 corners of triangle e
@@ -35,9 +38,14 @@ for e=1:T  % integration over one triangular element at a time
   Fe=Area/3*load; % integral of phi over triangle is volume of pyramid:
   % multiply Fe by f at centroid for load f(x,y): one-point quadrature!
   
-  K(nodes,nodes)=K(nodes,nodes)+Ke; % add Ke to 9 entries of global K
+  idx=9*e-8:9*e;
+  [ni,nj]=ndgrid(nodes);
+  i(idx)=ni(:);
+  j(idx)=nj(:);
+  K(idx,:)=Ke(:); % add Ke to 9 entries of global K
   F(nodes)=F(nodes)+Fe; % add Fe to 3 components of load vector F
 end   % all T element matrices and vectors now assembled into K and F
+K=sparse(i, j, K, N, N);
 
 % [Kb,Fb] = dirichlet(K,F,b) % assembled K was singular! K*ones(N,1)=0
 % Implement Dirichlet boundary conditions U(b)=g(x,y) at nodes in list b
