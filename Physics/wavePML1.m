@@ -14,7 +14,7 @@ sigma=zeros(N,1);
 sigma(layer)=smax*((abs(x(layer))-x(width+1))/(1-x(width+1))).^3;
 
 % Initial conditions
-u0=exp(-40*(x-0.5).^2)-exp(-40*(x+0.5).^2);
+u0=sech(20*(x-0.5)).^2-0.7*sech(20*(x+0.5)).^2;
 v0=sign(x).*u0;
 w=[u0,v0];
 
