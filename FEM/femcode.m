@@ -49,7 +49,7 @@ K=sparse(i, j, K, N, N);
 
 % [Kb,Fb] = dirichlet(K,F,b) % assembled K was singular! K*ones(N,1)=0
 % Implement Dirichlet boundary conditions U(b)=g(x,y) at nodes in list b
-K(b,:)=0; F(b)=(sin(3*pi*x(b))-sin(3*pi*y(b))); % put g(x,y) in boundary rows/columns of K and F 
+K(b,:)=0; F(b)=0*(sin(3*pi*x(b))-sin(3*pi*y(b))); % put g(x,y) in boundary rows/columns of K and F 
 K(b,b)=speye(length(b),length(b)); % put I into boundary submatrix of K
 Kb=K; Fb=F; % Stiffness matrix Kb (sparse format) and load vector Fb
 
@@ -57,7 +57,7 @@ Kb=K; Fb=F; % Stiffness matrix Kb (sparse format) and load vector Fb
 U=Kb\Fb;  % The FEM approximation is U_1 phi_1 + ... + U_N phi_N
 
 % Plot the FEM approximation U(x,y) with values U_1 to U_N at the nodes 
-trisurf(t,p(:,1),p(:,2),U,U,'edgecolor','none','facecolor','interp');
+trimesh(t,p(:,1),p(:,2),U,U);
 axis square;
 colorbar();
 end
