@@ -12,6 +12,7 @@ if(~iscell(A))
 end
 for i=1:dim
     [V{i}, d{i}]=eig(A{i},'vector');
+    U{i}=inv(V{i});
 end
 if(dim==3)
     [di,dj,dk]=ndgrid(d{1},d{2},d{3});
@@ -19,9 +20,6 @@ if(dim==3)
 else
     [di,dj]=ndgrid(d{1},d{2});
     D=di+dj;    
-end
-for i=1:dim
-    U{i}=inv(V{i});
 end
 G=gekv(U, F, dim);
 Z=G./D;
