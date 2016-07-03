@@ -17,7 +17,7 @@ tic;
 uu=zeros(n);
 uu(n,:)=ua; uu(1,:)=ub;
 uu(:,n)=uc; uu(:,1)=ud;
-uu(2:end-1, 2:end-1)=kronsolve(D2(2:end-1, 2:end-1), RHS(2:end-1, 2:end-1));
+uu(2:end-1, 2:end-1)=sylvester(D2(2:end-1, 2:end-1), D2(2:end-1, 2:end-1)', RHS(2:end-1, 2:end-1));
 toc
 disp(norm(D2*uu+uu*D2'-F, 'fro'));
 
