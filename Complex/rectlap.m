@@ -36,14 +36,16 @@ phi(2:end-1,2:end-1)=reshape(V(:,idx(k)), N-2);
 phi=phi/max(abs(phi(:)));
 disp(lam);
 
-% Conformal mapping
-ww=f(zz);
-uu=real(ww);
-vv=imag(ww);
+% Conformal mapping ww=f(zz)
+b1=f(zz([1 end],:)); b2=f(zz(:,[1 end]));
+BC=Dxx(:,[1 end])*b1+b2*Dyy(:,[1 end])';
+ww=zeros(N); ww([1 end],:)=b1; ww(:,[1 end])=b2;
+ww(2:end-1,2:end-1)=greenF(V1,V2,U1,U2,W,1,-BC(2:end-1,2:end-1));
+uu=real(ww); vv=imag(ww);
 
 % Plot solution
 figure(1);
-surfl(uu,vv,phi,'light'); 
+surfl(uu,vv,phi,'light');
 shading interp; alpha(0.8);
 colormap(jet(256));
 zrange=max(phi(:))-min(phi(:));
@@ -57,5 +59,5 @@ title(sprintf('\\lambda_{%d} = %.8f', k, lam(k)));
 end
 
 function X=greenF(V1, V2, U1, U2, W, J, X)
-X=V1*((U1*(J.*X)*V2)./W)*U2;
+X=V1*((U1*(J.*X)*U2')./W)*V2';
 end
