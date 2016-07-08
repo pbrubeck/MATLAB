@@ -1,1 +1,0 @@
-EXTRA_DIST = doxygen.css doxygen.Doxyfile doxygen.Doxyfile.in footer.html header.html
