@@ -14,9 +14,9 @@ uu=zeros(N,M);
 uu(1,:)=g;
 uu(2:end,:)=sylvester(Drr(2:end,2:end), Dff', RHS(2:end,:));
 
-xx=[xx(:,end), xx];
-yy=[yy(:,end), yy];
-uu=[uu(:,end), uu];
+xx=xx(:,[end 1:end]);
+yy=yy(:,[end 1:end]);
+uu=uu(:,[end 1:end]);
 figure(1); surfl(xx,yy,uu,'light'); 
 shading interp; colormap(jet(256)); axis square;
 end

@@ -21,26 +21,25 @@ J=abs(evaldiff(f,zz(2:end,:))).^2;
 OP=@(x) reshape(greenF(V1,V2,U1,U2,W,R2*J,reshape(x, size(J))), size(x));
 [V,lam]=eigs(OP, numel(J), k, 'sm');
 lam=diag(lam);
-[lam,idx]=sort(lam,'descend');
 phi=zeros(N);
-phi(2:end,:)=reshape(V(:,idx(k)), size(J));
+phi(2:end,:)=reshape(V(:,k), size(J));
 phi=phi/max(abs(phi(:)));
 disp(lam);
 
 % Conformal mapping ww=f(zz)
-b1=f(zz(1,:));
-BC=Drr(:,1)*b1;
-ww=zeros(N); ww(1,:)=b1;
-ww(2:end,:)=greenF(V1,V2,U1,U2,W,R2*ones(size(J)),-BC(2:end,:));
+wb=f(zz(1,:));
+BC=Drr(:,1)*wb;
+ww=zeros(N); ww(1,:)=wb;
+ww(2:end,:)=greenF(V1,V2,U1,U2,W,1,-BC(2:end,:));
 uu=real(ww); vv=imag(ww);
 
-phi=[phi(1:N,end), phi(1:N,:)];
-uu=[uu(1:N,end), uu(1:N,:)];
-vv=[vv(1:N,end), vv(1:N,:)];
+phi=phi(:,[end 1:end]);
+uu=uu(:,[end 1:end]);
+vv=vv(:,[end 1:end]);
 
 % Plot solution
 figure(1);
-surfl(uu,vv,phi,'light'); 
+surfl(uu,vv,phi,'light');
 shading interp; alpha(0.8);
 colormap(jet(256));
 zrange=max(phi(:))-min(phi(:));

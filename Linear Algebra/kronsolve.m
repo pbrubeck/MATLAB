@@ -26,8 +26,8 @@ Z=G./D;
 X=gekv(V, Z, dim);
 end
 
-function [x] = gekv(A, x, dim)
+function [X] = gekv(A, X, dim)
 for i=1:dim
-    x=permute(reshape(A{i}*reshape(x, size(A{i},1), []), size(x)), [2:dim 1]);
+    X=permute(reshape(A{i}*reshape(X, size(A{i},2), []), size(X)), [2:dim 1]);
 end
 end

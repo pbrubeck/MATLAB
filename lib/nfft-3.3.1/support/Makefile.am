@@ -1,0 +1,1 @@
+EXTRA_DIST = rem.sed toc.sed

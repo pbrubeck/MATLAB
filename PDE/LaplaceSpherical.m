@@ -16,8 +16,6 @@ nfsft_set_f(plan,V.*w);
 nfsft_adjoint(plan);
 Cml = nfsft_get_f_hat(plan);
 nfsft_finalize(plan);
-% Display coeficients
-figure(2); imagesc(abs(Cml));
 
 % Prepare spherical plot
 figure(1); clf;
@@ -26,7 +24,7 @@ colormap(jet(depth));
 [h,th,ph]=sphericalPlot(2*N,N);
 shading interp;
 
-alpha(0.6);
+
 lightangle(-45,30);
 h.LineStyle = 'none';
 h.FaceLighting = 'gouraud';

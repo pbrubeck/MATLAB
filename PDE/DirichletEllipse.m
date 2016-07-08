@@ -21,9 +21,10 @@ xx=xx(1:half,:);
 yy=yy(1:half,:);
 Psi=Psi(1:half,:);
 
-xx=[xx(:,end), xx];
-yy=[yy(:,end), yy];
-zz=real([Psi(:,end), Psi]);
+xx=xx(:,[end 1:end]);
+yy=yy(:,[end 1:end]);
+zz=Psi(:,[end 1:end]);
+
 figure(1); surfl(xx,yy,zz,'light'); 
 shading interp; colormap(jet(256));
 zrange=max(zz(:))-min(zz(:));
