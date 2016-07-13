@@ -40,7 +40,7 @@ vv=vv(:,[end 1:end]);
 % Plot solution
 figure(1);
 surfl(uu,vv,phi,'light');
-shading interp; alpha(0.8);
+shading interp;
 colormap(jet(256));
 zrange=max(phi(:))-min(phi(:));
 xrange=max(uu(:))-min(uu(:));

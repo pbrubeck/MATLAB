@@ -12,8 +12,8 @@ F=zeros(n);
 RHS=F-D2(:,[1 end])*b1-b2*D2(:,[1 end])';
 
 uu=zeros(n);
-uu([1  end],:)=b1;
-uu(:,[1  end])=b2;
+uu([1 end],:)=b1;
+uu(:,[1 end])=b2;
 uu(2:end-1, 2:end-1)=sylvester(D2(2:end-1, 2:end-1), D2(2:end-1, 2:end-1)', RHS(2:end-1, 2:end-1));
 
 figure(1); surfl(xx,yy,uu,'light'); 

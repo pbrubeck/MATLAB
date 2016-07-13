@@ -47,7 +47,6 @@ m(:,:,2)=ur.*(Dr*uf)+diag(1./r)*(uf.*(fftD(uf,2,1)+ur));
 end
 
 function [v]=timeD(u, Dr, r)
-N=size(u,2);
 F=zeros(size(u));
 F(:,:,1)=-0.2*repmat(1-r,[1,size(u,2)]);
 F(:,:,2)=repmat(1-r,[1,size(u,2)]);

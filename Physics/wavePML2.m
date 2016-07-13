@@ -32,7 +32,7 @@ for i=1:nframes
     w=solveRK4(w,dt);
     w([1 end],:,:)=0;
     w(:,[1 end],:)=0;
-    if(mod(i,4)==1)
+    if(mod(i,5)==1)
         h.ZData=w(roi,roi,1);
         drawnow;
     end

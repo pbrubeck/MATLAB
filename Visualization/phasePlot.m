@@ -5,7 +5,7 @@ y=linspace(y0, y1, n);
 C=log(f(xx+1i*yy));
 
 map=hsv(256);
-A=ind2rgb(uint8(128-128*imag(C)/pi), map);
+A=ind2rgb(uint8(128+128*imag(C)/pi), map);
 B=mat2gray(real(C));
 B=cat(3, B, B, B);
 

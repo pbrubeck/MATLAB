@@ -27,8 +27,8 @@ J=abs(evaldiff(f,zz(2:end-1,2:end-1))).^2;
 [V1, w1]=eig(Dxx(2:end-1,2:end-1),'vector'); U1=inv(V1);
 [V2, w2]=eig(Dyy(2:end-1,2:end-1),'vector'); U2=inv(V2);
 [W1,W2]=ndgrid(w1,w2); W=W1+W2;
-
 OP=@(x) reshape(greenF(V1,V2,U1,U2,W,J,reshape(x, size(J))), size(x));
+
 [V,lam]=eigs(OP, numel(J), k, 'sm');
 lam=diag(lam);
 phi=zeros(N);
@@ -39,6 +39,7 @@ disp(lam);
 % Conformal mapping ww=f(zz)
 b1=f(zz([1 end],:)); b2=f(zz(:,[1 end]));
 BC=Dxx(:,[1 end])*b1+b2*Dyy(:,[1 end])';
+
 ww=zeros(N); ww([1 end],:)=b1; ww(:,[1 end])=b2;
 ww(2:end-1,2:end-1)=greenF(V1,V2,U1,U2,W,1,-BC(2:end-1,2:end-1));
 uu=real(ww); vv=imag(ww);
