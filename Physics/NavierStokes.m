@@ -10,11 +10,11 @@ global Dx Dxx Dy Dyy nu F;
 
 nu=0.1;
 zz=xx+1i*yy;
-F=-1000*(zz.^3)./abs(zz.^3);
+F=-1000*(zz.^3-0.1)./abs(zz.^3-0.1);
 F=F-solenoid(F);
 rho=exp(-10*abs(zz-0.1).^2);
 
-u=-250i*(xx+2i*yy).*exp(-20*abs(zz).^2);
+u=-2500i*(xx+2i*yy).*exp(-10*abs(zz).^2);
 u=solenoid(u);
 
 
@@ -25,7 +25,8 @@ hs=surf(xx,yy,-1+0*rho,rho); shading interp; colormap(jet(256));
 axis equal; xlim([-1.1 1.1]); ylim([-1.1 1.1]);
 hold off;
 
-dt=0.1/prod(N);
+t=0;
+dt=0.01/prod(N);
 nframes=10000;
 for i=1:nframes
     % Velocity update
@@ -40,12 +41,17 @@ for i=1:nframes
     rho([1 end],:)=0;
     rho(:,[1 end])=0;
     
+    % Gradient update
+    F=-1000*(zz.^3-0.1*exp(100i*t))./abs(zz.^3-0.1*exp(100i*t));
+    F=F-solenoid(F);
+    
     % Plot
     uq=interp2(xx',yy',u.',xq,yq); uq=uq./abs(uq);
     hq.UData=real(uq);
     hq.VData=imag(uq);
     hs.CData=rho;
     drawnow;
+    t=t+dt;
 end
 
 end

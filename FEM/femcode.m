@@ -1,10 +1,11 @@
-function [] = femcode(m,n)
+function [] = femcode(M)
 %3.6  femcode.m
+m=M(1); n=M(end);
 
 % [p,t,b] = squaregrid(m,n) % create grid of N=mn nodes to be listed in p
 % generate mesh of T=2(m-1)(n-1) right triangles in unit square
 % includes boundary nodes, mesh spacing 1/(m-1) and 1/(n-1)
-[x,y]=ndgrid((0:m-1)/(m-1),(0:n-1)/(n-1)); % matlab forms x and y lists
+[x,y]=ndgrid(-1+2*(0:m-1)/(m-1),-1+2*(0:n-1)/(n-1)); % matlab forms x and y lists
 p=[x(:),y(:)]; % N by 2 matrix listing x,y coordinates of all N=mn nodes
 t=[1,2,m+2; 1,m+2,m+1]; % 3 node numbers for two triangles in first square
 t=kron(t,ones(m-1,1))+kron(ones(size(t)),(0:m-2)');
@@ -42,7 +43,7 @@ for e=1:T  % integration over one triangular element at a time
     [ni,nj]=ndgrid(nodes);
     i(idx)=ni(:);
     j(idx)=nj(:);
-    K(idx,:)=Ke(:); % add Ke to 9 entries of global K
+    K(idx)=Ke(:); % add Ke to 9 entries of global K
     F(nodes)=F(nodes)+Fe; % add Fe to 3 components of load vector F
 end   % all T element matrices and vectors now assembled into K and F
 K=sparse(i, j, K, N, N);
@@ -59,6 +60,5 @@ U=Kb\Fb;  % The FEM approximation is U_1 phi_1 + ... + U_N phi_N
 % Plot the FEM approximation U(x,y) with values U_1 to U_N at the nodes 
 trimesh(t,p(:,1),p(:,2),U,U);
 axis square;
-colorbar();
 end
 
