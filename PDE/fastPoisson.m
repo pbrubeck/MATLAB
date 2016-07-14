@@ -14,7 +14,7 @@ ly=2/hy^2*(cos(pi/(N(2)-1)*(1:N(2)-2))-1);
 [Lx, Ly]=ndgrid(lx,ly); L=Lx+Ly;
 
 % Boundary conditions
-b1=[0*y; 0.2*sin(3*pi*y)];
+b1=[0*y; 0.2*sin(3*pi*y)]; 
 b2=[0*x, (x<0).*sin(pi*x).^4];
 
 uu=zeros(N);

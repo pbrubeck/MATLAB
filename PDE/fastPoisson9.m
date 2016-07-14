@@ -33,7 +33,6 @@ RHS=F-E1*b1-b2*E2';
 
 uu(2:end-1,2:end-1)=4/prod(N-1)*dst2(dst2(RHS(2:end-1,2:end-1))./L);
 
-figure(1);
 surfl(xx,yy,uu,'light'); colormap(jet(256));
 shading interp; axis square;
 end

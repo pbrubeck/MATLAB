@@ -1,4 +1,4 @@
-function [y] = BesselS(a, x)
+function [y] = BesselSeries(a, x)
 % Bessel Series: sum(a(n)*J(n,x))
 n=length(a);
 y=(n>1)*a(n); 
