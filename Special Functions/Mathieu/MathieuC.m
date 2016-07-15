@@ -1,9 +1,14 @@
 function [cem] = MathieuC(m, q, z)
 % Even Angular Mathieu Function
+if ~isreal(z)
+    cem=MathieuJe(m, q, 1i*z);
+    return;
+end
+
 n=42;
 A=MathieuA(m, q, n);
 AA=zeros(2*n,1);
-AA(mod(m,2)+1:2:end)=A;
+AA(1+mod(m,2):2:end)=A;
 
 plan=nfft(1,length(AA),numel(z));
 plan.x=z(:)/(2*pi);

@@ -1,6 +1,6 @@
 function [jem] = MathieuJe(m, q, z)
 % Even Radial Mathieu Function
-n=42;
+n=52;
 A=MathieuA(m, q, n);
 
 sigma=(-1).^(0:n-1);
@@ -16,27 +16,27 @@ end
 end
 
 function [bp]=bessprod1(A, v1, v2)
-a=besselj(0,v1);
-b=besselj(0,v2);
-aa=besselj(1,v1);
-bb=besselj(1,v2);
-bp=A(1)*(a.*b);
+a0=besselj(0,v1);
+b0=besselj(0,v2);
+a1=besselj(1,v1);
+b1=besselj(1,v2);
+bp=A(1)*(a0.*b0);
 for j=2:length(A)
-    [a, aa]=deal(aa, 2*(j-1)*aa./v1-a);
-    [b, bb]=deal(bb, 2*(j-1)*bb./v2-b);
-    bp=bp+A(j)*(a.*b);
+    [a0, a1]=deal(a1, 2*(j-1)*a1./v1-a0);
+    [b0, b1]=deal(b1, 2*(j-1)*b1./v2-b0);
+    bp=bp+A(j)*(a0.*b0);
 end
 end
 
 function [bp]=bessprod2(A, v1, v2)
-a=besselj(0,v1);
-b=besselj(0,v2);
-aa=besselj(1,v1);
-bb=besselj(1,v2);
-bp=A(1)*(a.*bb+aa.*b);
+a0=besselj(0,v1);
+b0=besselj(0,v2);
+a1=besselj(1,v1);
+b1=besselj(1,v2);
+bp=A(1)*(a0.*b1+a1.*b0);
 for j=2:length(A)
-    [a, aa]=deal(aa, 2*(j-1)*aa./v1-a);
-    [b, bb]=deal(bb, 2*(j-1)*bb./v2-b);
-    bp=bp+A(j)*(a.*bb+aa.*b);
+    [a0, a1]=deal(a1, 2*(j-1)*a1./v1-a0);
+    [b0, b1]=deal(b1, 2*(j-1)*b1./v2-b0);
+    bp=bp+A(j)*(a0.*b1+a1.*b0);
 end
 end

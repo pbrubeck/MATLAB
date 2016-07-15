@@ -1,5 +1,10 @@
 function [sem] = MathieuS(m, q, z)
 % Odd Angular Mathieu Function
+if ~isreal(z)
+    sem=-1i*MathieuJo(m, q, 1i*z);
+    return;
+end
+
 n=42;
 B=MathieuB(m, q, 42);
 r=mod(m,2);
