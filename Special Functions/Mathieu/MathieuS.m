@@ -5,9 +5,8 @@ if ~isreal(z)
     return;
 end
 
-n=42;
+n=42; r=mod(m,2);
 B=MathieuB(m, q, 42);
-r=mod(m,2);
 BB=zeros(2*n+2,1);
 BB(3-r:2:end-r)=B;
 

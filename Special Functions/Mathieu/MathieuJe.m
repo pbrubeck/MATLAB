@@ -1,6 +1,10 @@
 function [jem] = MathieuJe(m, q, z)
 % Even Radial Mathieu Function
-n=52;
+if q==0
+    jem=cosh(m*z);
+    return;
+end
+n=42;
 A=MathieuA(m, q, n);
 
 sigma=(-1).^(0:n-1);

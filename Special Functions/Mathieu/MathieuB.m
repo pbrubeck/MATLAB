@@ -9,4 +9,3 @@ end
 [~,B]=trideigs(D,E);
 B=B(:,ceil(m/2));
 end
-
