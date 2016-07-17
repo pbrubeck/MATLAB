@@ -1,19 +1,9 @@
-function [] = femcode(M)
-%3.6  femcode.m
-m=M(1); n=M(end);
+function [] = femcode(h0)
 
-% [p,t,b] = squaregrid(m,n) % create grid of N=mn nodes to be listed in p
-% generate mesh of T=2(m-1)(n-1) right triangles in unit square
-% includes boundary nodes, mesh spacing 1/(m-1) and 1/(n-1)
-[x,y]=ndgrid(-1+2*(0:m-1)/(m-1),-1+2*(0:n-1)/(n-1)); % matlab forms x and y lists
-p=[x(:),y(:)]; % N by 2 matrix listing x,y coordinates of all N=mn nodes
-t=[1,2,m+2; 1,m+2,m+1]; % 3 node numbers for two triangles in first square
-t=kron(t,ones(m-1,1))+kron(ones(size(t)),(0:m-2)');
-% now t lists 3 node numbers of 2(m-1) triangles in the first mesh row
-t=kron(t,ones(n-1,1))+kron(ones(size(t)),(0:n-2)'*m);
-% final t lists 3 node numbers of all triangles in T by 3 matrix 
-b=[1:m,m+1:m:m*n,2*m:m:m*n,m*n-m+2:m*n-1]; % bottom, left, right, top 
-% b = numbers of all 2m+2n **boundary nodes** preparing for U(b)=0
+% Rectangle with circular hole, refined at circle boundary
+fd=@(p) ddiff(drectangle(p,-1,1,-1,1), dcircle(p,0,0,0.5));
+fh=@(p) 0.05+0.3*dcircle(p,0,0,0.5);
+[p,t,b]=distmesh2d(fd,fh,h0,[-1,-1;1,1],[-1,-1;-1,1;1,-1;1,1]);
 
 % [K,F] = assemble(p,t) % K and F for any mesh of triangles: linear phi's
 N=size(p,1);T=size(t,1); % number of nodes, number of triangles
@@ -50,7 +40,7 @@ K=sparse(i, j, K, N, N);
 
 % [Kb,Fb] = dirichlet(K,F,b) % assembled K was singular! K*ones(N,1)=0
 % Implement Dirichlet boundary conditions U(b)=g(x,y) at nodes in list b
-K(b,:)=0; F(b)=0*(sin(3*pi*x(b))-sin(3*pi*y(b))); % put g(x,y) in boundary rows/columns of K and F 
+K(b,:)=0; F(b)=0*(sin(3*pi*p(b,1))-sin(3*pi*p(b,2))); % put g(x,y) in boundary rows/columns of K and F 
 K(b,b)=speye(length(b),length(b)); % put I into boundary submatrix of K
 Kb=K; Fb=F; % Stiffness matrix Kb (sparse format) and load vector Fb
 
@@ -58,7 +48,7 @@ Kb=K; Fb=F; % Stiffness matrix Kb (sparse format) and load vector Fb
 U=Kb\Fb;  % The FEM approximation is U_1 phi_1 + ... + U_N phi_N
 
 % Plot the FEM approximation U(x,y) with values U_1 to U_N at the nodes 
-trimesh(t,p(:,1),p(:,2),U,U);
-axis square;
+trisurf(t,p(:,1),p(:,2),U,U);
+axis square; shading interp; colormap(jet(256));
 end
 

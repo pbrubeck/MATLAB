@@ -1,4 +1,4 @@
-function [] = SchrodCayley(N)
+function [] = schrodCayley(N)
 % Solves the Schrodinger equation via Cayley transformations
 R1=1;
 R2=2;

@@ -1,4 +1,4 @@
-function [] = SchrodPolar(N, k)
+function [] = schrodPolar(N, k)
 R1=1;
 R2=3;
 [D,x]=chebD(N);

@@ -1,15 +1,18 @@
 function [] = HermiteODE(n, m)
+% Solves ( d^2/dx^2 + x^2 ) Psi = lambda Psi using Hermite spectral methods
 [D, x, w]=hermD(n+1);
 H=-D*D+diag(x.^2);
-[S, lambda]=eigs(H(2:end-1,2:end-1), m, 'sm');
+[Psi, lambda]=eig(H);
 lambda=diag(lambda);
-Psi=zeros(n+2, m);
-Psi(2:end-1,:)=S;
+[lambda,order]=sort(lambda);
+Psi=Psi(:,order);
 
-%Normalization
+% Normalization and interpolation to a finer grid
 w=w.*exp(x'.^2);
-Psi=bsxfun(@rdivide, Psi, sqrt(w*(Psi.^2)));
-
-plot(x, Psi(:,end)); 
+Psi=bsxfun(@rdivide, Psi, sqrt(w*(abs(Psi).^2)));
+xx=linspace(x(1), x(end), 4*n); xx=xx(:);
+uu=interp1(x,Psi,xx,'spline');
+clf; plot(xx,uu(:,m));
+title(sprintf('\\lambda_{%d} = %f', m, lambda(m)));
 disp(lambda);
 end

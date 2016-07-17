@@ -9,5 +9,5 @@ for k=n-2:-1:1
     yy=temp;
 end
 h0=pi^(-1/4)*exp(-x.^2/2);
-y=h0.*(a(1)+sqrt(2)*x.*y-sqrt(1/2)*yy);
+y=h0.*(a(1)+sqrt(2)*(x.*y-yy/2));
 end

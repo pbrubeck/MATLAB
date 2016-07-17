@@ -1,9 +1,10 @@
-function [p,t]=distmesh2d(fd,fh,h0,bbox,pfix,varargin)
+function [p,t,b]=distmesh2d(fd,fh,h0,bbox,pfix,varargin)
 %DISTMESH2D 2-D Mesh Generator using Distance Functions.
 %   [P,T]=DISTMESH2D(FD,FH,H0,BBOX,PFIX,FPARAMS)
 %
 %      P:         Node positions (Nx2)
 %      T:         Triangle indices (NTx3)
+%      B:         Boundary node indices (NBx1)
 %      FD:        Distance function d(x,y)
 %      FH:        Scaled edge length function h(x,y)
 %      H0:        Initial edge length
@@ -99,7 +100,7 @@ while 1
   L0=hbars*Fscale*sqrt(sum(L.^2)/sum(hbars.^2));     % L0 = Desired lengths
   
   % Density control - remove points that are too close
-  if mod(count,densityctrlfreq)==0 & any(L0>2*L)
+  if mod(count,densityctrlfreq)==0 && any(L0>2*L)
       p(setdiff(reshape(bars(L0>2*L,:),[],1),1:nfix),:)=[];
       N=size(p,1); pold=inf;
       continue;
@@ -117,11 +118,15 @@ while 1
   dgrady=(feval(fd,[p(ix,1),p(ix,2)+deps],varargin{:})-d(ix))/deps; %    gradient
   dgrad2=dgradx.^2+dgrady.^2;
   p(ix,:)=p(ix,:)-[d(ix).*dgradx./dgrad2,d(ix).*dgrady./dgrad2];    % Project
-
+  
   % 8. Termination criterion: All interior nodes move less than dptol (scaled)
   if max(sqrt(sum(deltat*Ftot(d<-geps,:).^2,2))/h0)<dptol, break; end
 end
 
 % Clean up and plot final mesh
 [p,t]=fixmesh(p,t);
-simpplot(p,t)
+simpplot(p,t);
+
+% Return boundary nodes
+b=find(feval(fd,p,varargin{:})>=-geps);
+end
