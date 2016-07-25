@@ -1,6 +1,6 @@
 function [] = confmap(N)
-x=linspace(0,0.8,N);
-y=linspace(-pi,pi,N);
+x=linspace(0,0.5,N);
+y=linspace(0,2*pi,N);
 [xx,yy]=ndgrid(x,y);
 zz=xx+1i*yy;
 ww=cosh(zz);

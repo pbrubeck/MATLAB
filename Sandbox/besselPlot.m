@@ -1,7 +1,7 @@
 m=0;
 rlim=100;
 r=linspace(-rlim,rlim,2048)';
-[tau,w]=ClenshawCurtis(-pi,pi,4096);
+[tau,w]=GaussLegendre(-pi,pi,256);
 f=exp(1i*(m*ones(size(r))*tau-r*sin(tau)));
 J=1/(2*pi)*f*w';
 

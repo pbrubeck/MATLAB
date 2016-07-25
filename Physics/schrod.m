@@ -3,9 +3,8 @@ function [] = schrod(n,m)
 % A neat example on Hermite spectral methods
 
 % Differentiantion matrix, nodes and quadrature weights
-[D, x, w]=hermD(n+1);
-dt=6.6/32^2;
-
+[D, x, w]=hermD(n);
+dt=6/32^2;
 
 % Quantum mechanical operators
 H=-D*D+diag(x.^2);         % Halmintonian
@@ -32,18 +31,20 @@ vv=interp1(x,F*Psi,xx,'spline');
 figure(1); clf;
 subplot(3,1,1); 
 h1=plot(xx, [real(uu), imag(uu)]);
-ax=axis(gca); ax(1:2)=x([1 end]); ax(3:4)=[-1 1]*max(abs(ax(3:4))); axis(ax);
+axis([x(1), x(end), -1, 1]);
 title('\Psi(x,t)');
 
 subplot(3,1,2);
 h2=plot(xx, abs(uu).^2); 
-ax=axis(gca); ax(1:2)=x([1 end]); axis(ax);
+axis([x(1), x(end), 0, 1]);
 title('|\Psi(x,t)|^2');
 
 subplot(3,1,3);
 h3=plot(xx, [real(vv), imag(vv)]); 
-ax=axis(gca); ax(1:2)=x([1 end]); ax(3:4)=[-1 1]*max(abs(ax(3:4))); axis(ax);
+axis([x(1), x(end), -1, 1]);
 title('\Psi(k,t)');
+
+
 
 % Time evolution
 for i=1:50000
@@ -55,6 +56,9 @@ for i=1:50000
     set(h2, 'YData', abs(uu).^2);
     set(h3, {'YData'}, {real(vv); imag(vv)});
     drawnow;
+    
+    position=Psi'*diag(x(:).*w(:))*Psi;
+    momentum=(F*Psi)'*diag(x(:).*w(:))*(F*Psi);
 end
 end
 
