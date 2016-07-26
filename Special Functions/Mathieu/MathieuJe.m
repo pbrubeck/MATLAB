@@ -1,5 +1,5 @@
 function [jem] = MathieuJe(m, q, z)
-% Even Radial Mathieu Function
+% Even Radial Mathieu Function Je_m(q; z)
 if q==0
     jem=cosh(m*z);
     return;

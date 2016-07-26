@@ -1,5 +1,5 @@
 function [jom] = MathieuJo(m, q, z)
-% Odd Radial Mathieu Function
+% Odd Radial Mathieu Function Jo_m(q; z)
 if q==0
     jom=sinh(m*z);
     return;
