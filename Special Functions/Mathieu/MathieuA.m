@@ -9,7 +9,7 @@ else
     D=[1+q, (3:2:2*n-1).^2];  
 end
 [~,A]=trideigs(D,E);
+A=bsxfun(@times, A, sign(sum(A)));
+A(1,:)=A(1,:)*(1-(1-s)/(2+sqrt(2)));
 A=A(:,k);
-A=A*sign(sum(A));
-A(1)=A(1)*(1-(1-s)/(2+sqrt(2)));
 end

@@ -8,6 +8,6 @@ else
     D=[1-q, (3:2:2*n-1).^2];
 end
 [~,B]=trideigs(D,E);
+B=bsxfun(@times, B, sign((1+s:2:2*n+s)*B));
 B=B(:,k);
-B=B*sign((1+s:2:2*n+s)*B);
 end

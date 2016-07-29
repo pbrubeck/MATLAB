@@ -1,6 +1,6 @@
 function [cem] = MathieuC(m, q, z)
 % Even Angular Mathieu Function ce_m(q; z)
-if ~isreal(z)
+if(~isreal(z))
     cem=MathieuJe(m, q, 1i*z);
     return;
 end
