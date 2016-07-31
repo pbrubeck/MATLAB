@@ -4,11 +4,14 @@ y=linspace(y0, y1, n);
 [xx, yy]=meshgrid(x, y);
 C=f(xx+1i*yy);
 
-gamma=1/log(max(abs(C(:))));
-
 map=hsv(256);
 A=ind2rgb(uint8(128+128*angle(C)/pi), map);
-B=mat2gray(abs(C).^gamma);
+
+G=log1p(abs(C));
+gamma=1/log(max(G(:)));
+G=G.^gamma;
+
+B=mat2gray(G);
 B=cat(3, B, B, B);
 
 image([x0,x1], [y0,y1], A.*B);
