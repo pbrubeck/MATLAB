@@ -20,23 +20,33 @@ if s==0
     jem4=sum(A)/A(1)*sumj2k(A(1:j), s, v2-v1);
     jem5=sum(AA)/A(1)*sumj2k(AA(1:j), s, v2+v1);
     
-    plot(z, [jem0-jem5]); title(sprintf('%d terms', j))
+    plot(z, [jem0-jem5]); title(sprintf('%d terms', j));
+    threeTerm(A, v1, v2);
 end
 
 
+end
+
+function []=threeTerm(A, v1, v2)
+y=besselj(0,v1).*besselj(0,v2);
+yy=besselj(1,v1).*besselj(1,v2);
+r=zeros(numel(y)-1,2);
+for j=2:length(A)
+    yyy=besselj(j,v1).*besselj(j,v2);
+    for i=1:numel(y)-1
+        r(i,:)=([yy(i), y(i); yy(i+1), y(i+1)]\[yyy(i); yyy(i+1)])';
+    end
+    figure(2)
+    plot(r); drawnow; pause(1);
+    [y, yy]=deal(yy, yyy);
+end
 end
 
 function [bp, j]=bpexact(A, v1, v2)
-a0=besselj(0,v1);
-b0=besselj(0,v2);
-a1=besselj(1,v1);
-b1=besselj(1,v2);
-bp=A(1)*(a0.*b0);
-j=2; r=1; tol=eps;
-while(j<=length(A) && any(r>tol))
-    [a0, a1]=deal(a1, besselj(j,v1));
-    [b0, b1]=deal(b1, besselj(j,v2));
-    delta=A(j)*(a0.*b0);
+bp=zeros(size(v1));
+j=0; r=1; tol=eps;
+while(j<=length(A) && any(r(:)>tol))
+    delta=A(j+1)*(besselj(j,v1).*besselj(j,v2));
     bp=bp+delta;
     r=abs(delta)./(abs(bp)+tol);
     j=j+1;
@@ -86,7 +96,7 @@ a1=besselj(1,v1); j11=a1;
 b1=besselj(1,v2); j12=b1;
 bp=A(1)*(a0.*b0);
 j=2; r=1; tol=eps;
-while(j<=length(A) && any(r>tol))
+while(j<=length(A) && any(r(:)>tol))
     [a0, a1]=deal(a1, jn(j,v1,j01,j11));
     [b0, b1]=deal(b1, jn(j,v2,j02,j12));
     delta=A(j)*(a0.*b0);

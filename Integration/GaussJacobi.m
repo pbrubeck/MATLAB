@@ -6,7 +6,7 @@ c=2*k+a+b;
 D=(b^2-a^2)./(c.*(c-2)+(b^2==a^2));
 E=2./c.*sqrt(k.*(k+a).*(k+b).*(k+a+b)./(c.^2-1));
 [x,V]=trideigs(D, E); 
-w0=hypergeom([1,-a],2+b,-1)/(1+b)+hypergeom([1,-b],2+a,-1)/(1+a);
+w0=2^(a+b+1)*gamma(a+1)*gamma(b+1)/gamma(a+b+2);
 w=w0*V(1,:).^2;
 x=x';
 end
