@@ -3,22 +3,23 @@ function [] = wavePML1( N )
 % Uses Chebyshev spectral methods in the spatial dimension
 % and classic Runge-Kutta for time evolution of second order PDE.
 x=chebGrid(N);
+dt=6/N^2;
 
 % Layer
-smax=1000;
-width=12;
-roi=width+1:N-width;
-layer=[1:width, N-width+1:N];
+xl=0.95;
+layer=abs(x)>xl;
+roi=~layer;
 global sigma;
 sigma=zeros(N,1);
-sigma(layer)=smax*((abs(x(layer))-x(width+1))/(1-x(width+1))).^3;
+sigma(layer)=1/dt*((abs(x(layer))-xl)/(1-xl)).^3;
 
 % Initial conditions
 u0=sech(20*(x-0.5)).^2-0.7*sech(20*(x+0.5)).^2;
 v0=sign(x).*u0;
 w=[u0,v0];
 
-dt=6/N^2;
+
+figure(1);
 h=plot(x(roi), w(roi,1));
 ylim([-1,1]);
 

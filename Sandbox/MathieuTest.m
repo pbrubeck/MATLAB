@@ -1,6 +1,6 @@
 function [] = MathieuTest(m, q)
-L=30;
-z=linspace(-L,L,100000);
+L=25;
+z=linspace(-L,L,10000);
 
 n=100;
 A=MathieuA(m, q, n);
@@ -20,26 +20,29 @@ if s==0
     jem4=sum(A)/A(1)*sumj2k(A(1:j), s, v2-v1);
     jem5=sum(AA)/A(1)*sumj2k(AA(1:j), s, v2+v1);
     
+    figure(1);
     plot(z, [jem0-jem5]); title(sprintf('%d terms', j));
-    threeTerm(A, v1, v2);
+    threeTerm(v1, v2);
 end
 
 
 end
 
-function []=threeTerm(A, v1, v2)
-y=besselj(0,v1).*besselj(0,v2);
-yy=besselj(1,v1).*besselj(1,v2);
-r=zeros(numel(y)-1,2);
-for j=2:length(A)
-    yyy=besselj(j,v1).*besselj(j,v2);
-    for i=1:numel(y)-1
-        r(i,:)=([yy(i), y(i); yy(i+1), y(i+1)]\[yyy(i); yyy(i+1)])';
+function []=threeTerm(q, z)
+z=z(:);
+y0=besselj(0,z);
+y1=besselj(1,z);
+r1=zeros(2, length(y0)-1);
+r2=zeros(2, length(y0)-1);
+for j=2:9
+    y2=besselj(j,z);
+    for i=1:length(y0)-1
+        r1(:,i)=[y1(i:i+1), y0(i:i+1)]\y2(i:i+1);
     end
-    figure(2)
-    plot(r); drawnow; pause(1);
-    [y, yy]=deal(yy, yyy);
+    [y0, y1]=deal(y1, y2);
+    figure(2); plot(r1'); drawnow; pause(1);
 end
+
 end
 
 function [bp, j]=bpexact(A, v1, v2)
