@@ -1,4 +1,4 @@
-function [u] = Airy(m, n)
+function [u] = AiryODE(m, n)
 % Solves Airy's ordinary differential equation on the interval containing
 % the first m zeros
 [D, x]=chebD(n);
@@ -8,8 +8,8 @@ lambda=diag(lambda);
 [~, ii]=sort(lambda); ii=ii(end); 
 lambda=lambda(ii);
 u=[0; V(:, ii); 0];
-mid=(u(ceil(end/2))+u(floor(end/2+1)))/2;
-u=(airy(0)/mid)*u;
+u0=interp1(x,u,0,'spline');
+u=(airy(0)/u0)*u;
 figure(1); plot(x, u);
 title(sprintf('lambda = %f', lambda));
 end
