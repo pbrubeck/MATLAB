@@ -20,8 +20,8 @@ figure(2); plot(r,V);
 mu=diag(mu);
 Phi=Phi/sqrt(2*pi/N);
 
-[x,w]=GaussChebyshev(-1,1,N);
-W=diag((R2-R1)*sqrt(1-x(2:end-1).^2).*w(2:end-1));
+[x,w]=ClenshawCurtis(R1,R2,N-1);
+W=diag(w(2:end-1));
 
 E=zeros(k,k);
 RR=zeros(N,k,k);
@@ -41,7 +41,7 @@ zz=zeros(N,N+1);
 
 h=surf(xx,yy,zz); view(0,90);
 shading interp; colormap(jet(256));
-zlim([0, 0.4]);
+zlim([0, 1]);
 for t=0:dt:tmax
     Psi(:,:)=0;
     a=c.*exp(-1i*E*t);

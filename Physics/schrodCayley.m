@@ -10,8 +10,8 @@ Drr=(diag(r)*D)^2;
 
 Psi=(-(r-R1).*(r-R2).*(r-(R1+R2)/2))*sin(3*th.^2/(2*pi));
 
-[x,w]=GaussChebyshev(-1,1,N);
-W=diag((R2-R1)*sqrt(1-x.^2).*w);
+[x,w]=ClenshawCurtis(R1,R2,N-1);
+W=diag(w);
 Psi=Psi/sqrt(sum(r'*W*abs(Psi).^2)*(2*pi/N));
 
 
