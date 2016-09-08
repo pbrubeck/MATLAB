@@ -20,8 +20,7 @@ Psi=Psi(:, order(m));
 
 
 % Normalization and interpolation to a finer, equispaced grid
-w=w.*exp(x'.^2);
-Psi=bsxfun(@rdivide, Psi, sqrt(w*(abs(Psi).^2)));
+Psi=bsxfun(@rdivide, Psi, sqrt(w'*(abs(Psi).^2)));
 xx=linspace(x(1), x(end), 2048); xx=xx(:);
 uu=interp1(x,Psi,xx,'spline');
 vv=interp1(x,F*Psi,xx,'spline');

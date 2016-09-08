@@ -1,7 +1,7 @@
 function [E, rbohr] = schrodHydrogen(N, k)
 % Schrodinger Equation for the Hydrogen atom
 % Hatree units
-E0=27.21138505;   % Electronvolts
+E0=1;%27.21138505;   % Electronvolts
 r0=0.52917721067; % Angstroms
 
 % Differentiation matrix

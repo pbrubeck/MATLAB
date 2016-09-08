@@ -15,7 +15,7 @@ U(:,1:2)=null(H);
 U(2:end-1,3:end)=V;
 Q=U*diag(exp(-1i*dt*L))/U;
 
-sigma=0.2;
+sigma=0.8;
 k=1/sigma;
 Psi0=normc(exp(-(x/sigma).^2-1i*k*x), w);
 h=plot(x,abs(Psi0).^2); drawnow; ylim([0, 4]);
