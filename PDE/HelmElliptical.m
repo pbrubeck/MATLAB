@@ -1,38 +1,44 @@
-function [] = HelmElliptical(N,m)
-f=1;
-[Gu,Gv,Duu,Dvv,u,v]=chebLapEll(2*N-1,N);
-Duu=Duu(2:end-1,2:end-1);
-Gu=Gu(2:end-1,2:end-1);
+function [] = HelmElliptical(a, b, N, k)
+f=sqrt(a^2-b^2);
+[A1,B1,A2,B2,u,v]=chebLapEll(a,b,2*N-1,N);
+A1=A1(2:end-1,2:end-1);
+B1=B1(2:end-1,2:end-1);
+C1=eye(2*N-3);
+C2=-eye(N);
 
-a=m^2;
+a=k^2;
 lam=-2*a;
-Vu=cos(0*pi*u(2:end-1));
-Vv=cos(m*v(:));
-[Vu,Vv,lam,a]=mpep(Duu,Dvv,Gu,Gv,Vu,Vv,lam,a);
-q=-lam/4;
+rmf=cos(pi/2*u(2:end-1)/u(end));
+amf=cos(k*v(:));
+[lam,a,X1,X2] = newton_mep(A1,B1,C1,A2,B2,C2,rmf,amf,lam,a);
+%[lam,a,X1,X2] = twopareigs(A1,B1,C1,A2,B2,C2,k);
+q=-lam*f^2/4;
 
 rmf=zeros(N,1);
-rmf(2:end,:)=bsxfun(@times, conj(Vu(N-1,:))./abs(Vu(N-1,:)), Vu(1:N-1,:));
-amf=bsxfun(@times, conj(Vv(1,:))./abs(Vv(1,:)), Vv);
+rmf(2:end,:)=bsxfun(@times, conj(X1(N-1,:)), X1(1:N-1,:));
+amf=bsxfun(@times, conj(X2(1,:)), X2);
+rmf=rmf/max(rmf);
+amf=amf/max(amf);
 u=u(1:N);
 
 display(a);
 display(q);
+
 figure(1); plot(u,rmf);
 figure(2); plot(v,amf);
 
-xx=f*cosh(u)*cos([0,v]);
-yy=f*sinh(u)*sin([0,v]);
+xx=f*cosh(u)*cos(v);
+yy=f*sinh(u)*sin(v);
 zz=rmf*amf.';
-zz=[zz(:,end), zz];
+
 figure(3);
-surf(xx,yy,zz); 
+surfl(xx(:,[1:end 1]),yy(:,[1:end 1]),zz(:,[1:end 1]),'light'); 
 shading interp;
 axis off;
 colormap(jet(256));
 zrange=max(zz(:))-min(zz(:));
 xrange=max(xx(:))-min(xx(:));
 yrange=max(yy(:))-min(yy(:));
-daspect([1 1 zrange/hypot(xrange,yrange)]);
+daspect([1 1 2*zrange/hypot(xrange,yrange)]);
 view(0,90);
 end
