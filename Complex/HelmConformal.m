@@ -21,7 +21,7 @@ OP=@(x) reshape(greenF(V1,V2,U1,U2,W,J,reshape(x, size(J))), size(x));
 % Compute k eigenmodes
 [V,lam]=eigs(OP, numel(J), k, 'sm');
 [lam, id]=sort(-diag(lam));
-q=lam*f^2/4;
+q=lam.^2*f^2/4;
 psi=zeros(size(ww));
 psi(2:end-1,:)=reshape(V(:,id(k)), size(J));
 psi=psi/max(abs(psi(:)));
