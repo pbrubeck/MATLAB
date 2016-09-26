@@ -18,7 +18,6 @@ u0=sech(20*(x-0.5)).^2-0.7*sech(20*(x+0.5)).^2;
 v0=sign(x).*u0;
 w=[u0,v0];
 
-
 figure(1);
 h=plot(x(roi), w(roi,1));
 ylim([-1,1]);

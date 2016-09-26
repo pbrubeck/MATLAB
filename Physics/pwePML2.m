@@ -18,16 +18,15 @@ sig=zeros(N,1);
 sig(layer)=2/dz*((abs(x(layer))-xl)/(x(end)-xl)).^3;
 
 % Initial conditions
-u0=exp(2i*pi*xx-(xx.^2+yy.^2)/2);
+u0=(cos(2*pi*(xx+yy))+cos(2*pi*(xx-yy))).*exp(-(xx.^2+yy.^2)/2);
 vx=zeros(N);
 vy=zeros(N);
 psi=zeros(N);
 w=cat(3,u0,vx,vy,psi);
 
 figure(1);
-h=surf(xx(roi,roi), yy(roi,roi), abs(w(roi,roi,1)).^2);
-colormap(jet(256)); shading interp;
-xlim([-xl,xl]); ylim([-xl,xl]); zlim([-1,1]); 
+h=image(x(roi), x(roi), abs(w(roi,roi,1)).^2);
+map=hsv(256); colormap(map); shading interp;
 view(2); axis square; 
 
 nframes=10000;
@@ -36,7 +35,16 @@ for i=1:nframes
     w([1 end],:,:)=0;
     w(:,[1 end],:)=0;
     if(mod(i,5)==1)
-        h.ZData=abs(w(roi,roi,1)).^2;
+        E=w(roi,roi,1);
+        EE=real(E).^2+imag(E).^2;
+        
+        V=mat2gray(EE);
+        V=cat(3,V,V,V);
+        phase=angle(E)/(2*pi);
+        phase=phase-floor(phase);
+        H=ind2rgb(uint8((length(map)-1)*phase), map);
+        
+        h.CData=H.*V;
         drawnow;
     end
 end
@@ -44,11 +52,10 @@ end
 
 function wt=partialTime(w)
 global D k sig;
+wt=w;
 u=w(:,:,1);
 vx=D*u -dgmm(sig , w(:,:,2));
 vy=u*D'-dgmm(sig', w(:,:,3));
-
-wt=w;
 wt(:,:,2)=vx;
 wt(:,:,3)=vy;
 wt(:,:,4)=-dgmm(sig,dgmm(sig',u))+dgmm(sig',vx)+dgmm(sig,vy);

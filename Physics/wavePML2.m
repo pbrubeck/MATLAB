@@ -4,15 +4,15 @@ function [] = wavePML2(N)
 % and classic Runge-Kutta for time evolution of second order PDE.
 x=chebGrid(N);
 [xx,yy]=ndgrid(x);
+dt=6/N^2;
 
 % Layer
-smax=1000;
-width=12;
-roi=width+1:N-width;
-layer=[1:width, N-width+1:N];
-global sigma;
-sigma=zeros(N,1);
-sigma(layer)=smax*((abs(x(layer))-x(width+1))/(1-x(width+1))).^3;
+xl=0.95;
+layer=abs(x)>xl;
+roi=~layer;
+global sig;
+sig=zeros(N,1);
+sig(layer)=1/dt*((abs(x(layer))-xl)/(1-xl)).^3;
 
 % Initial conditions
 u0=exp(-40*((xx-.4).^2+yy.^2));
@@ -21,7 +21,6 @@ vy=zeros(N);
 phi=zeros(N);
 w=cat(3,u0,vx,vy,phi);
 
-dt=6/N^2;
 figure(1);
 h=surf(xx(roi,roi), yy(roi,roi), w(roi,roi,1), 'EdgeColor', 'none');
 colormap(jet(256)); shading interp;
@@ -40,16 +39,16 @@ end
 end
 
 function wt=partialTime(w)
-global sigma;
+global sig;
 wt=w;
 ux=chebfftD(w(:,:,1),1);
 uy=chebfftD(w(:,:,1),2);
 vx=chebfftD(w(:,:,2),1);
 vy=chebfftD(w(:,:,3),2);
-wt(:,:,1)=(vx+vy)-dgmm(sigma, w(:,:,1))-dgmm(sigma', w(:,:,1))+w(:,:,4);
-wt(:,:,2)=ux-dgmm(sigma, w(:,:,2));
-wt(:,:,3)=uy-dgmm(sigma', w(:,:,3));
-wt(:,:,4)=(dgmm(sigma', vx)+dgmm(sigma, vy))-dgmm(sigma', dgmm(sigma, w(:,:,1)));
+wt(:,:,1)=(vx+vy)-dgmm(sig, w(:,:,1))-dgmm(sig', w(:,:,1))+w(:,:,4);
+wt(:,:,2)=ux-dgmm(sig, w(:,:,2));
+wt(:,:,3)=uy-dgmm(sig', w(:,:,3));
+wt(:,:,4)=dgmm(sig', vx)+dgmm(sig, vy)-dgmm(sig', dgmm(sig, w(:,:,1)));
 end
 
 function w=solveRK4(w, dt)

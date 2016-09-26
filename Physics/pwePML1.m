@@ -2,22 +2,21 @@ function [] = pwePML1( N )
 % Solves the paraxial wave equation in 1D using a Perfectly Matched Layer for BCs.
 % Uses Hermite spectral methods in the spatial dimension
 % and classic Runge-Kutta for z evolution of second order PDE.
-global Dx k sig;
+global D k sig;
 lambda=100;
 k=2*pi/lambda;
-[Dx,x]=hermD(N);
+[D,x]=hermD(N);
 dz=6/N^2;
 
 % Layer
 xl=3/4*x(end);
 layer=abs(x)>xl;
-roi=~layer;
-
+roi=1:N;%~layer;
 sig=zeros(N,1);
 sig(layer)=2/dz*((abs(x(layer))-xl)/(x(end)-xl)).^3;
 
 % Initial conditions
-u0=exp(2i*pi*x-x.^2/2);
+u0=cos(2*pi*x).*exp(-x.^2/2);
 v0=zeros(size(x));
 w=[u0,v0];
 
@@ -39,10 +38,10 @@ end
 end
 
 function wt=partialz(w)
-global Dx k sig;
+global D k sig;
 wt=w;
-wt(:,2)=Dx*w(:,1)-sig.*w(:,2);
-wt(:,1)=1i/(2*k)*Dx*wt(:,2)-sig.*w(:,1);
+wt(:,2)=D*w(:,1)-sig.*w(:,2);
+wt(:,1)=1i/(2*k)*D*wt(:,2)-sig.*w(:,1);
 end
 
 function w=solveRK4(w, dz)
