@@ -12,10 +12,16 @@ h=max(y1,y2)+L;
 opts=[];
 opts.FunctionTolerance=1e-13;
 
-[path,t]=ga(@timeFun,n-2,[],[],[],[],min(y1,y2)-L,max(y1,y2)+L,[],[],opts);
+lb=(min(y1,y2)-L)*ones(n-2,1);
+ub=(max(y1,y2)+L)*ones(n-2,1);
+path=y1+(y2-y1)*(x(2:end-1)+1)/2;
+[path,t]=ga(@timeFun,n-2,[],[],[],[],lb,ub,[],[],opts);
+disp(t);
+[path,t]=fmincon(@timeFun,path,[],[],[],[],lb,ub);
+disp(t);
+
 y=[y2;path(:);y1];
 plot(x,y);
-disp(t);
 end
 
 function t=timeFun(y)

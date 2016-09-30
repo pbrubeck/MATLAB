@@ -11,7 +11,7 @@ dz=6/N^2;
 % Layer
 xl=3/4*x(end);
 layer=abs(x)>xl;
-roi=1:N;%~layer;
+roi=~layer;
 sig=zeros(N,1);
 sig(layer)=2/dz*((abs(x(layer))-xl)/(x(end)-xl)).^3;
 
@@ -23,7 +23,7 @@ w=[u0,v0];
 
 figure(1);
 h=plot(x(roi), w(roi,1));
-xlim([-xl,xl]);
+%xlim([-xl,xl]);
 ylim([-1,1]);
 
 nframes=10000;

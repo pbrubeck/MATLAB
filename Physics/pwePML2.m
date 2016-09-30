@@ -6,6 +6,7 @@ global D k sig;
 lambda=100;
 k=2*pi/lambda;
 [D, x]=hermD(N);
+
 [xx,yy]=ndgrid(x);
 dz=6/N^2;
 
@@ -36,9 +37,8 @@ for i=1:nframes
     w(:,[1 end],:)=0;
     if(mod(i,5)==1)
         E=w(roi,roi,1);
-        EE=real(E).^2+imag(E).^2;
         
-        V=mat2gray(EE);
+        V=mat2gray(abs(E).^2);
         V=cat(3,V,V,V);
         phase=angle(E)/(2*pi);
         phase=phase-floor(phase);
