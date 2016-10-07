@@ -35,3 +35,5 @@ title(sprintf('Original | Haar Wavelet Transform psnr = %.4f', psnr(Xhaar,X0)));
 % Plot wavelet coefficients
 figure(4); plotwavelet2(C(1:size(X,3):end),S(:,1:2),lvl,'haar',255,'square'); colormap(gray); title('Noisy wavelet coefficients (R channel)');
 figure(5); plotwavelet2(CT(1:size(X,3):end),S(:,1:2),lvl,'haar',255,'square'); colormap(gray); title('Filtered wavelet coefficients (R channel)');
+
+%imwrite([X0, X, Xhaar], sprintf('%s_denoise.tif',filename(1:end-4)))
