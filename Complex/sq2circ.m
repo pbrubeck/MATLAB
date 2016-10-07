@@ -13,7 +13,7 @@ RHS=-D2(:,[1 end])*bx-by*D2(:,[1 end])';
 w=zeros(size(D2)); w([1 end],:)=bx; w(:,[1 end])=by;
 w(2:end-1,2:end-1)=sylvester(D2(2:end-1,2:end-1), D2(2:end-1,2:end-1)', RHS(2:end-1,2:end-1));
 
-im=imread('airplane.png');
+im=imread('airplane.tiff');
 figure(1);
 imshow(im);
 

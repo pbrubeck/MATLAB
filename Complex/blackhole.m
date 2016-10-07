@@ -20,6 +20,4 @@ for i=1:100
     xlim([-c,c]); ylim([-c,c]);
     drawnow; pause(0.1);
 end
-
 end
-

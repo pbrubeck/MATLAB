@@ -6,7 +6,7 @@ R2=2;
 r=(R2+R1)/2+(R2-R1)/2*x;
 D=2/(R2-R1)*D;
 Drr=(diag(r)*D)^2;
-[Dtt,th]=periodicD2(N);
+[Dtt,th]=fourD2(N);
 
 Psi=(-(r-R1).*(r-R2).*(r-(R1+R2)/2))*sin(3*th.^2/(2*pi));
 

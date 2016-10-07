@@ -1,4 +1,4 @@
-function [D2, t] = periodicD2(M)
+function [D2, t] = fourD2(M)
 % Second derivative matrix with periodic boundary conditions.
 dt=2*pi/M;
 t=dt*(1:M);

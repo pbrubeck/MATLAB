@@ -3,7 +3,7 @@ f=sqrt(a^2-b^2);
 xi0=acosh(a/f);
 
 [Dx,x]=chebD(2*N-1); x=xi0*x; Dx=Dx/xi0; Dxx=Dx*Dx;
-[Dyy,y]=periodicD2(N);
+[Dyy,y]=fourD2(N);
 [xx,yy]=ndgrid(x,y);
 zz=xx+1i*yy;
 ww=f*cosh(zz);

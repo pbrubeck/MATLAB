@@ -4,7 +4,7 @@ function [Dxx, Jx, Dyy, Jy, x, y] = chebLapEll(a, b, N, M)
 % domain x:[-xi0,xi0], y:(0,2*pi]
 f=sqrt(a^2-b^2);
 xi0=acosh(a/f);
-[Dyy,y]=periodicD2(M);
+[Dyy,y]=fourD2(M);
 [Dx,x]=chebD(N);
 x=xi0*x; Dx=Dx/xi0; Dxx=Dx*Dx;
 Jx=diag(f^2/2*cosh(2*x));

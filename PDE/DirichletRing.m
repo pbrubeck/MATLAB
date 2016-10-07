@@ -7,7 +7,7 @@ r=(R2+R1)/2+(R2-R1)/2*x;
 D=2/(R2-R1)*D;
 Drr=(diag(r)*D)^2;
 
-[Dff, phi]=periodicD2(M);
+[Dff, phi]=fourD2(M);
 xx=r*cos(phi);
 yy=r*sin(phi);
 

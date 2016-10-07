@@ -5,7 +5,7 @@ x1=-asinh(a/R1);
 x2= asinh(a/R2);
 
 [Dx,x]=chebD(N(1)); x=x1+(x2-x1)/2*(x+1); Dx=2/(x2-x1)*Dx; Dxx=Dx*Dx; 
-[Dyy,y]=periodicD2(N(2));
+[Dyy,y]=fourD2(N(2));
 [xx,yy]=ndgrid(x,y);
 zz=xx+1i*yy;
 ww=a*coth(zz/2)-a*coth(x2)+L;
@@ -22,11 +22,10 @@ psi(2:end-1,:)=sylvester(Dxx(2:end-1,2:end-1), Dyy', RHS(2:end-1,:));
 
 h=mesh(uu(:,[1:end,1]),vv(:,[1:end,1]),psi(:,[1:end,1]));
 colormap(jet(256)); shading interp;
-set(h,'FaceColor','none'); whitebg(1,'k'); view(2);
+set(h,'FaceColor','none'); view(2);
 c=4*(R1+R2+L); xlim([-c,c]); ylim([-c,c]);
 xrange=2*c;
 yrange=2*c;
 zrange=max(psi(:))-min(psi(:));
 daspect([1 1 2*zrange/hypot(xrange,yrange)]);
 end
-

@@ -1,6 +1,6 @@
 function [] = invfilter()
 % Load image
-im0=rgb2gray(imread('Lenna.png'));
+im0=rgb2gray(imread('lena.tiff'));
 im0=double(im0)/max(double(im0(:)));
 
 filter=fspecial('laplacian');
