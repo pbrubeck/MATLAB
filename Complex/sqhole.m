@@ -25,7 +25,7 @@ psi(2:end-1,:)=sylvester(Drr(2:end-1,2:end-1), Dtt', RHS(2:end-1,:));
 
 u=real(w);
 v=imag(w);
-surf(u(:,[1:end,1]), v(:,[1:end,1]), psi(:,[1:end,1]));
-axis square; shading interp; colormap(jet(256));
+figure(1); surf(u(:,[1:end,1]), v(:,[1:end,1]), psi(:,[1:end,1]));
+colormap(jet(256)); axis square; %shading interp; 
 end
 

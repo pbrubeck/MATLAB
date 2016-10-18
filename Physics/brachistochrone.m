@@ -1,34 +1,40 @@
 function [] = brachistochrone(n)
-global D w y1 y2 h;
+global D x w y1 y2 h;
 L=12;
 
-[~,w]=ClenshawCurtis(-1,1,n-1);
+[~,w]=ClenshawCurtis(-1,1,n-1); w=w(:);
 [D,x]=chebD(n);
-x=L/2*(x+1); D=2/L*D;
 
 y1=2;
 y2=0;
+y0=y1+(y2-y1)*(x(2:end-1)+1)/2;
 h=max(y1,y2)+L;
-opts=[];
-opts.FunctionTolerance=1e-13;
+x=L/2*(x+1); D=2/L*D;
 
+opts = optimoptions(@fmincon,'Algorithm','interior-point',...
+    'GradObj','off','MaxFunEvals',10000,'PlotFcns',@simpleplot);
 lb=(min(y1,y2)-L)*ones(n-2,1);
 ub=(max(y1,y2)+L)*ones(n-2,1);
-path=y1+(y2-y1)*(x(2:end-1)+1)/2;
-[path,t]=ga(@timeFun,n-2,[],[],[],[],lb,ub,[],[],opts);
-disp(t);
-[path,t]=fmincon(@timeFun,path,[],[],[],[],lb,ub);
-disp(t);
 
-y=[y2;path(:);y1];
-plot(x,y);
+fmincon(@gradfnc,y0,[],[],[],[],lb,ub,[],opts);
 end
 
-function t=timeFun(y)
+function [f, g]=gradfnc(y)
 global D w y1 y2 h;
-y=[y2;y(:);y1];
-t=w*sqrt((1+(D*y).^2)./(h-y));
-if ~isreal(t)
-    t=inf;
+y=h-[y2;y(:);y1];
+dy=D*y;
+
+f=w'*sqrt((1+dy.^2)./y);
+a=-0.5*(w./y).*sqrt((1+dy.^2)./y);
+b=D'*((w.*dy)./sqrt(y.*(1+dy.^2)));
+g=a+b; g=g(2:end-1);
 end
+
+function [stop]=simpleplot(y,optimValues,state,varargin)
+global x y1 y2;
+y=[y2;y(:);y1];
+plot(x,y); hold on;
+stem(x,y); hold off;
+title(num2str(optimValues.fval,'Time = %f'));
+stop = false;
 end
