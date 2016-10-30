@@ -16,7 +16,6 @@ while err>tol
     err=norm(unew-u(2:end-1,1:end-1),inf);
     u(2:end-1,1:end-1)=unew;
     i=i+1;
-    
 end
 [xx,tt]=ndgrid(x,t);
 surf(xx,tt,u); colormap(jet(256)); view(2);

@@ -18,7 +18,7 @@ for i=1:nframes
     u=solveRK4(u,dt);
     u(1,1)=b1;
     u(end,1)=b2;
-    set(h, 'YData', u(:,1));
+    set(h, 'YData', real(u(:,1)));
     drawnow;
 end
 end
