@@ -1,4 +1,4 @@
-function [] = schrod(n,m)
+function [] = schrodHerm(n,m)
 % Quantum harmonic oscillator time evolution in one spatial dimension
 % A neat example on Hermite spectral methods
 
