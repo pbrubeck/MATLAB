@@ -2,12 +2,12 @@ function [] = nlse( N )
 % NLSE NonLinear Schrodinger Equation
 % 1i u_t + 1/2 u_xx +|u|^2 u = 0
 nframes=1024;
-t0=-3;
-tf=3;
+t0=0;
+tf=2*pi;
 x0=3;
 
 dt=1/N;
-m=round((tf-t0)/(dt*(nframes-1)));
+m=ceil((tf-t0)/(dt*(nframes-1)));
 dt=(tf-t0)/(m*(nframes-1));
 
 % Domain substitution x=tan(th), psi=sec(th).*u
@@ -15,7 +15,12 @@ dt=(tf-t0)/(m*(nframes-1));
 x=tan(th);
 
 % Initial condition
+% Peregrine
 psi=(1-4*(1+2i*t0)./(1+4*(x.^2+t0^2)))*exp(1i*t0);
+
+% Kuznetsov-Ma
+f=5; a=(1+sqrt(1+f^2))/4; w=2*sqrt(2*a-1);
+psi=(1+(2*(2*a-1))./(sqrt(2*a)*cosh(w*x)+1));
 u=cos(th).*psi;
 
 % Linear propagator
@@ -49,7 +54,7 @@ for i=2:nframes
 end
 
 figure(2);
-id=abs(x)<=3;
+id=abs(x)<=x0;
 surf(x(id),t0:m*dt:tf,abs(udata(:,id)).^2);
 colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('|\Psi|^2');
