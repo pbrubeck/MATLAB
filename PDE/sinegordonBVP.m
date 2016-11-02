@@ -1,4 +1,4 @@
-function [] = sinegordon( N )
+function [] = sinegordonBVP( N )
 [D,x]=chebD(N); t=1+x';
 Dxx=D*D;
 Dtt=D*D;
@@ -18,6 +18,6 @@ while err>tol
     i=i+1;
 end
 [xx,tt]=ndgrid(x,t);
-surf(xx,tt,u); colormap(jet(256)); view(2);
+surf(xx,tt,u); colormap(jet(256)); shading interp; view(2);
 end
 

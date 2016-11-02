@@ -1,12 +1,12 @@
-function [] = nlse( N )
-% NLSE NonLinear Schrodinger Equation
-% 1i u_t + 1/2 u_xx +|u|^2 u = 0
+function [] = sinegordon( N )
+% Sine-Gordon Equation
+% u_tt - u_xx + sin(u) = 0
 nframes=1024;
 t0=0;
-tf=2*pi;
-x0=3;
+tf=10;
+x0=6;
 
-dt=1/N;
+dt=1/(N*20);
 m=ceil((tf-t0)/(dt*(nframes-1)));
 dt=(tf-t0)/(m*(nframes-1));
 
@@ -15,24 +15,19 @@ dt=(tf-t0)/(m*(nframes-1));
 x=tan(th);
 
 % Initial condition
-switch(2)
-case 1 % Peregrine soliton
-psi=(1-4*(1+2i*t0)./(1+4*(x.^2+t0^2)))*exp(1i*t0);
-case 2 % Kuznetsov-Ma breather
-b=3; a=(1+sqrt(1+b^2))/4; w=2*sqrt(2*a-1);
-psi=(1+(2*(2*a-1))./(sqrt(2*a)*cosh(w*x)+1));
+switch(1)
+case 1
+v=0.1; g=1/(1-v^2); d=0;
+psi=4*atan(exp(g*(x-v*t0)+d));
+case 2
+psi=exp(-x.^2);
 end
-u=cos(th).*psi;
+u=[cos(th).*psi; zeros(N,1)];
 
 % Linear propagator
-H=-1/2*diag(cos(th).^4)*(eye(N)+D*D);
-[V,L]=eig(H(2:end-1,2:end-1),'vector');
-L=[0;0;L];
-U=zeros(N);
-U(2:end-1,3:end)=V;
-nH=null(H);
-U(:,1:2)=nH(:,1:2);
-Q=U*diag(exp(-1i*dt/2*L))/U;
+Dx=diag(cos(th).^2)*D;
+A=[Dx, eye(N); zeros(N), -Dx]; 
+Q=expm(A*dt/2);
 
 figure(1);
 h=plot(x, abs(psi), 'b', 'LineWidth', 2);
@@ -45,10 +40,10 @@ udata(1,:)=psi;
 for i=2:nframes
     for j=1:m
         u=Q*u;
-        u=u.*exp(1i*dt*(abs(sec(th).*u).^2));
+        u=solveRK4(u,dt);
         u=Q*u;
     end
-    psi=sec(th).*u;
+    psi=sec(th).*u(1:N);
     udata(i,:)=psi;
     set(h, 'YData', abs(psi));
     drawnow;
@@ -59,4 +54,18 @@ id=abs(x)<=x0;
 surfl(x(id),t0:m*dt:tf,abs(udata(:,id)).^2,'light');
 colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('|\Psi|^2');
+end
+
+function v=partialTime(u)
+N=length(u)/2;
+v=[0*u(1:N); -sin(u(1:N))];
+end
+
+function u=solveRK4(u, dt)
+% Time-stepping by Runge Kutta 4th order.
+k1=dt*partialTime(u);
+k2=dt*partialTime(u+k1/2);
+k3=dt*partialTime(u+k2/2);
+k4=dt*partialTime(u+k3);
+u=u+(k1+2*k2+2*k3+k4)/6;
 end
