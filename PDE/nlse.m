@@ -56,7 +56,7 @@ end
 
 figure(2);
 id=abs(x)<=x0;
-surfl(x(id),t0:m*dt:tf,abs(udata(:,id)).^2,'light');
+surf(x(id),t0:m*dt:tf,abs(udata(:,id)).^2);
 colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('|\Psi|^2');
 end
