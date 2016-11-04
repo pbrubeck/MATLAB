@@ -2,8 +2,8 @@ function [] = nlse( N )
 % NLSE NonLinear Schrodinger Equation
 % 1i u_t + 1/2 u_xx +|u|^2 u = 0
 nframes=1024;
-t0=0;
-tf=2*pi;
+t0=-3;
+tf=3;
 x0=3;
 
 dt=1/N;
@@ -15,12 +15,11 @@ dt=(tf-t0)/(m*(nframes-1));
 x=tan(th);
 
 % Initial condition
-switch(2)
-case 1 % Peregrine soliton
-psi=(1-4*(1+2i*t0)./(1+4*(x.^2+t0^2)))*exp(1i*t0);
-case 2 % Kuznetsov-Ma breather
-b=3; a=(1+sqrt(1+b^2))/4; w=2*sqrt(2*a-1);
-psi=(1+(2*(2*a-1))./(sqrt(2*a)*cosh(w*x)+1));
+switch(1)
+case 1
+psi=peregrine(x,t0);
+case 2
+psi=kmbreather(3,x,t0);
 end
 u=cos(th).*psi;
 
@@ -59,4 +58,14 @@ id=abs(x)<=x0;
 surf(x(id),t0:m*dt:tf,abs(udata(:,id)).^2);
 colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('|\Psi|^2');
+end
+
+function psi=peregrine(x,t)
+psi=(1-4*(1+2i*t)./(1+4*(x.^2+t.^2))).*exp(1i*t);
+end
+
+function psi=kmbreather(b,x,t)
+% Kuznetsov-Ma breather, period 2*pi/b
+a=(1+sqrt(1+b^2))/4; w=2*sqrt(2*a-1);
+psi=(1+(2*(2*a-1)*cos(b*t)+1i*b*sin(b*t))./(sqrt(2*a)*cosh(w*x)+cos(b*t)));
 end
