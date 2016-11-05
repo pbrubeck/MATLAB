@@ -4,7 +4,8 @@ function [] = sinegordon( N )
 nframes=1024;
 t0=-10;
 tf=10;
-x0=0.75*(tf-t0)/2;
+c=0.75;
+x0=c*(tf-t0)/2;
 
 dt=1/1024;
 m=ceil((tf-t0)/(dt*(nframes-1)));
@@ -15,8 +16,8 @@ dt=(tf-t0)/(m*(nframes-1));
 x=tan(th);
 
 % Initial condition
-[psi1,phi1]=kink(-0.75,0,x,t0);
-[psi2,phi2]=kink(0.75,0,x,t0);
+[psi1,phi1]=kink( c,0,x,t0);
+[psi2,phi2]=kink(-c,0,x,t0);
 psi=psi1+psi2;
 phi=phi1+phi2;
 
@@ -35,7 +36,7 @@ Q3=real(U*diag(exp(-dt/2*L))/U);
 % 2d plot
 figure(1);
 h=plot(x, psi, 'b', 'LineWidth', 2);
-xlim([-x0,x0]); ylim([0,8]); axis manual;
+xlim([-x0,x0]); ylim([0,4*pi]); axis manual;
 xlabel('x'); title('\Psi(x)');
 drawnow;
 
@@ -82,16 +83,4 @@ id=abs(x)<=x0;
 surf(x(id),t0:m*dt:tf,udata(:,id));
 colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('\Psi(x,t)');
-end
-
-function [psi,phi]=kink(c,d,x,t)
-g=1/sqrt(1-c^2);
-psi=4*atan(exp(g*(x-c*t)+d));
-phi=-2*g*(c+1).*sech(g*(x-c*t)+d);
-end
-
-function [psi,phi]=antikink(c,d,x,t)
-g=-1/sqrt(1-c^2);
-psi=4*atan(exp(g*(x-c*t)+d));
-phi=-2*g*(c+1).*sech(g*(x-c*t)+d);
 end
