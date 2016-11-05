@@ -1,4 +1,4 @@
-function [] = KdV(N)
+function [] = kdv(N)
 % p27.m - Solve KdV eq. u_t + uu_x + u_xxx = 0 on [-pi,pi] by
 %         FFT with integrating factor v = exp(-ik^3t)*u-hat.
 

@@ -1,20 +1,26 @@
-function [] = nlse(init,Q,x,dt,t0,tf,p)
-% NLSE NonLinear Schrodinger Equation
+function [] = nlse(N, init, method)
+% NonLinear Schrodinger Equation
 % 1i u_t + 1/2 u_xx +|u|^2 u = 0
-% T=-1/2*(D*D); Q=expm(-1i*dt/2*T);
-if(nargin<7)
-    p=1;
-end
 
+t0=-pi; tf=pi; 
+nframes=1024;
+dt=1/1024;
+m=ceil((tf-t0)/(dt*(nframes-1)));
+dt=(tf-t0)/(m*(nframes-1));
+x0=3;
+
+% Linear propagator, half step
+if nargin==2, method='cheb'; end;
+switch(method)
+    case 'cheb', [Q,x,p]=nlsecheb(N,dt/2);
+    case 'herm', [Q,x]=nlseherm(N,dt/2); p=1;
+    case 'fft',  [Q,x]=nlsefft(N,dt/2);  p=1;
+end
 if(init==0)
     psi=peregrine(x,t0);
 else
     psi=kmbreather(init,x,t0);
 end
-
-nframes=1024;
-m=ceil((tf-t0)/(dt*(nframes-1)));
-x0=3;
 
 figure(1);
 h=plot(x, abs(psi), 'b', 'LineWidth', 2);

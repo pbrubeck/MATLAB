@@ -1,37 +1,29 @@
-function [] = sinegordon( N )
+function [] = sge(N, method)
 % Sine-Gordon Equation
 % u_tt - u_xx + sin(u) = 0
-nframes=1024;
-t0=-10;
-tf=10;
-c=0.75;
-x0=c*(tf-t0)/2;
 
+t0=-10; tf=10;
+nframes=1024;
 dt=1/1024;
 m=ceil((tf-t0)/(dt*(nframes-1)));
 dt=(tf-t0)/(m*(nframes-1));
 
-% Domain substitution x=tan(th)
-[D,th]=chebD(N); th=pi/2*th; D=2/pi*D;
-x=tan(th);
+c=0.75;
+x0=c*(tf-t0)/2;
+
+% Linear propagator, half step
+if nargin==1, method='cheb'; end;
+switch(method)
+    case 'cheb', [Q,x]=sgecheb(N, dt/2);
+    case 'herm', [Q,x]=sgeherm(N, dt/2);
+    case 'fft',  [Q,x]=sgefft(N, dt/2);
+end
 
 % Initial condition
 [psi1,phi1]=kink( c,0,x,t0);
 [psi2,phi2]=kink(-c,0,x,t0);
 psi=psi1+psi2;
 phi=phi1+phi2;
-
-% Linear propagator
-Dx=diag(cos(th).^2)*D;
-[V,L]=eig(Dx(2:end-1,2:end-1),'vector');
-L=[0;0;L];
-U=zeros(N);
-U(2:end-1,3:end)=V;
-nullspace=null(Dx);
-U(:,1:2)=nullspace(:,1:2);
-Q1=real(U*diag(exp(dt/2*L))/U);
-Q2=real(U*diag(sinc(1i*dt/2*L)*dt/2)/U);
-Q3=real(U*diag(exp(-dt/2*L))/U);
 
 % 2d plot
 figure(1);
@@ -42,14 +34,14 @@ drawnow;
 
 % 3d plot
 figure(2);
-w=exp(1i*psi);
+w=-1i*exp(1i*psi);
 h3=plot3(x, real(w), imag(w), 'b', 'LineWidth', 2); hold on;
 
 xq=linspace(-x0,x0,32);
 wq=interp1(x,w,xq,'spline');
 q3=quiver3(xq,0*xq,0*xq,0*xq,real(wq),imag(wq),'r','LineWidth',1,'AutoScale','off'); hold off;
 xlim([-x0,x0]); ylim([-2,2]); zlim([-2,2]); axis manual;
-xlabel('x'); ylabel('y'); zlabel('z'); title('y+iz=e^{i\Psi(x)}'); view(-145,52);
+xlabel('x'); ylabel('y'); zlabel('z'); title('y+iz=e^{i\Psi(x)}'); view(0,90);
 drawnow;
 
 % Time propagation
@@ -57,18 +49,14 @@ udata=zeros(nframes,N);
 udata(1,:)=psi;
 for i=2:nframes
     for j=1:m
-        psi=Q1*psi+Q2*phi;
-        phi=Q3*phi;
-        
+        [psi,phi]=Q(psi,phi);
         phi=phi-dt*sin(psi);
-        
-        psi=Q1*psi+Q2*phi;
-        phi=Q3*phi;
+        [psi,phi]=Q(psi,phi);
     end
     udata(i,:)=psi;
     set(h, 'YData', psi);
     
-    w=exp(1i*psi);
+    w=-1i*exp(1i*psi);
     wq=interp1(x,w,xq,'spline');
     set(h3, 'YData', real(w));
     set(h3, 'ZData', imag(w));
