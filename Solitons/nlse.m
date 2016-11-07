@@ -12,34 +12,32 @@ x0=3;
 % Linear propagator, half step
 if nargin==2, method='cheb'; end;
 switch(method)
-    case 'cheb', [Q,x,p]=nlsecheb(N,dt/2);
-    case 'herm', [Q,x]=nlseherm(N,dt/2); p=1;
-    case 'fft',  [Q,x]=nlsefft(N,dt/2);  p=1;
+    case 'cheb', [Q,x]=nlsecheb(N,dt/2);
+    case 'herm', [Q,x]=nlseherm(N,dt/2);
+    case 'fft',  [Q,x]=nlsefft(N, dt/2);
 end
 if(init==0)
-    psi=peregrine(x,t0);
+    u=peregrine(x,t0);
 else
-    psi=kmbreather(init,x,t0);
+    u=kmbreather(init,x,t0);
 end
 
 figure(1);
-h=plot(x, abs(psi), 'b', 'LineWidth', 2);
+h=plot(x, abs(u), 'b', 'LineWidth', 2);
 xlim([-x0,x0]); ylim([0,4]); axis manual;
 xlabel('x'); title('|\Psi|');
 drawnow;
 
-udata=zeros(nframes,length(psi));
-udata(1,:)=psi;
-u=psi./p;
+udata=zeros(nframes,length(u));
+udata(1,:)=u;
 for i=2:nframes
     for j=1:m
         u=Amtimes(Q,u);
-        u=u.*exp(1i*dt*(abs(p.*u).^2));
+        u=u.*exp(1i*dt*(abs(u).^2));
         u=Amtimes(Q,u);
     end
-    psi=p.*u;
-    udata(i,:)=psi;
-    set(h, 'YData', abs(psi));
+    udata(i,:)=u;
+    set(h, 'YData', abs(u));
     drawnow;
 end
 

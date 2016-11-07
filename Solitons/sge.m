@@ -8,8 +8,8 @@ dt=1/1024;
 m=ceil((tf-t0)/(dt*(nframes-1)));
 dt=(tf-t0)/(m*(nframes-1));
 
-c=0.75;
-x0=c*(tf-t0)/2;
+c=sqrt(1/2);
+x0=6;
 
 % Linear propagator, half step
 if nargin==1, method='cheb'; end;
@@ -20,48 +20,53 @@ switch(method)
 end
 
 % Initial condition
-[psi1,phi1]=kink( c,0,x,t0);
-[psi2,phi2]=kink(-c,0,x,t0);
-psi=psi1+psi2;
-phi=phi1+phi2;
+switch(2)
+case 1
+    [u1,v1]=kink(c,1i*pi,x,t0);
+    [u2,v2]=kink(-c,0,x,t0);
+    u=real(u1+u2);
+    v=real(v1+v2);
+case 2, [u,v]=sgbreather(c,x,t0);
+end
 
 % 2d plot
 figure(1);
-h=plot(x, psi, 'b', 'LineWidth', 2);
-xlim([-x0,x0]); ylim([0,4*pi]); axis manual;
+h=plot(x, u, 'b', 'LineWidth', 2);
+xlim([-x0,x0]); ylim([-4*pi,4*pi]); axis manual;
 xlabel('x'); title('\Psi(x)');
 drawnow;
 
-% 3d plot
-figure(2);
-w=-1i*exp(1i*psi);
-h3=plot3(x, real(w), imag(w), 'b', 'LineWidth', 2); hold on;
-
+w=-1i*exp(1i*u);
 xq=linspace(-x0,x0,32);
 wq=interp1(x,w,xq,'spline');
-q3=quiver3(xq,0*xq,0*xq,0*xq,real(wq),imag(wq),'r','LineWidth',1,'AutoScale','off'); hold off;
+
+% 3d plot
+figure(2);
+hp3=plot3(x, real(w), imag(w), 'b', 'LineWidth', 2); hold on;
+hq3=quiver3(xq,0*xq,0*xq,0*xq,real(wq),imag(wq),'r','LineWidth',1,'AutoScale','off'); hold off;
+
 xlim([-x0,x0]); ylim([-2,2]); zlim([-2,2]); axis manual;
-xlabel('x'); ylabel('y'); zlabel('z'); title('y+iz=e^{i\Psi(x)}'); view(0,90);
+xlabel('x'); ylabel('y'); zlabel('z'); title('y+iz=e^{i\Psi(x)}'); view(25,20);
 drawnow;
 
 % Time propagation
 udata=zeros(nframes,N);
-udata(1,:)=psi;
+udata(1,:)=u;
 for i=2:nframes
     for j=1:m
-        [psi,phi]=Q(psi,phi);
-        phi=phi-dt*sin(psi);
-        [psi,phi]=Q(psi,phi);
+        [u,v]=Q(u,v);
+        v=v-dt*sin(u);
+        [u,v]=Q(u,v);
     end
-    udata(i,:)=psi;
-    set(h, 'YData', psi);
+    udata(i,:)=u;
+    set(h, 'YData', u);
     
-    w=-1i*exp(1i*psi);
+    w=-1i*exp(1i*u);
     wq=interp1(x,w,xq,'spline');
-    set(h3, 'YData', real(w));
-    set(h3, 'ZData', imag(w));
-    set(q3, 'VData', real(wq));
-    set(q3, 'WData', imag(wq));
+    set(hp3, 'YData', real(w));
+    set(hp3, 'ZData', imag(w));
+    set(hq3, 'VData', real(wq));
+    set(hq3, 'WData', imag(wq));
     drawnow;
 end
 

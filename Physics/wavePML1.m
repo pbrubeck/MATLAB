@@ -8,7 +8,6 @@ dt=6/N^2;
 % Layer
 xl=0.95;
 layer=abs(x)>xl;
-roi=~layer;
 global sigma;
 sigma=zeros(N,1);
 sigma(layer)=1/dt*((abs(x(layer))-xl)/(1-xl)).^3;
@@ -19,7 +18,8 @@ v0=sign(x).*u0;
 w=[u0,v0];
 
 figure(1);
-h=plot(x(roi), w(roi,1));
+h=plot(x, w(:,1));
+xlim([-xl,xl]);
 ylim([-1,1]);
 
 nframes=10000;
@@ -27,7 +27,7 @@ for i=1:nframes
     w=solveRK4(w,dt);
     w([1 end],:)=0;
     if(mod(i,2)==1)
-        set(h, 'YData', real(w(roi,1)));
+        set(h, 'YData', real(w(:,1)));
         drawnow;
     end
 end

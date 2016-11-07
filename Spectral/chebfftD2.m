@@ -9,9 +9,9 @@ if(dim>1)
     th=reshape(th, [ones(1, dim-1), N-1]);
 end
 mid=repmat({':'}, 1, ndims(u)); mid{dim}=2:N;
-v_hat=fft(cat(dim, u, flip(u(mid{:}), dim)), [], dim);
-W1=ifft(bsxfun(@times, D, v_hat), [], dim);
-W2=ifft(bsxfun(@times, D.^2, v_hat), [], dim);
+vhat=fft(cat(dim, u, flip(u(mid{:}), dim)), [], dim);
+W1=ifft(bsxfun(@times, D, vhat), [], dim);
+W2=ifft(bsxfun(@times, D.^2, vhat), [], dim);
 w=zeros(size(u));
 c=cos(th); s=sin(th);
 w(mid{:})=bsxfun(@times, s.^-2, W2(mid{:}))-bsxfun(@times, c.*s.^-3, W1(mid{:}));
