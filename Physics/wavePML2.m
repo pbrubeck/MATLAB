@@ -10,16 +10,35 @@ dt=6/N^2;
 xl=0.95;
 layer=abs(x)>xl;
 roi=~layer;
-global sig;
 sig=zeros(N,1);
 sig(layer)=1/dt*((abs(x(layer))-xl)/(1-xl)).^3;
 
 % Initial conditions
 u0=exp(-40*((xx-.4).^2+yy.^2));
-vx=u0;
-vy=zeros(N);
+v1=u0;
+v2=zeros(N);
 phi=zeros(N);
-w=cat(3,u0,vx,vy,phi);
+w=cat(3,u0,v1,v2,phi);
+
+function wt=partialTime(w)
+wt=w;
+ux=chebfftD(w(:,:,1),1);
+uy=chebfftD(w(:,:,1),2);
+vx=chebfftD(w(:,:,2),1);
+vy=chebfftD(w(:,:,3),2);
+wt(:,:,1)=(vx+vy)-dgmm(sig, w(:,:,1))-dgmm(sig', w(:,:,1))+w(:,:,4);
+wt(:,:,2)=ux-dgmm(sig, w(:,:,2));
+wt(:,:,3)=uy-dgmm(sig', w(:,:,3));
+wt(:,:,4)=dgmm(sig', vx)+dgmm(sig, vy)-dgmm(sig', dgmm(sig, w(:,:,1)));
+end
+
+function w=solveRK4(w, dt)
+k1=dt*partialTime(w);
+k2=dt*partialTime(w+k1/2);
+k3=dt*partialTime(w+k2/2);
+k4=dt*partialTime(w+k3);
+w=w+(k1+2*k2+2*k3+k4)/6;
+end
 
 figure(1);
 h=surf(xx(roi,roi), yy(roi,roi), w(roi,roi,1), 'EdgeColor', 'none');
@@ -36,28 +55,6 @@ for i=1:nframes
         drawnow;
     end
 end
-end
-
-function wt=partialTime(w)
-global sig;
-wt=w;
-ux=chebfftD(w(:,:,1),1);
-uy=chebfftD(w(:,:,1),2);
-vx=chebfftD(w(:,:,2),1);
-vy=chebfftD(w(:,:,3),2);
-wt(:,:,1)=(vx+vy)-dgmm(sig, w(:,:,1))-dgmm(sig', w(:,:,1))+w(:,:,4);
-wt(:,:,2)=ux-dgmm(sig, w(:,:,2));
-wt(:,:,3)=uy-dgmm(sig', w(:,:,3));
-wt(:,:,4)=dgmm(sig', vx)+dgmm(sig, vy)-dgmm(sig', dgmm(sig, w(:,:,1)));
-end
-
-function w=solveRK4(w, dt)
-% Time-stepping by Runge Kutta 4th order.
-k1=dt*partialTime(w);
-k2=dt*partialTime(w+k1/2);
-k3=dt*partialTime(w+k2/2);
-k4=dt*partialTime(w+k3);
-w=w+(k1+2*k2+2*k3+k4)/6;
 end
 
 function A=dgmm(x,A)

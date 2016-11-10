@@ -2,7 +2,6 @@ function [ ] = pwePML2( N )
 % Solves the paraxial wave equation in 2D using a Perfectly Matched Layer for BCs.
 % Uses Hermite spectral methods in two spatial dimensions
 % and classic Runge-Kutta for z evolution of second order PDE.
-global D k sig;
 lambda=100;
 k=2*pi/lambda;
 [D, x]=hermD(N);
@@ -24,6 +23,25 @@ vx=zeros(N);
 vy=zeros(N);
 psi=zeros(N);
 w=cat(3,u0,vx,vy,psi);
+
+function wt=partialTime(w)
+wt=w;
+u=w(:,:,1);
+vx=D*u -dgmm(sig , w(:,:,2));
+vy=u*D'-dgmm(sig', w(:,:,3));
+wt(:,:,2)=vx;
+wt(:,:,3)=vy;
+wt(:,:,4)=-dgmm(sig,dgmm(sig',u))+dgmm(sig',vx)+dgmm(sig,vy);
+wt(:,:,1)=1i/(2*k)*(D*vx+vy*D')-dgmm(sig,u)-dgmm(sig',u)+w(:,:,4);
+end
+
+function w=solveRK4(w, dz)
+k1=dz*partialTime(w);
+k2=dz*partialTime(w+k1/2);
+k3=dz*partialTime(w+k2/2);
+k4=dz*partialTime(w+k3);
+w=w+(k1+2*k2+2*k3+k4)/6;
+end
 
 figure(1);
 h=image(x(roi), x(roi), abs(w(roi,roi,1)).^2);
@@ -48,27 +66,6 @@ for i=1:nframes
         drawnow;
     end
 end
-end
-
-function wt=partialTime(w)
-global D k sig;
-wt=w;
-u=w(:,:,1);
-vx=D*u -dgmm(sig , w(:,:,2));
-vy=u*D'-dgmm(sig', w(:,:,3));
-wt(:,:,2)=vx;
-wt(:,:,3)=vy;
-wt(:,:,4)=-dgmm(sig,dgmm(sig',u))+dgmm(sig',vx)+dgmm(sig,vy);
-wt(:,:,1)=1i/(2*k)*(D*vx+vy*D')-dgmm(sig,u)-dgmm(sig',u)+w(:,:,4);
-end
-
-function w=solveRK4(w, dz)
-% z-stepping by Runge Kutta 4th order.
-k1=dz*partialTime(w);
-k2=dz*partialTime(w+k1/2);
-k3=dz*partialTime(w+k2/2);
-k4=dz*partialTime(w+k3);
-w=w+(k1+2*k2+2*k3+k4)/6;
 end
 
 function A=dgmm(x,A)

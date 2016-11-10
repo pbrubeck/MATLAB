@@ -2,7 +2,6 @@ function [] = pwePML1( N )
 % Solves the paraxial wave equation in 1D using a Perfectly Matched Layer for BCs.
 % Uses Hermite spectral methods in the spatial dimension
 % and classic Runge-Kutta for z evolution of second order PDE.
-global D k sig;
 lambda=100;
 k=2*pi/lambda;
 [D,x]=hermD(N);
@@ -19,6 +18,20 @@ u0=cos(2*pi*x).*exp(-x.^2/2);
 v0=zeros(size(x));
 w=[u0,v0];
 
+function wz=partialz(w)
+    wz=w;
+    wz(:,2)=D*w(:,1)-sig.*w(:,2);
+    wz(:,1)=1i/(2*k)*D*wz(:,2)-sig.*w(:,1);
+end
+
+function w=solveRK4(w, dz)
+    k1=dz*partialz(w);
+    k2=dz*partialz(w+k1/2);
+    k3=dz*partialz(w+k2/2);
+    k4=dz*partialz(w+k3);
+    w=w+(k1+2*k2+2*k3+k4)/6;
+end
+
 figure(1);
 h=plot(x, w(:,1));
 xlim([-xl,xl]);
@@ -33,20 +46,4 @@ for i=1:nframes
         drawnow;
     end
 end
-end
-
-function wz=partialz(w)
-global D k sig;
-wz=w;
-wz(:,2)=D*w(:,1)-sig.*w(:,2);
-wz(:,1)=1i/(2*k)*D*wz(:,2)-sig.*w(:,1);
-end
-
-function w=solveRK4(w, dz)
-% z-stepping by Runge Kutta 4th order.
-k1=dz*partialz(w);
-k2=dz*partialz(w+k1/2);
-k3=dz*partialz(w+k2/2);
-k4=dz*partialz(w+k3);
-w=w+(k1+2*k2+2*k3+k4)/6;
 end

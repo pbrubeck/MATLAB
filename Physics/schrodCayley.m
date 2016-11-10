@@ -14,7 +14,6 @@ Psi=(-(r-R1).*(r-R2).*(r-(R1+R2)/2))*sin(3*th.^2/(2*pi));
 W=diag(w);
 Psi=Psi/sqrt(sum(r'*W*abs(Psi).^2)*(2*pi/N));
 
-
 xx=r*cos([0,th]);
 yy=r*sin([0,th]);
 zz=zeros(N,N+1);
@@ -40,24 +39,24 @@ zlim([0, 0.6]); view(0,90);
 
 [Q,U]=eig(A,'vector');
 [P,V]=eig(B,'vector');
+
+function [X]=solve(C)
+Z=zeros(size(C));
+G=Q\C*P;
+for i=size(P,1):-1:1
+    Z(:,i)=G(:,i)./(U+V(i));
+end
+X=Q*Z/P;
+end
+
 for t=0:dt:tmax
     C=AA*Psi(2:end-1,:)+Psi(2:end-1,:)*BB;
-    Psi(2:end-1,:)=solve(U,Q,V,P,C);
+    Psi(2:end-1,:)=solve(C);
     zz=abs(Psi).^2;
     set(h,'ZData',[zz(:,end), zz]);
     drawnow;
     %disp(sum(r'*W*abs(Psi(2:end-1,:)).^2)*(2*pi/N));
 end
 
-end
-
-function [X]=solve(U,Q,V,P,C)
-Z=zeros(size(C));
-G=Q\C*P;
-n=size(P,1);
-for i=n:-1:1
-    Z(:,i)=G(:,i)./(U+V(i));
-end
-X=Q*Z/P;
 end
 
