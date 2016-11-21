@@ -6,8 +6,8 @@ function [Q,x] = nlseherm(N, dt)
 T=-1/2*(D*D);
 [V,L]=eig(T(2:end-1,2:end-1),'vector');
 L=[0;0;L];
-U=zeros(N);
-U(2:end-1,3:end)=V;
-U(:,1:2)=[0*x+1,x];
-Q=U*diag(exp(-1i*dt*L))/U;
+S=zeros(N);
+S(2:end-1,3:end)=V;
+S(:,1:2)=[0*x+1,x];
+Q=S*diag(exp(-1i*dt*L))/S;
 end

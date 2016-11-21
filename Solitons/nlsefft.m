@@ -5,5 +5,5 @@ function [Q,x] = nlsefft(N, dt)
 x=sqrt(2*pi/N)*(-N/2:N/2-1)';
 T=1/2*(2*pi/N)*([0:N/2-1, -N/2:-1]').^2;
 q=exp(-1i*dt*T);
-Q=@(u) ifft(q.*fft(u));
+Q=@(u) ifft(bsxfun(@times, q, fft(u)));
 end

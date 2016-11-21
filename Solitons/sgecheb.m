@@ -9,13 +9,13 @@ x=tan(th);
 % Linear propagator
 [V,L]=eig(D(2:end-1,2:end-1),'vector');
 L=[0;0;L];
-U=zeros(N);
-U(2:end-1,3:end)=V;
+S=zeros(N);
+S(2:end-1,3:end)=V;
 ND=null(D);
-U(:,1:2)=ND(:,1:2);
-Q1=real(U*diag(exp(dt*L))/U);
-Q2=real(U*diag(dt*sinc(1i*dt*L))/U);
-Q3=real(U*diag(exp(-dt*L))/U);
+S(:,1:2)=ND(:,1:2);
+Q1=real(S*diag(exp(dt*L))/S);
+Q2=real(S*diag(dt*sinc(1i*dt*L))/S);
+Q3=real(S*diag(exp(-dt*L))/S);
 
 function [u,v]=sgechebprop(u,v)
     u=Q1*u+Q2*v;

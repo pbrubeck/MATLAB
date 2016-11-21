@@ -1,5 +1,5 @@
 function [] = nlse(N, init, method)
-% NonLinear Schrodinger Equation
+% NonLinear Schrodinger Equation in one dimension
 % 1i u_t + 1/2 u_xx +|u|^2 u = 0
 
 t0=-pi; tf=pi; 
@@ -32,9 +32,9 @@ udata=zeros(nframes,length(u));
 udata(1,:)=u;
 for i=2:nframes
     for j=1:m
-        u=Amtimes(Q,u);
+        u=linprop(Q,u);
         u=u.*exp(1i*dt*(abs(u).^2));
-        u=Amtimes(Q,u);
+        u=linprop(Q,u);
     end
     udata(i,:)=u;
     set(h, 'YData', abs(u));
@@ -48,10 +48,10 @@ colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('|\Psi|^2');
 end
 
-function x=Amtimes(A,x)
-if isfloat(A)
-    x=A*x;
+function u=linprop(Q,u)
+if isfloat(Q)
+    u=Q*u;
 else
-    x=A(x);
+    u=Q(u);
 end
 end
