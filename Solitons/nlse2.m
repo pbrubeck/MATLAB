@@ -1,6 +1,6 @@
 function [] = nlse2(N, init, method)
 % NonLinear Schrodinger Equation in two dimensions
-% 1i u_t + 1/2 u_xx +|u|^2 u = 0
+% 1i u_t + 1/2 ( u_xx + u_yy ) +|u|^2 u = 0
 
 t0=-pi; tf=pi; 
 nframes=1024;
@@ -12,9 +12,9 @@ x0=3;
 % Linear propagator, half step
 if nargin==2, method='cheb'; end;
 switch(method)
-    case 'cheb', [Q,x]=nlsecheb(N,dt/2);
-    case 'herm', [Q,x]=nlseherm(N,dt/2);
-    case 'fft',  [Q,x]=nlsefft(N, dt/2);
+    case 'cheb', [x,w,D,Q]=nlsecheb(N,dt/2);
+    case 'herm', [x,w,D,Q]=nlseherm(N,dt/2);
+    case 'fft',  [x,w,D,Q]=nlsefft(N, dt/2);
 end
 [xx,yy]=ndgrid(x);
 

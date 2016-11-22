@@ -1,8 +1,8 @@
-function [Q,x] = nlseherm(N, dt)
+function [x,w,D,Q] = nlseherm(N, dt)
 % NonLinear Schrodinger Equation, Hermite linear propagator
 % 1i u_t + 1/2 u_xx = 0
 
-[D,x]=hermD(N);
+[D,x,w]=hermD(N);
 T=-1/2*(D*D);
 [V,L]=eig(T(2:end-1,2:end-1),'vector');
 L=[0;0;L];
