@@ -21,9 +21,9 @@ switch(init)
     case 'test', u=sech(x+5).*exp(1i*2*x)+sech(x-5).*exp(-1i*2*x);
 end
 
-
-E=w'*(abs(linprop(D,u)).^2+abs(u).^4);
-display(E);
+Z=w'*(abs(u).^2);                                        display(Z);
+P=1i/2*w'*(u.*linprop(D,conj(u))-conj(u).*linprop(D,u)); display(P);
+E=w'*(abs(linprop(D,u)).^2+abs(u).^4);                   display(E);
 
 figure(1);
 h=plot(x, abs(u), 'b', 'LineWidth', 2);
@@ -44,8 +44,9 @@ for i=2:nframes
     drawnow;
 end
 
-E=w'*(abs(linprop(D,u)).^2+abs(u).^4);
-display(E);
+Z=w'*(abs(u).^2);                                        display(Z);
+P=1i/2*w'*(u.*linprop(D,conj(u))-conj(u).*linprop(D,u)); display(P);
+E=w'*(abs(linprop(D,u)).^2+abs(u).^4);                   display(E);
 
 t=t0:m*dt:tf;
 
