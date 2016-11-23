@@ -1,18 +1,23 @@
-function [] = sge(N, method)
+function [] = sge(N, t1, t2, L, init, method)
 % Sine-Gordon Equation
 % u_tt - u_xx + sin(u) = 0
+%
+% N: number of collocation points
+% t1: initial time
+% t2: final time
+% init: kink, breather
+% method: cheb, fft, herm
 
-t0=-10; tf=10;
 nframes=1024;
 dt=1/1024;
-m=ceil((tf-t0)/(dt*(nframes-1)));
-dt=(tf-t0)/(m*(nframes-1));
+m=ceil((t2-t1)/(dt*(nframes-1)));
+dt=(t2-t1)/(m*(nframes-1));
+Amax=4;
 
 c=sqrt(1/2);
-x0=6;
 
 % Linear propagator, half step
-if nargin==1, method='cheb'; end;
+if nargin<6, method='cheb'; end;
 switch(method)
     case 'cheb', [Q,x]=sgecheb(N, dt/2);
     case 'herm', [Q,x]=sgeherm(N, dt/2);
@@ -20,36 +25,40 @@ switch(method)
 end
 
 % Initial condition
-switch(2)
-case 1
-    [u1,v1]=kink(c,1i*pi,x,t0);
-    [u2,v2]=kink(-c,0,x,t0);
+switch(init)
+case {1, 'kink'}
+    [u1,v1]=kink(c,1i*pi,x,t1);
+    [u2,v2]=kink(-c,0,x,t1);
     u=real(u1+u2);
     v=real(v1+v2);
-case 2, [u,v]=sgbreather(c,x,t0);
+case {2, 'breather'}
+    [u,v]=sgbreather(c,x,t1);
 end
 
 % 2d plot
-figure(1);
+f1=figure(1);
 h=plot(x, u, 'b', 'LineWidth', 2);
-xlim([-x0,x0]); ylim([-4*pi,4*pi]); axis manual;
-xlabel('x'); title('\Psi(x)');
+xlim([-L,L]); ylim([-Amax,Amax]); axis manual;
+set(gca, 'XTick', [-L,0,L]);
+set(gca, 'YTick', [-Amax,0,Amax]);
+xlabel('x'); title('|\Psi|');
+set(gca,'FontSize',36);
 drawnow;
 
 w=-1i*exp(1i*u);
-xq=linspace(-x0,x0,32);
+xq=linspace(-L,L,32);
 wq=interp1(x,w,xq,'spline');
 
 % 3d plot
 figure(2);
 hp3=plot3(x, real(w), imag(w), 'b', 'LineWidth', 2); hold on;
 hq3=quiver3(xq,0*xq,0*xq,0*xq,real(wq),imag(wq),'r','LineWidth',1,'AutoScale','off'); hold off;
-
-xlim([-x0,x0]); ylim([-2,2]); zlim([-2,2]); axis manual;
+xlim([-L,L]); ylim([-2,2]); zlim([-2,2]); axis manual;
 xlabel('x'); ylabel('y'); zlabel('z'); title('y+iz=e^{i\Psi(x)}'); view(25,20);
 drawnow;
 
 % Time propagation
+inc=0; tinc=0; tframe=(t2-t1)/8;
 udata=zeros(nframes,N);
 udata(1,:)=u;
 for i=2:nframes
@@ -57,7 +66,14 @@ for i=2:nframes
         [u,v]=Q(u,v);
         v=v-dt*sin(u);
         [u,v]=Q(u,v);
+        
+        tinc=tinc+dt;
+        if(tinc>=tframe)
+            print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
+            tinc=0; inc=inc+1;
+        end
     end
+    print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
     udata(i,:)=u;
     set(h, 'YData', u);
     
@@ -69,11 +85,12 @@ for i=2:nframes
     set(hq3, 'WData', imag(wq));
     drawnow;
 end
+print(sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
 
 % Surf plot
 figure(3);
-id=abs(x)<=x0;
-surf(x(id),t0:m*dt:tf,udata(:,id));
+id=abs(x)<=L;
+surf(x(id),t1:m*dt:t2,udata(:,id));
 colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('\Psi(x,t)');
 end

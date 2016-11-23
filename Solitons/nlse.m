@@ -1,7 +1,7 @@
 function [] = nlse(N, t1, t2, L, init, method)
 % NonLinear Schrodinger Equation in one dimension
 % 1i u_t + 1/2 u_xx +|u|^2 u = 0
-
+%
 % N: number of collocation points
 % t1: initial time
 % t2: final time
@@ -43,7 +43,7 @@ Z=w'*(abs(u).^2);                                        display(Z);
 P=1i/2*w'*(u.*linprop(D,conj(u))-conj(u).*linprop(D,u)); display(P);
 E=w'*(abs(linprop(D,u)).^2+abs(u).^4);                   display(E);
 
-figure(1);
+f1=figure(1);
 h=plot(x, abs(u), 'b', 'LineWidth', 2);
 xlim([-L,L]); ylim([0,Amax]); axis manual;
 set(gca, 'XTick', [-L,0,L]);
@@ -52,7 +52,8 @@ xlabel('x'); title('|\Psi|');
 set(gca,'FontSize',36);
 drawnow;
 
-inc=0; tinc=0; tframe=0.5;
+% Time propagation
+inc=0; tinc=0; tframe=(t2-t1)/8;
 udata=zeros(nframes,length(u));
 udata(1,:)=u;
 for i=2:nframes
@@ -63,7 +64,7 @@ for i=2:nframes
         
         tinc=tinc+dt;
         if(tinc>=tframe)
-            print(sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
+            print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
             tinc=0; inc=inc+1;
         end
     end
@@ -71,7 +72,7 @@ for i=2:nframes
     set(h, 'YData', abs(u));
     drawnow;
 end
-print(sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
+print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
 
 Z=w'*(abs(u).^2);                                        display(Z);
 P=1i/2*w'*(u.*linprop(D,conj(u))-conj(u).*linprop(D,u)); display(P);

@@ -21,7 +21,7 @@ end
 if(init==0)
     U=peregrine(hypot(xx,yy),t0);
 else
-    U=kmbreather(init,hypot(xx,yy),t0);
+    U=nlsebreather(init,hypot(xx,yy),t0);
 end
 
 figure(1);
