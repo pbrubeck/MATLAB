@@ -5,8 +5,9 @@ function [] = sge(N, t1, t2, L, init, method)
 % N: number of collocation points
 % t1: initial time
 % t2: final time
+% L: spatial window
 % init: kink, breather
-% method: cheb, fft, herm
+% method: cheb, herm, fft
 
 nframes=1024;
 dt=1/1024;
@@ -41,8 +42,8 @@ h=plot(x, u, 'b', 'LineWidth', 2);
 xlim([-L,L]); ylim([-Amax,Amax]); axis manual;
 set(gca, 'XTick', [-L,0,L]);
 set(gca, 'YTick', [-Amax,0,Amax]);
-xlabel('x'); title('|\Psi|');
-set(gca,'FontSize',36);
+xlabel('x'); title('\phi');
+set(gca,'FontSize',18);
 drawnow;
 
 w=-1i*exp(1i*u);
@@ -54,7 +55,7 @@ figure(2);
 hp3=plot3(x, real(w), imag(w), 'b', 'LineWidth', 2); hold on;
 hq3=quiver3(xq,0*xq,0*xq,0*xq,real(wq),imag(wq),'r','LineWidth',1,'AutoScale','off'); hold off;
 xlim([-L,L]); ylim([-2,2]); zlim([-2,2]); axis manual;
-xlabel('x'); ylabel('y'); zlabel('z'); title('y+iz=e^{i\Psi(x)}'); view(25,20);
+xlabel('x'); ylabel('y'); zlabel('z'); title('y+iz=e^{i\phi(x)}'); view(25,20);
 drawnow;
 
 % Time propagation
@@ -69,11 +70,10 @@ for i=2:nframes
         
         tinc=tinc+dt;
         if(tinc>=tframe)
-            print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
+            %print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
             tinc=0; inc=inc+1;
         end
     end
-    print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
     udata(i,:)=u;
     set(h, 'YData', u);
     
@@ -85,12 +85,12 @@ for i=2:nframes
     set(hq3, 'WData', imag(wq));
     drawnow;
 end
-print(sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
+%print(sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
 
 % Surf plot
 figure(3);
 id=abs(x)<=L;
 surf(x(id),t1:m*dt:t2,udata(:,id));
 colormap(jet(256)); colorbar(); shading interp; view(2);
-xlabel('x'); ylabel('t'); title('\Psi(x,t)');
+xlabel('x'); ylabel('t'); title('\phi(x,t)');
 end

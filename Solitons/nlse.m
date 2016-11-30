@@ -5,8 +5,9 @@ function [] = nlse(N, t1, t2, L, init, method)
 % N: number of collocation points
 % t1: initial time
 % t2: final time
+% L: spatial window
 % init: bright, dark1, dark2, peregrine, breather
-% method: cheb, fft, herm
+% method: cheb, herm, fft, dst
 
 nframes=1024;
 dt=1/1024;
@@ -20,6 +21,7 @@ switch(method)
     case 'cheb', [x,w,D,Q]=nlsecheb(N,dt/2);
     case 'herm', [x,w,D,Q]=nlseherm(N,dt/2);
     case 'fft',  [x,w,D,Q]=nlsefft(N, dt/2);
+    case 'dst',  [x,w,D,Q]=nlsedst(N, dt/2);
 end
 
 beta=-1;
@@ -49,7 +51,7 @@ xlim([-L,L]); ylim([0,Amax]); axis manual;
 set(gca, 'XTick', [-L,0,L]);
 set(gca, 'YTick', [0,Amax/2,Amax]);
 xlabel('x'); title('|\Psi|');
-set(gca,'FontSize',36);
+set(gca,'FontSize',18);
 drawnow;
 
 % Time propagation
@@ -64,7 +66,7 @@ for i=2:nframes
         
         tinc=tinc+dt;
         if(tinc>=tframe)
-            print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
+            %print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
             tinc=0; inc=inc+1;
         end
     end
@@ -72,7 +74,7 @@ for i=2:nframes
     set(h, 'YData', abs(u));
     drawnow;
 end
-print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
+%print(f1,sprintf('%s\\data\\%s%02d',pwd,init,inc),'-depsc');
 
 Z=w'*(abs(u).^2);                                        display(Z);
 P=1i/2*w'*(u.*linprop(D,conj(u))-conj(u).*linprop(D,u)); display(P);
@@ -87,7 +89,7 @@ colormap(jet(256)); colorbar(); shading interp; view(2);
 xlabel('x'); ylabel('t'); title('|\Psi|^2');
 
 figure(3);
-imagesc(x(roi),t,angle(udata(:,roi)));
+imagesc(x(roi),t,angle(udata(:,roi))); set(gca, 'YDir', 'normal');
 colormap(hsv(256)); colorbar(); shading interp;
 xlabel('x'); ylabel('t'); title('arg(\Psi)');
 end
