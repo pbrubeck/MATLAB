@@ -1,6 +1,6 @@
 function [D,x,w] = lagD(N)
 % Laguerre spectral differentiation matrix
-[x,w]=GaussLaguerre(1,N-1); x=x(:); w=w(:);
+[x,w]=gaulag(1,N-1); x=x(:); w=w(:);
 X=repmat([0;x], [1, N]);
 c(N-1)=1;
 L=[N; -x.*LaguerreL(c,2,x).*exp(-x/2)];

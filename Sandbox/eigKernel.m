@@ -1,5 +1,5 @@
 n=512; p=0; a=-4; b=4;
-[x,w]=GaussLegendre(a,b,n);
+[x,w]=gauleg(a,b,n);
 
 x2 = x.^2;
 r=exp(0.5i*x2);

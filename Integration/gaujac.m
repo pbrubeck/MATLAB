@@ -1,6 +1,6 @@
-function [x, w] = GaussJacobi(a,b,n)
+function [x, w] = gaujac(a,b,n)
 % Returns abscissas and weights for the Gauss-Jacobi n-point quadrature 
-% over the interval [-1, 1] using the Golub-Welsch Algorithm.
+% over the interval [a, b] using the Golub-Welsch Algorithm.
 k=1:n;
 c=2*k+a+b;
 D=(b^2-a^2)./(c.*(c-2)+(b^2==a^2));

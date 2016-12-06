@@ -1,4 +1,4 @@
-function [x, w] = GaussChebyshev(a, b, n)
+function [x, w] = gaucheb(a, b, n)
 % Returns abscissas and weights for the Gauss-Chebyshev n-point quadrature
 % over the interval [a, b].
 th=pi*(1:2:2*n-1)/(2*n);

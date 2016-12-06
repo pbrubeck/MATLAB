@@ -20,7 +20,7 @@ figure(2); plot(r,V);
 mu=diag(mu);
 Phi=Phi/sqrt(2*pi/N);
 
-[x,w]=ClenshawCurtis(R1,R2,N-1);
+[x,w]=ClenshawCurtis(R1,R2,N);
 W=diag(w(2:end-1));
 
 E=zeros(k,k);

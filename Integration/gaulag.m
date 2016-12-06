@@ -1,6 +1,6 @@
-function [x, w] = GaussLaguerre(alpha, n)
+function [x, w] = gaulag(alpha, n)
 % Returns abscissas and weights for the Gauss-Laguerre n-point quadrature
-% over the interval [0, inf] using the Golub-Welsch Algorithm.
+% over the interval [0, inf) using the Golub-Welsch Algorithm.
 k=(1:n);
 D=2*k-1+alpha;
 E=sqrt(k.*(k+alpha));

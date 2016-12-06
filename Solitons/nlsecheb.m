@@ -5,7 +5,7 @@ function [x,w,D,Q] = nlsecheb(N, dt)
 % Domain substitution x=tan(th), u=sec(th).*w
 [Dt,th]=chebD(N); th=pi/2*th; Dt=2/pi*Dt;
 x=tan(th);
-[~,w]=ClenshawCurtis(-pi/2,pi/2,N-1);
+[~,w]=ClenshawCurtis(-pi/2,pi/2,N);
 w=(sec(th).^2).*w(:);
 
 T=-1/2*diag(cos(th).^4)*(eye(N)+Dt*Dt);

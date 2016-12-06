@@ -2,7 +2,7 @@ function [] = brachistochrone(n)
 global D x w y1 y2 h;
 L=20;
 
-[~,w]=ClenshawCurtis(-1,1,n-1); w=w(:);
+[~,w]=ClenshawCurtis(-1,1,n); w=w(:);
 [D,x]=chebD(n);
 
 y1=0;

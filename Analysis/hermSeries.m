@@ -1,6 +1,6 @@
 function [ c ] = hermSeries(f, n)
 sig=1/sqrt(2);
-[x,w]=GaussHermite(n,0,sig);
+[x,w]=gauherm(n,0,sig);
 Psi=zeros(n);
 a=zeros(n,1); a(end)=1;
 for i=1:n

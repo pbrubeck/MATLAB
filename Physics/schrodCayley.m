@@ -10,7 +10,7 @@ Drr=(diag(r)*D)^2;
 
 Psi=(-(r-R1).*(r-R2).*(r-(R1+R2)/2))*sin(3*th.^2/(2*pi));
 
-[x,w]=ClenshawCurtis(R1,R2,N-1);
+[x,w]=ClenshawCurtis(R1,R2,N);
 W=diag(w);
 Psi=Psi/sqrt(sum(r'*W*abs(Psi).^2)*(2*pi/N));
 

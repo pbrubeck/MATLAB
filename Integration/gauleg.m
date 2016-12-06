@@ -1,4 +1,4 @@
-function [x, w] = GaussLegendre(a, b, n)
+function [x, w] = gauleg(a, b, n)
 % Returns abscissas and weights for the Gauss-Legendre n-point quadrature 
 % over the interval [a, b] using the Golub-Welsch Algorithm.
 k=1:n-1;

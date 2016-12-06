@@ -1,4 +1,4 @@
-function [x, w] = GaussHermite(n, mu, sigma)
+function [x, w] = gauherm(n, mu, sigma)
 % Returns abscissas and weights for the Gauss-Hermite n-point quadrature 
 % over the interval [-inf, inf] using the Golub-Welsch Algorithm.
 E=sqrt((1:n-1)/2);

@@ -1,6 +1,6 @@
 function [] = schrodExp( N )
 [D,x]=chebD(N);
-[~,w]=ClenshawCurtis(-1,1,N-1);
+[~,w]=ClenshawCurtis(-1,1,N);
 
 dt=0.001;
 V0=1000;

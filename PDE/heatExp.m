@@ -1,7 +1,7 @@
 function [] = heatExp( N )
 dt=0.001;
 
-[x,w]=GaussLegendre(-1,1,N); x=x(:); w=w(:);
+[x,w]=gauleg(-1,1,N); x=x(:); w=w(:);
 V=exp(1i*pi/2*x*(-N/2:N/2-1))/sqrt(2);
 L=-pi^2/4*(-N/2:N/2-1)'.^2;
 
