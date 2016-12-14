@@ -1,20 +1,30 @@
-function [] = Neumann(N)
-% Solves u_xx=f(x) with free-fixed boundary conditions
+function [] = Neumann(N,k)
+% Example on Neumann boundary conditions
+[~,w]=ClenshawCurtis(-1,1,N);
 [D,x]=chebD(N);
-D2=D^2;
-D2(end,:)=D(end,:);
-d1=D2(:,1);
-D2=D2(2:end,2:end);
+D2=D*D;
+[A,G,CM]=setBC(D2,D,[0,1],[1,0]);
 
-% Boundary conditions
-va=5;
-ub=2;
-
-f=exp(4*x);
-f(end)=va;
-rhs=f-d1*ub;
-u=[ub; D2\rhs(2:end)];
+% Helmholtz equation
+U=zeros(N,N-2);
+[U(2:N-1,:),L]=eig(A,'vector');
+[L,id]=sort(L,'descend');
+U([1,N],:)=G*U(2:N-1,:);
+U=normc(U, w);
 
 figure(1);
-plot(x,u);
+plot(x,U(:,id(k)));
+disp(L(k)*4/(pi^2));
+
+% Poisson Equation
+f=exp(-4*x(2:N-1));
+bc=[1;1];
+
+u=zeros(N,1);
+u([1,N])=CM(:,[1,N])\bc;
+u(2:N-1)=A\(f-D2(2:N-1,[1,N])*u([1,N]));
+u([1,N])=u([1,N])+G*u(2:N-1);
+
+figure(2);
+plot(x, u);
 end
