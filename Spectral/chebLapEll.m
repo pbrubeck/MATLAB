@@ -1,6 +1,6 @@
 function [Dxx, Jx, Dyy, Jy, x, y] = chebLapEll(a, b, N, M)
 % Matrices to calculate the laplacian on the ellipse
-% usage: Jx*Lap(U)+Lap(U)*Jy=Dxx*U+U*Dyy'
+% usage: Jx*Lap(U)+Lap(U)*Jy'=Dxx*U+U*Dyy'
 % domain x:[-xi0,xi0], y:(0,2*pi]
 f=sqrt(a^2-b^2);
 xi0=acosh(a/f);
