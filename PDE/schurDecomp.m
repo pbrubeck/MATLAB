@@ -61,21 +61,26 @@ u=reshape(U(:,id(k)), N-2, N-2, []);
 disp(lam);
 
 % Retrieve boundary nodes, since they were lost in the eigenmode computation
+b0=zeros(N-2,1);
 b1=-(u(:,:,2)*D(N,2:N-1)'-u(:,:,1)*D(1,2:N-1)')/(D(N,N)-D(1,1));
 b2=-(D(N,2:N-1)*u(:,:,3)-D(1,2:N-1)*u(:,:,1))/(D(N,N)-D(1,1));
 
+umax=max(u(:));
+u=u/umax;
+b1=b1/umax;
+b2=b2/umax;
+
 % Plot solution
-[xx, yy]=ndgrid([x+1/2; x(2:end)-1/2]);
-uu=zeros(2*N-1);
-uu(2:end-1,2:end-1)=[zeros(N-2, N-1), u(:,:,3); zeros(1,N-1), b2; u(:,:,2), b1, u(:,:,1)];
+[xx, yy]=ndgrid(x);
 
 figure(1);
-surfl(xx, yy, uu, 'light');
-title(sprintf('\\lambda_{%d}=%f', k, lam(k)));
-zrange=max(uu(:))-min(uu(:));
-xrange=max(xx(:))-min(xx(:));
-yrange=max(yy(:))-min(yy(:));
-daspect([1 1 2*zrange/hypot(xrange,yrange)]);
+surf(xx-1/2, yy-1/2, [0 b2  0; b1 u(:,:,1) b0; 0 b0' 0]); hold on;
+surf(xx-1/2, yy+1/2, [0 b0' 0; b0 u(:,:,2) b1; 0 b0' 0]); 
+surf(xx+1/2, yy-1/2, [0 b0' 0; b0 u(:,:,3) b0; 0 b2  0]); hold off;
+
+title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
+zrange=max(u(:))-min(u(:));
+daspect([1 1 zrange/sqrt(2)]);
 xlabel('x'); ylabel('y');
 colormap(jet(256)); view(2); shading interp;
 end

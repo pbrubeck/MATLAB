@@ -47,7 +47,7 @@ uu=real(ww); vv=imag(ww);
 % Plot solution
 figure(1);
 surfl(uu,vv,phi,'light');
-view(2); shading interp; colormap(jet(256));
+view(2); colormap(jet(256)); shading interp;
 zrange=max(phi(:))-min(phi(:));
 xrange=max(uu(:))-min(uu(:));
 yrange=max(vv(:))-min(vv(:));
