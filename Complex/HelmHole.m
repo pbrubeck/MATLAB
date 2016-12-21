@@ -1,34 +1,42 @@
-function [lam] = HelmTiles( N, k )
+function [lam] = HelmHole(n, N, k )
 % Schur Decompositon Method for the Helmholtz equation on a domain formed
-% by squares
+% by regions mapped to the square
 
-% Inner square cavity
-x0=[2;0;-2;-2;-2;0;2;2];
-y0=[2;2;2;0;-2;-2;-2;0];
-e=9;
+% Inner circular cavity
+z0=[1; 1i; -1; -1i];
+e=5;
 % Right-Left-Top-Bottom
-net=[e 1 e 8; 1 2 e e; 2 e e 3; e e 3 4; 5 e 4 e; 6 5 e e; e 6 7 e; e e 8 7];
+net=[ e e 1 4; e e 2 1;e e 3 2 ;e e 4 3 ];
 % Id-NextB-LastB-NextU-LastU
-RL=[1 e 2 1 2; 2 1 e 2 3; 5 6 e 6 5; 6 e 5 7 6];
-TB=[3 e 4 3 4; 4 3 e 4 5; 7 8 e 8 7; 8 e 7 1 8];
+TB=[1 2 4 2 1; 2 3 1 3 2; 3 4 2 4 3; 4 1 3 1 4];
+RL=[];
 
-% L-shaped membrane
-% x0=[1;-1;-1];
-% y0=[1;1;-1];
-% e=3;
-% net=[e 1 e e; 1 e e 2; e e 2 e];
-% RL=[1 e e 1 2];
-% TB=[2 e e 2 3];
+vertex=[1-1i;1+1i;sqrt(2/9)*exp(-1i*linspace(-pi/4,pi/4,n)')];
+corners=[1;2;3;n+2];
+
+f=rectmap(polygon(vertex), corners);
+params=parameters(f);
+xmin=min(real(params.prevertex));
+xmax=max(real(params.prevertex));
+ymin=min(imag(params.prevertex));
+ymax=max(imag(params.prevertex));
+dx=xmax-xmin;
+dy=ymax-ymin;
+
+
+
 
 % Poisson solver on the square [-1,1]^2
-[D,x]=chebD(N);
-D2=D*D;
+[D,x]=chebD(N); D2=D*D;
+[xx,yy]=ndgrid(xmin+dx*(x+1)/2, ymin+dy*(x+1)/2);
+zz=xx+1i*yy;
+ww=f(zz);
+J=abs(evaldiff(f,zz(2:end-1,2:end-1))).^2;
 [V,L]=eig(D2(2:N-1,2:N-1), 'vector'); W=inv(V);
-[L1,L2]=ndgrid(L); LL=L1+L2;
+[L1,L2]=ndgrid((2/dx)^2*L, (2/dy)^2*L); LL=L1+L2;
 function [u]=poissonSquare(F)
-    u=V*((W*F*W')./LL)*V';
+    u=V*((W*(J.*F)*W')./LL)*V';
 end
-
 
 % Imposition of Neumann BCs, matching normal derivates at the interface
 % The Schur Complement Method maps Dirichlet BCs to Neumann BCs
@@ -114,7 +122,6 @@ b=reshape(H\rhs, N-2, []);
 b=[b, zeros(N-2,1)];
 
 % Plot solution
-[xx, yy]=ndgrid(x);
 umax=max(u(:));
 uu=zeros(N);
 figure(1);
@@ -122,7 +129,7 @@ for i=1:size(u,3)
     uu(2:N-1,2:N-1)=u(:,:,i);
     uu([1,N],2:N-1)=b(:,net(i,1:2))';
     uu(2:N-1,[1,N])=b(:,net(i,3:4));
-    surf(xx+x0(i), yy+y0(i), uu/umax, ...
+    surf(real(z0(i)*ww), imag(z0(i)*ww), uu/umax, ...
     'FaceLighting','gouraud','FaceColor','interp','AmbientStrength',0.5);
     if i==1, hold on, end;
 end
@@ -132,3 +139,4 @@ colormap(jet(256)); view(2); shading interp;
 title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
 xlabel('x'); ylabel('y'); axis square manual;
 end
+

@@ -8,4 +8,3 @@ u=[0; L(2:end-1,2:end-1)\f(2:end-1); 0];
 
 plot(x,u);
 end
-

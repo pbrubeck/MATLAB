@@ -30,10 +30,10 @@ J=abs(evaldiff(f,zz(2:end-1,2:end-1))).^2;
 OP=@(x) reshape(poissonSquare(V1,V2,U1,U2,LL,J,reshape(x, size(J))), size(x));
 
 [V,lam]=eigs(OP, numel(J), k, 'sm');
-lam=diag(lam);
-phi=zeros(N);
-phi(2:end-1,2:end-1)=reshape(V(:,k), size(J));
-phi=phi/max(abs(phi(:)));
+[lam,id]=sort(diag(lam),'descend');
+psi=zeros(N);
+psi(2:end-1,2:end-1)=reshape(V(:,id(k)), size(J));
+psi=psi/max(abs(psi(:)));
 
 % Conformal mapping ww=f(zz)
 b1=f(zz([1 end],:)); b2=f(zz(:,[1 end]));
@@ -44,12 +44,12 @@ ww(2:end-1,2:end-1)=poissonSquare(V1,V2,U1,U2,LL,1,-BC(2:end-1,2:end-1));
 uu=real(ww); vv=imag(ww);
 
 % Plot solution
-surf(uu,vv,phi);
+surfl(uu,vv,psi,'light');
 colormap(jet(256)); view(2); shading interp;
 title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
 xlim([min(uu(:)) max(uu(:))]);
 ylim([min(vv(:)) max(vv(:))]);
-xlabel('x'); ylabel('y'); axis square; axis manual;
+xlabel('x'); ylabel('y'); axis square manual;
 end
 
 function X=poissonSquare(V1, V2, U1, U2, LL, J, X)

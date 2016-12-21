@@ -40,7 +40,7 @@ uu=uu(:,[end,1:end]);
 vv=vv(:,[end,1:end]);
 
 figure(1);
-surf(uu,vv,psi);
+surfl(uu,vv,psi,'light');
 title(sprintf('\\lambda_{%d} = %.8f', k, lam(k)));
 colormap(jet(256)); shading interp;
 view(2); axis square manual;
