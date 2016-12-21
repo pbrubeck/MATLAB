@@ -1,7 +1,7 @@
 function [] = fastPoisson9(N)
 % Solves Poisson's equation in 2D with Dirichlet boundary conditions.
 % Discrete Laplacian 9-point stencil
-N([1 2])=N;
+N(1:2)=N;
 x=linspace(-1, 1, N(1))';
 y=linspace(-1, 1, N(2));
 hx=x(2)-x(1);

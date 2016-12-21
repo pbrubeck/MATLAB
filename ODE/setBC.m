@@ -9,7 +9,7 @@ function [A, G, H] = setBC(A, D, alpha, beta)
 %
 % References
 % J. Hoepffner, Implementation of boundary conditions, 
-% www.fukagata.mech.keio.ac.jp/~jerome/ (2007)
+% http://www.lmm.jussieu.fr/~hoepffner/boundarycondition.pdf
 
 E=eye(size(A,1));
 

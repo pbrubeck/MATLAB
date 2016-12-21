@@ -1,12 +1,11 @@
-function [R2, Drr, Dff, r, phi] = chebLapPol(N,M)
+function [A1, A2, B1, r, t] = chebLapPol(N,M)
 % Matrices to calculate the laplacian on the unit disk
-% usage: R2*Lap(U)=Drr*U+U*Dff'
-% domain r:(0,1], phi:(0,2*pi]
-[Dff,phi]=fourD2(M);
+% A1*U + U*A2' = B1*Lap(U)
+% domain r:(0,1], t:(0,2*pi]
 [D,r]=chebD(2*N);
-Drr=(diag(r)*D)^2;
-Drr=Drr(1:N,1:N)+Drr(1:N,end:-1:N+1);
+A1=diag(r)*D+diag(r.^2)*D^2;
+A1=A1(1:N,1:N)+A1(1:N,end:-1:N+1);
 r=r(1:N);
-R2=diag(r.^2);
+B1=diag(r.^2);
+[A2,t]=fourD2(M);
 end
-

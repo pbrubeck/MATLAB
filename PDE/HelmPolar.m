@@ -1,20 +1,20 @@
 function [] = HelmPolar(N,k)
-[R2,Drr,Dff,r,phi]=chebLapPol(N,N);
-Drr=Drr(2:end,2:end);
-R2=R2(2:end,2:end);
+[A1,A2,B1,r,phi]=chebLapPol(N,N);
+A1=A1(2:end,2:end);
+B1=B1(2:end,2:end);
 
 xx=r*cos([0, phi]);
 yy=r*sin([0, phi]);
 
 figure(1);
-[Vf,mu]=eigs(Dff, k, 'sm');
+[Vf,mu]=eigs(A2, k, 'sm');
 Vf=bsxfun(@times, conj(Vf(1,:))./abs(Vf(1,:)), Vf);
 mu=diag(mu);
-I=eye(size(Drr));
+I=eye(size(A1));
 vv=zeros(N,N);
 
 for j=1:k
-    [Vr,lam]=eigs(Drr+mu(j)*I, R2, k, 'sm');
+    [Vr,lam]=eigs(A1+mu(j)*I, B1, k, 'sm');
     lam=sqrt(-diag(lam));
     Vr=bsxfun(@times, conj(Vr(end,:))./abs(Vr(end,:)), Vr);
     for i=1:k

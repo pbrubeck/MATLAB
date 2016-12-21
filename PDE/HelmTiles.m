@@ -1,4 +1,4 @@
-function [] = HelmTiles( N, k )
+function [lam] = HelmTiles( N, k )
 % Schur Decompositon Method for the Helmholtz equation on a domain formed
 % by squares
 
@@ -13,12 +13,12 @@ RL=[1 e 2 1 2; 2 1 e 2 3; 5 6 e 6 5; 6 e 5 7 6];
 TB=[3 e 4 3 4; 4 3 e 4 5; 7 8 e 8 7; 8 e 7 1 8];
 
 % L-shaped membrane
-% x0=[1;-1;-1];
-% y0=[1;1;-1];
-% e=3;
-% net=[e 1 e e; 1 e e 2; e e 2 e];
-% RL=[1 e e 1 2];
-% TB=[2 e e 2 3];
+x0=[1;-1;-1];
+y0=[1;1;-1];
+e=3;
+net=[e 1 e e; 1 e e 2; e e 2 e];
+RL=[1 e e 1 2];
+TB=[2 e e 2 3];
 
 % Poisson solver on the square [-1,1]^2
 [D,x]=chebD(N);
@@ -39,10 +39,10 @@ function [s, h]=schurComplement(b)
     b=[b, zeros(N-2,1)];
     w=cell([size(net,1),1]);
     for j=1:size(net,1)
-        if(norm(b(:,net(j,:)),'fro')==0)
-            w{j}=0;
+        if(any(any(b(:,net(j,:)))))
+            w{j}=poissonSquare(D2(2:N-1,[1,N])*b(:,net(j,1:2))'+b(:,net(j,3:4))*D2(2:N-1,[1,N])');
         else
-            w{j}=poissonSquare(b(:,net(j,3:4))*D2(2:N-1,[1,N])'+D2(2:N-1,[1,N])*b(:,net(j,1:2))');
+            w{j}=0;
         end
     end
     for j=1:size(TB,1)
@@ -89,7 +89,7 @@ function [u]=poissonTiles(F)
     % Solve for interior nodes with the given BCs
     u=zeros(size(F));
     for j=1:size(net,1)
-        u(:,:,j)=poissonSquare(F(:,:,j)-b(:,net(j,3:4))*D2(2:N-1,[1,N])'-D2(2:N-1,[1,N])*b(:,net(j,1:2))');
+        u(:,:,j)=poissonSquare(F(:,:,j)-D2(2:N-1,[1,N])*b(:,net(j,1:2))'-b(:,net(j,3:4))*D2(2:N-1,[1,N])');
     end
     u=u(:);
 end
@@ -99,7 +99,6 @@ end
 [U,lam]=eigs(@poissonTiles, size(net,1)*(N-2)^2, k, 'sm');
 [lam,id]=sort(real(diag(lam)),'descend');
 u=reshape(U(:,id(k)), N-2, N-2, []);
-disp(lam/pi^2);
 
 
 % Retrieve boundary nodes, since they were lost in the eigenmode computation
@@ -128,9 +127,7 @@ for i=1:size(u,3)
 end
 hold off;
 
-title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
-zrange=1-min(u(:))/umax;
-daspect([1 1 zrange/sqrt(24)]);
-xlabel('x'); ylabel('y'); axis manual;
 colormap(jet(256)); view(2); shading interp;
+title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
+xlabel('x'); ylabel('y'); axis square manual;
 end
