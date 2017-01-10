@@ -35,7 +35,7 @@ J=abs(evaldiff(f,zz(2:end-1,2:end-1))).^2;
 [V,L]=eig(D2(2:N-1,2:N-1), 'vector'); W=inv(V);
 [L1,L2]=ndgrid((2/dx)^2*L, (2/dy)^2*L); LL=L1+L2;
 function [u]=poissonSquare(F)
-    u=V*((W*(J.*F)*W')./LL)*V';
+    u=V*((W*F*W')./LL)*V';
 end
 
 % Imposition of Neumann BCs, matching normal derivates at the interface
@@ -78,7 +78,7 @@ function [u]=poissonTiles(F)
     F=reshape(F, N-2, N-2, []);
     v=cell([size(net,1),1]);
     for j=1:size(net,1)
-        v{j}=poissonSquare(F(:,:,j));
+        v{j}=poissonSquare(J.*F(:,:,j));
     end
     
     rhs=zeros(N-2, size(RL,1)+size(TB,1));
@@ -97,7 +97,7 @@ function [u]=poissonTiles(F)
     % Solve for interior nodes with the given BCs
     u=zeros(size(F));
     for j=1:size(net,1)
-        u(:,:,j)=poissonSquare(F(:,:,j)-D2(2:N-1,[1,N])*b(:,net(j,1:2))'-b(:,net(j,3:4))*D2(2:N-1,[1,N])');
+        u(:,:,j)=poissonSquare(J.*F(:,:,j)-D2(2:N-1,[1,N])*b(:,net(j,1:2))'-b(:,net(j,3:4))*D2(2:N-1,[1,N])');
     end
     u=u(:);
 end
@@ -139,4 +139,3 @@ colormap(jet(256)); view(2); shading interp;
 title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
 xlabel('x'); ylabel('y'); axis square manual;
 end
-
