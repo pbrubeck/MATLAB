@@ -1,4 +1,4 @@
-function [ uu ] = LaplaceBVP(N)
+function [] = LaplaceBVP(N)
 [D,x]=chebD(N);
 [xx, yy]=meshgrid(x); x=xx(:); y=yy(:);
 D2=D^2; I=eye(N);
@@ -11,7 +11,9 @@ rhs=zeros(N^2, 1);
 rhs(b)=(y(b)==1 & x(b)<0).*sin(pi*x(b)).^4+0.2*(xx(b)==1).*sin(3*pi*yy(b));
 
 tic; u=L\rhs; uu=reshape(u, N, N); toc
-figure(1); surf(xx,yy,uu); shading interp;
-colormap(jet(256)); whitebg('k');
+
+figure(1);
+surf(xx,yy,uu); colormap(jet(256));
+camlight; shading interp; axis square;
 end
 

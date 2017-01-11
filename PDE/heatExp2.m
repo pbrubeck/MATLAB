@@ -36,8 +36,8 @@ uu(:,[1,N])=uu(:,2:N-1)*G';
 
 figure(1);
 h=surf(xx,yy,uu);
-colormap(jet(256)); shading interp;
-view(2); axis square manual;
+colormap(jet(256)); camlight; shading interp;
+axis square manual;
 
 nframes=1000;
 for i=1:nframes

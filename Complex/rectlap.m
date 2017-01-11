@@ -44,8 +44,8 @@ ww(2:end-1,2:end-1)=poissonSquare(V1,V2,U1,U2,LL,1,-BC(2:end-1,2:end-1));
 uu=real(ww); vv=imag(ww);
 
 % Plot solution
-surfl(uu,vv,psi,'light');
-colormap(jet(256)); view(2); shading interp;
+surf(uu,vv,psi); colormap(jet(256));
+camlight; view(2); shading interp;
 title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
 xlim([min(uu(:)) max(uu(:))]);
 ylim([min(vv(:)) max(vv(:))]);

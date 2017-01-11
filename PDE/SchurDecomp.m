@@ -75,7 +75,7 @@ surf(xx+1/2, yy+1/2, [0 b0' 0; b0 u(:,:,1) b0; 0 b1  0]); hold on;
 surf(xx-1/2, yy+1/2, [0 b1  0; b0 u(:,:,2) b2; 0 b0' 0]); 
 surf(xx-1/2, yy-1/2, [0 b0' 0; b2 u(:,:,3) b0; 0 b0' 0]); hold off;
 
-colormap(jet(256)); view(2); shading interp;
+colormap(jet(256)); camlight; shading interp; view(2); 
 title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
 xlabel('x'); ylabel('y'); axis square; axis manual;
 end

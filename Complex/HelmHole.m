@@ -8,8 +8,8 @@ e=5;
 % Right-Left-Top-Bottom
 net=[ e e 1 4; e e 2 1;e e 3 2 ;e e 4 3 ];
 % Id-NextB-LastB-NextU-LastU
-TB=[1 2 4 2 1; 2 3 1 3 2; 3 4 2 4 3; 4 1 3 1 4];
 RL=[];
+TB=[1 2 4 2 1; 2 3 1 3 2; 3 4 2 4 3; 4 1 3 1 4];
 
 vertex=[1-1i;1+1i;sqrt(2/9)*exp(-1i*linspace(-pi/4,pi/4,n)')];
 corners=[1;2;3;n+2];

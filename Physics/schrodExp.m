@@ -15,7 +15,6 @@ L=[0;0;L];
 
 Q=U*diag(exp(-1i*dt*L))/U;
 
-
 sigma=0.1;
 k=5;
 Psi0=normc(exp(-(x/sigma).^2-1i*k*x), w);

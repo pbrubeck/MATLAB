@@ -16,7 +16,8 @@ uu(2:end,:)=sylvester(A1(2:end,2:end), A2', RHS(2:end,:));
 xx=xx(:,[end 1:end]);
 yy=yy(:,[end 1:end]);
 uu=uu(:,[end 1:end]);
-figure(1); surfl(xx,yy,uu,'light'); 
-shading interp; colormap(jet(256)); axis square;
+figure(1);
+surf(xx,yy,uu); colormap(jet(256));
+camlight; shading interp; axis square;
 end
 

@@ -21,7 +21,7 @@ for j=1:k
         vv(2:end,:)=real(Vr(:,i)*Vf(:,j).');
         subplot(k,k,(i-1)*k+j);
         surf(xx,yy,[vv(:,end), vv]);
-        axis square; axis off;
+        camlight; axis square; axis off;
         shading interp;
         colormap(jet(256));
         text(-1,1.3,sprintf('%f', lam(i)));

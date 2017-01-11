@@ -15,6 +15,7 @@ F=zeros(n);
 RHS=F-D2(:,[1 end])*b1-b2*D2(:,[1 end])';
 uu(2:end-1, 2:end-1)=sylvester(D2(2:end-1, 2:end-1), D2(2:end-1, 2:end-1)', RHS(2:end-1, 2:end-1));
 
-surfl(xx,yy,uu,'light'); colormap(jet(256));
-shading interp; axis square;
+figure(1);
+surf(xx,yy,uu); colormap(jet(256));
+camlight; shading interp; axis square;
 end

@@ -41,7 +41,7 @@ w=w+(k1+2*k2+2*k3+k4)/6;
 end
 
 figure(1);
-h=surf(xx(roi,roi), yy(roi,roi), w(roi,roi,1), 'EdgeColor', 'none');
+h=surf(xx(roi,roi), yy(roi,roi), w(roi,roi,1));
 colormap(jet(256)); shading interp;
 view(2); zlim([-1,1]); axis square; 
 

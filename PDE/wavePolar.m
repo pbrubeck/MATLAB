@@ -8,8 +8,8 @@ u(:,:,1)=exp(-40*((xx-.4).^2+yy.^2));
 u(:,:,2)=0;
 dt=6/(N*M);
 n=N/2;
-h=surf(xx(n:end,:), yy(n:end,:), u(n:end,:,1), 'EdgeColor', 'none');
-shading interp
+h=surf(xx(n:end,:), yy(n:end,:), u(n:end,:,1));
+camlight; shading interp
 colormap(jet);
 nframes=10000;
 for i=1:nframes

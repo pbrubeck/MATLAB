@@ -22,17 +22,7 @@ figure(1); clf;
 depth=256;
 colormap(jet(depth));
 [h,th,ph]=sphericalPlot(2*N,N);
-shading interp;
-
-
-lightangle(-45,30);
-h.LineStyle = 'none';
-h.FaceLighting = 'gouraud';
-h.AmbientStrength = 0.3;
-h.DiffuseStrength = 0.8;
-h.SpecularStrength = 0.9;
-h.SpecularExponent = 25;
-h.BackFaceLighting = 'unlit';
+camlight; shading interp;
 
 % Obtain evaluation nodes
 dim=[2*N, N];

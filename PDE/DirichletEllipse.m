@@ -23,8 +23,8 @@ psi(2:end-1,:)=sylvester(Dxx(2:end-1,2:end-1), Dyy', RHS(2:end-1,:));
 
 % Plot solution
 figure(1);
-surfl(uu(1:N,[1:end,1]),vv(1:N,[1:end,1]),psi(1:N,[1:end,1]),'light');
-view(2); shading interp; colormap(jet(256));
+surf(uu(1:N,[1:end,1]),vv(1:N,[1:end,1]),psi(1:N,[1:end,1]));
+colormap(jet(256)); camlight; view(2); shading interp; 
 zrange=max(psi(:))-min(psi(:));
 xrange=max(uu(:))-min(uu(:));
 yrange=max(vv(:))-min(vv(:));

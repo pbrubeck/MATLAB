@@ -13,12 +13,12 @@ RL=[1 e 2 1 2; 2 1 e 2 3; 5 6 e 6 5; 6 e 5 7 6];
 TB=[3 e 4 3 4; 4 3 e 4 5; 7 8 e 8 7; 8 e 7 1 8];
 
 % L-shaped membrane
-% x0=[1;-1;-1];
-% y0=[1;1;-1];
-% e=3;
-% net=[e 1 e e; 1 e e 2; e e 2 e];
-% RL=[1 e e 1 2];
-% TB=[2 e e 2 3];
+x0=[1;-1;-1];
+y0=[1;1;-1];
+e=3;
+net=[e 1 e e; 1 e e 2; e e 2 e];
+RL=[1 e e 1 2];
+TB=[2 e e 2 3];
 
 % Poisson solver on the square [-1,1]^2
 [D,x]=chebD(N);
@@ -122,13 +122,11 @@ for i=1:size(u,3)
     uu(2:N-1,2:N-1)=u(:,:,i);
     uu([1,N],2:N-1)=b(:,net(i,1:2))';
     uu(2:N-1,[1,N])=b(:,net(i,3:4));
-    surf(xx+x0(i), yy+y0(i), uu/umax, ...
-    'FaceLighting','gouraud','FaceColor','interp','AmbientStrength',0.5);
+    surf(xx+x0(i), yy+y0(i), uu/umax);
     if i==1, hold on, end;
 end
 hold off;
-light('Position',[0 0 2],'Style','local');
-colormap(jet(256)); view(2); shading interp;
+colormap(jet(256)); camlight; shading interp; view(2); 
 title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
-xlabel('x'); ylabel('y'); axis square manual;
+xlabel('x'); ylabel('y'); axis square; axis manual;
 end
