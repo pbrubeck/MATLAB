@@ -6,9 +6,7 @@ function [lam] = SchurDecomp(N, k)
 [D,x]=chebD(N); x=x/2; D=2*D; D2=D*D;
 [V,L]=eig(D2(2:N-1,2:N-1), 'vector'); W=inv(V);
 [L1,L2]=ndgrid(L); LL=L1+L2;
-function [u]=poissonSquare(F)
-    u=V*((W*F*W')./LL)*V';
-end
+poissonSquare=@(F) V*((W*F*W')./LL)*V';
 
 
 % Imposition of Neumann BCs, matching normal derivates at the interface

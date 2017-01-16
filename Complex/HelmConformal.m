@@ -4,7 +4,7 @@ xi0=acosh(a/f);
 
 [Dx,x]=chebD(2*N-1); x=xi0*x; Dx=Dx/xi0; Dxx=Dx*Dx;
 [A1,G]=setBC(Dxx,Dx,1,0);
-[A2,y]=fourD2(N);
+y=2*pi/N*(1:N);
 [xx,yy]=ndgrid(x,y);
 zz=xx+1i*yy;
 ww=f*cosh(zz);
@@ -15,11 +15,11 @@ J=J(2:end-1,:);
 
 % Factor homogeneous BC Green function
 [V1, L1]=eig(A1,'vector'); W1=inv(V1);
-[V2, L2]=eig(A2,'vector'); W2=inv(V2);
-[L1, L2]=ndgrid(L1,L2); L=L1+L2;
+L2=-[0:N/2-1 -N/2:-1].^2;
+[L1,L2]=ndgrid(L1,L2); LL=L1+L2;
 function X=Afun(X)
     X=reshape(X, size(J));
-    X=V1*((W1*(J.*X)*W2')./L)*V2';
+    X=real(V1*fft((W1*ifft(J.*X,[],2))./LL,[],2));
     X=X(:);
 end
 
@@ -35,9 +35,9 @@ psi=psi/max(abs(psi(:)));
 
 % Plot solution
 figure(1);
-surfl(uu(2:N,[1:end,1]),vv(2:N,[1:end,1]),psi(2:N,[1:end,1]),'light');
+surf(uu(2:N,[1:end,1]),vv(2:N,[1:end,1]),psi(2:N,[1:end,1]));
+camlight; view(2); colormap(jet(256)); shading interp;
 
-view(2); shading interp; colormap(jet(256));
 zrange=max(psi(:))-min(psi(:));
 xrange=max(uu(:))-min(uu(:));
 yrange=max(vv(:))-min(vv(:));

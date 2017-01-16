@@ -15,7 +15,7 @@ layer=abs(x)>xl;
 roi=~layer;
 
 sig=zeros(N,1);
-sig(layer)=2/dz*((abs(x(layer))-xl)/(x(end)-xl)).^3;
+sig(layer)=2*N^(3/2)*((abs(x(layer))-xl)/(x(end)-xl)).^3;
 
 % Initial conditions
 u0=(cos(2*pi*(xx+yy))+cos(2*pi*(xx-yy))).*exp(-(xx.^2+yy.^2)/2);

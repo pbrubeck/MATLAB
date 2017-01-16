@@ -1,9 +1,10 @@
-function x = Bailey(f, ff, fff, x)
-% Solves f(x)=0, requires f'(x), f''(x) and an initial aproximation.
+function x = Bailey(f, x)
+% Solves f(x)=0, requires an initial aproximation.
+x=ainit(x,2);
 y=f(x);
-while(abs(y)>2*eps)
-    yy=ff(x);
-    x=x-y/(yy-y*fff(x)/(2*yy));
+while(abs(y{0})>10*eps)
+    x=x-y{0}/(y{1}-y{0}*y{2}/(2*y{1}));
     y=f(x);
 end
+x=x{0};
 end

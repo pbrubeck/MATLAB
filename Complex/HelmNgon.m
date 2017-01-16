@@ -38,8 +38,8 @@ uu=uu(:,[end,1:end]);
 vv=vv(:,[end,1:end]);
 
 figure(1);
-surfl(uu,vv,psi,'light');
+surf(uu,vv,psi);
+camlight; view(2); colormap(jet(256));
+shading interp; axis square manual;
 title(sprintf('\\lambda_{%d} = %.8f', k, lam(k)));
-colormap(jet(256)); shading interp;
-view(2); axis square manual;
 end

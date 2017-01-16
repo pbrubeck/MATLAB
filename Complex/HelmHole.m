@@ -23,20 +23,20 @@ ymax=max(imag(params.prevertex));
 dx=xmax-xmin;
 dy=ymax-ymin;
 
-
-
-
 % Poisson solver on the square [-1,1]^2
-[D,x]=chebD(N); D2=D*D;
-[xx,yy]=ndgrid(xmin+dx*(x+1)/2, ymin+dy*(x+1)/2);
-zz=xx+1i*yy;
-ww=f(zz);
-J=abs(evaldiff(f,zz(2:end-1,2:end-1))).^2;
+[D,x]=chebD(N);
+D2=D*D;
 [V,L]=eig(D2(2:N-1,2:N-1), 'vector'); W=inv(V);
-[L1,L2]=ndgrid((2/dx)^2*L, (2/dy)^2*L); LL=L1+L2;
+[L1,L2]=ndgrid(L); LL=(2/dx)^2*L1+(2/dy)^2*L2;
 function [u]=poissonSquare(F)
     u=V*((W*F*W')./LL)*V';
 end
+
+% Jacobian determinant
+[xx,yy]=ndgrid(xmin+dx*(x+1)/2, ymin+dy*(x+1)/2);
+zz=xx+1i*yy;
+J=abs(evaldiff(f,zz(2:end-1,2:end-1))).^2;
+ww=f(zz);
 
 % Imposition of Neumann BCs, matching normal derivates at the interface
 % The Schur Complement Method maps Dirichlet BCs to Neumann BCs
@@ -129,13 +129,11 @@ for i=1:size(u,3)
     uu(2:N-1,2:N-1)=u(:,:,i);
     uu([1,N],2:N-1)=b(:,net(i,1:2))';
     uu(2:N-1,[1,N])=b(:,net(i,3:4));
-    surf(real(z0(i)*ww), imag(z0(i)*ww), uu/umax, ...
-    'FaceLighting','gouraud','FaceColor','interp','AmbientStrength',0.5);
+    surf(real(z0(i)*ww), imag(z0(i)*ww), uu/umax);
     if i==1, hold on, end;
 end
 hold off;
-light('Position',[0 0 2],'Style','local');
-colormap(jet(256)); view(2); shading interp;
+colormap(jet(256)); camlight; shading interp; view(2); 
 title(sprintf('\\lambda_{%d}=%.8f', k, lam(k)));
-xlabel('x'); ylabel('y'); axis square manual;
+xlabel('x'); ylabel('y'); axis square; axis manual;
 end

@@ -55,9 +55,8 @@ yy=f*sinh(u)*sin(v);
 zz=rmf*amf.';
 
 figure(3);
-surfl(xx(:,[1:end 1]),yy(:,[1:end 1]),zz(:,[1:end 1]),'light'); 
-shading interp;
-axis off;
+surf(xx(:,[1:end 1]),yy(:,[1:end 1]),zz(:,[1:end 1])); 
+camlight; shading interp; axis off;
 colormap(jet(256));
 zrange=max(zz(:))-min(zz(:));
 xrange=max(xx(:))-min(xx(:));

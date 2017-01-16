@@ -8,6 +8,6 @@ zz=S(:,:,3);
 xx=[xx, xx(:,1)]; xx=[xx; xx(1,:)];
 yy=[yy, yy(:,1)]; yy=[yy; yy(1,:)];
 zz=[zz, zz(:,1)]; zz=[zz; zz(1,:)];
-surfl(xx,yy,zz,'light');
-shading interp; axis equal;
+surf(xx,yy,zz);
+camlight; shading interp; axis equal;
 end
