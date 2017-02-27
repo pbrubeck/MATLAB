@@ -14,7 +14,7 @@ function [] = heatExp( N )
 % nullspace of the SOLDO, and the eigenvalues are exp(dt*lambda).
 
 c=1;
-dt=0.01;
+dt=0.0001;
 
 [D,x]=chebD(N);
 D2=D*D;
@@ -27,15 +27,15 @@ V(:,[1,N])=null(D2);
 V([1,N],2:N-1)=G*V(2:N-1,2:N-1);
 Q=V*diag(exp(dt*L))*pinv(V);
 
-u=(1-x.^2);
+u=exp(-10*x.^2);
 
 figure(1);
-h=plot(x, u); ylim([-4,1]); xlim([-1,1]);
+h=plot(x, u); ylim([-4,4]); xlim([-1,1]);
 
 nframes=1000;
 for i=1:nframes
     u=Q*u;
-    set(h, 'YData', u);
+    set(h, 'YData', real(u));
     drawnow;
 end
 end

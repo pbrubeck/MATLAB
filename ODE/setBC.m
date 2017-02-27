@@ -1,6 +1,6 @@
-function [A, G, H] = setBC(A, D, alpha, beta)
+function [A, G, H] = setBC(A, D, a, b, c)
 % Returns interior region differential operator suited for boundary 
-% conditions of the form alpha(i)*u+beta(i)*u'=bc.
+% conditions of the form a*u+b*u_x+c*u_t=bc.
 %
 % The give-back matrix gives back the boundary values when multiplied by
 % the interior values.
@@ -11,9 +11,13 @@ function [A, G, H] = setBC(A, D, alpha, beta)
 % J. Hoepffner, Implementation of boundary conditions, 
 % http://www.lmm.jussieu.fr/~hoepffner/boundarycondition.pdf
 
+if(nargin<5)
+    c=0;
+end
+
 I=eye(size(A,1));
 % Constraint matrix
-C=diag(alpha)*I([1,end],:)+diag(beta)*D([1,end],:); 
+C=diag(a)*I([1,end],:)+diag(b)*D([1,end],:)+diag(c)*A([1,end],:); 
 % non-homogeneous contribution
 H=inv(C(:,[1,end]));
 % give-back matrix
