@@ -1,4 +1,4 @@
-function [A, G, H] = setBC(A, D, a, b, c)
+function [A, G, H, C] = setBC(A, D, a, b, c)
 % Returns interior region differential operator suited for boundary 
 % conditions of the form a*u+b*u_x+c*u_t=bc.
 %
