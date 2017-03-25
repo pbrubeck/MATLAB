@@ -1,29 +1,31 @@
-function [] = Young(n)
-k=40*pi;
-R=1e-3;
-d=0.4;
-z=1;
+function [] = Young(m,n)
+k=2*pi;
+R=1;
+b=4;
+z=1000;
 
-[xx,yy]=ndgrid(linspace(-1,1,n));
+x=linspace(-z,z,n);
+[xx,yy]=ndgrid(x);
 
-I=zeros(n);
-figure(1);
-h=imagesc(I);
-colormap(hot(256));
-colorbar();
-
-Nframes=30;
-for m=1:Nframes
-    E=zeros(n);
-    for i=0:m-1
-        x0=d*cos(2*pi*i/m);
-        y0=d*sin(2*pi*i/m);
-        rho=k*R*hypot(xx-x0,yy-y0)./sqrt(xx.^2+yy.^2+z^2);
-        E=E+exp(1i*k*sqrt((xx-x0).^2+(yy-y0).^2+z^2)).*jinc(rho);
-    end
-    I=real(conj(E).*E);
-    set(h,'CData',I);
-    drawnow;
-    pause(0.1);
+E=zeros(n);
+for i=0:m-1
+    x0=b*cos(2*pi*i/m);
+    y0=b*sin(2*pi*i/m);
+    r=sqrt((xx-x0).^2+(yy-y0).^2+z^2);
+    rho=k*R*hypot(xx-x0,yy-y0)./r;
+    E=E+exp(1i*k*r).*jinc(rho);
 end
+I=real(conj(E).*E);
+
+figure(1);
+imagesc(x/z,x/z,I.');
+colormap(hot(256));
+set(gcf,'DefaultTextInterpreter','latex');
+set(gca,'YDir','normal','TickLabelInterpreter','latex','fontsize',14);
+axis equal;
+xlim([-1,1]); 
+ylim([-1,1]);
+xlabel('$x/z_R$');
+ylabel('$y/z_R$');
+%print('-depsc', sprintf('Young%02d',m));
 end

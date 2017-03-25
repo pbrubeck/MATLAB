@@ -33,16 +33,14 @@ V2(rd,kd)=G2*V2(kd,kd);
 % Eigenvalues
 [L1,L2]=ndgrid(L1,L2);
 LL=L1+L2;
-W1=V1;
-W2=V2;
 
 % Poincare-Steklov operator
-P11=kron(W2(:,kd), C1*W1(:,rd));
-P12=kron(W2(:,rd), C1*W1(:,kd));
-P13=kron(W2(:,rd), C1*W1(:,rd));
-P21=kron(C2*W2(:,kd), W1(:,rd));
-P22=kron(C2*W2(:,rd), W1(:,kd));
-P23=kron(C2*W2(:,rd), W1(:,rd));
+P11=kron(V2(:,kd), C1*V1(:,rd));
+P12=kron(V2(:,rd), C1*V1(:,kd));
+P13=kron(V2(:,rd), C1*V1(:,rd));
+P21=kron(C2*V2(:,kd), V1(:,rd));
+P22=kron(C2*V2(:,rd), V1(:,kd));
+P23=kron(C2*V2(:,rd), V1(:,rd));
 P=[P11, P12, P13; P21, P22, P23];
 
 % Inhomogenous boundary term
@@ -51,7 +49,7 @@ U=zeros(N);
 U(rd,kd)=reshape(qq(1:2*(N-2)), [2,N-2]);
 U(kd,rd)=reshape(qq(1+2*(N-2):4*(N-2)), [N-2,2]);
 U(rd,rd)=reshape(qq(1+4*(N-2):4*(N-1)), [2,2]);
-ub=W1*U*W2';
+ub=V1*U*V2';
 
 % Solution
 rhs=-D2*ub-ub*D2';
@@ -64,7 +62,4 @@ colormap(jet(256));
 camlight; shading interp;
 axis square manual; 
 xlabel('x'); ylabel('y');
-
-figure(2);
-plot(x,C1*uu,x,uu*C2');
 end
