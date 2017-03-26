@@ -37,10 +37,10 @@ kd=2:N-1;
 % V0 = p.grad(U0)
 % F0 = forcing amplitude
 x0=0.01;
-q=2*pi;
+w0=2*pi;
 zz=xx+1i*yy;
 hh=0*exp(-100*(xx.^2+yy.^2)/2);
-U0=real(zz.^2)+hh;
+U0=real(0*zz.^2)+hh;
 V0=-(1*D*U0+0*U0*D');
 F0=5000*(exp(-1000*((xx-x0).^2+yy.^2)/2)-exp(-1000*((xx+x0).^2+yy.^2)/2));
 
@@ -56,14 +56,14 @@ S2(rd,kd)=G2*S2(kd,kd);
 
 % Eigenvalues, frequency and damping
 [L1, L2] = ndgrid(L1, L2);
-AA=-L1-L2;
+AA=-(L1+L2);
 BB=damp+c(1)*sqrt(-L1)+c(2)*sqrt(-L2);
 WW=sqrt(AA+BB.^2);
 WW(rd,:)=0; WW(:,rd)=0;
 BB(rd,:)=0; BB(:,rd)=0;
 
 % Solve force contribution F(:)=K\F0(:)
-KK=(AA-q^2).^2+4*q^2*BB.^2;
+KK=(AA-w0^2).^2+4*w0^2*BB.^2;
 FF=(pinv(S1)*F0*pinv(S2)')./KK;
 FF(rd,:)=0; FF(:,rd)=0;
 
@@ -71,11 +71,11 @@ FF(rd,:)=0; FF(:,rd)=0;
 UU=pinv(S1)*U0*pinv(S2)';
 VV=pinv(S1)*V0*pinv(S2)';
 
-Y1=UU+2*q*BB.*FF;
-Y2=(VV-BB.*Y1+q*(AA-q^2).*FF)./WW;
+Y1=UU-2*w0*BB.*FF;
+Y2=(VV-BB.*Y1-w0*(AA-w0^2).*FF)./WW;
 Y2(rd,:)=0; Y2(:,rd)=0;
 U=@(t) S1*(exp(-BB*t).*(Y1.*cos(WW*t)+Y2.*sin(WW*t))+...
-          (-sin(q*t)*(AA-q^2)-2*q*cos(q*t)*BB).*FF)*S2';
+          (sin(w0*t)*(AA-w0^2)+2*w0*cos(w0*t)*BB).*FF)*S2';
 
 figure(1);
 h=surf(xx,yy,U0);
