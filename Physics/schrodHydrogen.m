@@ -1,4 +1,4 @@
-function [E, rbohr] = schrodHydrogen(N, k)
+function [E,rbohr] = schrodHydrogen(N, k)
 % Schrodinger Equation for the Hydrogen atom
 % Hatree units
 E0=27.21138505;   % Electronvolts

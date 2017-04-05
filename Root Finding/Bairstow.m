@@ -26,12 +26,12 @@ x=(-u(1)+[1;-1]*sqrt(u(1)^2-4*u(2)))/2;
 
 a=b(1:end-2);
 switch(min(length(a),4))
-    case 4,
+    case 4
         x=[x;Bairstow(a)];
-    case 3,
+    case 3
         u=a([2,1])/a(3);
         x=[x;(-u(1)+[1;-1]*sqrt(u(1)^2-4*u(2)))/2];
-    case 2,
+    case 2
         x=[x; -a(1)/a(2)];
 end
 end
