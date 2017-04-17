@@ -10,8 +10,8 @@ kd=2:N-1;
 % Boundary conditions
 a=[1,0;1,0];
 b=[0,1;0,1];
-b1=[0.2*sin(3*pi*y); 0*y];
-b2=[(x<0).*sin(pi*x).^4, 0*x];
+b1=[0.2*sin(3*pi*y); y];
+b2=[(x<0).*sin(pi*x).^4, x];
 
 V1=zeros(N); L1=zeros(N,1);
 V2=zeros(N); L2=zeros(N,1);
@@ -34,11 +34,11 @@ V2(rd,kd)=G2*V2(kd,kd);
 [L1,L2]=ndgrid(L1,L2);
 LL=L1+L2;
 
-% Poincare-Steklov operator
+% Boundary operator on nullspace
 P11=kron(V2(:,kd), C1*V1(:,rd));
-P12=kron(V2(:,rd), C1*V1(:,kd));
+P12=zeros(2*N, 2*(N-2));
 P13=kron(V2(:,rd), C1*V1(:,rd));
-P21=kron(C2*V2(:,kd), V1(:,rd));
+P21=zeros(2*N, 2*(N-2));
 P22=kron(C2*V2(:,rd), V1(:,kd));
 P23=kron(C2*V2(:,rd), V1(:,rd));
 P=[P11, P12, P13; P21, P22, P23];
