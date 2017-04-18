@@ -21,15 +21,13 @@ G2=-B2(:,rd)\B2(:,kd);
 A1=D2(kd,kd)+D2(kd,rd)*G1;
 A2=D2(kd,kd)+D2(kd,rd)*G2;
 
-V1=zeros(n,n-2); V1(rd,:)=G1; V1(kd,:)=eye(n-2);
-V2=zeros(n,n-2); V2(rd,:)=G2; V2(kd,:)=eye(n-2);
+% Poincare-Steklov operator
 N1=zeros(n,2); N1(rd,:)=inv(B1(:,rd));
 N2=zeros(n,2); N2(rd,:)=inv(B2(:,rd));
-
-P1=V1/(V1'*V1)*V1'; Q1=eye(n)-P1;
-P2=V2/(V2'*V2)*V2'; Q2=eye(n)-P2;
-F=b1*Q2*N2+N1'*Q1*b2;
-u0=N1*sylvester(N1'*N1, N2'*N2, F)*N2';
+P1=eye(n)-B1'/(B1*B1')*B1;
+P2=eye(n)-B2'/(B2*B2')*B2;
+F=(B1*B1')*(b1*B2')+(B1*b2)*(B2*B2');
+u0=N1*sylvester(B1*B1', B2*B2', F)*N2';
 ub=u0+(N1*b1-u0)*P2'+P1*(b2*N2'-u0);
 
 % Solution
@@ -49,4 +47,7 @@ colormap(jet(256));
 camlight; shading interp;
 axis square manual; 
 xlabel('x'); ylabel('y');
+
+figure(2);
+plot(x,B1*uu,x,uu*B2');
 end
