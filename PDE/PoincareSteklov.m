@@ -7,8 +7,8 @@ kd=2:n-1;
 [xx,yy]=ndgrid(x); y=x';
 
 % Boundary conditions
-a=[1,0;1,0];
-b=[0,1;0,1];
+a=[1,1;1,1];
+b=[0,0;0,0];
 b1=[0.2*sin(3*pi*y); 0*y];
 b2=[(x<0).*sin(pi*x).^4, 0*x];
 
@@ -21,6 +21,17 @@ G2=-B2(:,rd)\B2(:,kd);
 A1=D2(kd,kd)+D2(kd,rd)*G1;
 A2=D2(kd,kd)+D2(kd,rd)*G2;
 
+% Eigenvectors
+S1=zeros(n,n-2);
+S2=zeros(n,n-2);
+[S1(kd,:),L1]=eig(A1,'vector');
+[S2(kd,:),L2]=eig(A2,'vector');
+S1(rd,:)=G1*S1(kd,:);
+S2(rd,:)=G2*S2(kd,:);
+[L1,L2]=ndgrid(L1,L2);
+LL=L1+L2;
+LL(abs(LL)<1e-9)=inf;
+
 % Poincare-Steklov operator
 N1=zeros(n,2); N1(rd,:)=inv(B1(:,rd));
 N2=zeros(n,2); N2(rd,:)=inv(B2(:,rd));
@@ -32,13 +43,6 @@ ub=u0+(N1*b1-u0)*P2'+P1*(b2*N2'-u0);
 
 % Solution
 rhs=-D2*ub-ub*D2';
-S1=zeros(n,n-2);
-S2=zeros(n,n-2);
-[S1(kd,:),L1]=eig(A1,'vector');
-[S2(kd,:),L2]=eig(A2,'vector');
-S1(rd,:)=G1*S1(kd,:);
-S2(rd,:)=G2*S2(kd,:);
-[L1,L2]=ndgrid(L1,L2); LL=L1+L2;
 uu=ub+S1*((S1(kd,:)\rhs(kd,kd)/S2(kd,:)')./LL)*S2';
 
 figure(1);
@@ -47,7 +51,4 @@ colormap(jet(256));
 camlight; shading interp;
 axis square manual; 
 xlabel('x'); ylabel('y');
-
-figure(2);
-plot(x,B1*uu,x,uu*B2');
 end

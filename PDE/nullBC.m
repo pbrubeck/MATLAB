@@ -10,8 +10,8 @@ kd=2:N-1;
 % Boundary conditions
 a=[1,0;1,0];
 b=[0,1;0,1];
-b1=[0.2*sin(3*pi*y); y];
-b2=[(x<0).*sin(pi*x).^4, x];
+b1=[0.2*sin(3*pi*y); 0*y];
+b2=[(x<0).*sin(pi*x).^4, 0*x];
 
 V1=zeros(N); L1=zeros(N,1);
 V2=zeros(N); L2=zeros(N,1);

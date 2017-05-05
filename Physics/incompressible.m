@@ -23,20 +23,16 @@ W=inv(S(kd,:));
 [L1,L2]=ndgrid(L); LL=L1+L2;
 LL(abs(LL)<1e-5)=inf;
 
-V=zeros(n,n-2); 
-V(kd,:)=eye(n-2);
-V(rd,:)=G;
-N=zeros(n,2); 
+N=zeros(n,2);
 N(rd,:)=inv(B(:,rd));
-P=V/(V'*V)*V';
-Q=eye(n)-P;
+P=eye(n)-B'/(B*B')*B;
 
 % Solenoidal projection operator
 function [u]=solenoidal(u)
     b1=real(u(rd,:));
     b2=imag(u(:,rd));
-    F=b1*Q'*N+N'*Q*b2;
-    phi0=N*sylvester(N'*Q*N, N'*Q*N, F)*N';
+    F=(B*B')*(b1*B')+(B*b2)*(B*B');
+    phi0=N*sylvester(B*B', B*B', F)*N';
     phib=phi0+(N*b1-phi0)*P+P*(b2*N'-phi0);
     div=D*real(u)+imag(u)*D';
     rhs=div-D2*phib-phib*D2';
@@ -62,7 +58,8 @@ end
 
 % Initial condition
 zz=xx+1i*yy;
-u=-2000i*(xx+2i*(yy-1/2)).*exp(-3*abs(zz+1i/2).^2);
+a=0.5;
+u=10i*((zz+a)./abs(zz+a)-(zz-a)./abs(zz-a));
 u=solenoidal(u);
 
 [xq,yq]=ndgrid(linspace(-1,1,50));
