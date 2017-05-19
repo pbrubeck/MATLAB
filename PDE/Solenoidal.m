@@ -54,6 +54,8 @@ uu=ub+V1*sln*V2';
 
 v1=v1-D*uu;
 v2=v2-uu*D';
+
+
 vv=hypot(v1,v2);
 
 figure(1); clf;

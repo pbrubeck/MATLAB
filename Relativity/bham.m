@@ -1,9 +1,9 @@
-function [] = bh(n)
-% Black-hole
+function [] = bham(n)
+% Black-hole with angular momentum
 
 % Simulation parameters
-R=1;
-p=1;
+a0=0.5;
+J=3;
 
 % Differentiation matrix
 kd=2:n-1;
@@ -18,7 +18,7 @@ b2=[0*x, 0*x];
 
 A1=diag((x+1).^2)*D*D;
 A2=diag(1-y.^2)*D*D-diag(2*y)*D;
-Q=3/256*(p/R)^2*diag((x+1).^2.*(3-2*x-x.^2).^2);
+Q=9/64*(J/a0)^2*((x+1).^4)*(1-y.^2);
 
 % Imposition of boundary conditions
 E=eye(n);
@@ -48,36 +48,35 @@ LL=L1+L2; LL(abs(LL)<1e-9)=inf;
 W1=inv(S1(kd,:));
 W2=inv(S2(kd,:));
 
-
 eqn=A1*ub+ub*A2';
 uu=ub-S1*((W1*eqn(kd,kd)*W2')./LL)*S2';
 % Gauss Seidel
-its=8;
+its=20;
 for i=1:its
-    eqn=A1*uu+uu*A2'+Q*(uu).^(-7);
+    eqn=A1*uu+uu*A2'+Q.*(uu.^(-7));
     uu=uu-S1*((W1*eqn(kd,kd)*W2')./LL)*S2';
     disp(norm(eqn(kd,kd),'fro')/(n-2));
 end
 
 % Coordinate mapping
-r=(2*R)./(x+1);
+r=(2*a0)./(x+1);
 th=acos(x);
-
-L=10;
 rho=r*sin(th)';
 z=r*cos(th)';
+L=12;
 
 figure(1);
-surf(kron([-1,1],rho),z(:,[n:-1:1,1:n]),uu(:,[n:-1:1,1:n]));
-xlim([-L/2,L/2]);
-ylim([-L/2,L/2]);
-colormap(jet(256));
-camlight;
-shading interp;
-axis square;
+mesh(kron([-1,1],rho),z(:,[n:-1:1,1:n]), uu(:,[n:-1:1,1:n]));
 
-E=sqrt(p^2+4*R^2);
-figure(2);
-v=(1+2*E./r+6*(R./r).^2+2*R^2*E./r.^3+(R./r).^4).^(1/4);
-plot(x, uu(:,1)-v, 'Linewidth', 1);
+xlim([-L,L]);
+ylim([-L,L]);
+colormap(jet(256));
+%camlight;
+%shading interp;
+axis square;
+set(gcf,'DefaultTextInterpreter','latex');
+set(gca,'TickLabelInterpreter','latex','fontsize',14);
+xlabel('$\rho$');
+ylabel('$z$');
+zlabel('$\psi$');
 end
