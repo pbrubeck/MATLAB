@@ -2,7 +2,7 @@ function [] = brillwaves(n)
 % Black-hole plus brill wave
 
 % Simulation parameters
-a0=1;
+a0=2;
 A0=1;
 eta0=0.5;
 s0=1;
