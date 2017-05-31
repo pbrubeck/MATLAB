@@ -1,28 +1,34 @@
-function [] = bh(m,n)
-% Black-hole
+function [] = brillbh(m,n)
+% Brill wave plus black hole
 if nargin<2
     n=m;
 end
 
 % Simulation parameters
-L=8;  % Window
-a0=1; % Throat
-p=2;  % Momentum
+L=8;    % Window
+a0=1;   % Throat
+A0=1;   % Amplitude
+s0=1; 
+eta0=1;
+n0=2;
 
 % Differential operators
 [Dx,x]=chebD(m);
 [Dy,y]=chebD(n); y=y';
 A1=diag((x+1).^2)*Dx*Dx;
 A2=diag(1-y.^2)*Dy*Dy-diag(2*y)*Dy;
-R=3/256*(p/a0)^2*((x+1).^2.*(3-2*x-x.^2).^2);
-C=@(uu) R.*(uu.^(-7));
-F=zeros(m,n);
 
 % Coordinate mapping
 r=(2*a0)./(x+1);
 th=acos(y);
 rho=r*sin(th);
 z=r*cos(th);
+
+eta=log(2./(x+1));
+qq=A0*(exp(-((eta+eta0)/s0).^2)+exp(-((eta-eta0)/s0).^2))*((1-y.^2).^(n0/2));
+qq(isnan(qq))=0;
+C=1/4*((diag((x+1).^2)*Dx*Dx+diag(x+1)*Dx)*qq+qq*(diag(1-y.^2)*Dy*Dy-diag(y)*Dy)');
+F=zeros(m,n);
 
 % Boundary conditions
 a=[-1/4,1;0,0];
@@ -36,7 +42,7 @@ B1=diag(a(1,:))*E1([1,end],:)+diag(b(1,:))*Dx([1,end],:);
 B2=diag(a(2,:))*E2([1,end],:)+diag(b(2,:))*Dy([1,end],:);
 
 % Solution
-[uu]=elliptic(A1,A2,B1,B2,C,F,b1,b2,[1,m],[1,n]);
+uu=elliptic(A1,A2,B1,B2,C,F,b1,b2,[1,m],[1,n]);
 
 % Plot
 [~,mm]=max(r>=sqrt(2)*L);

@@ -1,14 +1,27 @@
-function [] = bham(n)
+function [] = bham(m,n)
 % Black-hole with angular momentum
+if nargin<2
+    n=m;
+end
 
 % Simulation parameters
-a0=0.5;
-J=3;
+L=8;  % Window
+a0=1; % Throat
+J=1;  % Angular momentum
 
-% Differentiation matrix
-kd=2:n-1;
-rd=[1,n];
-[D,x]=chebD(n); y=x';
+% Differential operators
+[Dx,x]=chebD(m);
+[Dy,y]=chebD(n); y=y';
+A1=diag((x+1).^2)*Dx*Dx;
+A2=diag(1-y.^2)*Dy*Dy-diag(2*y)*Dy;
+C=9/64*(J/a0)^2*((x+1).^4)*(1-y.^2);
+F=zeros(m,n);
+
+% Coordinate mapping
+r=(2*a0)./(x+1);
+th=acos(y);
+rho=r*sin(th);
+z=r*cos(th);
 
 % Boundary conditions
 a=[-1/4,1;0,0];
@@ -16,67 +29,28 @@ b=[1,0;1,1];
 b1=[0*y; 0*y+1];
 b2=[0*x, 0*x];
 
-A1=diag((x+1).^2)*D*D;
-A2=diag(1-y.^2)*D*D-diag(2*y)*D;
-Q=9/64*(J/a0)^2*((x+1).^4)*(1-y.^2);
+E1=eye(m);
+E2=eye(n);
+B1=diag(a(1,:))*E1([1,end],:)+diag(b(1,:))*Dx([1,end],:);
+B2=diag(a(2,:))*E2([1,end],:)+diag(b(2,:))*Dy([1,end],:);
 
-% Imposition of boundary conditions
-E=eye(n);
-B1=diag(a(1,:))*E(rd,:)+diag(b(1,:))*D(rd,:);
-B2=diag(a(2,:))*E(rd,:)+diag(b(2,:))*D(rd,:);
-G1=-B1(:,rd)\B1(:,kd);
-G2=-B2(:,rd)\B2(:,kd);
+% Solution
+uu=elliptic(A1,A2,B1,B2,C,F,b1,b2,[1,m],[1,n],80);
 
-% Poincare-Steklov operator
-N1=zeros(n,2); N1(rd,:)=inv(B1(:,rd));
-N2=zeros(n,2); N2(rd,:)=inv(B2(:,rd));
-P1=eye(n)-B1'/(B1*B1')*B1;
-P2=eye(n)-B2'/(B2*B2')*B2;
-F=(B1*B1')*(b1*B2')+(B1*b2)*(B2*B2');
-u0=N1*sylvester(B1*B1', B2*B2', F)*N2';
-ub=u0+(N1*b1-u0)*P2'+P1*(b2*N2'-u0);
-
-% Eigenfunctions
-S1=zeros(n,n-2);
-S2=zeros(n,n-2);
-[S1(kd,:),L1]=eig(A1(kd,kd)+A1(kd,rd)*G1,'vector');
-[S2(kd,:),L2]=eig(A2(kd,kd)+A2(kd,rd)*G2,'vector');
-S1(rd,:)=G1*S1(kd,:);
-S2(rd,:)=G2*S2(kd,:);
-[L1,L2]=ndgrid(L1,L2);
-LL=L1+L2; LL(abs(LL)<1e-9)=inf;
-W1=inv(S1(kd,:));
-W2=inv(S2(kd,:));
-
-eqn=A1*ub+ub*A2';
-uu=ub-S1*((W1*eqn(kd,kd)*W2')./LL)*S2';
-% Gauss Seidel
-its=20;
-for i=1:its
-    eqn=A1*uu+uu*A2'+Q.*(uu.^(-7));
-    uu=uu-S1*((W1*eqn(kd,kd)*W2')./LL)*S2';
-    disp(norm(eqn(kd,kd),'fro')/(n-2));
-end
-
-% Coordinate mapping
-r=(2*a0)./(x+1);
-th=acos(x);
-rho=r*sin(th)';
-z=r*cos(th)';
-L=12;
-
+% Plot
+[~,mm]=max(r>=sqrt(2)*L);
 figure(1);
-mesh(kron([-1,1],rho),z(:,[n:-1:1,1:n]), uu(:,[n:-1:1,1:n]));
-
+surf(kron([-1,1],rho(1:mm,:)),z(1:mm,[end:-1:1,1:end]), uu(1:mm,[end:-1:1,1:end]));
+colormap(jet(256));
+colorbar;
+shading interp;
+%camlight; 
+axis square;
 xlim([-L,L]);
 ylim([-L,L]);
-colormap(jet(256));
-%camlight;
-%shading interp;
-axis square;
 set(gcf,'DefaultTextInterpreter','latex');
 set(gca,'TickLabelInterpreter','latex','fontsize',14);
 xlabel('$\rho$');
 ylabel('$z$');
-zlabel('$\psi$');
+title('$\psi(\rho,z)$');
 end

@@ -25,6 +25,7 @@ V2=zeros(n,n-2);
 [V2(kd,:),L2]=eig(A2,'vector');
 V1(rd,:)=G1*V1(kd,:);
 V2(rd,:)=G2*V2(kd,:);
+A1
 
 % Eigenvalues
 [L1,L2]=ndgrid(L1,L2);
