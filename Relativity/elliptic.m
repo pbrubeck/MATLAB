@@ -1,9 +1,12 @@
-function [uu,res] = elliptic(A1,A2,B1,B2,C,F,b1,b2,rd1,rd2,its,tol)
+function [uu,res] = elliptic(A1,A2,B1,B2,C,F,b1,b2,rd1,rd2,its,tol,h)
+if nargin<13
+    h=-1;
+end
 if nargin<12
-    tol=1e-8;
+    tol=1e-10;
 end
 if nargin<11
-    its=20;
+    its=30;
 end
 
 m=size(A1,1);
@@ -39,13 +42,16 @@ LL=L1+L2; LL(abs(LL)<1e-9)=inf;
 W1=inv(V1(kd1,:));
 W2=inv(V2(kd2,:));
 
-function rhs=op(uu)
+function rhs=eqn(uu,F)
     if isfloat(C)
         rhs=A1*uu+uu*A2'+C.*uu;
     elseif ishandle(C)
         rhs=A1*uu+uu*A2'+C(uu);
     else
         rhs=A1*uu+uu*A2';
+    end
+    if nargin==2
+        rhs=rhs-F;
     end
     rhs=rhs(kd1, kd2);
 end
@@ -54,13 +60,19 @@ function uu=green(rhs)
     uu=V1*((W1*rhs*W2')./LL)*V2';
 end
 
-% Gauss Seidel
-F=F(kd1,kd2);
-uu=ub+green(F-op(ub));
-i=0; res=inf;
+% Succesive Over-Relaxation
+uu=ub;
+um=h.*green(eqn(uu,F));
+uu=uu+um;
+normb=norm(eqn(ub,F),'fro');
+i=1; res=norm(eqn(uu,F),'fro')/normb;
 while i<its && res>=tol
-    uu=uu+green(F-op(uu));
-    res=norm(F-op(uu),'fro')/norm(F-op(ub),'fro');
+    um=um+h.*green(eqn(um));
+    uu=uu+um;
+    res=norm(eqn(uu,F),'fro')/normb;
     i=i+1;
 end
+
+display(i);
+display(res);
 end

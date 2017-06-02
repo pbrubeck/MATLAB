@@ -13,11 +13,9 @@ uu=zeros(N,M);
 uu(1,:)=g;
 uu(2:end,:)=sylvester(A1(2:end,2:end), A2', RHS(2:end,:));
 
-xx=xx(:,[end 1:end]);
-yy=yy(:,[end 1:end]);
-uu=uu(:,[end 1:end]);
 figure(1);
-surf(xx,yy,uu); colormap(jet(256));
+surf(xx(:,[end 1:end]),yy(:,[end 1:end]),uu(:,[end 1:end]));
+colormap(jet(256));
 camlight; shading interp; axis square;
 end
 

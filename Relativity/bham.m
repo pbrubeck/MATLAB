@@ -35,16 +35,16 @@ B1=diag(a(1,:))*E1([1,end],:)+diag(b(1,:))*Dx([1,end],:);
 B2=diag(a(2,:))*E2([1,end],:)+diag(b(2,:))*Dy([1,end],:);
 
 % Solution
-uu=elliptic(A1,A2,B1,B2,C,F,b1,b2,[1,m],[1,n],80);
+uu=elliptic(A1,A2,B1,B2,C,F,b1,b2,[1,m],[1,n],80,1e-10,-1.45);
 
 % Plot
 [~,mm]=max(r>=sqrt(2)*L);
 figure(1);
-surf(kron([-1,1],rho(1:mm,:)),z(1:mm,[end:-1:1,1:end]), uu(1:mm,[end:-1:1,1:end]));
+surf(kron([-1,1],rho(1:mm,:)), z(1:mm,[end:-1:1,1:end]), uu(1:mm,[end:-1:1,1:end]));
 colormap(jet(256));
 colorbar;
 shading interp;
-%camlight; 
+camlight; 
 axis square;
 xlim([-L,L]);
 ylim([-L,L]);

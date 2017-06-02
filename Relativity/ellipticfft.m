@@ -27,13 +27,13 @@ W1=inv(V1(kd1,:));
 
 A2=@(uu) ifft(bsxfun(@times, fft(uu,[],2), L2),[],2);
 
-function rhs=op(uu)
+function rhs=eqn(uu)
     if isfloat(C)
-        rhs=A1*uu+A2(uu)+C.*uu;
+        rhs=A1*uu+A2(uu)+C.*uu-F;
     elseif ishandle(C)
-        rhs=A1*uu+A2(uu)+C(uu);
+        rhs=A1*uu+A2(uu)+C(uu)-F;
     else
-        rhs=A1*uu+A2(uu);
+        rhs=A1*uu+A2(uu)-F;
     end
     rhs=rhs(kd1, :);
 end
@@ -43,12 +43,14 @@ function uu=green(rhs)
 end
 
 % Gauss Seidel
-F=F(kd1,:);
-uu=ub+green(F-op(ub));
-i=0; res=inf;
+uu=ub;
+rhs=eqn(uu);
+normb=norm(eqn(ub),'fro');
+i=0; res=1;
 while i<its && res>=tol
-    uu=uu+green(F-op(uu));
-    res=norm(F-op(uu),'fro')/norm(F-op(ub),'fro');
+    uu=uu-green(rhs);
+    rhs=eqn(uu);
+    res=norm(rhs,'fro')/normb;
     i=i+1;
 end
 end
