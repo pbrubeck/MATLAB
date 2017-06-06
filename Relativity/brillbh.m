@@ -42,10 +42,18 @@ B1=diag(a(1,:))*E1([1,end],:)+diag(b(1,:))*Dx([1,end],:);
 B2=diag(a(2,:))*E2([1,end],:)+diag(b(2,:))*Dy([1,end],:);
 
 % Solution
-[green,ps,kd]=elliptic(A1,A2,B1,B2,[1,m],[1,n]);
-eqn=@(uu,F) kd(A1*uu+uu*A2'+C.*uu-F);
-[uu,res]=sor(eqn,green,ps,F,b1,b2,-1);
+[green,ps,kd,sc,gb]=elliptic(A1,A2,B1,B2,[1,m],[1,n]);
+afun=@(uu) sc(uu)+kd(C).*uu;
+pfun=@(uu) kd(green(uu));
+
+ub=ps(b1,b2);
+rhs=kd(F-A1*ub-ub*A2'-C.*ub);
+u0=kd(ub+green(rhs));
+
+[uu,res,its]=precond(afun,pfun,rhs,u0,20,1e-10);
+uu=gb(uu)+ub;
 display(res);
+display(its);
 
 % Plot
 [~,mm]=max(r>=sqrt(2)*L);

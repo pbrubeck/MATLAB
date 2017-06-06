@@ -10,14 +10,14 @@ tol=1e-7;
 h=-1;
 
 % Simulation parameters
-L=20;           % Window
-r0=L;           % Window
+L=20;           % Plot window
+r0=L;           % Numerical window
 m1=1;           % Mass of BH1
 m2=1;           % Mass of BH2
 z1= 4;          % Position of BH1
 z2=-4;          % Position of BH2
 s1= 0.5;        % Spin of BH1
-s2=-0.5;        % Spin of BH2
+s2= 0.5;        % Spin of BH2
 
 % Differential operators
 [Dx,x]=chebD(2*m);
@@ -44,7 +44,7 @@ r1=hypot(rr,zz-z1);
 r2=hypot(rr,zz-z2);
 
 psi=1+(m1/2)./r1+(m2/2)./r2;
-E=r0^2*9/4*(rr.^2).*(s1^2./r1.^8+s2^2./r2.^8+2*s1*s2.*(rr.^2+(zz-z1).*(zz-2))./(r1.*r2).^5);
+E=r0^2*9/4*(rr.^2).*(s1^2./r1.^8+s2^2./r2.^8+2*s1*s2*(rr.^2+(zz-z1).*(zz-2))./(r1.*r2).^5);
 F=zeros(m,n);
 
 [green,ps,kd]=elliptic(A1,A2,B1,B2,1,[1,n]);
@@ -53,8 +53,8 @@ eqn=@(uu,F) kd(A1*uu+uu*A2'+E.*(psi+uu).^(-7)-F);
 % HAM nonlinear functions
 R1=@(um) (psi+um{1}).^(-7);
 R2=@(um) -7*(psi+um{1}).^(-8).*(um{2});
-R3=@(um) -7/2*(psi+um{1}).^(-9).*(2*(psi+um{1}).*um{3}-8*um{2}.^2);
-R4=@(um) -7/6*(psi+um{1}).^(-10).*(6*(psi+um{1}).^2.*um{4}-48*(psi+um{1}).*um{2}.*um{3}+72*um{2}.^3);
+R3=@(um) -7*(psi+um{1}).^(-9).*((psi+um{1}).*um{3}-4*um{2}.^2);
+R4=@(um) -7*(psi+um{1}).^(-10).*((psi+um{1}).^2.*um{4}-8*(psi+um{1}).*um{2}.*um{3}+12*um{2}.^3);
 
 ub=ps(b1,b2);
 um=cell(4,1);

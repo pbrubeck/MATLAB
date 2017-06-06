@@ -1,4 +1,4 @@
-function [green,ps,kd] = elliptic(A1,A2,B1,B2,rd1,rd2)
+function [green,ps,kd,sc,gb] = elliptic(A1,A2,B1,B2,rd1,rd2)
 m=size(A1,1);
 n=size(A2,1);
 
@@ -10,10 +10,19 @@ kd=@(uu) uu(kd1,kd2);
 % Give-back matrix
 G1=-B1(:,rd1)\B1(:,kd1);
 G2=-B2(:,rd2)\B2(:,kd2);
+function uu=giveback(m,n,kd1,kd2,rd1,rd2,G1,G2,vv)
+    uu=zeros(m,n);
+    uu(kd1,kd2)=vv;
+    uu(rd1,kd2)=G1*vv;
+    uu(kd1,rd2)=vv*G2';
+    uu(rd1,rd2)=G1*vv*G2';
+end
+gb=@(vv) giveback(m,n,kd1,kd2,rd1,rd2,G1,G2,vv);
 
 % Schur complement
 S1=A1(kd1,kd1)+A1(kd1,rd1)*G1;
 S2=A2(kd2,kd2)+A2(kd2,rd2)*G2;
+sc=@(vv) S1*vv+vv*S2';
 
 % Eigenfunctions
 V1=zeros(m,length(kd1));

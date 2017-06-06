@@ -11,7 +11,7 @@ h=-1;
 
 % Simulation parameters
 L=20;           % Plot window
-r0=sqrt(2)*L;   % Radial window
+r0=sqrt(2)*L;   % Numerical window
 m1=1;           % Mass
 J=0.5;          % Angular momentum
 
@@ -40,7 +40,7 @@ z=r*cos(th);
 rr=rho+1i*z;
 
 psi=1+(m1/2)./abs(rr);
-E=9/4*J^2*(r.^-4).*(1-y.^2);
+E=9/4*J^2*(r.^-4)*(1-y.^2);
 F=zeros(m,n);
 
 [green,ps,kd]=elliptic(A1,A2,B1,B2,1,[1,n]);
@@ -49,8 +49,8 @@ eqn=@(uu,F) kd(A1*uu+uu*A2'+E.*(psi+uu).^(-7)-F);
 % HAM nonlinear functions
 R1=@(um) (psi+um{1}).^(-7);
 R2=@(um) -7*(psi+um{1}).^(-8).*(um{2});
-R3=@(um) -7/2*(psi+um{1}).^(-9).*(2*(psi+um{1}).*um{3}-8*um{2}.^2);
-R4=@(um) -7/6*(psi+um{1}).^(-10).*(6*(psi+um{1}).^2.*um{4}-48*(psi+um{1}).*um{2}.*um{3}+72*um{2}.^3);
+R3=@(um) -7*(psi+um{1}).^(-9).*((psi+um{1}).*um{3}-4*um{2}.^2);
+R4=@(um) -7*(psi+um{1}).^(-10).*((psi+um{1}).^2.*um{4}-8*(psi+um{1}).*um{2}.*um{3}+12*um{2}.^3);
 
 ub=ps(b1,b2);
 um=cell(4,1);
@@ -71,7 +71,6 @@ display(res);
 display(i);
 
 uu=1+um{1};
-
 figure(1);
 surf(kron([-1,1],rho), z(:,[end:-1:1,1:end]), uu(:,[end:-1:1,1:end]));
 

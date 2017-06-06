@@ -10,7 +10,7 @@ tol=1e-6;
 h=-1;
 
 % Simulation parameters
-L=8;    % Window
+L=20;   % Plot window
 a0=1;   % Throat
 p=0.5;  % Momentum
 
@@ -47,8 +47,8 @@ eqn=@(uu,F) kd(A1*uu+uu*A2'+E.*(psi+uu).^(-7)-F);
 % HAM nonlinear functions
 R1=@(um) (psi+um{1}).^(-7);
 R2=@(um) -7*(psi+um{1}).^(-8).*(um{2});
-R3=@(um) -7/2*(psi+um{1}).^(-9).*(2*(psi+um{1}).*um{3}-8*um{2}.^2);
-R4=@(um) -7/6*(psi+um{1}).^(-10).*(6*(psi+um{1}).^2.*um{4}-48*(psi+um{1}).*um{2}.*um{3}+72*um{2}.^3);
+R3=@(um) -7*(psi+um{1}).^(-9).*((psi+um{1}).*um{3}-4*um{2}.^2);
+R4=@(um) -7*(psi+um{1}).^(-10).*((psi+um{1}).^2.*um{4}-8*(psi+um{1}).*um{2}.*um{3}+12*um{2}.^3);
 
 ub=ps(b1,b2);
 um=cell(4,1);
@@ -76,7 +76,7 @@ surf(kron([-1,1],rho(1:mm,:)),z(1:mm,[end:-1:1,1:end]), uu(1:mm,[end:-1:1,1:end]
 colormap(jet(256));
 colorbar;
 shading interp;
-%camlight; 
+camlight; 
 axis square;
 xlim([-L,L]);
 ylim([-L,L]);

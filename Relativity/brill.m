@@ -37,10 +37,19 @@ qq=A0*(rho.^2).*exp(-(rho/1).^2-(z/1).^2);
 C=1/4*((diag(x.^2)*Dx*Dx+diag(x)*Dx)*qq+qq*(diag(1-y.^2)*Dy*Dy-diag(y)*Dy)');
 F=zeros(m,n);
 
-[green,ps,kd]=elliptic(A1,A2,B1,B2,1,[1,n]);
-eqn=@(uu,F) kd(A1*uu+uu*A2'+C.*uu-F);
-[uu,res]=sor(eqn,green,ps,F,b1,b2,-1);
+% Solution
+[green,ps,kd,sc,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
+afun=@(uu) sc(uu)+kd(C).*uu;
+pfun=@(uu) kd(green(uu));
+
+ub=ps(b1,b2);
+rhs=kd(F-A1*ub-ub*A2'-C.*ub);
+u0=kd(ub+green(rhs));
+
+[uu,res,its]=precond(afun,pfun,rhs,u0,20,1e-10);
+uu=gb(uu)+ub;
 display(res);
+display(its);
 
 figure(1);
 surf(kron([-1,1],rho), z(:,[end:-1:1,1:end]), uu(:,[end:-1:1,1:end]));
