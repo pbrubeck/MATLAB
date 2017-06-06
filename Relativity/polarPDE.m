@@ -18,7 +18,10 @@ E1=eye(m);
 B1=a*E1(1,:)+b*Dx(1,:);
 b1=4*sin(5*y);
 
-uu=ellipticfft(A1,L2,B1,C,F,b1,1);
+[A2,green,ps,kd]=ellipticfft(A1,L2,B1,1);
+eqn=@(uu,F) A1*uu+A2(uu)-F; 
+ub=ps(b1);
+uu=ub-green(kd(eqn(ub,F)));
 
 xx=x*cos(y);
 yy=x*sin(y);

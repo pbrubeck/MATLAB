@@ -4,7 +4,7 @@ if nargin<2
 end
 
 % Simulation parameters
-L=8;
+L=8*(m-1)/(m-2);
 r0=sqrt(2)*L;
 A0=1;
 
@@ -37,7 +37,10 @@ qq=A0*(rho.^2).*exp(-(rho/1).^2-(z/1).^2);
 C=1/4*((diag(x.^2)*Dx*Dx+diag(x)*Dx)*qq+qq*(diag(1-y.^2)*Dy*Dy-diag(y)*Dy)');
 F=zeros(m,n);
 
-uu=elliptic(A1,A2,B1,B2,C,F,b1,b2,1,[1,n],20,1e-10,-1);
+[green,ps,kd]=elliptic(A1,A2,B1,B2,1,[1,n]);
+eqn=@(uu,F) kd(A1*uu+uu*A2'+C.*uu-F);
+[uu,res]=sor(eqn,green,ps,F,b1,b2,-1);
+display(res);
 
 figure(1);
 surf(kron([-1,1],rho), z(:,[end:-1:1,1:end]), uu(:,[end:-1:1,1:end]));
@@ -56,7 +59,7 @@ ylabel('$z$');
 title('$\psi(\rho,z)$');
 view(2);
 
-% [rr,zz]=ndgrid(linspace(-L,L,m));
+% [rr,zz]=ndgrid(linspace(-L,L,2*m));
 % xq=hypot(rr,zz)/r0;
 % yq=zz./hypot(rr,zz);
 % [xx,yy]=ndgrid(x,y);
@@ -78,5 +81,4 @@ view(2);
 % ylabel('$z$');
 % title('$\psi(\rho,z)$');
 % view(2);
-
 end
