@@ -32,12 +32,13 @@ V2=zeros(n,length(kd2));
 V1(rd1,:)=G1*V1(kd1,:);
 V2(rd2,:)=G2*V2(kd2,:);
 [L1,L2]=ndgrid(L1,L2);
-LL=L1+L2; LL(abs(LL)<1e-9)=inf;
+LL=L1+L2;
 W1=inv(V1(kd1,:));
 W2=inv(V2(kd2,:));
 
 % Green's function
-green=@(rhs) V1*((W1*rhs*W2')./LL)*V2';
+green=@(rhs) V1*(((W1*rhs*W2'))./LL)*V2';
+
 
 % Poincare-Steklov operator
 N1=zeros(m,length(rd1)); N1(rd1,:)=inv(B1(:,rd1));

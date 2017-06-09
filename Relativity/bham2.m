@@ -5,8 +5,8 @@ if nargin<2
 end
 
 % Homotopy Analysis Method
-its=30;
-tol=1e-7;
+maxits=30;
+tol=3e-10;
 h=-1;
 
 % Simulation parameters
@@ -51,30 +51,32 @@ F=zeros(m,n);
 eqn=@(uu,F) kd(A1*uu+uu*A2'+E.*(psi+uu).^(-7)-F);
 
 % HAM nonlinear functions
-R1=@(um) (psi+um{1}).^(-7);
-R2=@(um) -7*(psi+um{1}).^(-8).*(um{2});
-R3=@(um) -7*(psi+um{1}).^(-9).*((psi+um{1}).*um{3}-4*um{2}.^2);
-R4=@(um) -7*(psi+um{1}).^(-10).*((psi+um{1}).^2.*um{4}-8*(psi+um{1}).*um{2}.*um{3}+12*um{2}.^3);
+R{1}=@(um) (psi+um{1}).^(-7);
+R{2}=@(um) -7*(psi+um{1}).^(-8).*(um{2});
+R{3}=@(um) -7*(psi+um{1}).^(-9).*((psi+um{1}).*um{3}-4*um{2}.^2);
+R{4}=@(um) -7*(psi+um{1}).^(-10).*((psi+um{1}).^2.*um{4}-8*(psi+um{1}).*um{2}.*um{3}+12*um{2}.^3);
+R{5}=@(um) -7*(psi+um{1}).^(-11).*(-30*um{2}.^4+36*(psi+um{1}).*um{2}.^2.*um{3}+...
+    -8*(psi+um{1}).^2.*um{2}.*um{4}+(psi+um{1}).^2.*(-4*um{3}.^2+(psi+um{1}).*um{5}));
 
 ub=ps(b1,b2);
-um=cell(4,1);
-um{1}=ub-green(eqn(ub,F));
+uu=ub-green(eqn(ub,F));
 
-i=0;
-res=norm(eqn(um{1},F),'inf');
-while res>tol && i<its
-    um{2}=h*green(kd(A1*um{1}+um{1}*A2'+E.*R1(um)));
-    um{3}=um{2}+h*green(kd(A1*um{2}+um{2}*A2'+E.*R2(um)));
-    um{4}=um{3}+h*green(kd(A1*um{3}+um{3}*A2'+E.*R3(um)));
-    um{5}=um{4}+h*green(kd(A1*um{4}+um{4}*A2'+E.*R4(um)));
-    um{1}=um{1}+um{2}+um{3}+um{4}+um{5};
-    res=norm(eqn(um{1},F),'inf');
-    i=i+1;
+its=0;
+err=1;
+um=cell(length(R)+1,1);
+while err>tol && its<maxits
+    um{1}=uu;
+    for k=1:length(R)
+        um{k+1}=(k>1)*um{k}+h*green(kd(A1*um{k}+um{k}*A2'+E.*R{k}(um)));
+    end
+    uu=sum(cat(3,um{:}),3);
+    err=norm(1-um{1}./uu,'inf');
+    its=its+1;
 end
-display(res);
-display(i);
 
-uu=1+um{1};
+display(its);
+display(err);
+uu=uu+1;
 
 figure(1);
 surf([rr;-rr(end:-1:1,:)],zz([1:end,end:-1:1],:),uu([1:end,end:-1:1],:));
