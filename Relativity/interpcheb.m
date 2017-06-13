@@ -1,4 +1,5 @@
-function [ uu ] = interpcheb(xx,u)
+function [ uu ] = interpcheb(u,xx)
+% Interpolation from Chebyshev nodes to any other grid [-1,1]
 N=size(u,1);
 M=2*N-2;
 uhat=ifft(u,M,'symmetric');

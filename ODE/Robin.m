@@ -13,7 +13,7 @@ B=diag(alph)*E(rd,:)+diag(beta)*D(rd,:);
 G=-B(:,rd)\B(:,kd);
 A=D2(kd,kd)+D2(kd,rd)*G;
 
-f=-5*(x.^2-0.25);
+f=-4*x.^2+1;
 rhs=f(kd)-D2(kd,rd)*(B(:,rd)\bc);
 
 u=zeros(n,1);
@@ -21,6 +21,9 @@ u(kd)=A\rhs;
 u(rd)=G*u(kd)+B(:,rd)\bc;
 
 xx=linspace(-1,1,n)';
-uu=interpcheb(xx,u);
-plot(x,u,'b',xx,uu,'.r');
+uu=interpcheb(u,xx);
+vv=spline(x,u,xx);
+
+f=@(x) (-2*x.^4+3*x.^2+3*x+1)/6;
+plot(x,u-f(x),'b',xx,uu-f(xx),'.r');
 end

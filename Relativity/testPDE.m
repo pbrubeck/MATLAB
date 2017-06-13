@@ -37,10 +37,15 @@ uu=kd(ub+green(rhs));
 [uu,res,its]=precond(afun,pfun,rhs,uu,20,1e-15);
 uu=gb(uu)+ub;
 
+
+[xxx,yyy]=ndgrid(linspace(-1,1,m), linspace(-1,1,n));
+vvv=interpcheb2(uu,xxx,yyy);
+
 err=norm(uu-f(xx+1i*yy),'inf');
+errint=norm(vvv-f(xxx+1i*yyy),'inf');
 
 figure(1);
-surf(x,y,uu);
+surf(xxx,yyy,vvv);
 colormap(jet(256));
 shading interp;
 camlight;
@@ -48,4 +53,5 @@ camlight;
 display(its);
 display(res);
 display(err);
+display(errint);
 end

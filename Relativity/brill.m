@@ -9,10 +9,10 @@ r0=sqrt(2)*L;
 A0=1;
 
 [Dx,x]=chebD(2*m);
-A1=diag(x.^2)*Dx*Dx+diag(2*x)*Dx;
+A1=(diag(x.^2)*Dx+diag(2*x))*Dx;
 [A1,Dx,x]=radial(A1,Dx,x);
 
-[Dy,y]=legD(n); y=y';
+[Dy,y]=chebD(n); y=y';
 A2=diag(1-y.^2)*Dy*Dy-diag(2*y)*Dy;
 
 a=[1,1;0,0];
@@ -53,8 +53,11 @@ uu=gb(u1)+ub;
 display(its);
 display(res);
 
+
+
+
 figure(1);
-surf(kron([-1,1],rho), z(:,[end:-1:1,1:end]), uu(:,[end:-1:1,1:end]));
+surf(kron([1,-1],rho), z(:,[1:end,end:-1:1]), uu(:,[1:end,end:-1:1]));
 
 colormap(jet(256));
 colorbar;
