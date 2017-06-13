@@ -37,21 +37,25 @@ uu=kd(ub+green(rhs));
 [uu,res,its]=precond(afun,pfun,rhs,uu,20,1e-15);
 uu=gb(uu)+ub;
 
+display(its);
+display(res);
 
-[xxx,yyy]=ndgrid(linspace(-1,1,m), linspace(-1,1,n));
-vvv=interpcheb2(uu,xxx,yyy);
+xq=linspace(-1,1,m);
+yq=linspace(-1,1,n);
+[xxx,yyy]=ndgrid(xq, yq);
+%uuu=interp2(xx',yy',uu',xxx',yyy','splines')';
+%uuu=interpcheb2(uu,xxx,yyy);
+uuu=interpcheb(interpcheb(uu,xq,1),yq,2);
 
 err=norm(uu-f(xx+1i*yy),'inf');
-errint=norm(vvv-f(xxx+1i*yyy),'inf');
+errint=norm(uuu-f(xxx+1i*yyy),'inf');
 
 figure(1);
-surf(xxx,yyy,vvv);
+surf(xxx,yyy,uuu);
 colormap(jet(256));
 shading interp;
 camlight;
 
-display(its);
-display(res);
 display(err);
 display(errint);
 end

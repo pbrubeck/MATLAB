@@ -53,11 +53,15 @@ uu=gb(u1)+ub;
 display(its);
 display(res);
 
-
+[rr,zz]=ndgrid(linspace(-L,L,2*m));
+xx=hypot(rr,zz)/r0;
+yy=zz./hypot(rr,zz);
+uuu=interpcheb2(uu([1:end,end:-1:1],:),xx,yy);
 
 
 figure(1);
-surf(kron([1,-1],rho), z(:,[1:end,end:-1:1]), uu(:,[1:end,end:-1:1]));
+surf([rho; -flipud(rho)], z([1:end,end:-1:1],:), uu([1:end,end:-1:1],:));
+surf(rr,zz,uuu);
 
 colormap(jet(256));
 colorbar;
