@@ -19,5 +19,8 @@ rhs=f(kd)-D2(kd,rd)*(B(:,rd)\bc);
 u=zeros(n,1);
 u(kd)=A\rhs;
 u(rd)=G*u(kd)+B(:,rd)\bc;
-plot(x,u);
+
+xx=linspace(-1,1,n)';
+uu=interpcheb(xx,u);
+plot(x,u,'b',xx,uu,'.r');
 end

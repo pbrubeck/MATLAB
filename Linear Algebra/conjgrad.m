@@ -34,7 +34,7 @@ function x = conjgrad(A,b,tol)
     t = (r'*y)/s;
     x = x + t*y;
   
-    for k = 1:numel(b);
+    for k = 1:numel(b)
        r = r - t*z;
        if( norm(r) < tol )
             return;

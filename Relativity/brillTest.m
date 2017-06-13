@@ -23,7 +23,7 @@ L=8;
 r0=sqrt(2)*L;
 
 [Dx,x]=chebD(2*m);
-A1=diag(x.^2)*Dx*Dx+diag(2*x)*Dx;
+A1=(diag(x.^2)*Dx+diag(2*x))*Dx;
 [A1,Dx,x]=radial(A1,Dx,x);
 
 [Dy,y]=chebD(n); y=y';
