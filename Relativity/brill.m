@@ -34,17 +34,18 @@ rho=r*sin(th);
 z=r*cos(th);
 
 qq=A0*(rho.^2).*exp(-(rho/1).^2-(z/1).^2);
-C=1/4*((diag(x.^2)*Dx*Dx+diag(x)*Dx)*qq+qq*(diag(1-y.^2)*Dy*Dy-diag(y)*Dy)');
+A3=1/4*((diag(x.^2)*Dx*Dx+diag(x)*Dx)*qq+qq*(diag(1-y.^2)*Dy*Dy-diag(y)*Dy)');
 F=zeros(m,n);
+opA=@(uu) A1*uu+uu*A2'+A3.*uu;
 
 % Solution
-[green,ps,kd,sc,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
+[green,ps,kd,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
 
 ub=ps(b1,b2);
-rhs=kd(F-A1*ub-ub*A2'-C.*ub);
+rhs=kd(F-opA(ub));
 u0=kd(ub+green(rhs));
 
-afun=@(uu) (sc(uu)+kd(C).*uu);
+afun=@(uu) kd(opA(gb(uu)));
 pfun=@(uu) kd(green(uu));
 
 [u1,res,its]=precond(afun,pfun,rhs,u0,20,2e-15);

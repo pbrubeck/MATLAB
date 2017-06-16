@@ -22,16 +22,29 @@ B2=diag(a(2,:))*E2([1,n],:)+diag(b(2,:))*Dy([1,n],:);
 
 % Right hand sides
 f=@(z) exp(-abs(z).^2);
-b1=f([1+1i*y; -1+1i*y]);
-b2=f([x+1i, x-1i]);
+fx=@(z) -2*real(z).*f(z);
+fy=@(z) -2*imag(z).*f(z);
+
+w1=[1+1i*y; -1+1i*y];
+w2=[x+1i, x-1i];
+b1=diag(a(1,:))*f(w1)+diag(b(1,:))*fx(w1);
+b2=f(w2)*diag(a(2,:))+fy(w2)*diag(b(2,:));
+
+% Differential operator
+opA=@(uu) A1*uu+uu*A2'+A3.*uu;
+cA=@(i,j) A1(:,i)+A3(i,j)*(1:m==i)';
+rA=@(i,j) A2(:,j)+A3(i,j)*(1:n==j)';
+
+% Preconditioner (Low frequency component)
+[P1,P2]=blockprecond(cA,rA,m,n);
 
 % Solver
-[green,ps,kd,sc,gb]=elliptic(A1,A2,B1,B2,[1,m],[1,n]);
+[green,ps,kd,gb]=elliptic(P1,P2,B1,B2,[1,m],[1,n]);
 
-afun=@(uu) sc(uu)+kd(A3).*uu;
+afun=@(uu)  kd(opA(gb(uu)));
 pfun=@(rhs) kd(green(rhs));
 ub=ps(b1,b2);
-rhs=kd(F-A1*ub-ub*A2'-A3.*ub);
+rhs=kd(F-opA(ub));
 uu=kd(ub+green(rhs));
 
 [uu,res,its]=precond(afun,pfun,rhs,uu,20,1e-15);

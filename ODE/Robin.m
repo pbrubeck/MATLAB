@@ -20,10 +20,12 @@ u=zeros(n,1);
 u(kd)=A\rhs;
 u(rd)=G*u(kd)+B(:,rd)\bc;
 
+f=@(x) (-2*x.^4+3*x.^2+3*x+1)/6;
+
 xx=linspace(-1,1,n)';
 uu=interpcheb(u,xx);
 vv=spline(x,u,xx);
 
-f=@(x) (-2*x.^4+3*x.^2+3*x+1)/6;
+figure(1);
 plot(x,u-f(x),'b',xx,uu-f(xx),'.r');
 end

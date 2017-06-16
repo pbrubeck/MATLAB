@@ -48,21 +48,22 @@ rho=r*sin(th);
 z=r*cos(th);
 
 % Test code
-C=(1/2)*exp(-rho.^2-z.^2).*(1+2*rho.^2.*(-3+rho.^2+z.^2));
+A3=(1/2)*exp(-rho.^2-z.^2).*(1+2*rho.^2.*(-3+rho.^2+z.^2));
 F=(1/20).*(1+rho.^2+z.^2).^(-5/2).*((-6)+exp(-rho.^2-z.^2) ... 
     .*(1+rho.^2+z.^2).^2.*(1+2.*rho.^2.*((-3)+rho.^2+z.^2)).*( ...
   1+10.*(1+rho.^2+z.^2).^(1/2)));
-C=diag(r.^2)*C;
+A3=diag(r.^2)*A3;
 F=diag(r.^2)*F;
+opA=@(uu) A1*uu+uu*A2'+A3.*uu;
 
 % Solution
-[green,ps,kd,sc,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
+[green,ps,kd,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
 
 ub=ps(b1,b2);
-rhs=kd(F-A1*ub-ub*A2'-C.*ub);
+rhs=kd(F-A1*ub-ub*A2'-A3.*ub);
 u0=kd(ub+green(rhs));
 
-afun=@(uu) (sc(uu)+kd(C).*uu);
+afun=@(uu) kd(opA(gb(uu)));
 pfun=@(uu) kd(green(uu));
 
 millis(1)=toc;

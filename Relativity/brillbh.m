@@ -27,8 +27,9 @@ z=r*cos(th);
 eta=log(2./(x+1));
 qq=A0*(exp(-((eta+eta0)/s0).^2)+exp(-((eta-eta0)/s0).^2))*((1-y.^2).^(n0/2));
 qq(isnan(qq))=0;
-C=1/4*((diag((x+1).^2)*Dx*Dx+diag(x+1)*Dx)*qq+qq*(diag(1-y.^2)*Dy*Dy-diag(y)*Dy)');
+A3=1/4*((diag((x+1).^2)*Dx*Dx+diag(x+1)*Dx)*qq+qq*(diag(1-y.^2)*Dy*Dy-diag(y)*Dy)');
 F=zeros(m,n);
+opA=@(uu) A1*uu+uu*A2'+A3.*uu;
 
 % Boundary conditions
 a=[-1/4,1;0,0];
@@ -42,12 +43,12 @@ B1=diag(a(1,:))*E1([1,end],:)+diag(b(1,:))*Dx([1,end],:);
 B2=diag(a(2,:))*E2([1,end],:)+diag(b(2,:))*Dy([1,end],:);
 
 % Solution
-[green,ps,kd,sc,gb]=elliptic(A1,A2,B1,B2,[1,m],[1,n]);
-afun=@(uu) sc(uu)+kd(C).*uu;
+[green,ps,kd,gb]=elliptic(A1,A2,B1,B2,[1,m],[1,n]);
+afun=@(uu) kd(opA(gb(uu)));
 pfun=@(uu) kd(green(uu));
 
 ub=ps(b1,b2);
-rhs=kd(F-A1*ub-ub*A2'-C.*ub);
+rhs=kd(F-A1*ub-ub*A2'-A3.*ub);
 u0=kd(ub+green(rhs));
 
 [uu,res,its]=precond(afun,pfun,rhs,u0,20,1e-10);
