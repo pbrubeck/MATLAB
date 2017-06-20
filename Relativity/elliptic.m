@@ -5,17 +5,17 @@ n=size(A2,1);
 % Kept degrees of freedom
 kd1=1:m; kd1(rd1)=[];
 kd2=1:n; kd2(rd2)=[];
-kd=@(uu) uu(kd1,kd2);
+kd=@(uu) reshape(uu(kd1,kd2),[],1);
 
 % Give-back matrix
 G1=-B1(:,rd1)\B1(:,kd1);
 G2=-B2(:,rd2)\B2(:,kd2);
 function uu=giveback(m,n,kd1,kd2,rd1,rd2,G1,G2,vv)
     uu=zeros(m,n);
-    uu(kd1,kd2)=vv;
-    uu(rd1,kd2)=G1*vv;
-    uu(kd1,rd2)=vv*G2';
-    uu(rd1,rd2)=G1*vv*G2';
+    uu(kd1,kd2)=reshape(vv,length(kd1),length(kd2));
+    uu(rd1,kd2)=G1*uu(kd1,kd2);
+    uu(kd1,rd2)=uu(kd1,kd2)*G2';
+    uu(rd1,rd2)=G1*uu(kd1,kd2)*G2';
 end
 gb=@(vv) giveback(m,n,kd1,kd2,rd1,rd2,G1,G2,vv);
 
@@ -36,18 +36,17 @@ W1=inv(V1(kd1,:));
 W2=inv(V2(kd2,:));
 
 % Green's function
-function uu=greenfunction(rhs)
-    uu=V1*(((W1*rhs*W2'))./LL)*V2';
+function uu=greenfunction(rhs,V1,V2,W1,W2)
+    uu=V1*(((W1*reshape(rhs, size(V1,2), size(V2,2))*W2'))./LL)*V2';
 end
-gf=@greenfunction;
-
+gf=@(rhs) greenfunction(rhs,V1,V2,W1,W2);
 
 % Eigenvalue perturbator
-% Adds a term of the form kron(P4,P3)*diag(C(:))*kron(P2,P1)
-function eigper(C,P1,P2,P3,P4)
-    LL=LL+((V1(kd1,:)\P3(kd1,:)).*((P1*V1).'))*C*((V2(kd2,:)\P4(kd2,:)).*((P2*V2).')).';
+% Adds a term of the form kron(E,D)*diag(C(:))*kron(B,A)
+function []=eigper(h,A,B,C,D,E,kd1,kd2,V1,V2)
+    LL=h*LL+((V1(kd1,:)\D(kd1,:)).*((A*V1).'))*C*((V2(kd2,:)\E(kd2,:)).*((B*V2).')).';
 end
-dL=@eigper; 
+dL=@(h,A,B,C,D,E) eigper(h,A,B,C,D,E,kd1,kd2,V1,V2); 
 
 % Poincare-Steklov operator
 N1=zeros(m,length(rd1)); N1(rd1,:)=inv(B1(:,rd1));

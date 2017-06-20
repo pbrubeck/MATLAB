@@ -49,9 +49,11 @@ pfun=@(uu) kd(green(uu));
 
 ub=ps(b1,b2);
 rhs=kd(F-A1*ub-ub*A2'-A3.*ub);
-u0=kd(ub+green(rhs));
+uu=kd(ub+green(rhs));
+tol=2e-15;
+maxit=50;
 
-[uu,res,its]=precond(afun,pfun,rhs,u0,20,1e-10);
+[uu,~,res,its]=bicgstab(afun,rhs,tol,maxit,pfun,[],uu);
 uu=gb(uu)+ub;
 display(res);
 display(its);

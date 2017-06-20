@@ -39,17 +39,19 @@ F=zeros(m,n);
 opA=@(uu) A1*uu+uu*A2'+A3.*uu;
 
 % Solution
-[green,ps,kd,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
+[gf,ps,kd,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
 
 ub=ps(b1,b2);
 rhs=kd(F-opA(ub));
-u0=kd(ub+green(rhs));
+uu=kd(ub+gf(rhs));
 
 afun=@(uu) kd(opA(gb(uu)));
-pfun=@(uu) kd(green(uu));
+pfun=@(uu) kd(gf(uu));
+tol=2e-15;
+maxit=50;
 
-[u1,res,its]=precond(afun,pfun,rhs,u0,20,2e-15);
-uu=gb(u1)+ub;
+[uu,~,res,its]=bicgstab(afun,rhs,tol,maxit,pfun,[],uu);
+uu=gb(uu)+ub;
 
 display(its);
 display(res);

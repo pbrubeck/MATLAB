@@ -57,20 +57,23 @@ F=diag(r.^2)*F;
 opA=@(uu) A1*uu+uu*A2'+A3.*uu;
 
 % Solution
-[green,ps,kd,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
+[gf,ps,kd,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
 
 ub=ps(b1,b2);
-rhs=kd(F-A1*ub-ub*A2'-A3.*ub);
-u0=kd(ub+green(rhs));
+rhs=kd(F-opA(ub));
+uu=kd(ub+gf(rhs));
 
 afun=@(uu) kd(opA(gb(uu)));
-pfun=@(uu) kd(green(uu));
+pfun=@(uu) kd(gf(uu));
 
-millis(1)=toc;
+millis(1)=1000*toc;
 tic;
 
-[u1,res,its]=precond(afun,pfun,rhs,u0,20,2e-16);
-uu=gb(u1)+ub;
+tol=2e-15;
+maxit=50;
+
+[uu,~,res,its]=bicgstab(afun,rhs,tol,maxit,pfun,[],uu);
+uu=gb(uu)+ub;
 millis(2)=1000*toc;
 
 ug=1+(1/10).*(1+rho.^2+z.^2).^(-1/2);
