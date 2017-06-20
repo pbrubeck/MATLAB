@@ -1,4 +1,4 @@
-function [green,ps,kd,gb] = elliptic(A1,A2,B1,B2,rd1,rd2)
+function [gf,ps,kd,gb,dL] = elliptic(A1,A2,B1,B2,rd1,rd2)
 m=size(A1,1);
 n=size(A2,1);
 
@@ -36,8 +36,18 @@ W1=inv(V1(kd1,:));
 W2=inv(V2(kd2,:));
 
 % Green's function
-green=@(rhs) V1*(((W1*rhs*W2'))./LL)*V2';
+function uu=greenfunction(rhs)
+    uu=V1*(((W1*rhs*W2'))./LL)*V2';
+end
+gf=@greenfunction;
 
+
+% Eigenvalue perturbator
+% Adds a term of the form kron(P4,P3)*diag(C(:))*kron(P2,P1)
+function eigper(C,P1,P2,P3,P4)
+    LL=LL+((V1(kd1,:)\P3(kd1,:)).*((P1*V1).'))*C*((V2(kd2,:)\P4(kd2,:)).*((P2*V2).')).';
+end
+dL=@eigper; 
 
 % Poincare-Steklov operator
 N1=zeros(m,length(rd1)); N1(rd1,:)=inv(B1(:,rd1));

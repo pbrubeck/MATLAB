@@ -28,7 +28,7 @@ function [uu]=dointerp(u)
 end
 
 uucell=cellfun(@dointerp, num2cell(u, dim), 'UniformOutput', false);
-uu=ipermute(cat(ndims(u), uucell{:}), [dim, 1:dim-1, dim+1:ndims(u)]);
+uu=ipermute(cat(ndims(u), uucell{:}), [dim, setdiff(1:ndims(u), dim)]);
 
 if isreal(u)
     uu=real(uu);
