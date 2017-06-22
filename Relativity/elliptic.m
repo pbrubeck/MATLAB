@@ -43,10 +43,12 @@ gf=@(rhs) greenfunction(rhs,V1,V2,W1,W2);
 
 % Eigenvalue perturbator
 % Adds a term of the form kron(E,D)*diag(C(:))*kron(B,A)
-function []=eigper(h,A,B,C,D,E,kd1,kd2,V1,V2)
-    LL=h*LL+((V1(kd1,:)\D(kd1,:)).*((A*V1).'))*C*((V2(kd2,:)\E(kd2,:)).*((B*V2).')).';
+diagop=@(A,B,C,D,E) ((A.').*D)*C*((B.').*E).';
+function []=eigper(h,A,B,C,D,E,kd1,kd2,V1,V2,W1,W2)
+    LL=h*LL+diagop(A*V1,B*V2,C,W1*D(kd1,:),W2*E(kd2,:));
 end
-dL=@(h,A,B,C,D,E) eigper(h,A,B,C,D,E,kd1,kd2,V1,V2); 
+dL=@(h,A,B,C,D,E) eigper(h,A,B,C,D,E,kd1,kd2,V1,V2,W1,W2); 
+
 
 % Poincare-Steklov operator
 N1=zeros(m,length(rd1)); N1(rd1,:)=inv(B1(:,rd1));

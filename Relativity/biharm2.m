@@ -31,11 +31,12 @@ B2=diag(a(2,:))*E2(be2,:)+diag(b(2,:))*Dy(be2,:)+diag(c(1,:))*Dyy(be2,:);
 % Differential operator
 lap=@(uu) Dxx*uu+uu*Dyy';
 opA=@(uu) lap(lap(uu));
+
+
 A11=ones(m,n);
 A12=ones(m,n);
 A21=ones(m,n);
 A22=ones(m,n);
-
 
 % Right hand sides
 zz=xx+1i*yy;
@@ -52,9 +53,9 @@ P2=Dyy*Dyy;
 % Solver
 [gf,ps,kd,gb,dL]=elliptic(P1,P2,B1,B2,rd1,rd2);
 dL(0,Dxx,E2,A11,Dxx,E2);
-dL(1,E1,Dyy,A22,E1,Dyy);
-dL(1,Dxx,E2,A21,E1,Dyy);
 dL(1,E1,Dyy,A12,Dxx,E2);
+dL(1,Dxx,E2,A21,E1,Dyy);
+dL(1,E1,Dyy,A22,E1,Dyy);
 
 
 afun=@(uu)  kd(opA(gb(uu)));
@@ -62,8 +63,8 @@ pfun=@(rhs) kd(gf(rhs));
 ub=ps(b1,b2);
 rhs=kd(F-opA(ub));
 uu=kd(ub+gf(rhs));
-tol=0e-15;
-maxit=50;
+tol=8*eps;
+maxit=100;
 
 [uu,~,res,its]=bicgstab(afun,rhs,tol,maxit,pfun,[],uu);
 uu=gb(uu)+ub;
