@@ -19,17 +19,17 @@ E2=eye(n);
 
 % Boundary condtions
 a=[1,1;1,1];
-b=[1,1;1,1];
+b=[0,0;0,0];
 B1=diag(a(1,:))*E1([1,m],:)+diag(b(1,:))*Dx([1,m],:);
 B2=diag(a(2,:))*E2([1,n],:)+diag(b(2,:))*Dy([1,n],:);
 
 
 % Equation coefficients
 A11=ones(m,n);
-A21=ones(m,n)/3;
-A12=ones(m,n)/3;
+A21=0*ones(m,n)/2.*cos(pi*(3*xx+3*yy));
+A12=0*ones(m,n)/2.*cos(pi*(3*xx+3*yy));
 A22=ones(m,n);
-A0=pi^2*sin(pi*(5*xx+3*yy));
+A0=10*cos(pi*(3*xx+3*yy));
 
 if(any((A12+A21).^2>=4*A11.*A22))
     % This costed a day of work
@@ -49,22 +49,40 @@ b2=f(xb)*diag(a(2,:))+fy(xb)*diag(b(2,:));
 F=opA(f(xx+1i*yy));
 
 
-% Preconditioner: Partial traces of the full operator
-[PX1, ~ ]=ptop(Dx,E2,A11,Dx,E2);
-[ ~ ,PY2]=ptop(E1,Dy,A22,E1,Dy);
-[PX3,PY3]=ptop(E1,E2,A0, E1,E2);
-P1=(PX1+PX3)/n; 
-P2=(PY2+PY3)/m;
-P1=P1-trace(P1)/(2*m)*eye(m);
-P2=P2-trace(P2)/(2*n)*eye(n);
+% Preconditioner
+function b=ophat(A,B,C,D,E,x,tflag)
+    X=reshape(x,floor(sqrt(numel(x))),[]);
+    if strcmp(tflag,'transp')    
+       b=reshape(D*diag(C*diag(B*X*E))*A,[],1);
+    else
+       b=reshape(B'*diag(C'*diag(D'*X*A'))*E',[],1);
+    end
+end
+function op2=setop(op1,A,B,C,D,E)
+    op2=@(x,tflag) op1(x,tflag)+ophat(A,B,C,D,E,x,tflag);
+end
+ahat=@(x,tflag) ophat(1,1,A0,1,1,x,tflag);
+ahat=setop(ahat,Dx,1,A11,Dx,1);
+ahat=setop(ahat,1,Dy,A12,Dx,1);
+ahat=setop(ahat,Dx,1,A21,1,Dy);
+ahat=setop(ahat,1,Dy,A22,1,Dy);
+
+[U,S,V]=svds(ahat, [n*n, m*m], 2);
+s=diag(S);
+PX1=sqrt(s(1))*reshape(V(:,1),[m,m]);
+PX2=sqrt(s(2))*reshape(V(:,2),[m,m]);
+PY1=sqrt(s(1))*reshape(U(:,1),[n,n])';
+PY2=sqrt(s(2))*reshape(U(:,2),[n,n])';
+
+figure(2);
+subplot(2,2,1); imagesc(PX1/sqrt(s(1))); title('PX1'); colormap(gray(32)); colorbar;
+subplot(2,2,2); imagesc(PX2/sqrt(s(2))); title('PX2'); colormap(gray(32)); colorbar;
+subplot(2,2,3); imagesc(PY1/sqrt(s(1))); title('PY1'); colormap(gray(32)); colorbar;
+subplot(2,2,4); imagesc(PY2/sqrt(s(2))); title('PY2'); colormap(gray(32)); colorbar;
+drawnow;
 
 % Solver
-[gf,ps,kd,gb,dL]=elliptic(P1,P2,B1,B2,[1,m],[1,n]);
-dL(0,Dx,E2,A11,Dx,E2);
-dL(1,E1,Dy,A12,Dx,E2);
-dL(1,Dx,E2,A21,E1,Dy);
-dL(1,E1,Dy,A22,E1,Dy);
-dL(1,E1,E2,A0, E1,E2);
+[gf,ps,kd,gb]=elliptic(PX1,PY1,PX2,PY2,B1,B2,[1,m],[1,n]);
 
 afun=@(uu)  kd(opA(gb(uu)));
 pfun=@(rhs) kd(gf(rhs));
@@ -79,7 +97,6 @@ uu=gb(uu)+ub;
 
 display(its);
 display(res);
-
 
 % Interpolation
 xq=linspace(-1,1,m);

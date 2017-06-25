@@ -1,6 +1,6 @@
-function [gf,ps,kd,gb,dL] = elliptic(A1,A2,B1,B2,rd1,rd2)
-m=size(A1,1);
-n=size(A2,1);
+function [gf,ps,kd,gb,dL] = elliptic(AX1,AY1,AX2,AY2,B1,B2,rd1,rd2)
+m=size(AX1,1);
+n=size(AY2,1);
 
 % Kept degrees of freedom
 kd1=1:m; kd1(rd1)=[];
@@ -20,20 +20,22 @@ end
 gb=@(vv) giveback(m,n,kd1,kd2,rd1,rd2,G1,G2,vv);
 
 % Schur complement
-S1=A1(kd1,kd1)+A1(kd1,rd1)*G1;
-S2=A2(kd2,kd2)+A2(kd2,rd2)*G2;
+SX1=AX1(kd1,kd1)+AX1(kd1,rd1)*G1;
+SY1=AY1(kd2,kd2)+AY1(kd2,rd2)*G2;
+SX2=AX2(kd1,kd1)+AX2(kd1,rd1)*G1;
+SY2=AY2(kd2,kd2)+AY2(kd2,rd2)*G2;
 
 % Eigenfunctions
 V1=zeros(m,length(kd1));
 V2=zeros(n,length(kd2));
-[V1(kd1,:),L1]=eig(S1,'vector');
-[V2(kd2,:),L2]=eig(S2,'vector');
+[V1(kd1,:),L1]=eig(SX1,SX2,'vector');
+[V2(kd2,:),L2]=eig(SY2,SY1,'vector');
 V1(rd1,:)=G1*V1(kd1,:);
 V2(rd2,:)=G2*V2(kd2,:);
 [L1,L2]=ndgrid(L1,L2);
 LL=L1+L2;
-W1=inv(V1(kd1,:));
-W2=inv(V2(kd2,:));
+W1=inv(AX2(kd1,:)*V1);
+W2=inv(AY1(kd2,:)*V2);
 
 % Green's function
 function uu=greenfunction(rhs,V1,V2,W1,W2)

@@ -51,7 +51,7 @@ P1=Dxx*Dxx;
 P2=Dyy*Dyy;
 
 % Solver
-[gf,ps,kd,gb,dL]=elliptic(P1,P2,B1,B2,rd1,rd2);
+[gf,ps,kd,gb,dL]=elliptic(P1,E2,E1,P2,B1,B2,rd1,rd2);
 dL(0,Dxx,E2,A11,Dxx,E2);
 dL(1,E1,Dyy,A12,Dxx,E2);
 dL(1,Dxx,E2,A21,E1,Dyy);
