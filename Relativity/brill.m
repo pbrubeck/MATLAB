@@ -39,7 +39,7 @@ F=zeros(m,n);
 opA=@(uu) A1*uu+uu*A2'+A3.*uu;
 
 % Solution
-[gf,ps,kd,gb]=elliptic(A1,A2,B1,B2,1,[1,n]);
+[gf,ps,kd,gb]=elliptic(A1,E2,E1,A2,B1,B2,1,[1,n]);
 
 ub=ps(b1,b2);
 rhs=kd(F-opA(ub));

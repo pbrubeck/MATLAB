@@ -41,7 +41,7 @@ B1=diag(a(1,:))*E1([1,end],:)+diag(b(1,:))*Dx([1,end],:);
 B2=diag(a(2,:))*E2([1,end],:)+diag(b(2,:))*Dy([1,end],:);
 
 % Solution
-[green,ps,kd]=elliptic(A1,A2,B1,B2,[1,m],[1,n]);
+[green,ps,kd]=elliptic(A1,E2,E1,A2,B1,B2,[1,m],[1,n]);
 eqn=@(uu,F) kd(A1*uu+uu*A2'+E.*(psi+uu).^(-7)-F);
 
 % HAM nonlinear functions

@@ -32,7 +32,6 @@ B2=diag(a(2,:))*E2(be2,:)+diag(b(2,:))*Dy(be2,:)+diag(c(1,:))*Dyy(be2,:);
 lap=@(uu) Dxx*uu+uu*Dyy';
 opA=@(uu) lap(lap(uu));
 
-
 A11=ones(m,n);
 A12=ones(m,n);
 A21=ones(m,n);
@@ -46,17 +45,13 @@ b1=diag(a(1,:))*f(z1)+diag(b(1,:))*fx(z1);
 b2=f(z2)*diag(a(2,:))+fy(z2)*diag(b(2,:));
 F=opA(f(xx+1i*yy));
 
-% Preconditioner
-P1=Dxx*Dxx;
-P2=Dyy*Dyy;
 
 % Solver
-[gf,ps,kd,gb,dL]=elliptic(P1,E2,E1,P2,B1,B2,rd1,rd2);
+[gf,ps,kd,gb,dL]=elliptic(Dxx*Dxx,E2,E1,Dyy*Dyy,B1,B2,rd1,rd2);
 dL(0,Dxx,E2,A11,Dxx,E2);
 dL(1,E1,Dyy,A12,Dxx,E2);
 dL(1,Dxx,E2,A21,E1,Dyy);
 dL(1,E1,Dyy,A22,E1,Dyy);
-
 
 afun=@(uu)  kd(opA(gb(uu)));
 pfun=@(rhs) kd(gf(rhs));

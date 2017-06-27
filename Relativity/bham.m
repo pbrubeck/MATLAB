@@ -43,7 +43,7 @@ psi=1+(m1/2)./abs(rr);
 E=9/4*J^2*(r.^-4)*(1-y.^2);
 F=zeros(m,n);
 
-[green,ps,kd]=elliptic(A1,A2,B1,B2,1,[1,n]);
+[green,ps,kd]=elliptic(A1,E2,E1,A2,B1,B2,1,[1,n]);
 eqn=@(uu,F) kd(A1*uu+uu*A2'+E.*(psi+uu).^(-7)-F);
 
 % HAM nonlinear functions
