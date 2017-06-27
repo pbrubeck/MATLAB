@@ -1,4 +1,4 @@
-function [G11,G21,G12,G22,K11,K21,K12,K22,vol] = diffgeom(u,v,iflag)
+function [G11,G21,G12,G22,K11,K21,K12,K22,vol] = mymanifold(u,v,iflag)
 m=length(u);
 n=length(v);
 
@@ -7,9 +7,9 @@ n=length(v);
 [u,v] = ainit(u,v,2);
 
 % define surface parametrization
-x = exp(u).*cos(pi*v);
-y = exp(u).*sin(pi*v);
-z = u.^2;
+x = u;
+y = v;
+z = exp(-10*(u.^2+v.^2));
 S = [x;y;z];
 
 % Differential geometry
@@ -41,4 +41,3 @@ K12=reshape(kk(1,2,:), m,n);
 K22=reshape(kk(2,2,:), m,n);
 vol=reshape(sqrt(detG{0}), m,n);
 end
-

@@ -25,7 +25,7 @@ B2=diag(a(2,:))*E2([1,n],:)+diag(b(2,:))*Dy([1,n],:);
 
 
 % Equation coefficients
-[G11,G21,G12,G22,K11,K21,K12,K22,vol]=diffgeom(x,y,'inv');
+[G11,G21,G12,G22,K11,K21,K12,K22,vol]=mymanifold(x,y,'inv');
 A11=vol.*G11;
 A21=vol.*G21;
 A12=vol.*G12;
@@ -33,10 +33,10 @@ A22=vol.*G22;
 A0=vol.*zeros(m,n);
 
 figure(2);
-subplot(2,2,1); imagesc(x,y,A11); title('A11'); colormap(jet(32)); colorbar;
-subplot(2,2,2); imagesc(x,y,A12); title('A12'); colormap(jet(32)); colorbar;
-subplot(2,2,3); imagesc(x,y,A21); title('A21'); colormap(jet(32)); colorbar;
-subplot(2,2,4); imagesc(x,y,A22); title('A22'); colormap(jet(32)); colorbar;
+subplot(2,2,1); surf(xx,yy,A11); title('A11'); shading interp; colormap(jet(256)); colorbar; view(2);
+subplot(2,2,2); surf(xx,yy,A12); title('A12'); shading interp; colormap(jet(256)); colorbar; view(2);
+subplot(2,2,3); surf(xx,yy,A21); title('A21'); shading interp; colormap(jet(256)); colorbar; view(2);
+subplot(2,2,4); surf(xx,yy,A22); title('A22'); shading interp; colormap(jet(256)); colorbar; view(2);
 drawnow;
 
 if(any((A12+A21).^2>=4*A11.*A22))
@@ -124,10 +124,9 @@ errint=norm(uuu-f(xxx+1i*yyy),'inf');
 display(err);
 display(errint);
 
-
 % Plot
 figure(1);
-surf(xxx,yyy,real(uuu));
+surf(xxx,yyy,uuu);
 colormap(jet(256));
 shading interp;
 camlight;
