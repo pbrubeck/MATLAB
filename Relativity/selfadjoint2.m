@@ -26,8 +26,10 @@ B2=diag(a(2,:))*E2([1,n],:)+diag(b(2,:))*Dy([1,n],:);
 
 % Equation coefficients
 [G11,G21,G12,G22,K11,K21,K12,K22,vol]=mymanifold(x,y,'inv');
+%[map,vol,G11,G12,G22]=mapquad([1+1i;2-1i;-0.9+0.8i;-1.3-0.7i],'inv');
+
 A11=vol.*G11;
-A21=vol.*G21;
+A21=vol.*G12;
 A12=vol.*G12;
 A22=vol.*G22;
 A0=vol.*zeros(m,n);
