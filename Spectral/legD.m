@@ -3,7 +3,7 @@ function [D, x, w] = legD(N)
 x=zeros(1,N); x([1,N])=[-1,1];
 w=zeros(1,N); w([1,N])=2/(N*(N-1));
 if(N==2)
-    D=[1,-1;1,-1]/2;
+    D=[-1,1;-1,1]/2;
     x=x(:); w=w(:);
     return;
 end

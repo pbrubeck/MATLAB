@@ -39,7 +39,6 @@ subplot(2,2,1); surf(xx,yy,A11); title('A11'); shading interp; colormap(jet(256)
 subplot(2,2,2); surf(xx,yy,A12); title('A12'); shading interp; colormap(jet(256)); colorbar; view(2);
 subplot(2,2,3); surf(xx,yy,A21); title('A21'); shading interp; colormap(jet(256)); colorbar; view(2);
 subplot(2,2,4); surf(xx,yy,A22); title('A22'); shading interp; colormap(jet(256)); colorbar; view(2);
-drawnow;
 
 if(any((A12+A21).^2>=4*A11.*A22))
     % This costed a day of work
@@ -96,7 +95,6 @@ subplot(2,2,1); imagesc(PX1/sqrt(s(1))); title('PX1'); colormap(gray(32)); color
 subplot(2,2,2); imagesc(PX2/sqrt(s(2))); title('PX2'); colormap(gray(32)); colorbar;
 subplot(2,2,3); imagesc(PY1/sqrt(s(1))); title('PY1'); colormap(gray(32)); colorbar;
 subplot(2,2,4); imagesc(PY2/sqrt(s(2))); title('PY2'); colormap(gray(32)); colorbar;
-drawnow;
 
 % Solver
 [gf,ps,kd,gb]=elliptic(PX1,PY1,PX2,PY2,B1,B2,[1,m],[1,n]);

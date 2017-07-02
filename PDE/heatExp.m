@@ -25,17 +25,18 @@ R=null(A);
 T=R/(R'*R)*R';
 Q=T+expm(dt*P*A)*(I-T);
 
-u=exp(-10*x.^2)+x;
+u=exp(-10*x.^2)-exp(-10);
 
 figure(1);
 h=plot(x, u);
 xlim([-1,1]);
-ylim([-4,4]); 
+ylim([-4,4]);
 
 nframes=1000;
 for i=1:nframes
     u=Q*u;
     set(h, 'YData', u);
+    %disp(B*u);
     drawnow;
 end
 end

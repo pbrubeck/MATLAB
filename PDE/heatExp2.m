@@ -14,10 +14,14 @@ function [] = heatExp2( N )
 % nullspace of the SOLDO, and the eigenvalues are exp(dt*lambda).
 
 c=0;
-dt=0.0001;
+dt=0.001;
 
 [D,x]=chebD(N);
 D2=D*D;
+
+I=eye(N);
+B=diag([1,-1])*I([1,end],:)+diag([c,c])*D([1,end],:); 
+P=I-B'/(B*B')*B;
 [A,G]=setBC(D2,D,[1,-1],c);
 
 L=zeros(N,1);
@@ -26,6 +30,10 @@ V(:,[1,N])=null(D2);
 [V(2:N-1,2:N-1),L(2:N-1)]=eig(A,'vector');
 V([1,N],2:N-1)=G*V(2:N-1,2:N-1);
 Q=V*diag(exp(dt*L))*pinv(V);
+[L1,L2]=ndgrid(L);
+LL=L1+L2;
+LL(L1.*L2==0)=0;
+QQ=exp(dt*LL);
 
 [xx,yy]=ndgrid(x);
 rr=hypot(xx,yy);
@@ -39,9 +47,10 @@ h=surf(xx,yy,uu);
 colormap(jet(256)); camlight; shading interp;
 axis square manual;
 
+
 nframes=1000;
 for i=1:nframes
-    uu=Q*uu*Q';
+    uu=V*(QQ.*(V\uu/V'))*V';
     set(h, 'ZData', uu);
     drawnow;
 end
