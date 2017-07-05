@@ -1,4 +1,4 @@
-function [gf,ps,kd,gb,dL] = elliptic(A1,B1,A2,B2,C1,C2,rd1,rd2)
+function [gf,ps,kd,gb,dL,hyp] = elliptic(A1,B1,A2,B2,C1,C2,rd1,rd2)
 m=size(A1,1);
 n=size(B2,1);
 
@@ -6,6 +6,16 @@ n=size(B2,1);
 kd1=1:m; kd1(rd1)=[];
 kd2=1:n; kd2(rd2)=[];
 kd=@(uu) reshape(uu(kd1,kd2),[],1);
+
+% Poincare-Steklov operator
+N1=zeros(m,length(rd1)); N1(rd1,:)=inv(C1(:,rd1));
+N2=zeros(n,length(rd2)); N2(rd2,:)=inv(C2(:,rd2));
+P1=eye(m)-C1'/(C1*C1')*C1;
+P2=eye(n)-C2'/(C2*C2')*C2;
+
+u0=@(b1,b2) N1*sylvester(C1*C1', C2*C2', (C1*C1')*(b1*C2')+(C1*b2)*(C2*C2'))*N2';
+ub=@(u0,b1,b2) u0+(N1*b1-u0)*P2+P1*(b2*N2'-u0);
+ps=@(b1,b2) ub(u0(b1,b2),b1,b2);
 
 % Give-back matrix
 G1=-C1(:,rd1)\C1(:,kd1);
@@ -46,19 +56,17 @@ gf=@(rhs) greenfunction(rhs,V1,V2,W1,W2);
 % Eigenvalue perturbator
 % Adds a term of the form kron(E,D)*diag(C(:))*kron(B,A)
 diagop=@(A,B,C,D,E) ((A.').*D)*C*((B.').*E).';
-function []=eigper(h,A,B,C,D,E,kd1,kd2,V1,V2,W1,W2)
+function []=eigper(kd1,kd2,V1,V2,W1,W2,h,A,B,C,D,E)
     LL=h*LL+diagop(A*V1,B*V2,C,W1*D(kd1,:),W2*E(kd2,:));
 end
-dL=@(h,A,B,C,D,E) eigper(h,A,B,C,D,E,kd1,kd2,V1,V2,W1,W2); 
+dL=@(h,A,B,C,D,E) eigper(kd1,kd2,V1,V2,W1,W2,h,A,B,C,D,E); 
 
-
-% Poincare-Steklov operator
-N1=zeros(m,length(rd1)); N1(rd1,:)=inv(C1(:,rd1));
-N2=zeros(n,length(rd2)); N2(rd2,:)=inv(C2(:,rd2));
-P1=eye(m)-C1'/(C1*C1')*C1;
-P2=eye(n)-C2'/(C2*C2')*C2;
-
-u0=@(b1,b2) N1*sylvester(C1*C1', C2*C2', (C1*C1')*(b1*C2')+(C1*b2)*(C2*C2'))*N2';
-ub=@(u0,b1,b2) u0+(N1*b1-u0)*P2+P1*(b2*N2'-u0);
-ps=@(b1,b2) ub(u0(b1,b2),b1,b2);
+% Hyperbolic evolution
+function [U]=hypevol(kd1,kd2,V1,V2,W1,W2,uu,vv)
+    WW=sqrt(-LL);
+    Y1=W1*uu(kd1,kd2)*W2.';
+    Y2=(W1*vv(kd1,kd2)*W2.')./WW;
+    U=@(t) V1*(Y1.*cos(WW*t)+Y2.*sin(WW*t))*V2.';
+end
+hyp=@(uu,vv) hypevol(kd1,kd2,V1,V2,W1,W2,uu,vv);
 end

@@ -19,7 +19,7 @@ E2=eye(n);
 
 % Boundary condtions
 a=[1,1;1,1];
-b=[0,0;0,0];
+b=0*[1,-1;1,-1];
 B1=diag(a(1,:))*E1([1,m],:)+diag(b(1,:))*Dx([1,m],:);
 B2=diag(a(2,:))*E2([1,n],:)+diag(b(2,:))*Dy([1,n],:);
 
@@ -105,13 +105,20 @@ ub=ps(b1,b2);
 rhs=kd(F-opA(ub));
 uu=kd(ub+gf(rhs));
 tol=2*eps;
-maxit=70;
+maxit=25;
 
 [uu,~,res,its]=bicgstab(afun,rhs,tol,maxit,pfun,[],uu);
 uu=gb(uu)+ub;
 
 display(its);
 display(res);
+
+% Eigenvalue solver
+% solver=@(rhs) bicgstab(afun,rhs,tol,maxit,pfun,[],pfun(rhs));
+% [uu,L]=eigs(solver, numel(rhs), 25, 'sm');
+% [L,id]=sort(diag(real(L)),'descend');
+% uu=gb(uu(:,id(end)));
+% display(L);
 
 % Interpolation
 xq=linspace(-1,1,m);

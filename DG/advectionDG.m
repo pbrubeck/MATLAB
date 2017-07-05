@@ -30,7 +30,7 @@ for i=1:k
 end
 
 % Initial condition
-u=sin(2*pi*x);
+u=sin(pi*x);
 
 figure(1);
 h1=plot(x,u);
