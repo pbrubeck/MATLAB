@@ -114,15 +114,15 @@ display(its);
 display(res);
 
 % Eigenvalue solver
-% solver=@(rhs) bicgstab(afun,rhs,tol,maxit,pfun,[],pfun(rhs));
-% [uu,L]=eigs(solver, numel(rhs), 25, 'sm');
-% [L,id]=sort(diag(real(L)),'descend');
-% uu=gb(uu(:,id(end)));
-% display(L);
+solver=@(rhs) bicgstab(afun,rhs,tol,maxit,pfun,[],pfun(rhs));
+[uu,L]=eigs(solver, numel(rhs), 25, 'sm');
+[L,id]=sort(diag(real(L)),'descend');
+uu=gb(uu(:,id(end)));
+display(L);
 
 % Interpolation
-xq=linspace(-1,1,m);
-yq=linspace(-1,1,n);
+xq=linspace(-1,1,1024);
+yq=linspace(-1,1,1024);
 [xxx,yyy]=ndgrid(xq, yq);
 uuu=interpcheb(interpcheb(uu,xq,1),yq,2);
 

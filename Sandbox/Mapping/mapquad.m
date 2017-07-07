@@ -6,7 +6,7 @@ end
 
 Z=reshape(Z,[2,2]);
 T=[1, 1; 1,-1]/2;
-A=T'*Z*T;
+A=T*Z*T;
 B=imag(conj(A(:,2))*A(2,:));
 E=real(A(2,:)'*A(2,:));
 F=real(A(:,2)*A(:,2)');

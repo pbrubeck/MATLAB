@@ -6,7 +6,7 @@ end
 [Dy,y]=chebD(m); y=y';
 [xx,yy]=ndgrid(x,y);
 
-[ex,ey]=ndgrid(linspace(-1,1,16));
+[ex,ey]=ndgrid(linspace(-1,1,32));
 Z=ex+1i*ey;
 Z=Z./abs(Z).*max(abs(real(Z)),abs(imag(Z)));
 

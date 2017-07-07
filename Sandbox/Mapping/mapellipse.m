@@ -3,11 +3,7 @@ function [f,df] = mapellipse(z,p,q)
 p=p-z;
 q=q-z;
 
-A=[real(p), -imag(p); imag(p), real(p)];
-x=A\[real(q); imag(q)];
-a=acos(x(1));
-r=1i*p*x(2)/sqrt(1-x(1)^2);
-
-f=@(t) z+p*cos(a*t)+r*sin(a*t);
-df=@(t) a*(-p*sin(a*t)+r*cos(a*t));
+a=pi/2;
+f=@(t) z+p*cos(a*t)+q*sin(a*t);
+df=@(t) a*(-p*sin(a*t)+q*cos(a*t));
 end

@@ -1,8 +1,6 @@
 function [] = gordonhall( n )
-% Sandbox
-
-a=0.75;
-b=0.4;
+a=0.5;
+b=0.5;
 th=atan2(a,b);
 
 p=[1+1i; 1i; 1i*b; a*cos(th)+1i*b*sin(th)];
@@ -30,10 +28,9 @@ G=@(x,y) (1-y)/2.*g3(x)+(1+y)/2.*g1(x)+...
 
 [xx,yy]=ndgrid(linspace(0,1,n),linspace(-1,1,n));
 figure(1); clf;
-plot(F(xx,yy));
-hold on;
-plot(G(xx,yy));
-hold off;
+plot(F(xx,yy)); hold on;
+plot(G(xx,yy).'); hold off;
+axis equal;
 
 end
 
