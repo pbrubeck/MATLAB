@@ -17,9 +17,9 @@ stiff=@(u) reshape(K*reshape(u,p,k),[],1);
 % Lax-Friedrichs numerical flux
 function [F]=LaxFriedrichs(u)
     uu=reshape(u,p,k);
-    u0  =(uu(end,[end,1:end-1])+uu(1,1:end))/2;
-    jump=(uu(end,[end,1:end-1])-uu(1,1:end))/2;
-    f=u0.^2/2+max(abs(uu)).*jump;
+    u0=(uu(end,[end,1:end-1])+uu(1,1:end))/2;
+    uj=(uu(end,[end,1:end-1])-uu(1,1:end))/2;
+    f=u0.^2/2+max(abs(uu)).*uj;
     F=zeros(p,k);
     F(end,[end,1:end-1])=f;
     F(1,:)=-f;
