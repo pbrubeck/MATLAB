@@ -114,8 +114,8 @@ display(its);
 display(res);
 
 % Eigenvalue solver
-solver=@(rhs) bicgstab(afun,rhs,tol,maxit,pfun,[],pfun(rhs));
-[uu,L]=eigs(solver, numel(rhs), 25, 'sm');
+solver=@(rhs) bicgstab(@(X)afun(X)./kd(vol),rhs,tol,maxit,@(X)pfun(X.*kd(vol)),[],pfun(rhs));
+[uu,L]=eigs(solver, numel(rhs), 3, 'sm');
 [L,id]=sort(diag(real(L)),'descend');
 uu=gb(uu(:,id(end)));
 display(L);

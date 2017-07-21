@@ -72,7 +72,7 @@ stiff=@(X) stiff(blockx(M1,blocky(M2,X)));
 lift =@(X) imag(blocky(M2,conj(zx).*upwindx(X))-blockx(M1,conj(zy).*upwindy(X)));
 
 % Advection velocity
-c=1+1i;
+c=1;
 
 % Flux
 function [F]=flux(u)

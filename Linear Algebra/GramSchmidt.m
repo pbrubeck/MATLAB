@@ -10,7 +10,7 @@ for i=1:n
 end
 for i=1:n
     n=norm(Q(:,i));
-    if(n>1E-15)
+    if(n>eps)
         Q(:,i)=Q(:,i)/n;
     end
 end

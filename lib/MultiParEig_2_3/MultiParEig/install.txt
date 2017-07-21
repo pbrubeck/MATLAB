@@ -1,0 +1,49 @@
+Installation the MultiParEig toolbox
+---------------------------------------
+
+1. Unpack the compressed file MultiParEig.zip. This should create
+   a directory MultiParEig.
+
+2. Open MATLAB and change into the directory MultiParEig.
+
+3. Execute the following commands within Matlab
+
+     addpath(pwd)
+     cd examples; cd bdemep; addpath(pwd)
+     savepath %<-- Save path for future MATLAB sessions.
+              %    This may not work for all installations of Matlab.
+
+Compatibility with MATLAB versions
+----------------------------------
+
+This toolbox requires MATLAB Version 8.0 (R2012b) or later. It has
+been tested under Windows 7 and Windows 10, with MATLAB 8.0 (R2012b), and 8.5 (R2015a)
+
+Other requierements
+-------------------
+
+If you use MATLAB prior to Version 8.3 (R2014a), package lapack by T. Toolan is recommended for faster evaluation of twopareigs.
+Some functions support extended precision using 'mp' type from Multiprecision Computing Toolbox, http://www.advanpix.com/, see examples in directory Multiprecision.
+
+Getting started
+---------------
+
+Run the functions that start with demo_ in Examples subdirectories
+
+Additional information
+----------------------
+
+This is a joined work with Andrej Muhiè, who wrote part of the code, among other things he contributed the staircase algorithm for a singular multiparameter eigenvalue problem.
+
+Other contributors: 
+- Pavel Holoborodko, Advanpix LLC, http://www.advanpix.com/
+
+Some related papers are available on my web page.
+For more information you can contact me through e-mail.
+
+Bor Plestenjak
+Department of Mathematics
+University of Ljubljana
+bor.plestenjak@fmf.uni-lj.si
+http://www-lp.fmf.uni-lj.si/plestenjak/bor.htm
+

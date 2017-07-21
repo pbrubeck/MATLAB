@@ -1,66 +1,109 @@
-function [] = HelmElliptical(a, b, N, k)
+function [] = HelmElliptical(a, b, m, n, k, mode)
+% Solves Helmoholtz in a elliptical domain as a two-parameter eigenproblem.
+
+% Semi-focal distance
 f=sqrt(a^2-b^2);
-[A1,B1,A2,B2,u,v]=chebLapEll(a,b,2*N-1,N);
-A1=A1(2:end-1,2:end-1);
-B1=B1(2:end-1,2:end-1);
-C1=eye(2*N-3);
-C2=-eye(N);
 
-a=k^2;
-lam=-2*a;
-rmf=cos(pi/2*u(2:end-1)/u(end));
-amf=cos(k*v(:));
-[lam,a,X1,X2] = newton_mep(A1,B1,C1,A2,B2,C2,rmf,amf,lam,a);
+% Kept and removed degrees of freedom
+kd1=2:m-1;
+kd2=2:n-1;
+rd1=[1,m];
+rd2=[1,n];
 
+% Differential operators and Jacobian
+[Dx,x]=chebD(m);
+xi0=acosh(a/f); x=xi0/2*(x+1);
+Dx=2/xi0*Dx; Dxx=Dx*Dx;
+Jx=diag(f^2/2*cosh(2*x));
+E1=eye(m);
 
-target = [0 0];  		 % we are looking for the closest eigenvalue to the target
-M1 = inv(full(A1-target(1)*B1-target(2)*C1)); % preconditioners
-M2 = inv(full(A2-target(1)*B2-target(2)*C2)); 
-solveM1 = @(x) M1*x;  % we can pass preconditioners as function handles
-solveM2 = @(x) M2*x;
+[Dy,y]=chebD(n);
+y=pi/4*(y'+1);
+Dy=4/pi*Dy; Dyy=Dy*Dy;
+Jy=-diag(f^2/2*cos(2*y));
+E2=eye(n);
 
-OPTS=[];							
-OPTS.M1 = solveM1;    % preconditioners 
-OPTS.M2 = solveM2;    
-OPTS.minsize = 5;     
-OPTS.maxsize = 10;
-OPTS.maxsteps = 1000;   % maximum number of outer iterations
-OPTS.extraction = 'mindist'; 
-OPTS.reschange = 0; % 10^(-6); % we change to minimal residual when residual is less then epschange
-OPTS.innersteps = 2;   % number of GMRES steps
-OPTS.innertol = 1e-15;  % tolerance for the GMRES method
-OPTS.target = target;
-OPTS.delta = 5e-6;
-OPTS.showinfo = 2; % set to 1 to see more information
-OPTS.harmonic = 1;
-OPTS.window = 0;
-[lam,a,X1,X2] = twopareigs(A1,B1,C1,A2,B2,C2,k,OPTS);
-q=-lam^2*f^2/4;
+J=bsxfun(@plus, f^2/2*cosh(2*x), -f^2/2*cos(2*y));
+lap=@(uu) (Dxx*uu+uu*Dyy');
 
-rmf=zeros(N,1);
-rmf(2:end,:)=bsxfun(@times, conj(X1(N-1,:)), X1(1:N-1,:));
-amf=bsxfun(@times, conj(X2(1,:)), X2);
-rmf=rmf/max(rmf);
-amf=amf/max(amf);
-u=u(1:N);
+% Boundary conditions
+switch mode
+    case 1 % MathieuJe(2*s,q,x)*MathieuC(2*s,q,y)
+        bc1 = [1 0; 0 1]; % F(xi0) = F'(0) = 0
+        bc2 = [0 1; 0 1]; % G'(pi/2) = G'(0) = 0
+    case 2 % MathieuJe(2*s+1,q,x)*MathieuC(2*s+1,q,y)
+        bc1 = [1 0; 0 1]; % F(xi0) = F'(0) = 0
+        bc2 = [1 0; 0 1]; % G(pi/2) = G'(0) = 0
+    case 3 % MathieuJo(2*s+2,q,x)*MathieuS(2*s+2,q,y)
+        bc1 = [1 0; 1 0]; % F(xi0) = F(0) = 0
+        bc2 = [1 0; 1 0]; % G(pi/2) = G(0) = 0
+    case 4 % MathieuJo(2*s+1,q,x)*MathieuS(2*s+1,q,y)
+        bc1 = [1 0; 1 0]; % F(xi0) = F(0) = 0
+        bc2 = [0 1; 1 0]; % G'(pi/2) = G(0) = 0
+end
+BC1=diag(bc1(:,1))*E1(rd1,:)+diag(bc1(:,2))*Dx(rd1,:);
+BC2=diag(bc2(:,1))*E2(rd2,:)+diag(bc2(:,2))*Dy(rd2,:);
 
-display(a);
+% Give-back matrix
+G1=-BC1(:,rd1)\BC1(:,kd1);
+G2=-BC2(:,rd2)\BC2(:,kd2);
+
+% Schur complements
+A1=Dxx(kd1,kd1)+Dxx(kd1,rd1)*G1;
+B1=Jx(kd1,kd1)+Jx(kd1,rd1)*G1;
+C1=E1(kd1,kd1)+E1(kd1,rd1)*G1;
+
+A2=Dyy(kd2,kd2)+Dyy(kd2,rd2)*G2;
+B2=Jy(kd2,kd2)+Jy(kd2,rd2)*G2;
+C2=-E2(kd2,kd2)-E2(kd2,rd2)*G2;
+
+if mode==1  % in first mode A2 is singular, we shift mu to mu - 5
+    A1=A1+5*C1;
+    A2=A2+5*C2;
+end
+
+% Compute first k eigenmodes
+V1=zeros(m,k);
+V2=zeros(n,k);
+[mu,lambda,V1(kd1,:),V2(kd2,:)]=twopareigs(A1,C1,B1,A2,C2,B2,k);
+mu=mu-5*(mode==1);
+
+[lambda,id]=sort(lambda,'descend');
+mu=mu(id);
+V1=V1(:,id);
+V2=V2(:,id);
+
+% Retrieve boundary values
+V1(rd1,:)=G1*V1(kd1,:);
+V2(rd2,:)=G2*V2(kd2,:);
+
+q=-f^2/4*lambda;
+display(lambda);
+display(mu);
 display(q);
 
-figure(1); plot(u,rmf);
-figure(2); plot(v,amf);
+% Interpolation
+x=linspace(real(xi0),0,1024)';
+y=linspace(pi/2,0,1024);
+V1=interpcheb(V1,linspace(1,-1,1024),1);
+V2=interpcheb(V2,linspace(1,-1,1024),1);
 
-xx=f*cosh(u)*cos(v);
-yy=f*sinh(u)*sin(v);
-zz=rmf*amf.';
+% Fix periodicity
+y=[y+3*pi/2,y+pi,y+pi/2,y];
+V2=[(-1)^(mode==3||mode==2)*flipud(V2);V2];
+V2=[(-1)^(mode==3||mode==4)*flipud(V2);V2];
+
+% Plot
+figure(1); plot(x,V1);
+figure(2); plot(y,V2);
+
+xx=f*cosh(x)*cos(y);
+yy=f*sinh(x)*sin(y);
+uu=V1(:,end)*V2(:,end)';
 
 figure(3);
-surf(xx(:,[1:end 1]),yy(:,[1:end 1]),zz(:,[1:end 1])); 
-camlight; shading interp; axis off;
+surf(xx,yy,uu);
 colormap(jet(256));
-zrange=max(zz(:))-min(zz(:));
-xrange=max(xx(:))-min(xx(:));
-yrange=max(yy(:))-min(yy(:));
-daspect([1 1 2*zrange/hypot(xrange,yrange)]);
-view(0,90);
+camlight; shading interp;
+view(2);
 end
