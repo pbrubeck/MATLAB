@@ -1,4 +1,4 @@
-function [] = advectionDG2(k,p)
+function []=advectionDG2(k,p)
 k(1:2)=k; k1=k(1); k2=k(2);
 p(1:2)=p; p1=p(1); p2=p(2);
 m=k1*p1;
@@ -72,7 +72,7 @@ stiff=@(X) stiff(blockx(M1,blocky(M2,X)));
 lift =@(X) imag(blocky(M2,conj(zx).*upwindx(X))-blockx(M1,conj(zy).*upwindy(X)));
 
 % Advection velocity
-c=1;
+c=1-1i;
 
 % Flux
 function [F]=flux(u)
@@ -84,7 +84,7 @@ function [F]=upwindx(u)
     umid=(u([end,p1:p1:end-1],:)+u(1:p1:end,:))/2;
     ujmp=(u([end,p1:p1:end-1],:)-u(1:p1:end,:))/2;
     F=zeros(size(u));
-    F([end,p1:p1:end-1],:)=flux(umid);
+    F([end,p1:p1:end-1],:)=flux(umid)+0*ujmp;
     F(1:p1:end,:)=-F([end,p1:p1:end-1],:);
 end
 
@@ -92,7 +92,7 @@ function [F]=upwindy(u)
     umid=(u(:,[end,p2:p2:end-1])+u(:,1:p2:end))/2;
     ujmp=(u(:,[end,p2:p2:end-1])-u(:,1:p2:end))/2;
     F=zeros(size(u));
-    F(:,[end,p2:p2:end-1])=flux(umid);
+    F(:,[end,p2:p2:end-1])=flux(umid)+0*ujmp;
     F(:,1:p2:end)=-F(:,[end,p2:p2:end-1]);
 end
 
@@ -125,7 +125,7 @@ drawnow;
 
 h=min(min(sqrt(abs(JJ))))*min(1-cos(pi./(p-1)));
 dt=0.5*h/abs(c);
-T=3;
+T=5;
 nframes=ceil(T/dt);
 for i=1:nframes
     u=solveRK4(u,dt);

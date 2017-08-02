@@ -1,4 +1,4 @@
-function [] = eulerDG(k,p)
+function []=eulerDG(k,p)
 k(1:2)=k; k1=k(1); k2=k(2);
 p(1:2)=p; p1=p(1); p2=p(2);
 m=k1*p1;
@@ -17,7 +17,7 @@ yn=yn';
 xe=linspace(-1,1,k1+1)';
 ye=linspace(-1,1,k2+1)';
 [xxe,yye]=ndgrid(xe,ye);
-Z=xxe+(1i)*yye;
+Z=xxe+1i*yye;
 
 % Legendre nodes
 d=@(j) j./sqrt(4*j.^2-1);
