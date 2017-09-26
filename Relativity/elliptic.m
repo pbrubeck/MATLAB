@@ -62,11 +62,12 @@ end
 dL=@(h,A,B,C,D,E) eigper(kd1,kd2,V1,V2,W1,W2,h,A,B,C,D,E); 
 
 % Hyperbolic evolution
-function [U]=hypevol(kd1,kd2,V1,V2,W1,W2,uu,vv)
+function [U,Ut]=hypevol(kd1,kd2,V1,V2,W1,W2,uu,vv)
     WW=sqrt(-LL);
     Y1=W1*uu(kd1,kd2)*W2.';
     Y2=(W1*vv(kd1,kd2)*W2.')./WW;
     U=@(t) V1*(Y1.*cos(WW*t)+Y2.*sin(WW*t))*V2.';
+    Ut=@(t) V1*(-Y1.*(WW.*sin(WW*t))+Y2.*(WW.*cos(WW*t)))*V2.';
 end
 hyp=@(uu,vv) hypevol(kd1,kd2,V1,V2,W1,W2,uu,vv);
 end

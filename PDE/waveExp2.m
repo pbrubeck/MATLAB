@@ -27,12 +27,17 @@ f=@(x,y) real(sin((xx+1i*yy).^4))+exp(-100/2*(xx.^2+yy.^2));
 u0=f(xx,yy);
 w0=gf(kd(opA(u0)));
 psi=u0-w0;
-U=hyp(w0,-0.5*Dx*w0-0.5*w0*Dy');
+[U,Ut]=hyp(w0,-0.5*Dx*w0-0.5*w0*Dy');
 
 xq=linspace(-1,1,m);
 yq=linspace(-1,1,n);
 [xxx,yyy]=ndgrid(xq, yq);
 uuu=interpcheb(interpcheb(u0,xq,1),yq,2);
+
+% Energy integral
+[~,w1]=ClenshawCurtis(-1,1,n);
+[~,w2]=ClenshawCurtis(-1,1,m);
+E=@(uu,uut) w1*(uut.^2+(Dx*uu).^2+(uu*Dy').^2)*w2';
 
 figure(1);
 h1=surf(xxx,yyy,uuu);
@@ -44,6 +49,8 @@ T=30;
 dt=0.05;
 for t=0:dt:T
     uu=psi+U(t);
+    
+    disp(E(uu,Ut(t)));
     uuu=interpcheb(interpcheb(uu,xq,1),yq,2);
     set(h1,'ZData',uuu);
     drawnow;

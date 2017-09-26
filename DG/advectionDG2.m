@@ -17,7 +17,7 @@ yn=yn';
 xe=linspace(-1,1,k1+1)';
 ye=linspace(-1,1,k2+1)';
 [xxe,yye]=ndgrid(xe,ye);
-Z=xxe+(1i)*yye;
+Z=(xxe+1i*yye);
 
 % Legendre nodes
 d=@(j) j./sqrt(4*j.^2-1);
