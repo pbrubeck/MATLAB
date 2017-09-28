@@ -21,17 +21,19 @@ E1=eye(m);
 E2=eye(n);
 
 % Right hand side
-x1=1; y1=1;
-x2=1; y2=-1;
-r1=f*sqrt(xx.^2+yy.^2+x1^2+y1^2-2-2*x1*y1*xx.*yy);
-r2=f*sqrt(xx.^2+yy.^2+x2^2+y2^2-2-2*x2*y2*xx.*yy);
-src1=(r1<=R0).*sin(pi/R0*r1)./(pi/R0*r1);
-src2=(r2<=R0).*sin(pi/R0*r2)./(pi/R0*r2);
-src=src1+src2;
+r1=f*(xx-yy);
+r2=f*(xx+yy);
+
+src0=@(r) (r<=R0).*sinc(pi/R0*r);
+src1=@(r) exp(-r.^2/(2*R0^2));
+src2=@(r) (r.^2-3*R0^2).*exp(-r.^2/(2*R0^2))/R0^4;
+src=src0(r1)+src0(r2);
 rhs=diag(f^2*x.^2)*src-src*diag(f^2*y.^2);
 
 % Analytic solution
-phi0=@(r) R0^2/pi^2*((r>=R0).*(-R0./r)+(r<R0).*(-1-sin(pi/R0*r)./(pi/R0*r)));
+phi0=@(r) R0^2/pi^2*((r>=R0).*(-R0./(r+(r==0)))+(r<R0).*(-1-sinc(pi/R0*r)));
+phi1=@(r) -R0^3*(sqrt(pi/2)*erf(r/(sqrt(2)*R0))+(r==0)/R0)./(r+(r==0));
+phi2=@(r) exp(-r.^2/(2*R0^2));
 phi=phi0(r1)+phi0(r2);
 
 % Kept degrees of freedom
@@ -41,13 +43,15 @@ kd=@(uu) uu(kd1,kd2);
 
 % Boundary conditions
 a=[1,0;0,0];
-b=[x0,1;1,1];
-b1=[0*y; 0*y];
-b2=[0*x, 0*x];
+b=[0,1;1,1];
 
 % Constraint opertor
 C1=diag(a(1,:))*E1(rd1,:)+diag(b(1,:))*Dx(rd1,:);
 C2=diag(a(2,:))*E2(rd2,:)+diag(b(2,:))*Dy(rd2,:);
+
+% Boundary data
+b1=C1*phi;
+b2=phi*C2';
 
 % Poincare-Steklov operator
 N1=zeros(m,length(rd1)); N1(rd1,:)=inv(C1(:,rd1));
@@ -88,14 +92,20 @@ uuu=interpcheb(interpcheb(uu,ran(xq),1),ran(yq),2);
 [xq,yq]=ndgrid(xq,yq);
 
 % Transformation
-zzz=f*xx.*yy;
-xxx=f*sqrt((xx.^2-1).*(1-yy.^2));
+zzz=f*xq.*yq;
+xxx=f*sqrt((xq.^2-1).*(1-yq.^2));
 
 figure(1);
-surf(xxx,zzz,uu);
+surf(xxx,zzz,uuu);
 colormap(jet(256)); 
 camlight; shading interp; 
 view(2); axis manual;
 daspect([1 1 sqrt(2)*(max(uu(:))-min(uu(:)))/zmax]);
 xlabel('\rho'); ylabel('z');
+
+figure(2);
+plot(y,b1);
+
+figure(3);
+plot(x,b2);
 end
