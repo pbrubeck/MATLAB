@@ -16,7 +16,7 @@ y=linspace(0,2*pi,N(2));
 zz=xx+1i*yy;
 ww=z1+(z1-z2)/(2*L)*a*(coth(zz/2)-coth(x2));
 
-mesh(real(ww), imag(ww), 0*xx);
+mesh(real(ww), imag(ww), xx.^2);
 colormap(gray(1)); axis equal;
 
 d=2*(L+R1+R2);

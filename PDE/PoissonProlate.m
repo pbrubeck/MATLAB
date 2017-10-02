@@ -7,12 +7,11 @@ function [] = PoissonProlate(m,n,f,zmax,R0)
 
 x0=zmax/f;
 
-% Set coordinate grid [x,y]=[sinh(xi), cos(eta)]
+% Set coordinate grid [x,y]=[cosh(xi), cos(eta)]
 [Dx,x]=chebD(m);
 [Dy,y]=chebD(n); y=y';
 x=(x0-1)/2*(x+1)+1; Dx=2/(x0-1)*Dx;
 [xx,yy]=ndgrid(x,y);
-
 
 % Differential operators
 A=(diag(x.^2-1)*Dx+diag(2*x))*Dx;
@@ -27,14 +26,14 @@ r2=f*(xx+yy);
 src0=@(r) (r<=R0).*sinc(pi/R0*r);
 src1=@(r) exp(-r.^2/(2*R0^2));
 src2=@(r) (r.^2-3*R0^2).*exp(-r.^2/(2*R0^2))/R0^4;
-src=src0(r1)+src0(r2);
+src=src1(r1)+src1(r2);
 rhs=diag(f^2*x.^2)*src-src*diag(f^2*y.^2);
 
 % Analytic solution
 phi0=@(r) R0^2/pi^2*((r>=R0).*(-R0./(r+(r==0)))+(r<R0).*(-1-sinc(pi/R0*r)));
 phi1=@(r) -R0^3*(sqrt(pi/2)*erf(r/(sqrt(2)*R0))+(r==0)/R0)./(r+(r==0));
 phi2=@(r) exp(-r.^2/(2*R0^2));
-phi=phi0(r1)+phi0(r2);
+phi=phi1(r1)+phi1(r2);
 
 % Kept degrees of freedom
 rd1=[1,m]; kd1=2:m-1;
@@ -43,7 +42,7 @@ kd=@(uu) uu(kd1,kd2);
 
 % Boundary conditions
 a=[1,0;0,0];
-b=[0,1;1,1];
+b=[x0-1,1;1,1];
 
 % Constraint opertor
 C1=diag(a(1,:))*E1(rd1,:)+diag(b(1,:))*Dx(rd1,:);
@@ -81,31 +80,33 @@ LL=L1+L2;
 
 % Solve
 uu=ub+V1*(((V1(kd1,:)\kd(rhs-(A*ub+ub*B.'))/V2(kd2,:).'))./LL)*V2.';
-
 % Interpolation
-M=1024;
-N=1024;
-xq=(x0-1)/2*(cos(pi/(M-1)*(0:M-1))+1)+1;
-yq=cos(pi/(N-1)*(0:N-1));
-ran=@(x) 2*(x-min(x))/(max(x)-min(x))-1;
-uuu=interpcheb(interpcheb(uu,ran(xq),1),ran(yq),2);
-[xq,yq]=ndgrid(xq,yq);
+if false
+    M=1024;
+    N=1024;
+    xq=(x0-1)/2*(cos(pi/(M-1)*(0:M-1))+1)+1;
+    yq=cos(pi/(N-1)*(0:N-1));
+    ran=@(x) 2*(x-min(x))/(max(x)-min(x))-1;
+    uuu=interpcheb(interpcheb(uu,ran(xq),1),ran(yq),2);
+    [xq,yq]=ndgrid(xq,yq);
+else
+    xq=xx; yq=yy; uuu=uu;
+end
 
 % Transformation
 zzz=f*xq.*yq;
 xxx=f*sqrt((xq.^2-1).*(1-yq.^2));
-
 figure(1);
-surf(xxx,zzz,uuu);
+surf([xxx;-flipud(xxx)],zzz([1:end, end:-1:1],:),uuu([1:end, end:-1:1],:));
 colormap(jet(256)); 
 camlight; shading interp; 
 view(2); axis manual;
-daspect([1 1 sqrt(2)*(max(uu(:))-min(uu(:)))/zmax]);
+daspect([1 1 sqrt(2)*(max(uuu(:))-min(uuu(:)))/zmax]);
 xlabel('\rho'); ylabel('z');
 
 figure(2);
-plot(y,b1);
+plot(y,C1*uu);
 
 figure(3);
-plot(x,b2);
+plot(x,uu*C2');
 end

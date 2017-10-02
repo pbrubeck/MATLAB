@@ -23,7 +23,7 @@ psi(2:end-1,:)=sylvester(Dxx(2:end-1,2:end-1), Dyy', RHS(2:end-1,:));
 h=mesh(uu(:,[1:end,1]),vv(:,[1:end,1]),psi(:,[1:end,1]));
 colormap(jet(256)); shading interp;
 set(h,'FaceColor','none'); view(2);
-c=4*(R1+R2+L); xlim([-c,c]); ylim([-c,c]);
+c=4*(R1+R2+L);% xlim([-c,c]); ylim([-c,c]);
 xrange=2*c;
 yrange=2*c;
 zrange=max(psi(:))-min(psi(:));
