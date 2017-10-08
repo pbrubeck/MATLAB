@@ -2,11 +2,11 @@ function [] = PoissonBispherical(m,n,L,R1,R2)
 % Solves Poisson's equation in bispherical coordinats with mixed boundary conditions.
 
 % L : source distance
-% R1, R2 : source radius
+% R1, R2 : source radii
 
 a0=sqrt((R1^2-R2^2)^2-8*L^2*(R1^2+R2^2)+16*L^4)/(4*L);
 x1=-a0/R2;
-x2= a0/R1;
+x2= a0/R1; 
 
 % Set coordinate grid [x,y]=[sinh(xi), cos(eta)]
 [Dx,x]=chebD(m);
@@ -39,8 +39,8 @@ rd2=[1,n]; kd2=2:n-1;
 kd=@(uu) uu(kd1,kd2);
 
 % Boundary conditions
-a=[1,1;1,1];
-b=[0,0;0,0];
+a=[1,1;0,0];
+b=[0,0;1,1];
 
 % Constraint opertor
 C1=diag(a(1,:))*E1(rd1,:)+diag(b(1,:))*Dx(rd1,:);
@@ -95,7 +95,8 @@ else
 end
 
 % Transformation
-zzz=a0*(xq./(sqrt(xq.^2+1)-yq)-sqrt(1+x2^-2))+L;
+z0=sqrt(a0^2+R1^2)-L;
+zzz=a0*(xq./(sqrt(xq.^2+1)-yq))-z0;
 xxx=a0*sqrt(abs(1-yq.^2))./(sqrt(xq.^2+1)-yq);
 
 % Grid Clamping
