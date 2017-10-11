@@ -62,7 +62,7 @@ C1=diag(a1)*E1(rd1,:)+diag(b1)*Dx1(rd1,:);
 C2=diag(a2)*E2(rd2,:)+diag(b2)*Dx2(rd2,:);
 C3=diag(a3)*E3(rd3,:)+diag(b3)*Dy(rd3,:);
 
-% Giveback matrix
+% Give-back matrix
 G1=-C1(:,rd1)\C1(:,kd1);
 G2=-C2(:,rd2)\C2(:,kd2);
 G3=-C3(:,rd3)\C3(:,kd3);
@@ -91,28 +91,9 @@ GF1=@(rhs) S1*(LL1.*(S1(kd1,:)\rhs/S3(kd3,:).'))*S3.';
 GF2=@(rhs) S2*(LL2.*(S2(kd2,:)\rhs/S3(kd3,:).'))*S3.';
 
 % Interface Schur complement
-f1= 1*(S1(kd1,:)\A1(kd1,g1))'.*(Dx1(g1,kd1)*S1(kd1,:));
-f2=-2*(S2(kd2,:)\A2(kd2,g2))'.*(Dx2(g2,kd2)*S2(kd2,:));
-SS=S3(kd3,:)*diag((Dx1(g1,g1)-2*Dx2(g2,g2)-f1*LL1-f2*LL2))/S3(kd3,:);
-
-% Naive computation of Schur Complement
-function v=schurcomp(rhs)
-    gb=zeros(1,n);
-    gb(kd3)=rhs;
-    gb(rd3)=gb(kd3)*G3';
-    f1=K1(OP1(E1(:,g1)*gb));
-    f2=K2(OP2(E2(:,g2)*gb));
-    v=(Dx1(g1,g1)-2*Dx2(g2,g2))*rhs-Dx1(g1,kd1)*K1(GF1(f1))+2*Dx2(g2,kd2)*K2(GF2(f2));
-end
-if false
-SS2=eye(n-2);
-for i=1:n-2
-    SS2(i,:)=schurcomp(SS2(i,:));
-end
-SS2=SS2.';
-figure(3);
-imagesc(SS-SS2); colorbar();
-end
+t1= 1*(Dx1(g1,kd1)*S1(kd1,:)).*(S1(kd1,:)\A1(kd1,g1))';
+t2=-2*(Dx2(g2,kd2)*S2(kd2,:)).*(S2(kd2,:)\A2(kd2,g2))';
+SS=S3(kd3,:)*diag(Dx1(g1,g1)-2*Dx2(g2,g2)-t1*LL1-t2*LL2)/S3(kd3,:);
 
 % Solve for the interface
 rhs=Dx1(g1,kd1)*K1(GF1(K1(F1)))-2*Dx2(g2,kd2)*K2(GF2(K2(F2)));

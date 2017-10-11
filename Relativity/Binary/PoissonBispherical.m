@@ -17,8 +17,8 @@ x=(x2-x1)/2*(x+1)+x1; Dx=2/(x2-x1)*Dx;
 % Differential operators
 E1=eye(m);
 E2=eye(n);
-A=(diag(x.^2+1)*Dx+diag(x))*Dx-E1/8;
-B=(diag(1-y.^2)*Dy-diag(2*y))*Dy-E2/8;
+A=(diag(x.^2+1)*Dx+diag(x))*Dx-E1/4;
+B=(diag(1-y.^2)*Dy-diag(2*y))*Dy;
 
 % Right hand side
 zc=a0*(xx./(sqrt(xx.^2+1)-yy)-sqrt(1+x2^-2))+L;
@@ -120,7 +120,7 @@ axis manual;
 xlim([0,d]); ylim([-d, d]);
 daspect([1 1 1/sqrt(2)*(max(uuu(:))-min(uuu(:)))/d]);
 colormap(jet(256));
-shading interp; camlight;
+%shading interp; camlight;
 xlabel('\rho'); ylabel('z');
 hold off;
 end
