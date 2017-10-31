@@ -12,7 +12,7 @@ F0=[1, sign(c)*s]*[0.5, 0.5; 0.5, -0.5];
 F(1,1:2)=F0; F(end,end-1:end)=-F0;
 
 % Velocity function
-c=reshape(1+4*(x+1)/2, p, k);
+c=reshape(1+4*(x+1)/2, p, k); c(:)=1;
 
 % Mass matrix
 V=VandermondeLeg(xn);

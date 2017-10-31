@@ -95,18 +95,20 @@ end
 GF1=@(rhs) S1*(LL1.*(S1(kd1,:)\rhs/S4(kd4,:).'))*S4.';
 GF2=@(rhs) S2*(LL2.*(S2(kd2,:)\rhs/S4(kd4,:).'))*S4.';
 GF3=@(rhs) S3*(LL3.*(S3(kd3,:)\rhs/S4(kd4,:).'))*S4.';
-
 %% Schur complement method
 
-t1= (Dx1(g1,kd1)*S1(kd1,:)).*((S1(kd1,:)\A1(kd1,g1)).');
-t3= (Dx3(g3,kd3)*S3(kd3,:)).*((S3(kd3,:)\A3(kd3,g3)).');
-t2=-(Dx2(g2,kd2)*S2(kd2,:)).*((S2(kd2,:)\A2(kd2,g2)).');
-t4=-(Dx2(g2,kd2)*S2(kd2,:)).*((S2(kd2,:)\A2(kd2,fliplr(g2))).');
+t1  = Dx1(g1,kd1)*S1(kd1,:)*diag(S1(kd1,:)\A1(kd1,g1))*LL1;
+t3  = Dx3(g3,kd3)*S3(kd3,:)*diag(S3(kd3,:)\A3(kd3,g3))*LL3;
+t211=-Dx2(g2(1),kd2)*S2(kd2,:)*diag(S2(kd2,:)\A2(kd2,g2(1)))*LL2;
+t222=-Dx2(g2(2),kd2)*S2(kd2,:)*diag(S2(kd2,:)\A2(kd2,g2(2)))*LL2;
+t212=-Dx2(g2(1),kd2)*S2(kd2,:)*diag(S2(kd2,:)\A2(kd2,g2(2)))*LL2;
+t221=-Dx2(g2(2),kd2)*S2(kd2,:)*diag(S2(kd2,:)\A2(kd2,g2(1)))*LL2;
 
-Sig11=S4(kd4,:)*diag(Dx1(g1,g1)-Dx2(g2(1),g2(1))-t1*LL1-t2(1,:)*LL2)/S4(kd4,:);
-Sig22=S4(kd4,:)*diag(Dx3(g3,g3)-Dx2(g2(2),g2(2))-t3*LL3-t2(2,:)*LL2)/S4(kd4,:);
-Sig12=S4(kd4,:)*diag(-Dx2(g2(1),g2(2))-t4(1,:)*LL2)/S4(kd4,:);
-Sig21=S4(kd4,:)*diag(-Dx2(g2(2),g2(1))-t4(2,:)*LL2)/S4(kd4,:);
+
+Sig11=S4(kd4,:)*diag(Dx1(g1,g1)-Dx2(g2(1),g2(1))-t1-t211)/S4(kd4,:);
+Sig22=S4(kd4,:)*diag(Dx3(g3,g3)-Dx2(g2(2),g2(2))-t3-t222)/S4(kd4,:);
+Sig12=S4(kd4,:)*diag(-Dx2(g2(1),g2(2))-t212)/S4(kd4,:);
+Sig21=S4(kd4,:)*diag(-Dx2(g2(2),g2(1))-t221)/S4(kd4,:);
 Sig=[Sig11, Sig12; Sig21, Sig22];
 
 f1=-Dx1(g1,kd1)*K1(GF1(K1(F1)))+Dx2(g2(1),kd2)*K2(GF2(K2(F2)));
@@ -141,4 +143,5 @@ axis manual;
 colormap(jet(256));
 shading interp; camlight;
 xlabel('x'); ylabel('y');
+
 end
