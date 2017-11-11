@@ -1,38 +1,72 @@
-function [] = wave1D(N)
-dt=6/N^2;
-x=chebGrid(N);
-a=zeros(5,1); a(end)=1;
-u=zeros(N,2);
-u(:,1)=HermitePsi(a,20*x);
-u(:,2)=0;
+function [] = wave1D(n)
+% Solves the wave equation using Chebyshev collocation spectral method.
+
+% Diff matrix, nodes and quadrature
+[D,x]=chebD(n);
+[w,~]=ClenshawCurtis(-1,1,n);
+D2=D*D;
+
+% Boundary conditions
+a=[1,1]; % Dirichlet
+b=[0,0]; % Neumann
+kd=2:n-1;
+rd=[1,n];
+I=eye(n);
+B=diag(a)*I(rd,:)+diag(b)*D(rd,:);
+G=-B(:,rd)\B(:,kd);
+
+% Schur complement
+SA=D2(kd,kd)+D2(kd,rd)*G;
+
+% Eigenmodes
+S=zeros(n,n-2);
+[S(kd,:), L]=eig(SA, 'vector');
+S(rd,:)=G*S(kd,:);
+omega=sqrt(-L);
+
+% Initiall conditions
+u=1-x.^2;
+v=0*(1-x.^2);
+bc=B*u;
+
+% DC component
+u0=zeros(n,1);
+ub=G*u(kd)-u(rd);
+u0(kd)=SA\(D2(kd,rd)*ub);
+u0(rd)=G*u0(kd)-ub;
+
+a0=S(kd,:)\(u(kd)-u0(kd));
+b0=S(kd,:)\v(kd);
 
 figure(1);
-h=plot(x,u(:,1));
+h1=plot(x,u);
 axis manual;
-ylim([-1,1]);
+ylim([-4,4]);
 
-nframes=10000;
+figure(2);
+h2=plot(x,u);
+
+t=0; tf=24;
+nframes=200;
+dt=tf/nframes;
+
+E=zeros(nframes,1);
 for i=1:nframes
-    b1=spline(x,u(:,1),1-dt);
-    b2=spline(x,u(:,1),-1+dt);
-    u=solveRK4(u,dt);
-    u(1,1)=b1;
-    u(end,1)=b2;
-    set(h, 'YData', real(u(:,1)));
+    t=t+dt;
+    u=u0+S*(cos(omega*t).*a0+(t*sinc(omega*t)).*b0);
+    ut=  S*(-omega.*sin(omega*t).*a0+cos(omega*t).*b0);
+    utt= S*(-omega.*(omega.*cos(omega*t).*a0+sin(omega*t).*b0));
+    
+    err=(utt-D*D*u);
+    err(rd)=B*u-bc;
+    set(h1, 'YData', u);
+    set(h2, 'YData', err);
     drawnow;
-end
-end
-
-function u=solveRK4(u, dt)
-% Time-stepping by Runge Kutta 4th order.
-k1=dt*partialTime(u);
-k2=dt*partialTime(u+k1/2);
-k3=dt*partialTime(u+k2/2);
-k4=dt*partialTime(u+k3);
-u=u+(k1+2*k2+2*k3+k4)/6;
+    
+    E(i)=(ut'*diag(w)*ut-(D*u)'*diag(w)*(D*u))/2;
 end
 
-function v=partialTime(u)
-v(:,1)=u(:,2);
-v(:,2)=chebfftD2(u(:,1),1);
+figure(3);
+plot(dt*(1:nframes), E-mean(E));
 end
+

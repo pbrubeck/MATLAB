@@ -30,7 +30,7 @@ w=[u0(2:end-1), v0(2:end-1)];
 figure(1);
 h=plot(x, u0, 'b', 'Linewidth', 1);
 xlim([-xl,xl]); ylim([-1,1]); xlabel('x'); title('\Psi(x)');
-nframes=ceil((xl-x0)/dt)+1;
+nframes=2*ceil((xl-x0)/dt)+1;
 wdata=zeros(N,nframes);
 for i=1:nframes
     wdata(:,i)=[0; w(:,1); 0];

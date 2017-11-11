@@ -8,7 +8,7 @@ x=kron(J, xn)+kron((xe(1:end-1)+xe(2:end))/2,ones(p,1));
 c=1; % velocity
 s=1; % s=0 average, s=1 upwind
 F=zeros(p,p+2);
-F0=[1, sign(c)*s]*[0.5, 0.5; 0.5, -0.5];
+F0=[1, sign(c)*s]*[1, 1; 1, -1]/2;
 F(1,1:2)=F0; F(end,end-1:end)=-F0;
 
 % Velocity function

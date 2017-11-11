@@ -44,7 +44,7 @@ r1=hypot(rr,zz-z1);
 r2=hypot(rr,zz-z2);
 
 psi=1+(m1/2)./r1+(m2/2)./r2;
-E=r0^2*9/4*(rr.^2).*(s1^2./r1.^8+s2^2./r2.^8+2*s1*s2*(rr.^2+(zz-z1).*(zz-2))./(r1.*r2).^5);
+E=r0^2*9/4*(rr.^2).*(s1^2./r1.^8+s2^2./r2.^8+2*s1*s2*(rr.^2+(zz-z1).*(zz-z2))./(r1.*r2).^5);
 F=zeros(m,n);
 
 [green,ps,kd]=elliptic(A1,E2,E1,A2,B1,B2,1,[1,n]);
