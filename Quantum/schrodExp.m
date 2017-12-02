@@ -3,7 +3,7 @@ function [] = schrodExp( N )
 [~,w]=ClenshawCurtis(-1,1,N);
 
 dt=0.0001;
-V0=1000;
+V0=000;
 T=-1/2*D*D;
 V=diag(V0*x.^2);
 H=T+V;
