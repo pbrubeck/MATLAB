@@ -104,7 +104,6 @@ t222=-Dx2(g2(2),kd2)*S2(kd2,:)*diag(S2(kd2,:)\A2(kd2,g2(2)))*LL2;
 t212=-Dx2(g2(1),kd2)*S2(kd2,:)*diag(S2(kd2,:)\A2(kd2,g2(2)))*LL2;
 t221=-Dx2(g2(2),kd2)*S2(kd2,:)*diag(S2(kd2,:)\A2(kd2,g2(1)))*LL2;
 
-
 Sig11=S4(kd4,:)*diag(Dx1(g1,g1)-Dx2(g2(1),g2(1))-t1-t211)/S4(kd4,:);
 Sig22=S4(kd4,:)*diag(Dx3(g3,g3)-Dx2(g2(2),g2(2))-t3-t222)/S4(kd4,:);
 Sig12=S4(kd4,:)*diag(-Dx2(g2(1),g2(2))-t212)/S4(kd4,:);

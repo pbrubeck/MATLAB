@@ -72,7 +72,7 @@ h2=plot(x,err);
 figure(3);
 plot(x,S(:,1:6));
 
-t=0; tf=1;
+t=0; tf=10;
 nframes=3000;
 dt=tf/nframes;
 for i=1:nframes

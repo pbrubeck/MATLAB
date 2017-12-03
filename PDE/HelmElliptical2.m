@@ -77,10 +77,13 @@ figure(2); plot(y,V2(:,end));
 
 xx=f*cosh(x)*cos(y);
 yy=f*sinh(x)*sin(y);
-uu=V1(:,end)*V2(:,end)';
+uuu=zeros(m,n,k);
+for i=1:k
+    uuu(:,:,i)=V1(:,i)*V2(:,i)';
+end
 
 figure(3);
-surf(xx(:,[end,1:end]),yy(:,[end,1:end]),uu(:,[end,1:end]));
+modegallery(xx(:,[end,1:end]),yy(:,[end,1:end]),uuu(:,[end,1:end],:));
 colormap(jet(256));
 camlight; shading interp;
 view(2);
