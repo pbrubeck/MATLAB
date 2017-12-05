@@ -30,7 +30,7 @@ RL(:,1)=1:size(adjx,1);
 RL(I,2)=J;
 RL(J,3)=I;
 
-% Horizontal interface neighbors [N,S]
+% Vertical interface neighbors [N,S]
 TB=zeros(size(adjy));
 [A,B]=ndgrid(adjy(:,1), adjy(:,2));
 [I,J]=find(A==B);

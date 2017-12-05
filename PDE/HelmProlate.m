@@ -75,10 +75,10 @@ display(lambda);
 display(mu);
 
 % Interpolation
-x=linspace(a0,0,1024)';
-y=linspace(pi/2,0,1024);
-V1=interpcheb(V1,linspace(1,-1,1024),1);
-V2=interpcheb(V2,linspace(1,-1,1024),1);
+% x=linspace(a0,0,1024)';
+% y=linspace(pi/2,0,1024);
+% V1=interpcheb(V1,linspace(1,-1,1024),1);
+% V2=interpcheb(V2,linspace(1,-1,1024),1);
 
 % Fix periodicity
 y=[y+3*pi/2,y+pi,y+pi/2,y];
@@ -91,11 +91,14 @@ figure(2); plot(y,V2);
 
 zz=f*cosh(x)*cos(y);
 xx=f*sinh(x)*sin(y);
-uu=V1(:,end)*V2(:,end)';
+uuu=zeros(length(x),length(y),k);
+for i=1:k
+    uuu(:,:,i)=V1(:,i)*V2(:,i)';
+end
 
 figure(3);
-surf(xx,zz,uu);
+modegallery(xx,zz,uuu);
 colormap(jet(256));
 camlight; shading interp;
-view(2); axis square;
+view(2);
 end
