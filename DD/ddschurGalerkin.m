@@ -1,4 +1,4 @@
-function [S,H,gf,K1,K2,M1,M2,x,y] = ddschurGalerkin(adjx,adjy,m,n,a,b)
+function [S,gf,K1,K2,M1,M2,x,y] = ddschurGalerkin(adjx,adjy,m,n,a,b)
 % Computes the Schur complement for a separable operator kron(M2,K1)+kron(K2,M1)
 rd1=[1,m];
 rd2=[1,n];
@@ -19,7 +19,7 @@ function uu=greenF(F,b1,b2)
     uu(rd1,kd2)=b1;
     uu(kd1,rd2)=b2;
     rhs=M1*F*M2'-(K1*uu*M2'+M1*uu*K2');
-    uu(kd1,kd2)=V1(kd1,kd1)*((V1(kd1,kd1)'*rhs(kd1,kd2)*V2(kd2,kd2)).*LL)*V2(kd2,kd2)';
+    uu(kd1,kd2)=V1(kd1,kd1)*(LL.*(V1(kd1,kd1)'*rhs(kd1,kd2)*V2(kd2,kd2)))*V2(kd2,kd2)';
     uu=E1*uu*E2';
 end
 gf=@(F,b1,b2) greenF(F,b1,b2);
@@ -34,14 +34,14 @@ Q2=M2(kd2,kd2)*V2(kd2,kd2);
 % S11
 p1=[east,east,west,west];
 p2=[east,west,east,west];
-VTML=V1(kd1,kd1)'*M1(p1,kd1)';
-VTKL=V1(kd1,kd1)'*K1(p1,kd1)';
-VTMR=V1(kd1,kd1)'*M1(kd1,p2) ;
-VTKR=V1(kd1,kd1)'*K1(kd1,p2) ;
-MM=VTML.*VTMR;
-MK=VTML.*VTKR;
-KM=VTKL.*VTMR;
-KK=VTKL.*VTKR;
+VTML1=V1(kd1,kd1)'*M1(p1,kd1)';
+VTKL1=V1(kd1,kd1)'*K1(p1,kd1)';
+VTMR1=V1(kd1,kd1)'*M1(kd1,p2) ;
+VTKR1=V1(kd1,kd1)'*K1(kd1,p2) ;
+MM=VTML1.*VTMR1;
+MK=VTML1.*VTKR1;
+KM=VTKL1.*VTMR1;
+KK=VTKL1.*VTKR1;
 DXX=diag(L2.^2)*(LL'*MM)+diag(L2)*(LL'*(MK+KM))+(LL'*KK);
 EE=Q2*diag(DXX(:,1))*Q2';
 EW=Q2*diag(DXX(:,2))*Q2';
@@ -51,14 +51,14 @@ WW=Q2*diag(DXX(:,4))*Q2';
 % S22
 p1=[north,north,south,south];
 p2=[north,south,north,south];
-VTML=V2(kd2,kd2)'*M2(p1,kd2)';
-VTKL=V2(kd2,kd2)'*K2(p1,kd2)';
-VTMR=V2(kd2,kd2)'*M2(kd2,p2) ;
-VTKR=V2(kd2,kd2)'*K2(kd2,p2) ;
-MM=VTML.*VTMR;
-MK=VTML.*VTKR;
-KM=VTKL.*VTMR;
-KK=VTKL.*VTKR;
+VTML2=V2(kd2,kd2)'*M2(p1,kd2)';
+VTKL2=V2(kd2,kd2)'*K2(p1,kd2)';
+VTMR2=V2(kd2,kd2)'*M2(kd2,p2) ;
+VTKR2=V2(kd2,kd2)'*K2(kd2,p2) ;
+MM=VTML2.*VTMR2;
+MK=VTML2.*VTKR2;
+KM=VTKL2.*VTMR2;
+KK=VTKL2.*VTKR2;
 DYY=diag(L1.^2)*(LL*MM)+diag(L1)*(LL*(MK+KM))+(LL*KK);
 NN=Q1*diag(DYY(:,1))*Q1';
 NS=Q1*diag(DYY(:,2))*Q1';
@@ -66,39 +66,26 @@ SN=Q1*diag(DYY(:,3))*Q1';
 SS=Q1*diag(DYY(:,4))*Q1';
 
 % S12
-p1=[east, east, west, west ];
-p2=[north,south,north,south];
-VTML=V1(kd1,kd1)'*M1(p1,kd1)';
-VTKL=V1(kd1,kd1)'*K1(p1,kd1)';
-VTMR=V2(kd2,kd2)'*M2(kd2,p2) ;
-VTKR=V2(kd2,kd2)'*K2(kd2,p2) ;
-U=[L2.*VTMR, VTMR, L2.*VTKR, VTKR];
-V=[L1.*VTML, L1.*VTKL, VTML, VTKL];
-EN=Q1*((U(:,1:4:end)*V(:,1:4:end)').*LL')*Q2';
-ES=Q1*((U(:,2:4:end)*V(:,2:4:end)').*LL')*Q2';
-WN=Q1*((U(:,3:4:end)*V(:,3:4:end)').*LL')*Q2';
-WS=Q1*((U(:,4:4:end)*V(:,4:4:end)').*LL')*Q2';
+U=[L2.*VTMR2, VTMR2, L2.*VTKR2, VTKR2];
+V=[L1.*VTML1, L1.*VTKL1, VTML1, VTKL1];
+EN=Q2*((U(:,1:4:end)*V(:,1:4:end)').*LL')*Q1';
+ES=Q2*((U(:,2:4:end)*V(:,2:4:end)').*LL')*Q1';
+WN=Q2*((U(:,3:4:end)*V(:,3:4:end)').*LL')*Q1';
+WS=Q2*((U(:,4:4:end)*V(:,4:4:end)').*LL')*Q1';
 
 % S21
-p1=[north,north,south,south];
-p2=[east, west, east, west ];
-VTML=V2(kd2,kd2)'*M2(p1,kd2)';
-VTKL=V2(kd2,kd2)'*K2(p1,kd2)';
-VTMR=V1(kd1,kd1)'*M1(kd1,p2) ;
-VTKR=V1(kd1,kd1)'*K1(kd1,p2) ;
-U=[L1.*VTMR, VTMR, L1.*VTKR, VTKR];
-V=[L2.*VTML, L2.*VTKL, VTML, VTKL];
-NE=Q2*((U(:,1:4:end)*V(:,1:4:end)').*LL)*Q1';
-NW=Q2*((U(:,2:4:end)*V(:,2:4:end)').*LL)*Q1';
-SE=Q2*((U(:,3:4:end)*V(:,3:4:end)').*LL)*Q1';
-SW=Q2*((U(:,4:4:end)*V(:,4:4:end)').*LL)*Q1';
+U=[L1.*VTMR1, VTMR1, L1.*VTKR1, VTKR1];
+V=[L2.*VTML2, L2.*VTKL2, VTML2, VTKL2];
+NE=Q1*((U(:,1:4:end)*V(:,1:4:end)').*LL)*Q2';
+NW=Q1*((U(:,2:4:end)*V(:,2:4:end)').*LL)*Q2';
+SE=Q1*((U(:,3:4:end)*V(:,3:4:end)').*LL)*Q2';
+SW=Q1*((U(:,4:4:end)*V(:,4:4:end)').*LL)*Q2';
 
 % Assembly
 
 % S11
 [x1,y1]=ndgrid(adjx(:,1), adjx(:,1));
 [x2,y2]=ndgrid(adjx(:,2), adjx(:,2));
-
 S11=sparse((n-2)*size(adjx,1),(n-2)*size(adjx,1));
 S11=S11+kron(sparse(x2==y2), -EE+M1(east,east)*K2(kd2,kd2)+K1(east,east)*M2(kd2,kd2));
 S11=S11+kron(sparse(x2==y1), -EW+M1(east,west)*K2(kd2,kd2)+K1(east,west)*M2(kd2,kd2));
@@ -108,18 +95,15 @@ S11=S11+kron(sparse(x1==y1), -WW+M1(west,west)*K2(kd2,kd2)+K1(west,west)*M2(kd2,
 % S22
 [x1,y1]=ndgrid(adjy(:,1), adjy(:,1));
 [x2,y2]=ndgrid(adjy(:,2), adjy(:,2));
-
 S22=sparse((m-2)*size(adjy,1),(m-2)*size(adjy,1));
 S22=S22+kron(sparse(x2==y2), -NN+M2(north,north)*K1(kd1,kd1)+K2(north,north)*M1(kd1,kd1));
 S22=S22+kron(sparse(x2==y1), -NS+M2(north,south)*K1(kd1,kd1)+K2(north,south)*M1(kd1,kd1));
 S22=S22+kron(sparse(x1==y2), -SN+M2(south,north)*K1(kd1,kd1)+K2(south,north)*M1(kd1,kd1));
 S22=S22+kron(sparse(x1==y1), -SS+M2(south,south)*K1(kd1,kd1)+K2(south,south)*M1(kd1,kd1));
-
             
 % S12
 [x1,y1]=ndgrid(adjx(:,1), adjy(:,1));
 [x2,y2]=ndgrid(adjx(:,2), adjy(:,2));
-
 S12=sparse((n-2)*size(adjx,1),(m-2)*size(adjy,1));
 S12=S12+kron(sparse(x2==y2), -EN+M2(kd2,north)*K1(east,kd1)+K2(kd2,north)*M1(east,kd1));
 S12=S12+kron(sparse(x2==y1), -ES+M2(kd2,south)*K1(east,kd1)+K2(kd2,south)*M1(east,kd1));
@@ -129,7 +113,6 @@ S12=S12+kron(sparse(x1==y1), -WS+M2(kd2,south)*K1(west,kd1)+K2(kd2,south)*M1(wes
 % S21
 [y1,x1]=ndgrid(adjy(:,1), adjx(:,1));
 [y2,x2]=ndgrid(adjy(:,2), adjx(:,2));
-
 S21=sparse((m-2)*size(adjy,1),(n-2)*size(adjx,1));
 S21=S21+kron(sparse(y2==x2), -NE+M1(kd1,east)*K2(north,kd2)+K1(kd1,east)*M2(north,kd2));
 S21=S21+kron(sparse(y2==x1), -NW+M1(kd1,west)*K2(north,kd2)+K1(kd1,west)*M2(north,kd2));
@@ -145,8 +128,6 @@ S(id1,id1)=S11;
 S(id1,id2)=S12;
 S(id2,id1)=S21;
 S(id2,id2)=S22;
-
-H=0;
 end
 
 
@@ -176,7 +157,7 @@ Minv=(V*V');
 M=E'*(Minv\E);
 
 % Stiffness matrix
-K=DE'*diag(w)*DE-E(rd,:)'*diag([-1,1])*DE(rd,:);
+K=DE'*diag(w)*DE+E(rd,:)'*diag([1,-1])*DE(rd,:);
 
 % Eigenfunctions
 V=zeros(m);

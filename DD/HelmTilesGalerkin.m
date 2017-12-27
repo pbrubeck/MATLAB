@@ -4,13 +4,13 @@ function [lam] = HelmTilesGalerkin( m, k )
 % decomposition.
 n=m;
 
-% UIUC block-I
-adjx=[3 4; 4 5; 6 7; 7 8];
-adjy=[4 2; 2 1; 1 7];
-
 % L-shaped membrane
 adjx=[2 1];
 adjy=[3 1];
+
+% UIUC block-I
+adjx=[3 4; 4 5; 6 7; 7 8];
+adjy=[4 2; 2 1; 1 7];
 
 % Topology
 [topo,net,RL,TB]=ddtopo(adjx,adjy);
@@ -25,7 +25,7 @@ kd1=2:m-1;
 kd2=2:n-1;
 
 % Schur complement
-[S,H,gf,K1,K2,M1,M2,x,y]=ddschurGalerkin(adjx,adjy,m,n,ones(2,2),zeros(2,2));
+[S,gf,K1,K2,M1,M2,x,y]=ddschurGalerkin(adjx,adjy,m,n,ones(2,2),zeros(2,2));
 [Lschur, Uschur, pschur]=lu(S,'vector');
 
 figure(2);
@@ -33,25 +33,36 @@ imagesc(log(abs(S)));
 colormap(gray(256)); colorbar; axis square;
 drawnow;
 
+poissoncalls=0;
+gfcalls=0;
 
 % Poisson solver
 function [u]=poissonTiles(F)
+    poissoncalls=poissoncalls+1;
+    
     F=reshape(F, m, n, []);
-    v=cell([size(net,1),1]);
+    v=cell(size(net,1),1);
     for j=1:size(net,1)
+        gfcalls=gfcalls+1;
         v{j}=gf(F(:,:,j),zeros(2,n-2),zeros(m-2,2));
     end
     
     rhs=zeros(m-2, size(RL,1)+size(TB,1));
     for j=1:size(RL,1)
-        rhs(:,RL(j,1))=M1(rd1(2),:)*F(:, :, adjx(j,1))*M2(kd2,:)'/2 + M1(rd1(1),:)*F(:, :, adjx(j,2))*M2(kd2,:)'/2 + ...
-                       -(M1(rd1(2),:)*(v{adjx(j,1)})*K2(kd2,:)'+K1(rd1(2),:)*(v{adjx(j,1)})*M2(kd2,:)' + ...
-                         M1(rd1(1),:)*(v{adjx(j,2)})*K2(kd2,:)'+K1(rd1(1),:)*(v{adjx(j,2)})*M2(kd2,:)');
+        rhs(:,RL(j,1)) = M1(rd1(2),:)*F(:,:,adjx(j,1))*M2(kd2,:)'/2 + ...
+                         M1(rd1(1),:)*F(:,:,adjx(j,2))*M2(kd2,:)'/2 + ...
+                       -(M1(rd1(2),:)*v{adjx(j,1)}*K2(kd2,:)' + ...
+                         K1(rd1(2),:)*v{adjx(j,1)}*M2(kd2,:)' + ...
+                         M1(rd1(1),:)*v{adjx(j,2)}*K2(kd2,:)' + ...
+                         K1(rd1(1),:)*v{adjx(j,2)}*M2(kd2,:)');
     end
     for j=1:size(TB,1)
-        rhs(:,TB(j,1))=M1(kd1,:)*F(:, :, adjy(j,1))*M2(rd2(2),:)'/2 + M1(kd1,:)*F(:, :, adjy(j,2))*M2(rd2(1),:)'/2 + ...
-                       -(K1(kd1,:)*(v{adjy(j,1)})*M2(rd2(2),:)'+M1(kd1,:)*(v{adjy(j,1)})*K2(rd2(2),:)'+...
-                         K1(kd1,:)*(v{adjy(j,2)})*M2(rd2(1),:)'+M1(kd1,:)*(v{adjy(j,2)})*K2(rd2(1),:)');
+        rhs(:,TB(j,1)) = M1(kd1,:)*F(:,:,adjy(j,1))*M2(rd2(2),:)'/2 + ...
+                         M1(kd1,:)*F(:,:,adjy(j,2))*M2(rd2(1),:)'/2 + ...
+                       -(K1(kd1,:)*v{adjy(j,1)}*M2(rd2(2),:)' + ...
+                         M1(kd1,:)*v{adjy(j,1)}*K2(rd2(2),:)' + ...
+                         K1(kd1,:)*v{adjy(j,2)}*M2(rd2(1),:)' + ...
+                         M1(kd1,:)*v{adjy(j,2)}*K2(rd2(1),:)');
     end
     rhs=rhs(:);
     
@@ -63,6 +74,7 @@ function [u]=poissonTiles(F)
     % Solve for interior nodes with the given BCs
     u=zeros(size(F));
     for j=1:size(net,1)
+        gfcalls=gfcalls+1;
         u(:,:,j)=gf(F(:,:,j), b(:,net(j,1:2))', b(:,net(j,3:4)));
     end
     u=u(:);   
@@ -72,7 +84,6 @@ end
 [U,lam]=eigs(@poissonTiles, size(net,1)*(m*n), k, 'sm');
 [lam,id]=sort(real(diag(lam)),'ascend');
 U=U(:,id);
-
 um=reshape(U, m, n, [], k);
 uuu=permute(um,[1,2,4,3]);
 
@@ -84,9 +95,13 @@ for i=1:size(uuu,4)
     if i==1, hold on; end;
 end
 hold off;
-colormap(jet(256));  shading interp; camlight; view(2);
-xl=xlim(); dx=xl(2)-xl(1);
-yl=ylim(); dy=yl(2)-yl(1);
+colormap(jet(256)); shading interp; camlight; view(2);
+dx=diff(xlim());
+dy=diff(ylim());
 pbaspect([dx,dy,min(dx,dy)]);
 xlabel('x'); ylabel('y');
+
+display(poissoncalls);
+display(gfcalls);
+
 end

@@ -115,9 +115,9 @@ for i=1:size(uuu,4)
     if i==1, hold on; end;
 end
 hold off;
-colormap(jet(256));  shading interp; camlight; view(2);
-xl=xlim(); dx=xl(2)-xl(1);
-yl=ylim(); dy=yl(2)-yl(1);
+colormap(jet(256)); shading interp; camlight; view(2);
+dx=diff(xlim());
+dy=diff(ylim());
 pbaspect([dx,dy,min(dx,dy)]);
 xlabel('x'); ylabel('y');
 end
