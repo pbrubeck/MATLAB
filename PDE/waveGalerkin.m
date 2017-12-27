@@ -6,16 +6,13 @@ function [ ] = waveGalerkin( n )
 [D,x,w]=legD(n);
 
 % Boundary conditions
-a=[1,1];  % Dirichlet
-b=[-1,1]; % Neumann
-kd=2:n-1;
-rd=[1,n];
+a=[1,0];  % Dirichlet
+b=[0,-1]; % Neumann
+kd=2:n-1; % kept DOFs
+rd=[1,n]; % removed DOFs
 I=eye(n);
-B=diag(a)*I(rd,:)+diag(b)*D(rd,:);
-G=-B(:,rd)\B(:,kd);
-
-% Boundary connection
-J=diag([b(1)/a(1), -b(2)/a(2)]);
+B=diag(a)*I(rd,:)+diag(b)*D(rd,:); % Constraint operator
+G=-B(:,rd)\B(:,kd); % Give-back matrix
 
 % Schur complement
 E=I(:,kd)+I(:,rd)*G;
@@ -28,7 +25,7 @@ SM=E'*(Minv\E);
 SM=(SM+SM')/2;
 
 % Stiffness matrix
-SK=SD'*diag(w)*SD-G'*J*G;
+SK=SD'*diag(w)*SD-G'*diag([1,-1])*SD(rd,:);
 SK=(SK+SK')/2;
 
 % Eigenmodes
@@ -41,8 +38,8 @@ omega=sqrt(L);
 F=-(G'*diag([1,-1])*D(rd,rd)+SD'*diag(w)*D(:,rd))/B(:,rd);
 
 % Initiall conditions
-u=(1-x.^2)+exp(-100*x.^2/2);
-v=0*(1-x.^2);
+u=(1-x.^2)+exp(-100*x.^2/2)+x;
+v=0*(1-x.^2).^2;
 bc=B*u;
 
 % Force
@@ -64,11 +61,11 @@ figure(2);
 h2=plot(x,u);
 
 t=0; tf=16;
-nframes=300;
+nframes=3000;
 dt=tf/nframes;
 
 err=zeros(n,1);
-E=zeros(nframes,1);
+H=zeros(nframes,1);
 for i=1:nframes
     t=t+dt;
     u=u0+S*(cos(omega*t).*a0+(t*sinc(omega*t)).*b0);
@@ -83,9 +80,9 @@ for i=1:nframes
     drawnow;
     
     % Halmintonian
-    E(i)=(ut(kd)'*SM*ut(kd)+u(kd)'*SK*u(kd))/2-u(kd)'*f0;
+    H(i)=(ut(kd)'*SM*ut(kd)+u(kd)'*SK*u(kd))/2-u(kd)'*f0; 
 end
 
 figure(3);
-plot(dt*(1:nframes), E/mean(E)-1);
+plot(dt*(1:nframes), H/mean(H)-1);
 end

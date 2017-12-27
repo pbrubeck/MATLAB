@@ -58,10 +58,10 @@ SN =-Dy(south,kd2)*V2(kd2,kd2)*diag(V2(kd2,kd2)\A2(kd2,north))*LL(kd1,kd2).';
 SS =-Dy(south,kd2)*V2(kd2,kd2)*diag(V2(kd2,kd2)\A2(kd2,south))*LL(kd1,kd2).';
 
 S22=sparse((m-2)*size(adjy,1),(m-2)*size(adjy,1));
-S22=S22+kron(sparse(x2==y2), V1(kd1,kd1)*diag(-Dy(north,north)+NN)/V2(kd1,kd1));
-S22=S22+kron(sparse(x2==y1), V1(kd1,kd1)*diag(-Dy(north,south)+NS)/V2(kd1,kd1));
-S22=S22+kron(sparse(x1==y2), V1(kd1,kd1)*diag( Dy(south,north)+SN)/V2(kd1,kd1));
-S22=S22+kron(sparse(x1==y1), V1(kd1,kd1)*diag( Dy(south,south)+SS)/V2(kd1,kd1));
+S22=S22+kron(sparse(x2==y2), V1(kd1,kd1)*diag(-Dy(north,north)+NN)/V1(kd1,kd1));
+S22=S22+kron(sparse(x2==y1), V1(kd1,kd1)*diag(-Dy(north,south)+NS)/V1(kd1,kd1));
+S22=S22+kron(sparse(x1==y2), V1(kd1,kd1)*diag( Dy(south,north)+SN)/V1(kd1,kd1));
+S22=S22+kron(sparse(x1==y1), V1(kd1,kd1)*diag( Dy(south,south)+SS)/V1(kd1,kd1));
 H22=kron(Dy(south,south)*(x1==y1) + Dy(south,north)*(x1==y2) + ...
         -Dy(north,south)*(x2==y1) - Dy(north,north)*(x2==y2), speye(m-2));
 

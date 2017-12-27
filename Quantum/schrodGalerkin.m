@@ -14,9 +14,6 @@ I=eye(n);
 B=diag(a)*I(rd,:)+diag(b)*Dx(rd,:);
 G=-B(:,rd)\B(:,kd);
 
-% Boundary connection
-J=diag([b(1)/a(1), -b(2)/a(2)]);
-
 % Schur complement
 E=I(:,kd)+I(:,rd)*G;
 SD=Dx(:,kd)+Dx(:,rd)*G;
@@ -28,7 +25,7 @@ SM=E'*(Minv\E);
 SM=(SM+SM')/2;
 
 % Stiffness matrix
-SK=G'*J*G-SD'*diag(w)*SD;
+SK=SD'*diag(w)*SD-G'*diag([1,-1])*SD(rd,:);
 SK=(SK+SK')/2;
 
 % Eigenmodes
@@ -68,9 +65,6 @@ ylim([0, 4]);drawnow;
 err=zeros(size(x));
 figure(2);
 h2=plot(x,err);
-
-figure(3);
-plot(x,S(:,1:6));
 
 t=0; tf=10;
 nframes=3000;

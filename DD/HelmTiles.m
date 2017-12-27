@@ -3,13 +3,17 @@ function [lam] = HelmTiles( m, k )
 % by squares
 n=m;
 
+% UIUC block-I
+adjx=[3 4; 4 5; 6 7; 7 8];
+adjy=[4 2; 2 1; 1 7];
+
 % L-shaped membrane
 adjx=[2 1];
 adjy=[3 1];
 
-% UIUC block-I
-adjx=[3 4; 4 5; 6 7; 7 8];
-adjy=[4 2; 2 1; 1 7];
+% adjx=[3 4; 4 5; 6 7; 7 8; 10 11; 11 12; 12 13];
+% adjy=[4 2; 2 1; 1 7; 6 9; 9 10; 14 13; 15 14; 16 15; 17 16];
+
 
 % Topology
 [topo,net,RL,TB]=ddtopo(adjx,adjy);
@@ -105,12 +109,15 @@ for mode=1:k
     end
 end
 
-figure(1);
+figure(1); zoom off; pan off; rotate3d off;
 for i=1:size(uuu,4)
     modegallery(xx+x0(i),yy+y0(i),uuu(:,:,:,i));
     if i==1, hold on; end;
 end
 hold off;
-colormap(jet(256)); camlight; view(2); shading interp; 
+colormap(jet(256));  shading interp; camlight; view(2);
+xl=xlim(); dx=xl(2)-xl(1);
+yl=ylim(); dy=yl(2)-yl(1);
+pbaspect([dx,dy,min(dx,dy)]);
 xlabel('x'); ylabel('y');
 end
