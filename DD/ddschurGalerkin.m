@@ -153,7 +153,7 @@ DE=D*E;
 
 % Mass matrix
 V=VandermondeLeg(x);
-Minv=(V*V');
+Minv=V*V';
 M=E'*(Minv\E);
 
 % Stiffness matrix

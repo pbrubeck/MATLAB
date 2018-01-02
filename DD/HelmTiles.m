@@ -3,13 +3,14 @@ function [lam] = HelmTiles( m, k )
 % by squares
 n=m;
 
+% L-shaped membrane
+adjx=[2 1];
+adjy=[3 1];
+
 % UIUC block-I
 adjx=[3 4; 4 5; 6 7; 7 8];
 adjy=[4 2; 2 1; 1 7];
 
-% L-shaped membrane
-adjx=[2 1];
-adjy=[3 1];
 
 % adjx=[3 4; 4 5; 6 7; 7 8; 10 11; 11 12; 12 13];
 % adjy=[4 2; 2 1; 1 7; 6 9; 9 10; 14 13; 15 14; 16 15; 17 16];
@@ -45,6 +46,7 @@ C2=E2(rd2,:);
 
 figure(2);
 imagesc(log(abs(S)));
+title(sprintf('cond(\\Sigma) = %f', condest(S)));
 colormap(gray(256)); colorbar; axis square;
 drawnow;
 
