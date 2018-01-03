@@ -27,8 +27,7 @@ Z3=reshape(z0([7,6,4,3]),[2,2]);
 
 
 % Grid
-%p=polygon(z0([1,5,7,4]));
-p=polygon([1+1i, -1+1i, -1-1i, 1-1i]);
+p=polygon(z0([1,5,7,4]));
 f=rectmap(p, 1:4);
 params=parameters(f);
 xmin=min(real(params.prevertex));
@@ -52,7 +51,7 @@ y=y';
 % Jacobian determinant
 [xx,yy]=ndgrid(xmin+dx*(x+1)/2, ymin+dy*(y+1)/2);
 zz=xx+1i*yy;
-J=abs(evaldiff(f,zz)*1/dx).^2;
+J=dx/2*abs(evaldiff(f,zz)).^2;
 J(rd1,rd2)=0;
 
 function uu=greenF(F,b1,b2)
@@ -67,18 +66,15 @@ end
 F=ones(m,n);
 b1=[0.2*sin(3*pi*y); 0*y];
 b2=[(x<0).*sin(pi*x).^4, 0*x];
-psi=greenF(F, 0*b1, 0*b2);
+uu=greenF(F, 0*b1, 0*b2);
 
 % Conformal mapping ww=f(zz)
 b1=f(zz([1 end],:)); b2=f(zz(:,[1 end]));
 ww=greenF(zeros(m,n), b1, b2);
-uu=real(ww); vv=imag(ww);
-
-max(psi(:))
 
 % Plot solution
 figure(1);
-surf(uu,vv,psi); colormap(jet(256));
+surf(real(ww),imag(ww),uu); colormap(jet(256));
 shading interp; camlight; view(2); 
 xlabel('x'); ylabel('y'); axis square manual;
 end

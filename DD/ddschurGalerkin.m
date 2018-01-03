@@ -27,17 +27,17 @@ gf=@(F,b1,b2) greenF(F,b1,b2);
 % Schur complement matrix
 
 % Building blocks
+[I1,J1]=meshgrid([east,west]);
+[I2,J2]=meshgrid([north,south]);
 
 Q1=M1(kd1,kd1)*V1(kd1,kd1);
 Q2=M2(kd2,kd2)*V2(kd2,kd2);
 
 % S11
-p1=[east,east,west,west];
-p2=[east,west,east,west];
-VTML1=V1(kd1,kd1)'*M1(p1,kd1)';
-VTKL1=V1(kd1,kd1)'*K1(p1,kd1)';
-VTMR1=V1(kd1,kd1)'*M1(kd1,p2) ;
-VTKR1=V1(kd1,kd1)'*K1(kd1,p2) ;
+VTML1=V1(kd1,kd1)'*M1(I1(:),kd1)';
+VTKL1=V1(kd1,kd1)'*K1(I1(:),kd1)';
+VTMR1=V1(kd1,kd1)'*M1(kd1,J1(:)) ;
+VTKR1=V1(kd1,kd1)'*K1(kd1,J1(:)) ;
 MM=VTML1.*VTMR1;
 MK=VTML1.*VTKR1;
 KM=VTKL1.*VTMR1;
@@ -49,12 +49,10 @@ WE=Q2*diag(DXX(:,3))*Q2';
 WW=Q2*diag(DXX(:,4))*Q2';
 
 % S22
-p1=[north,north,south,south];
-p2=[north,south,north,south];
-VTML2=V2(kd2,kd2)'*M2(p1,kd2)';
-VTKL2=V2(kd2,kd2)'*K2(p1,kd2)';
-VTMR2=V2(kd2,kd2)'*M2(kd2,p2) ;
-VTKR2=V2(kd2,kd2)'*K2(kd2,p2) ;
+VTML2=V2(kd2,kd2)'*M2(I2(:),kd2)';
+VTKL2=V2(kd2,kd2)'*K2(I2(:),kd2)';
+VTMR2=V2(kd2,kd2)'*M2(kd2,J2(:)) ;
+VTKR2=V2(kd2,kd2)'*K2(kd2,J2(:)) ;
 MM=VTML2.*VTMR2;
 MK=VTML2.*VTKR2;
 KM=VTKL2.*VTMR2;

@@ -78,7 +78,7 @@ function [u]=poissonTiles(F)
         gfcalls=gfcalls+1;
         u(:,:,j)=gf(F(:,:,j), b(:,net(j,1:2))', b(:,net(j,3:4)));
     end
-    u=u(:);   
+    u=u(:);
 end
 
 % Compute eigenmodes using Arnoldi iteration
