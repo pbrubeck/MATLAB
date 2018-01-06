@@ -19,8 +19,7 @@ function uu=greenF(F,b1,b2)
     uu(rd1,kd2)=b1;
     uu(kd1,rd2)=b2;
     rhs=M1*F*M2'-(K1*uu*M2'+M1*uu*K2');
-    uu(kd1,kd2)=V1(kd1,kd1)*(LL.*(V1(kd1,kd1)'*rhs(kd1,kd2)*V2(kd2,kd2)))*V2(kd2,kd2)';
-    uu=E1*uu*E2';
+    uu=E1*uu*E2'+V1(:,kd1)*(LL.*(V1(:,kd1)'*rhs*V2(:,kd2)))*V2(:,kd2)';
 end
 gf=@(F,b1,b2) greenF(F,b1,b2);
 
@@ -155,7 +154,7 @@ Minv=V*V';
 M=E'*(Minv\E);
 
 % Stiffness matrix
-K=DE'*diag(w)*DE+E(rd,:)'*diag([1,-1])*DE(rd,:);
+K=DE'*diag(w)*DE-0*E(rd,:)'*diag([1,-1])*DE(rd,:);
 
 % Eigenfunctions
 V=zeros(m);

@@ -17,7 +17,7 @@ J = ajac(S);                              % Jacobian
 N = cross(J(:,1),J(:,2));                 % normal vector
 N = N/norm(N);                            % normalize
 G = J'*J;                                 % first fundamental form
-K = [N'*adiff(S,2,0) N'*adiff(S,1,1);...  % second fundamental form
+K = [N'*adiff(S,2,0) N'*adiff(S,1,1);     % second fundamental form
      N'*adiff(S,1,1) N'*adiff(S,0,2)];
 
 detG=det(G);
