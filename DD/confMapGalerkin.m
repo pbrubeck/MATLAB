@@ -25,7 +25,6 @@ Z1=reshape(z0([7,4,5,1]),[2,2]);
 Z2=reshape(z0([7,5,6,2]),[2,2]);
 Z3=reshape(z0([7,6,4,3]),[2,2]);
 
-
 % Grid
 p=polygon(z0([1,5,7,4]));
 f=rectmap(p, 1:4);
@@ -46,7 +45,6 @@ b=0*[0,1;0,1];
 [K2,M2,E2,V2,L2,y]=GalerkinGLL(n,a(2,:),b(2,:));
 [Lx,Ly]=ndgrid(2/dx*L1,2/dy*L2); LL=Lx+Ly;
 y=y';
-
 
 % Jacobian determinant
 [xx,yy]=ndgrid(xmin+dx*(x+1)/2, ymin+dy*(y+1)/2);

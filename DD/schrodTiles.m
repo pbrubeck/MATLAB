@@ -99,7 +99,7 @@ end
 [xx,yy]=ndgrid(x,y);
 uuu=zeros(m,n,size(net,1));
 sig=0.2;
-zg=[-1i; 3i];
+zg=[1i];
 ph=@(xx,yy) 2*pi*real(exp(1i)*(xx+1i*yy));
 
 for i=1:size(uuu,3)

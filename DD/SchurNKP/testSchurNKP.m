@@ -1,4 +1,4 @@
-function [ ] = quadmeshdemo( m )
+function [ ] = testSchurNKP( m )
 % Attempting to combine Schur complement and NKP with quadrileteral
 % domains.
 n=m;
@@ -19,10 +19,10 @@ C2=zeros(2,n); C2([1,end],[1,end])=eye(2);
 [xxx,yyy]=ndgrid(xx,yy);
 
 % Vertices
-v0=2/(2-sqrt(2))*[1i;0;1]; %Right angle
-v0=[-2+3i;0;5]; % Scalene
 v0=[3i;-1;1]; % Isoceles
-v0=[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
+v0=[-2+3i;0;2]; % Scalene
+v0=2/(2-sqrt(2))*[1i;0;1]; %Right angle
+v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
 
 % Sides
 L=abs(v0([3,1,2])-v0([2,3,1]));
@@ -40,10 +40,12 @@ Z2=reshape(z0([7,5,6,2]),[2,2]);
 Z3=reshape(z0([7,6,4,3]),[2,2]);
 
 % Topology
-east=1; west=2; north=3; south=4;
 adj=zeros(3,4);
-adj(1:3,[east,north])=[2,1; 3,2; 1,3];
+adj(1:3,[1,3])=[2,1; 3,2; 1,3]; % [E,W,N,S]
 net=topo(adj);
+corners=zeros(size(net));
+corners(:,1)=1; % [EN,WN,ES,WS]
+net=[net, corners];
 
 % Evaluate Jacobian determinant J and metric tensor [E, F; F, G]
 [~,J1,E1,F1,G1]=mapquad(Z1,xxx,yyy);
@@ -51,20 +53,23 @@ net=topo(adj);
 [~,J3,E3,F3,G3]=mapquad(Z3,xxx,yyy);
 
 % Construct Schur NKP preconditioner
-S=sparse((m-2)*size(adj,1), (m-2)*size(adj,1));
+S11=sparse((m-2)*size(adj,1),(m-2)*size(adj,1));
+S12=sparse((m-2)*size(adj,1), max(corners(:)) );
+S21=sparse( max(corners(:)) ,(m-2)*size(adj,1));
+S22=sparse( max(corners(:)) , max(corners(:)) );
 
 % Galerkin stiffness and mass (matrix-free) operators, with their NKP
 % Update NKP Schur complement and compute local Green functions
 stiff=cell(3,1);
 mass =cell(3,1);
 [stiff{1},mass{1},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J1,E1,F1,G1);
-[S,nkp1,gf1]=feedSchurNKP(S, net(1,:), A1, B1, A2, B2, C1, C2);
+[S11,S12,S21,S22,nkp1,gf1]=feedSchurNKP(S11,S12,S21,S22,net(1,:),A1,B1,A2,B2,C1,C2);
 
 [stiff{2},mass{2},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J2,E2,F2,G2);
-[S,nkp2,gf2]=feedSchurNKP(S, net(2,:), A1, B1, A2, B2, C1, C2);
+[S11,S12,S21,S22,nkp2,gf2]=feedSchurNKP(S11,S12,S21,S22,net(2,:),A1,B1,A2,B2,C1,C2);
 
 [stiff{3},mass{3},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J3,E3,F3,G3);
-[S,nkp3,gf3]=feedSchurNKP(S, net(3,:), A1, B1, A2, B2, C1, C2);
+[S11,S12,S21,S22,nkp3,gf3]=feedSchurNKP(S11,S12,S21,S22,net(3,:),A1,B1,A2,B2,C1,C2);
 
 % Full operators
 function [v]=fullmass(u)
@@ -83,46 +88,49 @@ function [v]=fullstiff(u)
 end
 
 % Schur LU decomposition
+S=[S11,S12;S21,S22];
 [Lschur, Uschur, pschur]=lu(S,'vector');
 
 figure(2);
 imagesc(log(abs(S)));
-title(sprintf('cond(\\Sigma) = %f', condest(S)));
+title(sprintf('cond(\\Sigma) = %.3f\ncond(\\Sigma_{11}) = %.3f', condest(S), condest(S11)));
 colormap(gray(256)); colorbar; axis square;
 drawnow;
 
-net(net==0)=max(net(:))+1;
+net(net==0)=max(net(:))+1; 
 
 % Schur NKP Preconditioner (Triangle exclusive, working on generalization)
-function [u] = precond(F)
-    F=reshape(F, m, n, []);
+function [u] = precond(X)
+    X=reshape(X, m, n, []);
     v=zeros(m,n,3);
-    v(:,:,1)=gf1(F(:,:,1),0,0);
-    v(:,:,2)=gf2(F(:,:,2),0,0);
-    v(:,:,3)=gf3(F(:,:,3),0,0);
-    adj
-    net
-    srhs=zeros(m-2, size(adj,1));
-    srhs(:,1)=vec(F(1,kd2,adj(1,1))-nkp1(v(:,:,adj(1,1)),1,kd2)) + ...
-              vec(F(kd1,1,adj(1,3))-nkp2(v(:,:,adj(1,3)),kd1,1));
-    srhs(:,2)=vec(F(1,kd2,adj(2,1))-nkp2(v(:,:,adj(2,1)),1,kd2)) + ...
-              vec(F(kd1,1,adj(2,3))-nkp3(v(:,:,adj(2,3)),kd1,1));
-    srhs(:,3)=vec(F(1,kd2,adj(3,1))-nkp3(v(:,:,adj(3,1)),1,kd2)) + ...
-              vec(F(kd1,1,adj(3,3))-nkp1(v(:,:,adj(3,3)),kd1,1));
-    srhs=srhs(:);
+    v(:,:,1)=gf1(X(:,:,1),0,0,0);
+    v(:,:,2)=gf2(X(:,:,2),0,0,0);
+    v(:,:,3)=gf3(X(:,:,3),0,0,0);
+    
+    s1=zeros(m-2, size(adj,1));
+    s1(:,1)=vec(X(1,kd2,adj(1,1))-nkp2(v(:,:,adj(1,1)),1,kd2)) + ...
+            vec(X(kd1,1,adj(1,3))-nkp1(v(:,:,adj(1,3)),kd1,1));
+    s1(:,2)=vec(X(1,kd2,adj(2,1))-nkp3(v(:,:,adj(2,1)),1,kd2)) + ...
+            vec(X(kd1,1,adj(2,3))-nkp2(v(:,:,adj(2,3)),kd1,1));
+    s1(:,3)=vec(X(1,kd2,adj(3,1))-nkp1(v(:,:,adj(3,1)),1,kd2)) + ...
+            vec(X(kd1,1,adj(3,3))-nkp3(v(:,:,adj(3,3)),kd1,1));
+    s0=X(1,1,1)-nkp1(v(:,:,1),1,1) + ...
+       X(1,1,2)-nkp2(v(:,:,2),1,1) + ...
+       X(1,1,3)-nkp3(v(:,:,3),1,1) ;
+    srhs=[s1(:); s0];
     
     % Solve for boundary nodes
     b=Uschur\(Lschur\srhs(pschur));
-    b=reshape(b, m-2, []);
-    b=[b, zeros(m-2,1)];
+    b1=reshape(b(1:end-corners), m-2, []);
+    b1=[b1, zeros(m-2,1)];
+    b0=zeros(2,2); 
+    b0(1,1)=b(end-corners+1:end);
     
     % Solve for interior nodes with the given BCs
-    % Not ready, should add extra params to gf
-    u=zeros(size(F));
-    u(:,:,1)=gf1(F(:,:,1), b(:,net(1,1:2))', b(:,net(1,3:4)));
-    u(:,:,2)=gf2(F(:,:,2), b(:,net(2,1:2))', b(:,net(2,3:4)));
-    u(:,:,3)=gf3(F(:,:,3), b(:,net(3,1:2))', b(:,net(3,3:4)));
-    
+    u=zeros(size(X));
+    u(:,:,1)=gf1(X(:,:,1), b1(:,net(1,1:2))', b1(:,net(1,3:4)), b0);
+    u(:,:,2)=gf2(X(:,:,2), b1(:,net(2,1:2))', b1(:,net(2,3:4)), b0);
+    u(:,:,3)=gf3(X(:,:,3), b1(:,net(3,1:2))', b1(:,net(3,3:4)), b0);
     u=u(:);
 end
 
@@ -131,26 +139,6 @@ F=ones(m,n,3);
 ub=zeros(m,n,3);
 rhs=fullmass(F)-fullstiff(ub);
 uu=reshape(precond(rhs), size(rhs));
-
-
-% % Helper routine to solve generalized Sylvester equations
-% afun=@(uu)  kd(stiff{1}(gb(uu)));
-% pfun=@(rhs) kd(gf1(gb(rhs),0,0));
-% 
-% F=ones(m,n);
-% ub=zeros(m,n);
-% rhs=kd(mass{1}(F)-stiff{1}(ub));
-% x0=kd(gf1(mass{1}(F)-stiff{1}(ub),0,0))+kd(ub);
-% tol=1e-14;
-% maxit=25;
-% 
-% % Solve the big problem in one domain
-% [uu,~,res,its]=gmres(afun,rhs,5,tol,maxit,pfun,[],x0);
-% uu=gb(uu)+ub;
-% 
-% display(its);
-% display(res);
-
 
 [xx,yy]=ndgrid(x,y);
 ww1=mapquad(Z1,xx,yy);

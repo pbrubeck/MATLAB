@@ -11,15 +11,16 @@ C11=diag(wx)*( g22./jac)*diag(wy);
 C12=diag(wx)*(-g12./jac)*diag(wy);
 C22=diag(wx)*( g11./jac)*diag(wy);
 
-E=@(uu) interpcheb(interpcheb(uu, xx).', yy).';
 E1=interpcheb(eye(m), xx);
 E2=interpcheb(eye(n), yy);
+E=@(uu) interpcheb(interpcheb(uu, xx).', yy).';
 
 function vv=stiff(uu)
     v11=Dx'*(E1'*(C11.*E(Dx*reshape(uu,[m,n])))*E2);
     v12=Dx'*(E1'*(C12.*E(reshape(uu,[m,n])))*E2)*Dy;
+    v21=(E1'*(C12.*E(Dx*reshape(uu,[m,n])*Dy'))*E2);
     v22=(E1'*(C22.*E(reshape(uu,[m,n])*Dy'))*E2)*Dy;
-    vv=reshape(v11+2*v12+v22, size(uu));
+    vv=reshape(v11+v12+v21+v22, size(uu));
 end
 lap=@stiff;
 
