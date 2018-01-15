@@ -18,11 +18,10 @@ C2=zeros(2,n); C2([1,end],[1,end])=eye(2);
 [xxx,yyy]=ndgrid(xx,yy);
 
 % Vertices
-v0=[3i;-1;1];                                             % Isoceles
 v0=[-2+3i;0;2];                                           % Scalene
+v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
 v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
-v0=2/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
-
+v0=[2i;-1;1];                                             % Isoceles
 
 L=abs(v0([3,1,2])-v0([2,3,1])); % Sides
 V=eye(3)+diag((sum(L)/2-L)./L([2,3,1]))*[-1,0,1; 1,-1,0; 0,1,-1];
@@ -46,35 +45,27 @@ corners=zeros(size(net));
 corners(:,1)=1;                 % [EN,WN,ES,WS]
 net=[net, corners];
 ndom=max(adj(:));
+d=[ndom*(m-2)^2, size(adj,1)*(m-2), max(corners(:))];
+dofs=sum(d);
 
-% Evaluate Jacobian determinant J and metric tensor [E, F; F, G]
-J=zeros([size(xxx),ndom]);
-E=zeros([size(xxx),ndom]);
-F=zeros([size(xxx),ndom]);
-G=zeros([size(xxx),ndom]);
-f=cell(3,1);
-for j=1:ndom
-    [~,J(:,:,j),E(:,:,j),F(:,:,j),G(:,:,j)]=mapquad(Z(:,:,j),xxx,yyy);
-%     [f{j},J(:,:,j)]=confmapquad(Z(:,:,j),xxx,yyy);
-%     J(:,:,j)=-J(:,:,j);
-%     E(:,:,j)=J(:,:,j);
-%     G(:,:,j)=J(:,:,j);
-end
+% Function handles
+stiff=cell(ndom,1); % block stiffness
+mass =cell(ndom,1); % block mass
+nkp  =cell(ndom,1); % block NKP
+gf   =cell(ndom,1); % block NKP Green's function
 
 % Construct Schur NKP preconditioner
-S11=sparse((m-2)*size(adj,1),(m-2)*size(adj,1));
-S12=sparse((m-2)*size(adj,1), max(corners(:)) );
-S21=sparse( max(corners(:)) ,(m-2)*size(adj,1));
-S22=sparse( max(corners(:)) , max(corners(:)) );
+S11=sparse(d(2),d(2));
+S12=sparse(d(2),d(3));
+S21=sparse(d(3),d(2));
+S22=sparse(d(3),d(3));
 
+% Evaluate Jacobian determinant J and metric tensor [E, F; F, G]
 % Galerkin stiffness and mass (matrix-free) operators, with their NKP
 % Update NKP Schur complement and compute local Green functions
-stiff=cell(3,1);
-mass =cell(3,1);
-nkp  =cell(3,1);
-gf   =cell(3,1);
 for j=1:3
-[stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J(:,:,j),E(:,:,j),F(:,:,j),G(:,:,j));
+[~,jac,g11,g12,g22]=mapquad(Z(:,:,j),xxx,yyy);
+[stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,jac,g11,g12,g22);
 [S11,S12,S21,S22,nkp{j},gf{j}]=feedSchurNKP(S11,S12,S21,S22,net(j,:),A1,B1,A2,B2,C1,C2);
 end
 
@@ -90,7 +81,7 @@ drawnow;
 
 net(net==0)=max(net(:))+1; 
 
-function [vv]=fullop(op,uu)
+function [vv] = fullop(op,uu)
     vv=reshape(uu,m,n,[]);
     for r=1:size(vv,3)
         vv(:,:,r)=op{r}(vv(:,:,r));
@@ -98,21 +89,21 @@ function [vv]=fullop(op,uu)
     vv=reshape(vv,size(uu));
 end
 
-function [u] = precond(F)
-    F=reshape(F, m, n, []);
-    v=zeros(size(F));
+function [u] = precond(rhs)
+    F=reshape(rhs(1:d(1)), m-2, n-2, []);
+    v=zeros(m,n,size(F,3));
     for r=1:size(adj,1)
         v(:,:,r)=gf{r}(F(:,:,r),0,0,0);
     end
-    
+    p=d(1);
     s1=zeros(m-2, size(adj,1));
     for r=1:size(adj,1)
-        s1(:,r)=vec(F(1,kd2,adj(r,1))-nkp{adj(r,1)}(v(:,:,adj(r,1)),1,kd2))+...
-                vec(F(kd1,1,adj(r,3))-nkp{adj(r,3)}(v(:,:,adj(r,3)),kd1,1));
+        s1(:,r)=rhs(1+p:p+m-2) + ...
+                -vec(nkp{adj(r,1)}(v(:,:,adj(r,1)),1,kd2))+ ...
+                -vec(nkp{adj(r,3)}(v(:,:,adj(r,3)),kd1,1));
+        p=p+m-2;
     end
-    s0=F(1,1,1)-nkp{1}(v(:,:,1),1,1)+...
-       F(1,1,2)-nkp{2}(v(:,:,2),1,1)+...
-       F(1,1,3)-nkp{3}(v(:,:,3),1,1);
+    s0=rhs(p+1)-nkp{1}(v(:,:,1),1,1)-nkp{2}(v(:,:,2),1,1)-nkp{3}(v(:,:,3),1,1);
     srhs=[s1(:); s0];
 
     % Solve for boundary nodes
@@ -123,80 +114,86 @@ function [u] = precond(F)
     b0(1,1)=b(end-corners+1:end);
 
     % Solve for interior nodes with the given BCs
-    u=zeros(size(F));
+    u=zeros(size(v));
     for r=1:size(adj,1)
         u(:,:,r)=gf{r}(F(:,:,r), b1(:,net(r,1:2))', b1(:,net(r,3:4)), b0);
     end
     u=u(:);
 end
 
-function [b]=afun(uu)
-    g=max(net(:));
-    uu=reshape(uu, m,n,[]);
-    bc=zeros(size(uu));
-    for r=1:size(uu,3)
-        bx=rd1(net(r,1:2)==g);
-        by=rd2(net(r,3:4)==g);
-        bc(bx,kd2,r)=uu(bx,kd2,r);
-        bc(kd1,by,r)=uu(kd1,by,r);
-        bc(bx,by,r)=uu(bx,by,r);
-        uu(bx,kd2,r)=0;
-        uu(kd1,by,r)=0;
-        uu(bx,by,r)=0;
+function [u] = pick(uu)
+    uu=reshape(uu,m,n,[]);
+    u=zeros(dofs,1);
+    u(1:d(1))=uu(kd1,kd2,:);
+    p=d(1);
+    for r=1:size(adj,1)
+        bx=rd1(adj(r,1:2)>0);
+        u(1+p:p+m-2)=uu(bx,kd2,adj(r,1))';
+        p=p+m-2;
     end
-    vv=reshape(fullop(stiff, uu), m,n,[]);
-    for r=1:size(uu,3)
-        bx=rd1(net(r,1:2)==g);
-        by=rd2(net(r,3:4)==g);
-        vv(bx,kd2,r)=bc(bx,kd2,r);
-        vv(kd1,by,r)=bc(kd1,by,r);
-        vv(bx,by,r)=bc(bx,by,r);   
-    end
-    b=vv(:);
+    u(1+p)=uu(1,1,1);
 end
 
-function [b]=pfun(rhs)
-    g=max(net(:));
-    rhs=reshape(rhs, m,n,[]);
-    vv=reshape(precond(rhs), m,n,[]);
-    for r=1:size(rhs,3)
-        bx=rd1(net(r,1:2)==g);
-        by=rd2(net(r,3:4)==g);
-        vv(bx,kd2,r)=rhs(bx,kd2,r);
-        vv(kd1,by,r)=rhs(kd1,by,r);
-        vv(bx,by,r)=rhs(bx,by,r);    
+function [uu] = assembly(u)
+    uu=zeros(m,n,ndom);
+    p=ndom*(m-2)^2;
+    uu(kd1,kd2,:)=reshape(u(1:p), m-2,n-2,[]);
+    for r=1:size(adj,1)
+        bx=rd1(adj(r,1:2)>0);
+        by=rd2(adj(r,3:4)>0);
+        uu(bx,kd2,adj(r,1))=reshape(u(1+p:p+m-2),n-2,[])';
+        uu(kd1,by,adj(r,3))=reshape(u(1+p:p+m-2),m-2,[]);
+        p=p+m-2;
     end
-    b=vv(:);
+    uu(1,1,:)=u(1+p);
+end
+
+function [u] = Rtransp(uu)
+    uu=reshape(uu,m,n,[]);
+    u=zeros(dofs,1);
+    u(1:d(1))=uu(kd1,kd2,:);
+    p=d(1);
+    for r=1:size(adj,1)
+        bx=rd1(adj(r,1:2)>0);
+        by=rd2(adj(r,3:4)>0);
+        u(1+p:p+m-2)=uu(bx,kd2,adj(r,1))'+uu(kd1,by,adj(r,3));
+        p=p+m-2;
+    end
+    u(1+p)=sum(uu(1,1,:));
+end
+
+function [b] = afun(u)
+    b=Rtransp(fullop(stiff, assembly(u)));
+end
+pcalls=0;
+function [u] = pfun(b)
+    pcalls=pcalls+1;
+    u=pick(precond(b));
 end
 
 % Right-hand sides
 F=ones(m,n,ndom);
 ub=zeros(m,n,ndom);
-rhs=fullop(mass,F)-fullop(stiff,ub);
-uu=precond(rhs);
+rhs=Rtransp(fullop(mass,F)-fullop(stiff,ub));
+uu=pfun(rhs);
 
 tol=1e-14;
-maxit=25;
-
-% [uu,~,res,its]=gmres(@afun,rhs(:),5,tol,maxit,@pfun,[],uu);
-% display(its);
-% display(res);
-uu=ub+reshape(uu,m,n,[]);
+maxit=10;
+[uu,~,res,its]=gmres(@afun,rhs,7,tol,maxit,[],@pfun,uu);
+display(pcalls);
+display(res);
+uu=ub+assembly(uu);
 
 [xx,yy]=ndgrid(x,y);
-figure(1); clf; grid on; hold on;
+figure(1);
 for j=1:ndom
     ww=mapquad(Z(:,:,j),xx,yy);
-%     ww=gf{j}(zeros(m,n), ...
-%         f{j}(xx(rd1,kd2),yy(rd1,kd2)), ...
-%         f{j}(xx(kd1,rd2),yy(kd1,rd2)), ...
-%         f{j}(xx(rd1,rd2),yy(rd1,rd2)));
-    surf(real(ww), imag(ww), uu(:,:,j));
-end
+    surf(real(ww), imag(ww), uu(:,:,j));hold on;
+end 
 hold off;
 
 colormap(jet(256));
-shading interp; camlight; view(2);
+shading interp; camlight;
 dx=diff(xlim());
 dy=diff(ylim());
 pbaspect([dx,dy,min(dx,dy)]);

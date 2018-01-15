@@ -16,10 +16,11 @@ E2=interpcheb(eye(n), yy);
 E=@(uu) interpcheb(interpcheb(uu, xx).', yy).';
 
 function vv=stiff(uu)
-    v11=Dx'*(E1'*(C11.*E(Dx*reshape(uu,[m,n])))*E2);
-    v12=Dx'*(E1'*(C12.*E(reshape(uu,[m,n])))*E2)*Dy;
-    v21=(E1'*(C12.*E(Dx*reshape(uu,[m,n])*Dy'))*E2);
-    v22=(E1'*(C22.*E(reshape(uu,[m,n])*Dy'))*E2)*Dy;
+    uu=reshape(uu,[m,n]);
+    v11=Dx'*(E1'*(C11.*E(Dx*uu))*E2);
+    v12=Dx'*(E1'*(C12.*E(uu*Dy'))*E2);
+    v21=(E1'*(C12.*E(Dx*uu))*E2)*Dy;
+    v22=(E1'*(C22.*E(uu*Dy'))*E2)*Dy;
     vv=reshape(v11+v12+v21+v22, size(uu));
 end
 lap=@stiff;

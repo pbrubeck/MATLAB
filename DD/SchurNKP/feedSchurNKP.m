@@ -22,8 +22,9 @@ function uu=greenF(F,b1,b2,b0)
     uu(rd1,rd2)=b0;
     uu(rd1,kd2)=b1;
     uu(kd1,rd2)=b2;
-    rhs=F-(A1*uu*B1'+A2*uu*B2');
-    uu=E1*uu*E2'+V1(:,kd1)*(LL.*(V1(:,kd1)'*rhs*V2(:,kd2)))*V2(:,kd2)';
+    uu=E1*uu*E2';
+    rhs=F-E1(:,kd1)'*(A1*uu*B1'+A2*uu*B2')*E2(:,kd2);
+    uu=uu+V1(:,kd1)*(LL.*(V1(kd1,kd1)'*rhs*V2(kd2,kd2)))*V2(:,kd2)';
 end
 gf=@(F,b1,b2,b0) greenF(F,b1,b2,b0);
 kd=@(uu) reshape(E1(:,kd1)'*uu*E2(:,kd2),[],1);
