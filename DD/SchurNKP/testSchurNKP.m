@@ -1,9 +1,8 @@
 function [ ] = testSchurNKP( m )
-% Attempting to combine Schur complement and NKP with quadrileteral
-% domains.
+% Schur complement of the NKP preconditioner with quadrileteral domains.
 n=m;
-kd1=2:m-1;
-kd2=2:n-1;
+kd1=2:m-1; rd1=[1,m];
+kd2=2:n-1; rd2=[1,n];
 vec=@(x) x(:);
 
 % Differential operators
@@ -19,14 +18,13 @@ C2=zeros(2,n); C2([1,end],[1,end])=eye(2);
 [xxx,yyy]=ndgrid(xx,yy);
 
 % Vertices
-v0=[3i;-1;1]; % Isoceles
-v0=[-2+3i;0;2]; % Scalene
-v0=2/(2-sqrt(2))*[1i;0;1]; %Right angle
-v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
+v0=[3i;-1;1];                                             % Isoceles
+v0=[-2+3i;0;2];                                           % Scalene
+v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
+v0=2/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
 
-% Sides
-L=abs(v0([3,1,2])-v0([2,3,1]));
-% Contact triangle
+
+L=abs(v0([3,1,2])-v0([2,3,1])); % Sides
 V=eye(3)+diag((sum(L)/2-L)./L([2,3,1]))*[-1,0,1; 1,-1,0; 0,1,-1];
 
 z0=zeros(7,1);
@@ -35,22 +33,33 @@ z0([4,5,6])=V*v0;     % Touch points
 z0(7)=(L'*v0)/sum(L); % Incenter
 
 % Assemble quads [EN, ES; WN, WS]
-Z1=reshape(z0([7,4,5,1]),[2,2]);
-Z2=reshape(z0([7,5,6,2]),[2,2]);
-Z3=reshape(z0([7,6,4,3]),[2,2]);
+Z=zeros(2,2,3);
+Z(:,:,1)=reshape(z0([7,4,5,1]),[2,2]);
+Z(:,:,2)=reshape(z0([7,5,6,2]),[2,2]);
+Z(:,:,3)=reshape(z0([7,6,4,3]),[2,2]);
 
 % Topology
 adj=zeros(3,4);
 adj(1:3,[1,3])=[2,1; 3,2; 1,3]; % [E,W,N,S]
 net=topo(adj);
 corners=zeros(size(net));
-corners(:,1)=1; % [EN,WN,ES,WS]
+corners(:,1)=1;                 % [EN,WN,ES,WS]
 net=[net, corners];
+ndom=max(adj(:));
 
 % Evaluate Jacobian determinant J and metric tensor [E, F; F, G]
-[~,J1,E1,F1,G1]=mapquad(Z1,xxx,yyy);
-[~,J2,E2,F2,G2]=mapquad(Z2,xxx,yyy);
-[~,J3,E3,F3,G3]=mapquad(Z3,xxx,yyy);
+J=zeros([size(xxx),ndom]);
+E=zeros([size(xxx),ndom]);
+F=zeros([size(xxx),ndom]);
+G=zeros([size(xxx),ndom]);
+f=cell(3,1);
+for j=1:ndom
+    [~,J(:,:,j),E(:,:,j),F(:,:,j),G(:,:,j)]=mapquad(Z(:,:,j),xxx,yyy);
+%     [f{j},J(:,:,j)]=confmapquad(Z(:,:,j),xxx,yyy);
+%     J(:,:,j)=-J(:,:,j);
+%     E(:,:,j)=J(:,:,j);
+%     G(:,:,j)=J(:,:,j);
+end
 
 % Construct Schur NKP preconditioner
 S11=sparse((m-2)*size(adj,1),(m-2)*size(adj,1));
@@ -62,29 +71,11 @@ S22=sparse( max(corners(:)) , max(corners(:)) );
 % Update NKP Schur complement and compute local Green functions
 stiff=cell(3,1);
 mass =cell(3,1);
-[stiff{1},mass{1},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J1,E1,F1,G1);
-[S11,S12,S21,S22,nkp1,gf1]=feedSchurNKP(S11,S12,S21,S22,net(1,:),A1,B1,A2,B2,C1,C2);
-
-[stiff{2},mass{2},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J2,E2,F2,G2);
-[S11,S12,S21,S22,nkp2,gf2]=feedSchurNKP(S11,S12,S21,S22,net(2,:),A1,B1,A2,B2,C1,C2);
-
-[stiff{3},mass{3},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J3,E3,F3,G3);
-[S11,S12,S21,S22,nkp3,gf3]=feedSchurNKP(S11,S12,S21,S22,net(3,:),A1,B1,A2,B2,C1,C2);
-
-% Full operators
-function [v]=fullmass(u)
-    v=reshape(u,m,n,[]);
-    for i=1:size(v,3)
-        v(:,:,i)=mass{i}(v(:,:,i));
-    end
-    v=reshape(v,size(u));
-end
-function [v]=fullstiff(u)
-    v=reshape(u,m,n,[]);
-    for i=1:size(v,3)
-        v(:,:,i)=stiff{i}(v(:,:,i));
-    end
-    v=reshape(v,size(u));
+nkp  =cell(3,1);
+gf   =cell(3,1);
+for j=1:3
+[stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,J(:,:,j),E(:,:,j),F(:,:,j),G(:,:,j));
+[S11,S12,S21,S22,nkp{j},gf{j}]=feedSchurNKP(S11,S12,S21,S22,net(j,:),A1,B1,A2,B2,C1,C2);
 end
 
 % Schur LU decomposition
@@ -99,56 +90,110 @@ drawnow;
 
 net(net==0)=max(net(:))+1; 
 
-% Schur NKP Preconditioner (Triangle exclusive, working on generalization)
-function [u] = precond(X)
-    X=reshape(X, m, n, []);
-    v=zeros(m,n,3);
-    v(:,:,1)=gf1(X(:,:,1),0,0,0);
-    v(:,:,2)=gf2(X(:,:,2),0,0,0);
-    v(:,:,3)=gf3(X(:,:,3),0,0,0);
+function [vv]=fullop(op,uu)
+    vv=reshape(uu,m,n,[]);
+    for r=1:size(vv,3)
+        vv(:,:,r)=op{r}(vv(:,:,r));
+    end
+    vv=reshape(vv,size(uu));
+end
+
+function [u] = precond(F)
+    F=reshape(F, m, n, []);
+    v=zeros(size(F));
+    for r=1:size(adj,1)
+        v(:,:,r)=gf{r}(F(:,:,r),0,0,0);
+    end
     
     s1=zeros(m-2, size(adj,1));
-    s1(:,1)=vec(X(1,kd2,adj(1,1))-nkp2(v(:,:,adj(1,1)),1,kd2)) + ...
-            vec(X(kd1,1,adj(1,3))-nkp1(v(:,:,adj(1,3)),kd1,1));
-    s1(:,2)=vec(X(1,kd2,adj(2,1))-nkp3(v(:,:,adj(2,1)),1,kd2)) + ...
-            vec(X(kd1,1,adj(2,3))-nkp2(v(:,:,adj(2,3)),kd1,1));
-    s1(:,3)=vec(X(1,kd2,adj(3,1))-nkp1(v(:,:,adj(3,1)),1,kd2)) + ...
-            vec(X(kd1,1,adj(3,3))-nkp3(v(:,:,adj(3,3)),kd1,1));
-    s0=X(1,1,1)-nkp1(v(:,:,1),1,1) + ...
-       X(1,1,2)-nkp2(v(:,:,2),1,1) + ...
-       X(1,1,3)-nkp3(v(:,:,3),1,1) ;
+    for r=1:size(adj,1)
+        s1(:,r)=vec(F(1,kd2,adj(r,1))-nkp{adj(r,1)}(v(:,:,adj(r,1)),1,kd2))+...
+                vec(F(kd1,1,adj(r,3))-nkp{adj(r,3)}(v(:,:,adj(r,3)),kd1,1));
+    end
+    s0=F(1,1,1)-nkp{1}(v(:,:,1),1,1)+...
+       F(1,1,2)-nkp{2}(v(:,:,2),1,1)+...
+       F(1,1,3)-nkp{3}(v(:,:,3),1,1);
     srhs=[s1(:); s0];
-    
+
     % Solve for boundary nodes
     b=Uschur\(Lschur\srhs(pschur));
     b1=reshape(b(1:end-corners), m-2, []);
     b1=[b1, zeros(m-2,1)];
     b0=zeros(2,2); 
     b0(1,1)=b(end-corners+1:end);
-    
+
     % Solve for interior nodes with the given BCs
-    u=zeros(size(X));
-    u(:,:,1)=gf1(X(:,:,1), b1(:,net(1,1:2))', b1(:,net(1,3:4)), b0);
-    u(:,:,2)=gf2(X(:,:,2), b1(:,net(2,1:2))', b1(:,net(2,3:4)), b0);
-    u(:,:,3)=gf3(X(:,:,3), b1(:,net(3,1:2))', b1(:,net(3,3:4)), b0);
+    u=zeros(size(F));
+    for r=1:size(adj,1)
+        u(:,:,r)=gf{r}(F(:,:,r), b1(:,net(r,1:2))', b1(:,net(r,3:4)), b0);
+    end
     u=u(:);
 end
 
+function [b]=afun(uu)
+    g=max(net(:));
+    uu=reshape(uu, m,n,[]);
+    bc=zeros(size(uu));
+    for r=1:size(uu,3)
+        bx=rd1(net(r,1:2)==g);
+        by=rd2(net(r,3:4)==g);
+        bc(bx,kd2,r)=uu(bx,kd2,r);
+        bc(kd1,by,r)=uu(kd1,by,r);
+        bc(bx,by,r)=uu(bx,by,r);
+        uu(bx,kd2,r)=0;
+        uu(kd1,by,r)=0;
+        uu(bx,by,r)=0;
+    end
+    vv=reshape(fullop(stiff, uu), m,n,[]);
+    for r=1:size(uu,3)
+        bx=rd1(net(r,1:2)==g);
+        by=rd2(net(r,3:4)==g);
+        vv(bx,kd2,r)=bc(bx,kd2,r);
+        vv(kd1,by,r)=bc(kd1,by,r);
+        vv(bx,by,r)=bc(bx,by,r);   
+    end
+    b=vv(:);
+end
+
+function [b]=pfun(rhs)
+    g=max(net(:));
+    rhs=reshape(rhs, m,n,[]);
+    vv=reshape(precond(rhs), m,n,[]);
+    for r=1:size(rhs,3)
+        bx=rd1(net(r,1:2)==g);
+        by=rd2(net(r,3:4)==g);
+        vv(bx,kd2,r)=rhs(bx,kd2,r);
+        vv(kd1,by,r)=rhs(kd1,by,r);
+        vv(bx,by,r)=rhs(bx,by,r);    
+    end
+    b=vv(:);
+end
+
 % Right-hand sides
-F=ones(m,n,3);
-ub=zeros(m,n,3);
-rhs=fullmass(F)-fullstiff(ub);
-uu=reshape(precond(rhs), size(rhs));
+F=ones(m,n,ndom);
+ub=zeros(m,n,ndom);
+rhs=fullop(mass,F)-fullop(stiff,ub);
+uu=precond(rhs);
+
+tol=1e-14;
+maxit=25;
+
+% [uu,~,res,its]=gmres(@afun,rhs(:),5,tol,maxit,@pfun,[],uu);
+% display(its);
+% display(res);
+uu=ub+reshape(uu,m,n,[]);
 
 [xx,yy]=ndgrid(x,y);
-ww1=mapquad(Z1,xx,yy);
-ww2=mapquad(Z2,xx,yy);
-ww3=mapquad(Z3,xx,yy);
-
-figure(1);
-surf(real(ww1), imag(ww1), uu(:,:,1)); hold on;
-surf(real(ww2), imag(ww2), uu(:,:,2));
-surf(real(ww3), imag(ww3), uu(:,:,3)); hold off;
+figure(1); clf; grid on; hold on;
+for j=1:ndom
+    ww=mapquad(Z(:,:,j),xx,yy);
+%     ww=gf{j}(zeros(m,n), ...
+%         f{j}(xx(rd1,kd2),yy(rd1,kd2)), ...
+%         f{j}(xx(kd1,rd2),yy(kd1,rd2)), ...
+%         f{j}(xx(rd1,rd2),yy(rd1,rd2)));
+    surf(real(ww), imag(ww), uu(:,:,j));
+end
+hold off;
 
 colormap(jet(256));
 shading interp; camlight; view(2);

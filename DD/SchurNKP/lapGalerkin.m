@@ -1,4 +1,4 @@
-function [lap,mass,A1,B1,A2,B2] = lapGalerkin(Dx,Dy,xx,yy,wx,wy,jac,g11,g12,g22 )
+function [lap,mass,A1,B1,A2,B2] = lapGalerkin(Dx,Dy,xx,yy,wx,wy,jac,g11,g12,g22)
 % Stiffness matrix from Laplacian given a metric 
 % Assumes oversampled coefficients
 % Also returns nearest Kronecker product approximation

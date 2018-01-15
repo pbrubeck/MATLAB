@@ -1,0 +1,205 @@
+\hypertarget{structnfct__plan}{\section{nfct\-\_\-plan Struct Reference}
+\label{structnfct__plan}\index{nfct\-\_\-plan@{nfct\-\_\-plan}}
+}
+
+
+data structure for an N\-F\-C\-T (nonequispaced fast cosine transform) plan with double precision  
+
+
+
+
+{\ttfamily \#include $<$nfft3.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structnfct__plan_af736d9e6e59e9a91276a48a50979fedb}{\hyperlink{structnfct__plan_af736d9e6e59e9a91276a48a50979fedb}{F\-F\-T\-W\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E} (plan) my\-\_\-fftw\-\_\-r2r\-\_\-plan}\label{structnfct__plan_af736d9e6e59e9a91276a48a50979fedb}
+
+\begin{DoxyCompactList}\small\item\em fftw\-\_\-plan \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a5ae19fdb6ea93d515109229f419c22df}{\hyperlink{structnfct__plan_a5ae19fdb6ea93d515109229f419c22df}{F\-F\-T\-W\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E} (r2r\-\_\-kind)$\ast$r2r\-\_\-kind}\label{structnfct__plan_a5ae19fdb6ea93d515109229f419c22df}
+
+\begin{DoxyCompactList}\small\item\em r2r transform type (D\-C\-T-\/\-I) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfct__plan_ad119bec761dbb42920ac1deafd68c8f2}{N\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of Fourier coefficients. \end{DoxyCompactList}\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfct__plan_ae0dfb03dae08036e8fe9df5243580c4a}{M\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of samples. \end{DoxyCompactList}\item 
+double $\ast$ \hyperlink{structnfct__plan_af289164b09e85f75e8ed0eb3ded40d9c}{f\-\_\-hat}
+\begin{DoxyCompactList}\small\item\em Fourier coefficients. \end{DoxyCompactList}\item 
+double $\ast$ \hyperlink{structnfct__plan_acca00284f93bd33c00a1b099a6eec8cd}{f}
+\begin{DoxyCompactList}\small\item\em Samples. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structnfct__plan_a5f9802e95bfc2ae69f22e91c1fe47778}{mv\-\_\-trafo} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Transform. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structnfct__plan_aab8ee071a4e254cbf94a03689ed3127f}{mv\-\_\-adjoint} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Adjoint transform. \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a25e2220bb224e71387be8af5fc85157d}{N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfct__plan_a25e2220bb224e71387be8af5fc85157d}{d}}\label{structnfct__plan_a25e2220bb224e71387be8af5fc85157d}
+
+\begin{DoxyCompactList}\small\item\em dimension, rank \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a0a14650a8d16ae0da7fcdb514e8eafc7}{N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$ \hyperlink{structnfct__plan_a0a14650a8d16ae0da7fcdb514e8eafc7}{N}}\label{structnfct__plan_a0a14650a8d16ae0da7fcdb514e8eafc7}
+
+\begin{DoxyCompactList}\small\item\em cut-\/off-\/frequencies (kernel) \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_ac52b6c0dd44762f479d1b191f65ab5b3}{N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$ \hyperlink{structnfct__plan_ac52b6c0dd44762f479d1b191f65ab5b3}{n}}\label{structnfct__plan_ac52b6c0dd44762f479d1b191f65ab5b3}
+
+\begin{DoxyCompactList}\small\item\em length of D\-C\-T-\/\-I \end{DoxyCompactList}\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfct__plan_a68ddfb06f47a32b4b7bd2ce6c86e430f}{n\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Combined total length of F\-F\-T\-W transforms. \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a56c9f580f79fb7605ae21bcbb729a8b9}{double $\ast$ \hyperlink{structnfct__plan_a56c9f580f79fb7605ae21bcbb729a8b9}{sigma}}\label{structnfct__plan_a56c9f580f79fb7605ae21bcbb729a8b9}
+
+\begin{DoxyCompactList}\small\item\em oversampling-\/factor \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a80b9e02b714d933fabadb2105c3dcfdb}{N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfct__plan_a80b9e02b714d933fabadb2105c3dcfdb}{m}}\label{structnfct__plan_a80b9e02b714d933fabadb2105c3dcfdb}
+
+\begin{DoxyCompactList}\small\item\em cut-\/off parameter in time-\/domain \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_af1c2c2fe35f5b574a39109bb7b176270}{double $\ast$ \hyperlink{structnfct__plan_af1c2c2fe35f5b574a39109bb7b176270}{b}}\label{structnfct__plan_af1c2c2fe35f5b574a39109bb7b176270}
+
+\begin{DoxyCompactList}\small\item\em shape parameters \end{DoxyCompactList}\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfct__plan_ac1707afe9f0d6b288a6329bec05048cc}{K}
+\begin{DoxyCompactList}\small\item\em Number of equispaced samples of window function. \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_abde8f7bf8b6003c45b25d7bda1fadf27}{unsigned \hyperlink{structnfct__plan_abde8f7bf8b6003c45b25d7bda1fadf27}{flags}}\label{structnfct__plan_abde8f7bf8b6003c45b25d7bda1fadf27}
+
+\begin{DoxyCompactList}\small\item\em flags for precomputation, malloc \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a407c06575335351e1b720b40f8b4f26c}{unsigned \hyperlink{structnfct__plan_a407c06575335351e1b720b40f8b4f26c}{fftw\-\_\-flags}}\label{structnfct__plan_a407c06575335351e1b720b40f8b4f26c}
+
+\begin{DoxyCompactList}\small\item\em flags for the fftw \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a5635e780f4c492f087754d71f16e07ed}{double $\ast$ \hyperlink{structnfct__plan_a5635e780f4c492f087754d71f16e07ed}{x}}\label{structnfct__plan_a5635e780f4c492f087754d71f16e07ed}
+
+\begin{DoxyCompactList}\small\item\em nodes (in time/spatial domain) \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_acd69baad39feaa27f34c063960b173f0}{double \hyperlink{structnfct__plan_acd69baad39feaa27f34c063960b173f0}{M\-E\-A\-S\-U\-R\-E\-\_\-\-T\-I\-M\-E\-\_\-t} \mbox{[}3\mbox{]}}\label{structnfct__plan_acd69baad39feaa27f34c063960b173f0}
+
+\begin{DoxyCompactList}\small\item\em measured time for each step \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_aa217dda883fc3533b95bf6ab6ccff888}{double $\ast$$\ast$ \hyperlink{structnfct__plan_aa217dda883fc3533b95bf6ab6ccff888}{c\-\_\-phi\-\_\-inv}}\label{structnfct__plan_aa217dda883fc3533b95bf6ab6ccff888}
+
+\begin{DoxyCompactList}\small\item\em precomputed data, matrix D \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_ad3886151e655110a1c5ba71a66439e2b}{double $\ast$ \hyperlink{structnfct__plan_ad3886151e655110a1c5ba71a66439e2b}{psi}}\label{structnfct__plan_ad3886151e655110a1c5ba71a66439e2b}
+
+\begin{DoxyCompactList}\small\item\em precomputed data, matrix B \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_aece97973cb846c3c798440e530ab6ce8}{N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfct__plan_aece97973cb846c3c798440e530ab6ce8}{size\-\_\-psi}}\label{structnfct__plan_aece97973cb846c3c798440e530ab6ce8}
+
+\begin{DoxyCompactList}\small\item\em only for thin B \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_adcbda022ce9e7e6e795d4bdc94125bf7}{N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$ \hyperlink{structnfct__plan_adcbda022ce9e7e6e795d4bdc94125bf7}{psi\-\_\-index\-\_\-g}}\label{structnfct__plan_adcbda022ce9e7e6e795d4bdc94125bf7}
+
+\begin{DoxyCompactList}\small\item\em only for thin B \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a7a9b4445cf3a61131261eeb39388a2b7}{N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$ \hyperlink{structnfct__plan_a7a9b4445cf3a61131261eeb39388a2b7}{psi\-\_\-index\-\_\-f}}\label{structnfct__plan_a7a9b4445cf3a61131261eeb39388a2b7}
+
+\begin{DoxyCompactList}\small\item\em only for thin B \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a88c6d97cb413daa4aa92bcb8f3536b7e}{double $\ast$ {\bfseries g}}\label{structnfct__plan_a88c6d97cb413daa4aa92bcb8f3536b7e}
+
+\item 
+\hypertarget{structnfct__plan_acf3167b1a9a1982581cbb69fa5a7e19e}{double $\ast$ {\bfseries g\-\_\-hat}}\label{structnfct__plan_acf3167b1a9a1982581cbb69fa5a7e19e}
+
+\item 
+\hypertarget{structnfct__plan_a597e9fd4dddb36748c5e33ee1f058835}{double $\ast$ \hyperlink{structnfct__plan_a597e9fd4dddb36748c5e33ee1f058835}{g1}}\label{structnfct__plan_a597e9fd4dddb36748c5e33ee1f058835}
+
+\begin{DoxyCompactList}\small\item\em input of fftw \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_ac4c375e593da728a4e7477f76ff12031}{double $\ast$ \hyperlink{structnfct__plan_ac4c375e593da728a4e7477f76ff12031}{g2}}\label{structnfct__plan_ac4c375e593da728a4e7477f76ff12031}
+
+\begin{DoxyCompactList}\small\item\em output of fftw \end{DoxyCompactList}\item 
+\hypertarget{structnfct__plan_a53242b3a71b8997bdcd173777146c427}{double $\ast$ \hyperlink{structnfct__plan_a53242b3a71b8997bdcd173777146c427}{spline\-\_\-coeffs}}\label{structnfct__plan_a53242b3a71b8997bdcd173777146c427}
+
+\begin{DoxyCompactList}\small\item\em input for de Boor algorithm, if B\-\_\-\-S\-P\-L\-I\-N\-E or S\-I\-N\-C\-\_\-2m is defined \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+data structure for an N\-F\-C\-T (nonequispaced fast cosine transform) plan with double precision 
+
+N\-F\-C\-T transform plan 
+
+Definition at line 284 of file nfft3.\-h.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structnfct__plan_ad119bec761dbb42920ac1deafd68c8f2}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!N\-\_\-total@{N\-\_\-total}}
+\index{N\-\_\-total@{N\-\_\-total}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{N\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfct\-\_\-plan\-::\-N\-\_\-total}}\label{structnfct__plan_ad119bec761dbb42920ac1deafd68c8f2}
+
+
+Total number of Fourier coefficients. 
+
+
+
+Definition at line 284 of file nfft3.\-h.
+
+\hypertarget{structnfct__plan_ae0dfb03dae08036e8fe9df5243580c4a}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!M\-\_\-total@{M\-\_\-total}}
+\index{M\-\_\-total@{M\-\_\-total}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{M\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfct\-\_\-plan\-::\-M\-\_\-total}}\label{structnfct__plan_ae0dfb03dae08036e8fe9df5243580c4a}
+
+
+Total number of samples. 
+
+
+
+Definition at line 284 of file nfft3.\-h.
+
+\hypertarget{structnfct__plan_af289164b09e85f75e8ed0eb3ded40d9c}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!f\-\_\-hat@{f\-\_\-hat}}
+\index{f\-\_\-hat@{f\-\_\-hat}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{f\-\_\-hat}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ nfct\-\_\-plan\-::f\-\_\-hat}}\label{structnfct__plan_af289164b09e85f75e8ed0eb3ded40d9c}
+
+
+Fourier coefficients. 
+
+
+
+Definition at line 284 of file nfft3.\-h.
+
+\hypertarget{structnfct__plan_acca00284f93bd33c00a1b099a6eec8cd}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!f@{f}}
+\index{f@{f}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{f}]{\setlength{\rightskip}{0pt plus 5cm}double$\ast$ nfct\-\_\-plan\-::f}}\label{structnfct__plan_acca00284f93bd33c00a1b099a6eec8cd}
+
+
+Samples. 
+
+
+
+Definition at line 284 of file nfft3.\-h.
+
+\hypertarget{structnfct__plan_a5f9802e95bfc2ae69f22e91c1fe47778}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!mv\-\_\-trafo@{mv\-\_\-trafo}}
+\index{mv\-\_\-trafo@{mv\-\_\-trafo}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{mv\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ nfct\-\_\-plan\-::mv\-\_\-trafo)(void $\ast$)}}\label{structnfct__plan_a5f9802e95bfc2ae69f22e91c1fe47778}
+
+
+Transform. 
+
+
+
+Definition at line 284 of file nfft3.\-h.
+
+\hypertarget{structnfct__plan_aab8ee071a4e254cbf94a03689ed3127f}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!mv\-\_\-adjoint@{mv\-\_\-adjoint}}
+\index{mv\-\_\-adjoint@{mv\-\_\-adjoint}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{mv\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ nfct\-\_\-plan\-::mv\-\_\-adjoint)(void $\ast$)}}\label{structnfct__plan_aab8ee071a4e254cbf94a03689ed3127f}
+
+
+Adjoint transform. 
+
+
+
+Definition at line 284 of file nfft3.\-h.
+
+\hypertarget{structnfct__plan_a68ddfb06f47a32b4b7bd2ce6c86e430f}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!n\-\_\-total@{n\-\_\-total}}
+\index{n\-\_\-total@{n\-\_\-total}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{n\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfct\-\_\-plan\-::n\-\_\-total}}\label{structnfct__plan_a68ddfb06f47a32b4b7bd2ce6c86e430f}
+
+
+Combined total length of F\-F\-T\-W transforms. 
+
+
+
+Definition at line 284 of file nfft3.\-h.
+
+\hypertarget{structnfct__plan_ac1707afe9f0d6b288a6329bec05048cc}{\index{nfct\-\_\-plan@{nfct\-\_\-plan}!K@{K}}
+\index{K@{K}!nfct_plan@{nfct\-\_\-plan}}
+\subsubsection[{K}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfct\-\_\-plan\-::\-K}}\label{structnfct__plan_ac1707afe9f0d6b288a6329bec05048cc}
+
+
+Number of equispaced samples of window function. 
+
+Used for flag P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I. 
+
+Definition at line 284 of file nfft3.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{nfft3_8h}{nfft3.\-h}\end{DoxyCompactItemize}

@@ -1,0 +1,114 @@
+\hypertarget{structmrif__inh__2d1d__plan}{\section{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan Struct Reference}
+\label{structmrif__inh__2d1d__plan}\index{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}}
+}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structmrif__inh__2d1d__plan_a7846a173c42c9b65d4e93a16da121ff4}{N\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of Fourier coefficients. \end{DoxyCompactList}\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structmrif__inh__2d1d__plan_aa88bdba25fa7c21f526b91ae6cb4b84e}{M\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of samples. \end{DoxyCompactList}\item 
+fftwf\-\_\-complex $\ast$ \hyperlink{structmrif__inh__2d1d__plan_a18fb340e9ead654552e45033c81ac637}{f\-\_\-hat}
+\begin{DoxyCompactList}\small\item\em Fourier coefficients. \end{DoxyCompactList}\item 
+fftwf\-\_\-complex $\ast$ \hyperlink{structmrif__inh__2d1d__plan_a3ab01f8b5f1b1368dbf3d7715ce46997}{f}
+\begin{DoxyCompactList}\small\item\em Samples. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structmrif__inh__2d1d__plan_acdbe3a414d9c87baba03db3d873b864c}{mv\-\_\-trafo} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Transform. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structmrif__inh__2d1d__plan_aea23a3331d423e70f2cbbeee71303906}{mv\-\_\-adjoint} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Adjoint transform. \end{DoxyCompactList}\item 
+\hypertarget{structmrif__inh__2d1d__plan_a50fc144d7931e8db51c8b745096419c0}{\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} {\bfseries plan}}\label{structmrif__inh__2d1d__plan_a50fc144d7931e8db51c8b745096419c0}
+
+\item 
+\hypertarget{structmrif__inh__2d1d__plan_ae083ca7967f0ac15dca241336782f353}{int {\bfseries N3}}\label{structmrif__inh__2d1d__plan_ae083ca7967f0ac15dca241336782f353}
+
+\item 
+\hypertarget{structmrif__inh__2d1d__plan_a7feb68d7fd4fe5590700ddf6aa64d27c}{float {\bfseries sigma3}}\label{structmrif__inh__2d1d__plan_a7feb68d7fd4fe5590700ddf6aa64d27c}
+
+\item 
+\hypertarget{structmrif__inh__2d1d__plan_a601416c33ee05eb2cc89b3a03aa0bb0b}{float $\ast$ {\bfseries t}}\label{structmrif__inh__2d1d__plan_a601416c33ee05eb2cc89b3a03aa0bb0b}
+
+\item 
+\hypertarget{structmrif__inh__2d1d__plan_a53834de9b90ac2eb35eb5bf5b00bdfac}{float $\ast$ {\bfseries w}}\label{structmrif__inh__2d1d__plan_a53834de9b90ac2eb35eb5bf5b00bdfac}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structmrif__inh__2d1d__plan_a7846a173c42c9b65d4e93a16da121ff4}{\index{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}!N\-\_\-total@{N\-\_\-total}}
+\index{N\-\_\-total@{N\-\_\-total}!mrif_inh_2d1d_plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}}
+\subsubsection[{N\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T mrif\-\_\-inh\-\_\-2d1d\-\_\-plan\-::\-N\-\_\-total}}\label{structmrif__inh__2d1d__plan_a7846a173c42c9b65d4e93a16da121ff4}
+
+
+Total number of Fourier coefficients. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+\hypertarget{structmrif__inh__2d1d__plan_aa88bdba25fa7c21f526b91ae6cb4b84e}{\index{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}!M\-\_\-total@{M\-\_\-total}}
+\index{M\-\_\-total@{M\-\_\-total}!mrif_inh_2d1d_plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}}
+\subsubsection[{M\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T mrif\-\_\-inh\-\_\-2d1d\-\_\-plan\-::\-M\-\_\-total}}\label{structmrif__inh__2d1d__plan_aa88bdba25fa7c21f526b91ae6cb4b84e}
+
+
+Total number of samples. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+\hypertarget{structmrif__inh__2d1d__plan_a18fb340e9ead654552e45033c81ac637}{\index{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}!f\-\_\-hat@{f\-\_\-hat}}
+\index{f\-\_\-hat@{f\-\_\-hat}!mrif_inh_2d1d_plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}}
+\subsubsection[{f\-\_\-hat}]{\setlength{\rightskip}{0pt plus 5cm}fftwf\-\_\-complex$\ast$ mrif\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f\-\_\-hat}}\label{structmrif__inh__2d1d__plan_a18fb340e9ead654552e45033c81ac637}
+
+
+Fourier coefficients. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+\hypertarget{structmrif__inh__2d1d__plan_a3ab01f8b5f1b1368dbf3d7715ce46997}{\index{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}!f@{f}}
+\index{f@{f}!mrif_inh_2d1d_plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}}
+\subsubsection[{f}]{\setlength{\rightskip}{0pt plus 5cm}fftwf\-\_\-complex$\ast$ mrif\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f}}\label{structmrif__inh__2d1d__plan_a3ab01f8b5f1b1368dbf3d7715ce46997}
+
+
+Samples. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+\hypertarget{structmrif__inh__2d1d__plan_acdbe3a414d9c87baba03db3d873b864c}{\index{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}!mv\-\_\-trafo@{mv\-\_\-trafo}}
+\index{mv\-\_\-trafo@{mv\-\_\-trafo}!mrif_inh_2d1d_plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}}
+\subsubsection[{mv\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ mrif\-\_\-inh\-\_\-2d1d\-\_\-plan\-::mv\-\_\-trafo)(void $\ast$)}}\label{structmrif__inh__2d1d__plan_acdbe3a414d9c87baba03db3d873b864c}
+
+
+Transform. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+\hypertarget{structmrif__inh__2d1d__plan_aea23a3331d423e70f2cbbeee71303906}{\index{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}!mv\-\_\-adjoint@{mv\-\_\-adjoint}}
+\index{mv\-\_\-adjoint@{mv\-\_\-adjoint}!mrif_inh_2d1d_plan@{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}}
+\subsubsection[{mv\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ mrif\-\_\-inh\-\_\-2d1d\-\_\-plan\-::mv\-\_\-adjoint)(void $\ast$)}}\label{structmrif__inh__2d1d__plan_aea23a3331d423e70f2cbbeee71303906}
+
+
+Adjoint transform. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{nfft3_8h}{nfft3.\-h}\end{DoxyCompactItemize}

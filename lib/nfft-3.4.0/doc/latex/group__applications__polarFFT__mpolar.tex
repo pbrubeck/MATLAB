@@ -1,0 +1,57 @@
+\hypertarget{group__applications__polarFFT__mpolar}{\section{mpolar\-\_\-fft\-\_\-test}
+\label{group__applications__polarFFT__mpolar}\index{mpolar\-\_\-fft\-\_\-test@{mpolar\-\_\-fft\-\_\-test}}
+}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{group__applications__polarFFT__mpolar_gabafb31c78ad6868b6689449a9b0cfeb8}{mpolar\-\_\-grid} (int T, int S, N\-F\-F\-T\-\_\-\-R $\ast$x, N\-F\-F\-T\-\_\-\-R $\ast$w)
+\begin{DoxyCompactList}\small\item\em Generates the points $x_{t,j}$ with weights $w_{t,j}$ for the modified polar grid with $T$ angles and $R$ offsets. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__mpolar_ga5c6c054600731628d73aaf1891b180d2}{static int \hyperlink{group__applications__polarFFT__mpolar_ga5c6c054600731628d73aaf1891b180d2}{mpolar\-\_\-dft} (N\-F\-F\-T\-\_\-\-C $\ast$f\-\_\-hat, int N\-N, N\-F\-F\-T\-\_\-\-C $\ast$f, int T, int S, int m)}\label{group__applications__polarFFT__mpolar_ga5c6c054600731628d73aaf1891b180d2}
+
+\begin{DoxyCompactList}\small\item\em discrete mpolar F\-F\-T \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__mpolar_gaa75a8d6168898b9a537019ee96166ca9}{static int \hyperlink{group__applications__polarFFT__mpolar_gaa75a8d6168898b9a537019ee96166ca9}{mpolar\-\_\-fft} (N\-F\-F\-T\-\_\-\-C $\ast$f\-\_\-hat, int N\-N, N\-F\-F\-T\-\_\-\-C $\ast$f, int T, int S, int m)}\label{group__applications__polarFFT__mpolar_gaa75a8d6168898b9a537019ee96166ca9}
+
+\begin{DoxyCompactList}\small\item\em N\-F\-F\-T-\/based mpolar F\-F\-T. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__mpolar_ga726b3cdc5ce7c12a953988532bdef2f3}{static int \hyperlink{group__applications__polarFFT__mpolar_ga726b3cdc5ce7c12a953988532bdef2f3}{inverse\-\_\-mpolar\-\_\-fft} (N\-F\-F\-T\-\_\-\-C $\ast$f, int T, int S, N\-F\-F\-T\-\_\-\-C $\ast$f\-\_\-hat, int N\-N, int \hyperlink{group__applications__fastsum_ga6bc571f685f894e15b83a848a0a30faa}{max\-\_\-i}, int m)}\label{group__applications__polarFFT__mpolar_ga726b3cdc5ce7c12a953988532bdef2f3}
+
+\begin{DoxyCompactList}\small\item\em inverse N\-F\-F\-T-\/based mpolar F\-F\-T \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__mpolar_ga1cda6d7e21a940aad127799e88d88fbc}{static int \hyperlink{group__applications__polarFFT__mpolar_ga1cda6d7e21a940aad127799e88d88fbc}{comparison\-\_\-fft} (F\-I\-L\-E $\ast$fp, int N, int T, int S)}\label{group__applications__polarFFT__mpolar_ga1cda6d7e21a940aad127799e88d88fbc}
+
+\begin{DoxyCompactList}\small\item\em Comparison of the F\-F\-T\-W, mpolar F\-F\-T, and inverse mpolar F\-F\-T. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__mpolar_ga3c04138a5bfe5d72780bb7e82a18e627}{int \hyperlink{group__applications__polarFFT__mpolar_ga3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)}\label{group__applications__polarFFT__mpolar_ga3c04138a5bfe5d72780bb7e82a18e627}
+
+\begin{DoxyCompactList}\small\item\em test program for various parameters \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__applications__polarFFT__mpolar_ga520902714d280fb0838f87d81cb5099b}{N\-F\-F\-T\-\_\-\-R {\bfseries G\-L\-O\-B\-A\-L\-\_\-elapsed\-\_\-time}}\label{group__applications__polarFFT__mpolar_ga520902714d280fb0838f87d81cb5099b}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__applications__polarFFT__mpolar_gabafb31c78ad6868b6689449a9b0cfeb8}{\index{mpolar\-\_\-fft\-\_\-test@{mpolar\-\_\-fft\-\_\-test}!mpolar\-\_\-grid@{mpolar\-\_\-grid}}
+\index{mpolar\-\_\-grid@{mpolar\-\_\-grid}!mpolar_fft_test@{mpolar\-\_\-fft\-\_\-test}}
+\subsubsection[{mpolar\-\_\-grid}]{\setlength{\rightskip}{0pt plus 5cm}static int mpolar\-\_\-grid (
+\begin{DoxyParamCaption}
+\item[{int}]{T, }
+\item[{int}]{S, }
+\item[{N\-F\-F\-T\-\_\-\-R $\ast$}]{x, }
+\item[{N\-F\-F\-T\-\_\-\-R $\ast$}]{w}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{group__applications__polarFFT__mpolar_gabafb31c78ad6868b6689449a9b0cfeb8}
+
+
+Generates the points $x_{t,j}$ with weights $w_{t,j}$ for the modified polar grid with $T$ angles and $R$ offsets. 
+
+We add more concentric circles to the polar grid and exclude those nodes not located in the unit square, i.\-e., \[ x_{t,j} := r_j\left(\cos\theta_t, \sin\theta_t\right)^{\top}\,,\qquad (j,t)^{\top}\in I_{\sqrt{2}R}\times I_T\,. \] with $r_j$ and $\theta_t$ as for the polar grid. The number of nodes for the modified polar grid can be estimated as $M \approx \frac{4}{\pi}\log(1+\sqrt{2}) T R$. 
+
+Definition at line 58 of file mpolar\-\_\-fft\-\_\-test.\-c.
+
+
+
+Referenced by inverse\-\_\-mpolar\-\_\-fft(), main(), mpolar\-\_\-dft(), and mpolar\-\_\-fft().
+

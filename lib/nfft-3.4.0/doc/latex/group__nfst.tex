@@ -1,0 +1,185 @@
+\hypertarget{group__nfst}{\section{N\-F\-S\-T -\/ Nonequispaced fast sine transform}
+\label{group__nfst}\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+}
+
+
+Direct and fast computation of the discrete nonequispaced sine transform.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structnfst__plan}{nfst\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-S\-T (nonequispaced fast sine transform) plan with double precision \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__nfst_gac13a4c85f5cd43cfc3b5c3895021a9a9}{nfst\-\_\-init\-\_\-1d} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_ga44eff771382180419936a6dbf51505fa}{nfst\-\_\-init\-\_\-2d} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_gaf1dd972b1831e75d3cfba0a0a2671711}{nfst\-\_\-init\-\_\-3d} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int N2, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_gae4043a9926de23326b21b8722648bafa}{nfst\-\_\-init} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_ga99bcf33a3cc6b3bb4842124d7894cee2}{nfst\-\_\-init\-\_\-guru} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)
+\item 
+void \hyperlink{group__nfst_gaa0cc88f5b76b758181688d3b438526e2}{nfst\-\_\-precompute\-\_\-psi} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfst_gac80b86521428ec2191919cc96c82f416}{nfst\-\_\-trafo} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+void \hyperlink{group__nfst_ga0ae3871b80dda28e7aabe541a48d34e2}{nfst\-\_\-adjoint} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+void \hyperlink{group__nfst_gab5d03eeff969c872061d96998f9f0405}{nfst\-\_\-finalize} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Direct and fast computation of the discrete nonequispaced sine transform. 
+
+\subsection{Function Documentation}
+\hypertarget{group__nfst_gac13a4c85f5cd43cfc3b5c3895021a9a9}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-init\-\_\-1d@{nfst\-\_\-init\-\_\-1d}}
+\index{nfst\-\_\-init\-\_\-1d@{nfst\-\_\-init\-\_\-1d}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-init\-\_\-1d}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-init\-\_\-1d (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan, }
+\item[{int}]{N0, }
+\item[{int}]{M\-\_\-total}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_gac13a4c85f5cd43cfc3b5c3895021a9a9}
+Creates a 1-\/dimensional transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item N0 The bandwidth $N$ \item M\-\_\-total The number of nodes $x$\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_ga44eff771382180419936a6dbf51505fa}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-init\-\_\-2d@{nfst\-\_\-init\-\_\-2d}}
+\index{nfst\-\_\-init\-\_\-2d@{nfst\-\_\-init\-\_\-2d}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-init\-\_\-2d}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-init\-\_\-2d (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan, }
+\item[{int}]{N0, }
+\item[{int}]{N1, }
+\item[{int}]{M\-\_\-total}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_ga44eff771382180419936a6dbf51505fa}
+Creates a 3-\/dimensional transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item N0 The bandwidth of dimension 1 \item N1 The bandwidth of dimension 2 \item M\-\_\-total The number of nodes $x$\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_gaf1dd972b1831e75d3cfba0a0a2671711}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-init\-\_\-3d@{nfst\-\_\-init\-\_\-3d}}
+\index{nfst\-\_\-init\-\_\-3d@{nfst\-\_\-init\-\_\-3d}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-init\-\_\-3d}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-init\-\_\-3d (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan, }
+\item[{int}]{N0, }
+\item[{int}]{N1, }
+\item[{int}]{N2, }
+\item[{int}]{M\-\_\-total}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_gaf1dd972b1831e75d3cfba0a0a2671711}
+Creates a 3-\/dimensional transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item N0 The bandwidth of dimension 1 \item N1 The bandwidth of dimension 2 \item N2 The bandwidth of dimension 3 \item M\-\_\-total The number of nodes $x$\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_gae4043a9926de23326b21b8722648bafa}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-init@{nfst\-\_\-init}}
+\index{nfst\-\_\-init@{nfst\-\_\-init}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan, }
+\item[{int}]{d, }
+\item[{int $\ast$}]{N, }
+\item[{int}]{M\-\_\-total}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_gae4043a9926de23326b21b8722648bafa}
+Creates a d-\/dimensional transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item d the dimension \item N The bandwidths \item M\-\_\-total The number of nodes $x$\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_ga99bcf33a3cc6b3bb4842124d7894cee2}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-init\-\_\-guru@{nfst\-\_\-init\-\_\-guru}}
+\index{nfst\-\_\-init\-\_\-guru@{nfst\-\_\-init\-\_\-guru}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-init\-\_\-guru}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-init\-\_\-guru (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan, }
+\item[{int}]{d, }
+\item[{int $\ast$}]{N, }
+\item[{int}]{M\-\_\-total, }
+\item[{int $\ast$}]{n, }
+\item[{int}]{m, }
+\item[{unsigned}]{flags, }
+\item[{unsigned}]{fftw\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_ga99bcf33a3cc6b3bb4842124d7894cee2}
+Creates a d-\/dimensional transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item d the dimension \item N The bandwidths \item M\-\_\-total The number of nodes $x$ \item n The oversampled bandwidths \item m The cut-\/off parameter \item flags The flags known to nfst \item fftw\-\_\-flags The flags known to fftw\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_gaa0cc88f5b76b758181688d3b438526e2}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-precompute\-\_\-psi@{nfst\-\_\-precompute\-\_\-psi}}
+\index{nfst\-\_\-precompute\-\_\-psi@{nfst\-\_\-precompute\-\_\-psi}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-precompute\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-precompute\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_gaa0cc88f5b76b758181688d3b438526e2}
+precomputes the values psi if the P\-R\-E\-\_\-\-P\-S\-I is set the application program has to call this routine after setting the nodes this\-\_\-plan-\/$>$x
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_gac80b86521428ec2191919cc96c82f416}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-trafo@{nfst\-\_\-trafo}}
+\index{nfst\-\_\-trafo@{nfst\-\_\-trafo}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-trafo (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_gac80b86521428ec2191919cc96c82f416}
+executes a N\-F\-S\-T (approximate,fast), computes for $j=0,...,M\_total-1$ $f_j^S(x_j) = \sum_{k \in I_1^{N,d}} \hat{f}_k^S * sin(2 \pi k x_j)$
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_ga0ae3871b80dda28e7aabe541a48d34e2}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-adjoint@{nfst\-\_\-adjoint}}
+\index{nfst\-\_\-adjoint@{nfst\-\_\-adjoint}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-adjoint (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_ga0ae3871b80dda28e7aabe541a48d34e2}
+executes a transposed N\-F\-S\-T (approximate,fast), computes for $k \in I_1^{N,d}$ $h^S(k) = \sum_{j \in I_0^{M\_total,1}} f_j^S * cos(2 \pi k x_j)$
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}
+\hypertarget{group__nfst_gab5d03eeff969c872061d96998f9f0405}{\index{N\-F\-S\-T -\/ Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}!nfst\-\_\-finalize@{nfst\-\_\-finalize}}
+\index{nfst\-\_\-finalize@{nfst\-\_\-finalize}!NFST - Nonequispaced fast sine transform@{N\-F\-S\-T -\/ Nonequispaced fast sine transform}}
+\subsubsection[{nfst\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void nfst\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nfst_gab5d03eeff969c872061d96998f9f0405}
+Destroys a plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Steffen Klatt 
+\end{DoxyAuthor}

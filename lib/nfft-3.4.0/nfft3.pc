@@ -1,0 +1,11 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: NFFT
+Description: Nonuniform fast Fourier transform library
+Version: 3.4.0
+Requires: fftw3
+Libs: -L${libdir} -lnfft3
+Cflags: -I${includedir}

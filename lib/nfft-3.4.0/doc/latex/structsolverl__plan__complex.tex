@@ -1,0 +1,81 @@
+\hypertarget{structsolverl__plan__complex}{\section{solverl\-\_\-plan\-\_\-complex Struct Reference}
+\label{structsolverl__plan__complex}\index{solverl\-\_\-plan\-\_\-complex@{solverl\-\_\-plan\-\_\-complex}}
+}
+
+
+data structure for an inverse N\-F\-F\-T plan with long double precision  
+
+
+
+
+{\ttfamily \#include $<$nfft3.\-h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structsolverl__plan__complex_a3da97d0d8d896d9da6a95a68a6f65442}{\hyperlink{structnfftl__mv__plan__complex}{nfftl\-\_\-mv\-\_\-plan\-\_\-complex} $\ast$ \hyperlink{structsolverl__plan__complex_a3da97d0d8d896d9da6a95a68a6f65442}{mv}}\label{structsolverl__plan__complex_a3da97d0d8d896d9da6a95a68a6f65442}
+
+\begin{DoxyCompactList}\small\item\em matrix vector multiplication \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_abd86575c07d53042297da1c54ebc9e1a}{unsigned \hyperlink{structsolverl__plan__complex_abd86575c07d53042297da1c54ebc9e1a}{flags}}\label{structsolverl__plan__complex_abd86575c07d53042297da1c54ebc9e1a}
+
+\begin{DoxyCompactList}\small\item\em iteration type \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_a547382238a57e96f316bac4dd291af0d}{long double $\ast$ \hyperlink{structsolverl__plan__complex_a547382238a57e96f316bac4dd291af0d}{w}}\label{structsolverl__plan__complex_a547382238a57e96f316bac4dd291af0d}
+
+\begin{DoxyCompactList}\small\item\em weighting factors \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_ad4d107f6ef642a2f8173d05d73bde405}{long double $\ast$ \hyperlink{structsolverl__plan__complex_ad4d107f6ef642a2f8173d05d73bde405}{w\-\_\-hat}}\label{structsolverl__plan__complex_ad4d107f6ef642a2f8173d05d73bde405}
+
+\begin{DoxyCompactList}\small\item\em damping factors \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_afbcb92106789225f6d54be521797b97f}{fftwl\-\_\-complex $\ast$ \hyperlink{structsolverl__plan__complex_afbcb92106789225f6d54be521797b97f}{y}}\label{structsolverl__plan__complex_afbcb92106789225f6d54be521797b97f}
+
+\begin{DoxyCompactList}\small\item\em right hand side, samples \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_affba771210ad63dfce92bed9a629e19f}{fftwl\-\_\-complex $\ast$ \hyperlink{structsolverl__plan__complex_affba771210ad63dfce92bed9a629e19f}{f\-\_\-hat\-\_\-iter}}\label{structsolverl__plan__complex_affba771210ad63dfce92bed9a629e19f}
+
+\begin{DoxyCompactList}\small\item\em iterative solution \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_aec8fcaf36c7ce234e76970dc4b4ec9c9}{fftwl\-\_\-complex $\ast$ \hyperlink{structsolverl__plan__complex_aec8fcaf36c7ce234e76970dc4b4ec9c9}{r\-\_\-iter}}\label{structsolverl__plan__complex_aec8fcaf36c7ce234e76970dc4b4ec9c9}
+
+\begin{DoxyCompactList}\small\item\em iterated residual vector \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_abe468b3b489a8707538f083713962fcc}{fftwl\-\_\-complex $\ast$ \hyperlink{structsolverl__plan__complex_abe468b3b489a8707538f083713962fcc}{z\-\_\-hat\-\_\-iter}}\label{structsolverl__plan__complex_abe468b3b489a8707538f083713962fcc}
+
+\begin{DoxyCompactList}\small\item\em residual of normal equation of first kind \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_aa7833544d06eb2d71042da5fa06b9c5c}{fftwl\-\_\-complex $\ast$ \hyperlink{structsolverl__plan__complex_aa7833544d06eb2d71042da5fa06b9c5c}{p\-\_\-hat\-\_\-iter}}\label{structsolverl__plan__complex_aa7833544d06eb2d71042da5fa06b9c5c}
+
+\begin{DoxyCompactList}\small\item\em search direction \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_a79c7f5b84aa9feddeafbcb9bde26de17}{fftwl\-\_\-complex $\ast$ \hyperlink{structsolverl__plan__complex_a79c7f5b84aa9feddeafbcb9bde26de17}{v\-\_\-iter}}\label{structsolverl__plan__complex_a79c7f5b84aa9feddeafbcb9bde26de17}
+
+\begin{DoxyCompactList}\small\item\em residual vector update \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_ad149f66fa5dde187b3ef7860e593de01}{long double \hyperlink{structsolverl__plan__complex_ad149f66fa5dde187b3ef7860e593de01}{alpha\-\_\-iter}}\label{structsolverl__plan__complex_ad149f66fa5dde187b3ef7860e593de01}
+
+\begin{DoxyCompactList}\small\item\em step size for search direction \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_ab0f9266a50fc4a3acda9659b2c0920e3}{long double \hyperlink{structsolverl__plan__complex_ab0f9266a50fc4a3acda9659b2c0920e3}{beta\-\_\-iter}}\label{structsolverl__plan__complex_ab0f9266a50fc4a3acda9659b2c0920e3}
+
+\begin{DoxyCompactList}\small\item\em step size for search correction \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_aa2d90b37bc2a2ae2f9d0c90c9431abf1}{long double \hyperlink{structsolverl__plan__complex_aa2d90b37bc2a2ae2f9d0c90c9431abf1}{dot\-\_\-r\-\_\-iter}}\label{structsolverl__plan__complex_aa2d90b37bc2a2ae2f9d0c90c9431abf1}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of r\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_a6d564c417ab5b11a306e489df80f4e1e}{long double \hyperlink{structsolverl__plan__complex_a6d564c417ab5b11a306e489df80f4e1e}{dot\-\_\-r\-\_\-iter\-\_\-old}}\label{structsolverl__plan__complex_a6d564c417ab5b11a306e489df80f4e1e}
+
+\begin{DoxyCompactList}\small\item\em previous dot\-\_\-r\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_ae487ec619578f4f6d4876d7bc059f22a}{long double \hyperlink{structsolverl__plan__complex_ae487ec619578f4f6d4876d7bc059f22a}{dot\-\_\-z\-\_\-hat\-\_\-iter}}\label{structsolverl__plan__complex_ae487ec619578f4f6d4876d7bc059f22a}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of z\-\_\-hat\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_af4efa34efc92f873c771df52d423f39e}{long double \hyperlink{structsolverl__plan__complex_af4efa34efc92f873c771df52d423f39e}{dot\-\_\-z\-\_\-hat\-\_\-iter\-\_\-old}}\label{structsolverl__plan__complex_af4efa34efc92f873c771df52d423f39e}
+
+\begin{DoxyCompactList}\small\item\em previous dot\-\_\-z\-\_\-hat\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_a4941cd9e60935f7e39a0c86a52202c02}{long double \hyperlink{structsolverl__plan__complex_a4941cd9e60935f7e39a0c86a52202c02}{dot\-\_\-p\-\_\-hat\-\_\-iter}}\label{structsolverl__plan__complex_a4941cd9e60935f7e39a0c86a52202c02}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of p\-\_\-hat\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structsolverl__plan__complex_a14f62c3118e3c1c7a92dd9bf8877250c}{long double \hyperlink{structsolverl__plan__complex_a14f62c3118e3c1c7a92dd9bf8877250c}{dot\-\_\-v\-\_\-iter}}\label{structsolverl__plan__complex_a14f62c3118e3c1c7a92dd9bf8877250c}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of v\-\_\-iter \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+data structure for an inverse N\-F\-F\-T plan with long double precision 
+
+Definition at line 785 of file nfft3.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{nfft3_8h}{nfft3.\-h}\end{DoxyCompactItemize}

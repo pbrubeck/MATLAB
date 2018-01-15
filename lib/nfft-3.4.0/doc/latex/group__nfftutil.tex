@@ -1,0 +1,1029 @@
+\hypertarget{group__nfftutil}{\section{Util -\/ Auxiliary functions}
+\label{group__nfftutil}\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}}
+}
+
+
+This module implements frequently used utility functions.  
+
+
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__nfftutil_ga1182d58d938007138fc59b18dca63ccb}{\#define {\bfseries C\-O\-N\-C\-A\-T}(prefix, name)~prefix \#\# name}\label{group__nfftutil_ga1182d58d938007138fc59b18dca63ccb}
+
+\item 
+\hypertarget{group__nfftutil_ga8b6269f253e2477499c586a966b329b2}{\#define {\bfseries Y}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(nfft\-\_\-,name)}\label{group__nfftutil_ga8b6269f253e2477499c586a966b329b2}
+
+\item 
+\hypertarget{group__nfftutil_gaa49a8fbc23ef18bfdc436b06d6388d42}{\#define {\bfseries F\-F\-T\-W}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(fftw\-\_\-,name)}\label{group__nfftutil_gaa49a8fbc23ef18bfdc436b06d6388d42}
+
+\item 
+\hypertarget{group__nfftutil_ga564a9c2be1b3e049c12b0b32593c0c46}{\#define {\bfseries N\-F\-F\-T}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(nfft\-\_\-,name)}\label{group__nfftutil_ga564a9c2be1b3e049c12b0b32593c0c46}
+
+\item 
+\hypertarget{group__nfftutil_ga3528f9832eb83053a31037130b87efb7}{\#define {\bfseries N\-F\-C\-T}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(nfct\-\_\-,name)}\label{group__nfftutil_ga3528f9832eb83053a31037130b87efb7}
+
+\item 
+\hypertarget{group__nfftutil_gac8d728256bd91473a1f42b782b6eb752}{\#define {\bfseries N\-F\-S\-T}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(nfst\-\_\-,name)}\label{group__nfftutil_gac8d728256bd91473a1f42b782b6eb752}
+
+\item 
+\hypertarget{group__nfftutil_gab3034d3ae1e6ab2dbc3aa6b640129338}{\#define {\bfseries N\-F\-S\-F\-T}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(nfsft\-\_\-,name)}\label{group__nfftutil_gab3034d3ae1e6ab2dbc3aa6b640129338}
+
+\item 
+\hypertarget{group__nfftutil_gaa98506b3390ef8e18f71ace66666d858}{\#define {\bfseries S\-O\-L\-V\-E\-R}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-,name)}\label{group__nfftutil_gaa98506b3390ef8e18f71ace66666d858}
+
+\item 
+\hypertarget{group__nfftutil_ga826edd40636cbaa44266b97c8c6a4fa3}{\#define {\bfseries X}(name)~Y(name)}\label{group__nfftutil_ga826edd40636cbaa44266b97c8c6a4fa3}
+
+\item 
+\hypertarget{group__nfftutil_ga7731fa5d9e9881a5be7b5ca52849f404}{\#define {\bfseries S\-T\-R\-I\-N\-G\-I\-Z\-Ex}(x)~\#x}\label{group__nfftutil_ga7731fa5d9e9881a5be7b5ca52849f404}
+
+\item 
+\hypertarget{group__nfftutil_ga3428692efe6051ef30016ffde1a9f7bb}{\#define {\bfseries S\-T\-R\-I\-N\-G\-I\-Z\-E}(x)~S\-T\-R\-I\-N\-G\-I\-Z\-Ex(x)}\label{group__nfftutil_ga3428692efe6051ef30016ffde1a9f7bb}
+
+\item 
+\hypertarget{group__nfftutil_gae5f839eceb66b42fe692d366c93a5bcc}{\#define {\bfseries K}(x)~((R) x)}\label{group__nfftutil_gae5f839eceb66b42fe692d366c93a5bcc}
+
+\item 
+\hypertarget{group__nfftutil_gaa88696ed510a29aeab8d976cbe8f7274}{\#define {\bfseries D\-K}(name, value)~const R name = K(value)}\label{group__nfftutil_gaa88696ed510a29aeab8d976cbe8f7274}
+
+\item 
+\hypertarget{group__nfftutil_ga00d0e13532a50be2e896a57d4555012d}{\#define {\bfseries K\-P\-I}~K(3.\-1415926535897932384626433832795028841971693993751)}\label{group__nfftutil_ga00d0e13532a50be2e896a57d4555012d}
+
+\item 
+\hypertarget{group__nfftutil_gafcf5013eb5c0dcfb6d95a93868c84ab0}{\#define {\bfseries K2\-P\-I}~K(6.\-2831853071795864769252867665590057683943387987502)}\label{group__nfftutil_gafcf5013eb5c0dcfb6d95a93868c84ab0}
+
+\item 
+\hypertarget{group__nfftutil_ga2bd86680e3e2809d04bd4968abecae04}{\#define {\bfseries K4\-P\-I}~K(12.\-5663706143591729538505735331180115367886775975004)}\label{group__nfftutil_ga2bd86680e3e2809d04bd4968abecae04}
+
+\item 
+\hypertarget{group__nfftutil_gad6cbab9b816acb64dddbf8bcb3098ef4}{\#define {\bfseries K\-E}~K(2.\-7182818284590452353602874713526624977572470937000)}\label{group__nfftutil_gad6cbab9b816acb64dddbf8bcb3098ef4}
+
+\item 
+\hypertarget{group__nfftutil_ga2b4fae951f148354ef77880deaa4166a}{\#define {\bfseries I\-F}(x, a, b)~((x)?(a)\-:(b))}\label{group__nfftutil_ga2b4fae951f148354ef77880deaa4166a}
+
+\item 
+\hypertarget{group__nfftutil_ga3acffbd305ee72dcd4593c0d8af64a4f}{\#define {\bfseries M\-I\-N}(a, b)~(((a)$<$(b))?(a)\-:(b))}\label{group__nfftutil_ga3acffbd305ee72dcd4593c0d8af64a4f}
+
+\item 
+\hypertarget{group__nfftutil_gafa99ec4acc4ecb2dc3c2d05da15d0e3f}{\#define {\bfseries M\-A\-X}(a, b)~(((a)$>$(b))?(a)\-:(b))}\label{group__nfftutil_gafa99ec4acc4ecb2dc3c2d05da15d0e3f}
+
+\item 
+\hypertarget{group__nfftutil_ga996f7be338ccb40d1a2a5abc1ad61759}{\#define {\bfseries A\-B\-S}(x)~(((x)$>$K(0.\-0))?(x)\-:(-\/(x)))}\label{group__nfftutil_ga996f7be338ccb40d1a2a5abc1ad61759}
+
+\item 
+\hypertarget{group__nfftutil_ga8c4a9e5e4622948245de4ec0b5d38329}{\#define {\bfseries S\-I\-G\-N}(a)~(((a)$>$=0)?1\-:-\/1)}\label{group__nfftutil_ga8c4a9e5e4622948245de4ec0b5d38329}
+
+\item 
+\hypertarget{group__nfftutil_ga8c4a9e5e4622948245de4ec0b5d38329}{\#define {\bfseries S\-I\-G\-N}(a)~(((a)$>$=0)?1\-:-\/1)}\label{group__nfftutil_ga8c4a9e5e4622948245de4ec0b5d38329}
+
+\item 
+\hypertarget{group__nfftutil_ga2cc65eb73401bb3d6036b21f5329c0b7}{\#define {\bfseries S\-I\-G\-N\-F}(a)~I\-F((a)$<$K(0.\-0),K(-\/1.\-0),K(1.\-0))}\label{group__nfftutil_ga2cc65eb73401bb3d6036b21f5329c0b7}
+
+\item 
+\hypertarget{group__nfftutil_gafd2537d19a3cb6556b0f727580ec6ee7}{\#define {\bfseries S\-I\-Z\-E}(x)~sizeof(x)/sizeof(x\mbox{[}0\mbox{]})}\label{group__nfftutil_gafd2537d19a3cb6556b0f727580ec6ee7}
+
+\item 
+\#define \hyperlink{group__nfftutil_ga18cf66b4ff69fd69cf3b8291c629e80b}{C\-S\-W\-A\-P}(x, y)
+\begin{DoxyCompactList}\small\item\em Swap two vectors. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__nfftutil_ga134a708e91eb0967369f42de15be4c85}{R\-S\-W\-A\-P}(x, y)
+\begin{DoxyCompactList}\small\item\em Swap two vectors. \end{DoxyCompactList}\item 
+\hypertarget{group__nfftutil_gaa413603e4d4fc20705261f3a9dc82566}{\#define {\bfseries P\-H\-I\-\_\-\-H\-U\-T}(n, k, d)~(Y(bessel\-\_\-i0)((R)(ths-\/$>$m) $\ast$ S\-Q\-R\-T(ths-\/$>$b\mbox{[}d\mbox{]} $\ast$ ths-\/$>$b\mbox{[}d\mbox{]} -\/ (K(2.\-0) $\ast$ K\-P\-I $\ast$ (R)(k) / (R)(n)) $\ast$ (K(2.\-0) $\ast$ K\-P\-I $\ast$ (R)(k) / (R)(n)))))}\label{group__nfftutil_gaa413603e4d4fc20705261f3a9dc82566}
+
+\item 
+\#define {\bfseries P\-H\-I}(n, x, d)
+\item 
+\#define {\bfseries W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-I\-N\-I\-T}
+\item 
+\hypertarget{group__nfftutil_gaafd97336d6085d380d018bc1c2f7789e}{\#define {\bfseries W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-F\-I\-N\-A\-L\-I\-Z\-E}~\{Y(free)(ths-\/$>$b);\}}\label{group__nfftutil_gaafd97336d6085d380d018bc1c2f7789e}
+
+\item 
+\hypertarget{group__nfftutil_ga6228c60b2fff40a2d5f698e249e54731}{\#define {\bfseries W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-E\-S\-T\-I\-M\-A\-T\-E\-\_\-m}~8}\label{group__nfftutil_ga6228c60b2fff40a2d5f698e249e54731}
+
+\item 
+\hypertarget{group__nfftutil_ga0b7f77e2473eb96891b0508e286c6d4e}{\#define {\bfseries C\-O\-P\-Y\-S\-I\-G\-N}~copysign}\label{group__nfftutil_ga0b7f77e2473eb96891b0508e286c6d4e}
+
+\item 
+\hypertarget{group__nfftutil_gaa93ade751d2059beef709becf178ece0}{\#define {\bfseries N\-E\-X\-T\-A\-F\-T\-E\-R}~nextafter}\label{group__nfftutil_gaa93ade751d2059beef709becf178ece0}
+
+\item 
+\hypertarget{group__nfftutil_gacfcf3fb0da11b997c26fd81a56bd8c4b}{\#define {\bfseries M\-K\-N\-A\-N}~nan}\label{group__nfftutil_gacfcf3fb0da11b997c26fd81a56bd8c4b}
+
+\item 
+\hypertarget{group__nfftutil_gae942a914db9767fa4fde805a268004e0}{\#define {\bfseries C\-E\-I\-L}~ceil}\label{group__nfftutil_gae942a914db9767fa4fde805a268004e0}
+
+\item 
+\hypertarget{group__nfftutil_ga1082f0d0b3b2f687958ea044cb0cd306}{\#define {\bfseries F\-L\-O\-O\-R}~floor}\label{group__nfftutil_ga1082f0d0b3b2f687958ea044cb0cd306}
+
+\item 
+\hypertarget{group__nfftutil_gaff1bca9ec310442e0173004bccb1456e}{\#define {\bfseries N\-E\-A\-R\-B\-Y\-I\-N\-T}~nearbyint}\label{group__nfftutil_gaff1bca9ec310442e0173004bccb1456e}
+
+\item 
+\hypertarget{group__nfftutil_ga4810d8325791be718f1bcb2a92fd3a0f}{\#define {\bfseries R\-I\-N\-T}~rint}\label{group__nfftutil_ga4810d8325791be718f1bcb2a92fd3a0f}
+
+\item 
+\hypertarget{group__nfftutil_gaf144c56be720021d0c3a8075b87ff9b5}{\#define {\bfseries R\-O\-U\-N\-D}~round}\label{group__nfftutil_gaf144c56be720021d0c3a8075b87ff9b5}
+
+\item 
+\hypertarget{group__nfftutil_gacf9158b64924c3e0193a740dde6538ba}{\#define {\bfseries L\-R\-I\-N\-T}~lrint}\label{group__nfftutil_gacf9158b64924c3e0193a740dde6538ba}
+
+\item 
+\hypertarget{group__nfftutil_ga4b5b6fc651dca070d28f9d8c31cac751}{\#define {\bfseries L\-R\-O\-U\-N\-D}~lround}\label{group__nfftutil_ga4b5b6fc651dca070d28f9d8c31cac751}
+
+\item 
+\hypertarget{group__nfftutil_gaaab1407eeb62476b76b508d6df9d089a}{\#define {\bfseries L\-L\-R\-I\-N\-T}~llrint}\label{group__nfftutil_gaaab1407eeb62476b76b508d6df9d089a}
+
+\item 
+\hypertarget{group__nfftutil_ga1b34fd407193bbd05247273e5fe14157}{\#define {\bfseries L\-L\-R\-O\-U\-N\-D}~llround}\label{group__nfftutil_ga1b34fd407193bbd05247273e5fe14157}
+
+\item 
+\hypertarget{group__nfftutil_ga970dc2bf44762648f4df3e97efc6b850}{\#define {\bfseries T\-R\-U\-N\-C}~trunc}\label{group__nfftutil_ga970dc2bf44762648f4df3e97efc6b850}
+
+\item 
+\hypertarget{group__nfftutil_gafc2a1dc13524da20924b30190dce9499}{\#define {\bfseries F\-M\-O\-D}~fmod}\label{group__nfftutil_gafc2a1dc13524da20924b30190dce9499}
+
+\item 
+\hypertarget{group__nfftutil_gaecc6286154455e3e6c6344d3b02dacef}{\#define {\bfseries R\-E\-M\-A\-I\-N\-D\-E\-R}~remainder}\label{group__nfftutil_gaecc6286154455e3e6c6344d3b02dacef}
+
+\item 
+\hypertarget{group__nfftutil_ga4eb16da6d20e47d63a9a77126ee5e29c}{\#define {\bfseries R\-E\-M\-Q\-U\-O}~remquo}\label{group__nfftutil_ga4eb16da6d20e47d63a9a77126ee5e29c}
+
+\item 
+\hypertarget{group__nfftutil_ga7d762e21c53fb2a42dc688d899a19447}{\#define {\bfseries F\-D\-I\-M}~fdim}\label{group__nfftutil_ga7d762e21c53fb2a42dc688d899a19447}
+
+\item 
+\hypertarget{group__nfftutil_gaf9520fdf42fc2eb129de2c594eb10505}{\#define {\bfseries F\-M\-A\-X}~fmax}\label{group__nfftutil_gaf9520fdf42fc2eb129de2c594eb10505}
+
+\item 
+\hypertarget{group__nfftutil_gada833912af53cace168f9be352e7cf7c}{\#define {\bfseries F\-M\-I\-N}~fmin}\label{group__nfftutil_gada833912af53cace168f9be352e7cf7c}
+
+\item 
+\hypertarget{group__nfftutil_ga7397da729a598e72085e547b5dbd9f66}{\#define {\bfseries F\-F\-M\-A}~fma}\label{group__nfftutil_ga7397da729a598e72085e547b5dbd9f66}
+
+\item 
+\hypertarget{group__nfftutil_gaf0175ba905b01f1a4ba753b6961473c5}{\#define {\bfseries F\-A\-B\-S}~fabs}\label{group__nfftutil_gaf0175ba905b01f1a4ba753b6961473c5}
+
+\item 
+\hypertarget{group__nfftutil_ga095e93222540fb38e433670cf08b5a46}{\#define {\bfseries S\-Q\-R\-T}~sqrt}\label{group__nfftutil_ga095e93222540fb38e433670cf08b5a46}
+
+\item 
+\hypertarget{group__nfftutil_ga5c288402d0d0421758d773118c9f3df8}{\#define {\bfseries C\-B\-R\-T}~cbrt}\label{group__nfftutil_ga5c288402d0d0421758d773118c9f3df8}
+
+\item 
+\hypertarget{group__nfftutil_ga3c7ad9d42d16f4b60697ceec2034c2f1}{\#define {\bfseries H\-Y\-P\-O\-T}~hypot}\label{group__nfftutil_ga3c7ad9d42d16f4b60697ceec2034c2f1}
+
+\item 
+\hypertarget{group__nfftutil_ga84db90500a1f9527c04e28817d9f60a1}{\#define {\bfseries E\-X\-P}~exp}\label{group__nfftutil_ga84db90500a1f9527c04e28817d9f60a1}
+
+\item 
+\hypertarget{group__nfftutil_gaec2d560eb64d1b8b45d21b5bec63e540}{\#define {\bfseries E\-X\-P2}~exp2}\label{group__nfftutil_gaec2d560eb64d1b8b45d21b5bec63e540}
+
+\item 
+\hypertarget{group__nfftutil_ga3fb23e53a3633b77b25c9a62d871d5aa}{\#define {\bfseries E\-X\-P\-M1}~expm1}\label{group__nfftutil_ga3fb23e53a3633b77b25c9a62d871d5aa}
+
+\item 
+\hypertarget{group__nfftutil_ga159ca84d25a5487d8e81e4438725df19}{\#define {\bfseries L\-O\-G}~log}\label{group__nfftutil_ga159ca84d25a5487d8e81e4438725df19}
+
+\item 
+\hypertarget{group__nfftutil_ga07267dcd6834194cfed517197ab1e2ad}{\#define {\bfseries L\-O\-G2}~log2}\label{group__nfftutil_ga07267dcd6834194cfed517197ab1e2ad}
+
+\item 
+\hypertarget{group__nfftutil_ga386bc1bec332d5809e3c5e5be1f47a5d}{\#define {\bfseries L\-O\-G10}~log10}\label{group__nfftutil_ga386bc1bec332d5809e3c5e5be1f47a5d}
+
+\item 
+\hypertarget{group__nfftutil_gafb5798a2d57b769a1f77ef259f361f5c}{\#define {\bfseries L\-O\-G1\-P}~log1p}\label{group__nfftutil_gafb5798a2d57b769a1f77ef259f361f5c}
+
+\item 
+\hypertarget{group__nfftutil_gafced88f944530b6dfb95807ae45120a6}{\#define {\bfseries L\-O\-G\-B}~logb}\label{group__nfftutil_gafced88f944530b6dfb95807ae45120a6}
+
+\item 
+\hypertarget{group__nfftutil_ga00bec72a9d235418060a7b03dd2f28fb}{\#define {\bfseries I\-L\-O\-G\-B}~ilogb}\label{group__nfftutil_ga00bec72a9d235418060a7b03dd2f28fb}
+
+\item 
+\hypertarget{group__nfftutil_ga022fefdb92bb304842c479d15cfa0847}{\#define {\bfseries M\-O\-D\-F}~modf}\label{group__nfftutil_ga022fefdb92bb304842c479d15cfa0847}
+
+\item 
+\hypertarget{group__nfftutil_ga04118a304eb37e8971e483d9b0a87fa2}{\#define {\bfseries F\-R\-E\-X\-P}~frexp}\label{group__nfftutil_ga04118a304eb37e8971e483d9b0a87fa2}
+
+\item 
+\hypertarget{group__nfftutil_gaae0dd21389e048804e20702edb3456ac}{\#define {\bfseries L\-D\-E\-X\-P}~ldexp}\label{group__nfftutil_gaae0dd21389e048804e20702edb3456ac}
+
+\item 
+\hypertarget{group__nfftutil_ga0cd32fa4eb7df3b047573ea6c47d1e43}{\#define {\bfseries S\-C\-A\-L\-B\-N}~scalbn}\label{group__nfftutil_ga0cd32fa4eb7df3b047573ea6c47d1e43}
+
+\item 
+\hypertarget{group__nfftutil_gab36651688041a272e5529027f751531d}{\#define {\bfseries S\-C\-A\-L\-B\-L\-N}~scalbln}\label{group__nfftutil_gab36651688041a272e5529027f751531d}
+
+\item 
+\hypertarget{group__nfftutil_ga7d36eb793ee8943f856044317659fbf1}{\#define {\bfseries P\-O\-W}~pow}\label{group__nfftutil_ga7d36eb793ee8943f856044317659fbf1}
+
+\item 
+\hypertarget{group__nfftutil_gaf1af2de870caad797b91210f0fc6fe78}{\#define {\bfseries C\-O\-S}~cos}\label{group__nfftutil_gaf1af2de870caad797b91210f0fc6fe78}
+
+\item 
+\hypertarget{group__nfftutil_gac80ce9955a1af2ab7aa3a67251ec9f5c}{\#define {\bfseries S\-I\-N}~sin}\label{group__nfftutil_gac80ce9955a1af2ab7aa3a67251ec9f5c}
+
+\item 
+\hypertarget{group__nfftutil_ga3f6118fca436bd2827d5fd0f998f665d}{\#define {\bfseries T\-A\-N}~tan}\label{group__nfftutil_ga3f6118fca436bd2827d5fd0f998f665d}
+
+\item 
+\hypertarget{group__nfftutil_ga06122bdfd04092936fac23f4de42d468}{\#define {\bfseries C\-O\-S\-H}~cosh}\label{group__nfftutil_ga06122bdfd04092936fac23f4de42d468}
+
+\item 
+\hypertarget{group__nfftutil_ga84b9b00b5c0df2cdb4c50e85ca4c2dbc}{\#define {\bfseries S\-I\-N\-H}~sinh}\label{group__nfftutil_ga84b9b00b5c0df2cdb4c50e85ca4c2dbc}
+
+\item 
+\hypertarget{group__nfftutil_ga1acfe6a311aa86bd70faa9032bf3c6bb}{\#define {\bfseries T\-A\-N\-H}~tanh}\label{group__nfftutil_ga1acfe6a311aa86bd70faa9032bf3c6bb}
+
+\item 
+\hypertarget{group__nfftutil_gac0968392c2b2fc716807863a5fa7d5f1}{\#define {\bfseries A\-C\-O\-S}~acos}\label{group__nfftutil_gac0968392c2b2fc716807863a5fa7d5f1}
+
+\item 
+\hypertarget{group__nfftutil_ga2fefd27702dc315df5aa8418055b9576}{\#define {\bfseries A\-S\-I\-N}~asin}\label{group__nfftutil_ga2fefd27702dc315df5aa8418055b9576}
+
+\item 
+\hypertarget{group__nfftutil_ga417dfa30ded09b26e9d0216adccab21e}{\#define {\bfseries A\-T\-A\-N}~atan}\label{group__nfftutil_ga417dfa30ded09b26e9d0216adccab21e}
+
+\item 
+\hypertarget{group__nfftutil_gac0c1f033adeb97850cce1712ad1b09e2}{\#define {\bfseries A\-T\-A\-N2}~atan2}\label{group__nfftutil_gac0c1f033adeb97850cce1712ad1b09e2}
+
+\item 
+\hypertarget{group__nfftutil_ga59cbf0d6978a854ccf1ee403eecc2f2f}{\#define {\bfseries A\-C\-O\-S\-H}~acosh}\label{group__nfftutil_ga59cbf0d6978a854ccf1ee403eecc2f2f}
+
+\item 
+\hypertarget{group__nfftutil_ga04831b544add9b3a8edbfb17694cbc58}{\#define {\bfseries A\-S\-I\-N\-H}~asinh}\label{group__nfftutil_ga04831b544add9b3a8edbfb17694cbc58}
+
+\item 
+\hypertarget{group__nfftutil_gad9e9af6cf0974e1bcfd8f562637e9a20}{\#define {\bfseries A\-T\-A\-N\-H}~atanh}\label{group__nfftutil_gad9e9af6cf0974e1bcfd8f562637e9a20}
+
+\item 
+\hypertarget{group__nfftutil_ga34699bfe82d89dfe813522a1e3322f46}{\#define {\bfseries T\-G\-A\-M\-M\-A}~tgamma}\label{group__nfftutil_ga34699bfe82d89dfe813522a1e3322f46}
+
+\item 
+\hypertarget{group__nfftutil_ga6161028f9522eedc7996188b306a573f}{\#define {\bfseries L\-G\-A\-M\-M\-A}~lgamma}\label{group__nfftutil_ga6161028f9522eedc7996188b306a573f}
+
+\item 
+\hypertarget{group__nfftutil_ga0dd22b283ae8ce51ead327e271ccb744}{\#define {\bfseries J0}~j0}\label{group__nfftutil_ga0dd22b283ae8ce51ead327e271ccb744}
+
+\item 
+\hypertarget{group__nfftutil_gaa0a810e76ff16787aab0c30a8b973e8a}{\#define {\bfseries J1}~j1}\label{group__nfftutil_gaa0a810e76ff16787aab0c30a8b973e8a}
+
+\item 
+\hypertarget{group__nfftutil_gab21d5215f4e92a90e567454a7a593204}{\#define {\bfseries J\-N}~jn}\label{group__nfftutil_gab21d5215f4e92a90e567454a7a593204}
+
+\item 
+\hypertarget{group__nfftutil_ga0b0dcdd1ffa302474e907d3d7ad9dbfe}{\#define {\bfseries Y0}~y0}\label{group__nfftutil_ga0b0dcdd1ffa302474e907d3d7ad9dbfe}
+
+\item 
+\hypertarget{group__nfftutil_ga294189cdea31dda8faf609b9b3e2000a}{\#define {\bfseries Y1}~y1}\label{group__nfftutil_ga294189cdea31dda8faf609b9b3e2000a}
+
+\item 
+\hypertarget{group__nfftutil_ga200d06751928794b58e227a7660539c5}{\#define {\bfseries Y\-N}~yn}\label{group__nfftutil_ga200d06751928794b58e227a7660539c5}
+
+\item 
+\hypertarget{group__nfftutil_ga7f0564892d185f409da7019460106cc8}{\#define {\bfseries E\-R\-F}~erf}\label{group__nfftutil_ga7f0564892d185f409da7019460106cc8}
+
+\item 
+\hypertarget{group__nfftutil_ga6677d29cca7304ef61758efa8e274063}{\#define {\bfseries E\-R\-F\-C}~erfc}\label{group__nfftutil_ga6677d29cca7304ef61758efa8e274063}
+
+\item 
+\hypertarget{group__nfftutil_gaadc886cc580025d6849ac82b0a8f7cf5}{\#define {\bfseries C\-R\-E\-A\-L}~creal}\label{group__nfftutil_gaadc886cc580025d6849ac82b0a8f7cf5}
+
+\item 
+\hypertarget{group__nfftutil_ga4b305e7c9cd60987bfcd8d953c19687c}{\#define {\bfseries C\-I\-M\-A\-G}~cimag}\label{group__nfftutil_ga4b305e7c9cd60987bfcd8d953c19687c}
+
+\item 
+\hypertarget{group__nfftutil_gac6945cb7d2db8f89f9eac901caa7d67a}{\#define {\bfseries C\-A\-B\-S}~cabs}\label{group__nfftutil_gac6945cb7d2db8f89f9eac901caa7d67a}
+
+\item 
+\hypertarget{group__nfftutil_ga5f6d9c6f413b78c79f036a545e0b7f22}{\#define {\bfseries C\-A\-R\-G}~carg}\label{group__nfftutil_ga5f6d9c6f413b78c79f036a545e0b7f22}
+
+\item 
+\hypertarget{group__nfftutil_gad7755f0abdc5f653dec63cc6c0017782}{\#define {\bfseries C\-O\-N\-J}~conj}\label{group__nfftutil_gad7755f0abdc5f653dec63cc6c0017782}
+
+\item 
+\hypertarget{group__nfftutil_ga57e51f43e132a8f48c43703f97bd4592}{\#define {\bfseries C\-P\-R\-O\-J}~cproj}\label{group__nfftutil_ga57e51f43e132a8f48c43703f97bd4592}
+
+\item 
+\hypertarget{group__nfftutil_ga65f1cc3008ce2ac0703a06f8da02690a}{\#define {\bfseries C\-S\-Q\-R\-T}~csqrt}\label{group__nfftutil_ga65f1cc3008ce2ac0703a06f8da02690a}
+
+\item 
+\hypertarget{group__nfftutil_ga691d03bd5a78dda7521e1b3131246429}{\#define {\bfseries C\-E\-X\-P}~cexp}\label{group__nfftutil_ga691d03bd5a78dda7521e1b3131246429}
+
+\item 
+\hypertarget{group__nfftutil_ga05785244b5afab2f72b74f922dfb777b}{\#define {\bfseries C\-L\-O\-G}~clog}\label{group__nfftutil_ga05785244b5afab2f72b74f922dfb777b}
+
+\item 
+\hypertarget{group__nfftutil_ga60692aa1f8e46258cc02429b45d5e1b7}{\#define {\bfseries C\-P\-O\-W}~cpow}\label{group__nfftutil_ga60692aa1f8e46258cc02429b45d5e1b7}
+
+\item 
+\hypertarget{group__nfftutil_gabef817045fb244a7b0cfaa027fda94dd}{\#define {\bfseries C\-S\-I\-N}~csin}\label{group__nfftutil_gabef817045fb244a7b0cfaa027fda94dd}
+
+\item 
+\hypertarget{group__nfftutil_gaa3cf97d648ee7ea497576e2f0be28852}{\#define {\bfseries C\-C\-O\-S}~ccos}\label{group__nfftutil_gaa3cf97d648ee7ea497576e2f0be28852}
+
+\item 
+\hypertarget{group__nfftutil_ga436b2519d3fcc3be77916f71433def4e}{\#define {\bfseries C\-T\-A\-N}~ctan}\label{group__nfftutil_ga436b2519d3fcc3be77916f71433def4e}
+
+\item 
+\hypertarget{group__nfftutil_ga4aa0709471711b5e90e934c4d76e1781}{\#define {\bfseries C\-A\-S\-I\-N}~casin}\label{group__nfftutil_ga4aa0709471711b5e90e934c4d76e1781}
+
+\item 
+\hypertarget{group__nfftutil_gaedcb40499f73807d1ee2223da13a568c}{\#define {\bfseries C\-A\-C\-O\-S}~cacos}\label{group__nfftutil_gaedcb40499f73807d1ee2223da13a568c}
+
+\item 
+\hypertarget{group__nfftutil_ga43622f292e7ed4c287ac413439a31281}{\#define {\bfseries C\-A\-T\-A\-N}~catan}\label{group__nfftutil_ga43622f292e7ed4c287ac413439a31281}
+
+\item 
+\hypertarget{group__nfftutil_ga466342fb4f2a91f2faf287703050b9c2}{\#define {\bfseries C\-S\-I\-N\-H}~csinh}\label{group__nfftutil_ga466342fb4f2a91f2faf287703050b9c2}
+
+\item 
+\hypertarget{group__nfftutil_ga46cf28e8b570b2e844d593a752ad9edb}{\#define {\bfseries C\-C\-O\-S\-H}~ccosh}\label{group__nfftutil_ga46cf28e8b570b2e844d593a752ad9edb}
+
+\item 
+\hypertarget{group__nfftutil_ga8ed8778716fcef81b690bea364421cac}{\#define {\bfseries C\-T\-A\-N\-H}~ctanh}\label{group__nfftutil_ga8ed8778716fcef81b690bea364421cac}
+
+\item 
+\hypertarget{group__nfftutil_ga06befc83ce9626b64bdec75d27bf4201}{\#define {\bfseries C\-A\-S\-I\-N\-H}~casinh}\label{group__nfftutil_ga06befc83ce9626b64bdec75d27bf4201}
+
+\item 
+\hypertarget{group__nfftutil_ga6c24f714a1fc6974019c72b16f9c444c}{\#define {\bfseries C\-A\-C\-O\-S\-H}~cacosh}\label{group__nfftutil_ga6c24f714a1fc6974019c72b16f9c444c}
+
+\item 
+\hypertarget{group__nfftutil_ga32c0019bc4667b161f1d15834de4e52e}{\#define {\bfseries C\-A\-T\-A\-N\-H}~catanh}\label{group__nfftutil_ga32c0019bc4667b161f1d15834de4e52e}
+
+\item 
+\hypertarget{group__nfftutil_ga4691b3501d88346ba5d89ed12ecc7433}{\#define {\bfseries M\-A\-N\-T\-\_\-\-D\-I\-G}~D\-B\-L\-\_\-\-M\-A\-N\-T\-\_\-\-D\-I\-G}\label{group__nfftutil_ga4691b3501d88346ba5d89ed12ecc7433}
+
+\item 
+\hypertarget{group__nfftutil_ga7df7879b8a01f36b50c36c526d20e81e}{\#define {\bfseries M\-I\-N\-\_\-\-E\-X\-P}~D\-B\-L\-\_\-\-M\-I\-N\-\_\-\-E\-X\-P}\label{group__nfftutil_ga7df7879b8a01f36b50c36c526d20e81e}
+
+\item 
+\hypertarget{group__nfftutil_gaca29a1e29b43877403defc1a4dbce1cc}{\#define {\bfseries M\-A\-X\-\_\-\-E\-X\-P}~D\-B\-L\-\_\-\-M\-A\-X\-\_\-\-E\-X\-P}\label{group__nfftutil_gaca29a1e29b43877403defc1a4dbce1cc}
+
+\item 
+\hypertarget{group__nfftutil_gae29f9fbc7c7d52e42d3d09c2ea31c874}{\#define {\bfseries F\-L\-T\-R\-O\-U\-N\-D}~0.\-0}\label{group__nfftutil_gae29f9fbc7c7d52e42d3d09c2ea31c874}
+
+\item 
+\hypertarget{group__nfftutil_ga574077f343f01348134a92c3d9a036ca}{\#define {\bfseries R\-\_\-\-R\-A\-D\-I\-X}~F\-L\-T\-\_\-\-R\-A\-D\-I\-X}\label{group__nfftutil_ga574077f343f01348134a92c3d9a036ca}
+
+\item 
+\hypertarget{group__nfftutil_gaae5a7261e9977d666462304e9063ce0e}{\#define {\bfseries I\-I}~\-\_\-\-Complex\-\_\-\-I}\label{group__nfftutil_gaae5a7261e9977d666462304e9063ce0e}
+
+\item 
+\hypertarget{group__nfftutil_gad47d7551760ad4b9bcdd6d1073528fd4}{\#define {\bfseries \-\_\-\-\_\-\-F\-G\-S\-\_\-\-\_\-}~\char`\"{}lg\char`\"{}}\label{group__nfftutil_gad47d7551760ad4b9bcdd6d1073528fd4}
+
+\item 
+\hypertarget{group__nfftutil_gacc093ba588d54404135f7119277fe076}{\#define {\bfseries \-\_\-\-\_\-\-F\-E\-S\-\_\-\-\_\-}~\char`\"{}l\-E\char`\"{}}\label{group__nfftutil_gacc093ba588d54404135f7119277fe076}
+
+\item 
+\hypertarget{group__nfftutil_ga716d978ed60edaeb348c564600c3e1ce}{\#define {\bfseries \-\_\-\-\_\-\-F\-E\-\_\-\-\_\-}~\char`\"{}\% 20.\-16l\-E\char`\"{}}\label{group__nfftutil_ga716d978ed60edaeb348c564600c3e1ce}
+
+\item 
+\hypertarget{group__nfftutil_ga3a7d293c3a0cadb8c6ef38558864a442}{\#define {\bfseries \-\_\-\-\_\-\-F\-I\-\_\-\-\_\-}~\char`\"{}\%lf\char`\"{}}\label{group__nfftutil_ga3a7d293c3a0cadb8c6ef38558864a442}
+
+\item 
+\hypertarget{group__nfftutil_gaf19dd96fcb262b1d1033628a9384b4a2}{\#define {\bfseries \-\_\-\-\_\-\-F\-I\-S\-\_\-\-\_\-}~\char`\"{}lf\char`\"{}}\label{group__nfftutil_gaf19dd96fcb262b1d1033628a9384b4a2}
+
+\item 
+\hypertarget{group__nfftutil_gae09f930fbc2ca0ca87abbd1af30fe712}{\#define {\bfseries \-\_\-\-\_\-\-F\-R\-\_\-\-\_\-}~\char`\"{}\%le\char`\"{}}\label{group__nfftutil_gae09f930fbc2ca0ca87abbd1af30fe712}
+
+\item 
+\hypertarget{group__nfftutil_gaa8cecfc5c5c054d2875c03e77b7be15d}{\#define {\bfseries T\-R\-U\-E}~1}\label{group__nfftutil_gaa8cecfc5c5c054d2875c03e77b7be15d}
+
+\item 
+\hypertarget{group__nfftutil_gaa93f0eb578d23995850d61f7d61c55c1}{\#define {\bfseries F\-A\-L\-S\-E}~0}\label{group__nfftutil_gaa93f0eb578d23995850d61f7d61c55c1}
+
+\item 
+\hypertarget{group__nfftutil_gaed1d524cd23327d86c6d0dfb28c253f9}{\#define {\bfseries \-\_\-\-\_\-\-D\-\_\-\-\_\-}~\char`\"{}\%td\char`\"{}}\label{group__nfftutil_gaed1d524cd23327d86c6d0dfb28c253f9}
+
+\item 
+\hypertarget{group__nfftutil_ga86d500a34c624c2cae56bc25a31b12f3}{\#define \hyperlink{group__nfftutil_ga86d500a34c624c2cae56bc25a31b12f3}{U\-N\-U\-S\-E\-D}(x)~(void)x}\label{group__nfftutil_ga86d500a34c624c2cae56bc25a31b12f3}
+
+\begin{DoxyCompactList}\small\item\em Dummy use of unused parameters to silence compiler warnings. \end{DoxyCompactList}\item 
+\hypertarget{group__nfftutil_ga86d500a34c624c2cae56bc25a31b12f3}{\#define \hyperlink{group__nfftutil_ga86d500a34c624c2cae56bc25a31b12f3}{U\-N\-U\-S\-E\-D}(x)~(void)x}\label{group__nfftutil_ga86d500a34c624c2cae56bc25a31b12f3}
+
+\begin{DoxyCompactList}\small\item\em Dummy use of unused parameters to silence compiler warnings. \end{DoxyCompactList}\item 
+\hypertarget{group__nfftutil_ga0da4ed0cfb39cbfe4114d125bceaccda}{\#define {\bfseries S\-T\-A\-C\-K\-\_\-\-M\-A\-L\-L\-O\-C}(T, p, x)~p = (T)alloca(x)}\label{group__nfftutil_ga0da4ed0cfb39cbfe4114d125bceaccda}
+
+\item 
+\hypertarget{group__nfftutil_ga563f7a6f461e6733fb2b6c2dd1af9d2c}{\#define {\bfseries S\-T\-A\-C\-K\-\_\-\-F\-R\-E\-E}(x)~/$\ast$ Nothing. Cleanup done automatically. $\ast$/}\label{group__nfftutil_ga563f7a6f461e6733fb2b6c2dd1af9d2c}
+
+\item 
+\#define \hyperlink{group__nfftutil_ga05909fc22b7177d1bd50119f40fbb1ec}{T\-I\-C}(a)
+\begin{DoxyCompactList}\small\item\em Timing, method works since the inaccurate timer is updated mostly in the measured function. \end{DoxyCompactList}\item 
+\hypertarget{group__nfftutil_gae1adb0a4004b84a277c80676c8bb6efb}{\#define {\bfseries T\-O\-C}(a)}\label{group__nfftutil_gae1adb0a4004b84a277c80676c8bb6efb}
+
+\item 
+\hypertarget{group__nfftutil_ga165d2a2300a7c50957661f7df0e14ec9}{\#define {\bfseries T\-I\-C\-\_\-\-F\-F\-T\-W}(a)}\label{group__nfftutil_ga165d2a2300a7c50957661f7df0e14ec9}
+
+\item 
+\hypertarget{group__nfftutil_gaa223d5c614418ff5e5f47211b1ef2e22}{\#define {\bfseries T\-O\-C\-\_\-\-F\-F\-T\-W}(a)}\label{group__nfftutil_gaa223d5c614418ff5e5f47211b1ef2e22}
+
+\item 
+\hypertarget{group__nfftutil_ga1be2a738a4a490e5ea5c8e4159e39f5e}{\#define {\bfseries C\-K}(ex)~(void)((ex) $\vert$$\vert$ (Y(assertion\-\_\-failed)(\#ex, \-\_\-\-\_\-\-L\-I\-N\-E\-\_\-\-\_\-, \-\_\-\-\_\-\-F\-I\-L\-E\-\_\-\-\_\-), 0))}\label{group__nfftutil_ga1be2a738a4a490e5ea5c8e4159e39f5e}
+
+\item 
+\hypertarget{group__nfftutil_ga7aad3b42bc1a0788d427a911d1dca138}{\#define {\bfseries A}(ex)~/$\ast$ nothing $\ast$/}\label{group__nfftutil_ga7aad3b42bc1a0788d427a911d1dca138}
+
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__nfftutil_ga7a378e1d420f329b25004d78cbcc508e}{typedef double {\bfseries R}}\label{group__nfftutil_ga7a378e1d420f329b25004d78cbcc508e}
+
+\item 
+\hypertarget{group__nfftutil_gae3672099132a831c594aee424c75aa26}{typedef double \-\_\-\-Complex {\bfseries C}}\label{group__nfftutil_gae3672099132a831c594aee424c75aa26}
+
+\item 
+\hypertarget{group__nfftutil_ga1d10e3f4e0bf45a3d262f566afb235a3}{typedef ptrdiff\-\_\-t {\bfseries I\-N\-T}}\label{group__nfftutil_ga1d10e3f4e0bf45a3d262f566afb235a3}
+
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum {\bfseries float\-\_\-property} \{ \\*
+{\bfseries N\-F\-F\-T\-\_\-\-S\-A\-F\-E\-\_\-\-\_\-\-M\-I\-N} = 1, 
+{\bfseries N\-F\-F\-T\-\_\-\-B\-A\-S\-E} = 2, 
+{\bfseries N\-F\-F\-T\-\_\-\-P\-R\-E\-C\-I\-S\-I\-O\-N} = 3, 
+{\bfseries N\-F\-F\-T\-\_\-\-M\-A\-N\-T\-\_\-\-D\-I\-G} = 4, 
+\\*
+{\bfseries N\-F\-F\-T\-\_\-\-F\-L\-T\-R\-O\-U\-N\-D} = 5, 
+{\bfseries N\-F\-F\-T\-\_\-\-E\-\_\-\-M\-I\-N} = 6, 
+{\bfseries N\-F\-F\-T\-\_\-\-R\-\_\-\-M\-I\-N} = 7, 
+{\bfseries N\-F\-F\-T\-\_\-\-E\-\_\-\-M\-A\-X} = 8, 
+\\*
+{\bfseries N\-F\-F\-T\-\_\-\-R\-\_\-\-M\-A\-X} = 9
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__nfftutil_gaf6947a72a3f08719875bc853b382ea3f}{I\-N\-T {\bfseries nfft\-\_\-m2\-K} (const I\-N\-T m)}\label{group__nfftutil_gaf6947a72a3f08719875bc853b382ea3f}
+
+\item 
+R \hyperlink{group__nfftutil_ga6991b7df7efdecc93da6e4426e106d67}{nfft\-\_\-elapsed\-\_\-seconds} (ticks t1, ticks t0)
+\begin{DoxyCompactList}\small\item\em Return number of elapsed seconds between two time points. \end{DoxyCompactList}\item 
+\hypertarget{group__nfftutil_ga803eb48489ddded05761f2a95b637228}{R {\bfseries nfft\-\_\-sinc} (R x)}\label{group__nfftutil_ga803eb48489ddded05761f2a95b637228}
+
+\item 
+\hypertarget{group__nfftutil_gac8ee15eb61c6f8b2f2d6df870a20903b}{R {\bfseries nfft\-\_\-lambda} (R z, R eps)}\label{group__nfftutil_gac8ee15eb61c6f8b2f2d6df870a20903b}
+
+\item 
+\hypertarget{group__nfftutil_gad2926599dee8e4bbb3146822e949a98a}{R {\bfseries nfft\-\_\-lambda2} (R mu, R nu)}\label{group__nfftutil_gad2926599dee8e4bbb3146822e949a98a}
+
+\item 
+\hypertarget{group__nfftutil_ga936736013d3dae6745d4af77732f887b}{R {\bfseries nfft\-\_\-bessel\-\_\-i0} (R x)}\label{group__nfftutil_ga936736013d3dae6745d4af77732f887b}
+
+\item 
+\hypertarget{group__nfftutil_gac484b19af95ed6c342b294e4f576e496}{R {\bfseries nfft\-\_\-bsplines} (const I\-N\-T, const R x)}\label{group__nfftutil_gac484b19af95ed6c342b294e4f576e496}
+
+\item 
+\hypertarget{group__nfftutil_ga5fc13f95636992eb63459e447af2497f}{R {\bfseries nfft\-\_\-float\-\_\-property} (float\-\_\-property)}\label{group__nfftutil_ga5fc13f95636992eb63459e447af2497f}
+
+\item 
+\hypertarget{group__nfftutil_gaca1a5db966f47347a11b195064438d64}{R {\bfseries nfft\-\_\-prod\-\_\-real} (R $\ast$vec, I\-N\-T d)}\label{group__nfftutil_gaca1a5db966f47347a11b195064438d64}
+
+\item 
+\hypertarget{group__nfftutil_ga0d10b4e7f62f2f59a3dd1c6572f7c745}{I\-N\-T {\bfseries nfft\-\_\-log2i} (const I\-N\-T m)}\label{group__nfftutil_ga0d10b4e7f62f2f59a3dd1c6572f7c745}
+
+\item 
+\hypertarget{group__nfftutil_ga10f55db3a6476cdfa1c36ff07fc1568f}{void {\bfseries nfft\-\_\-next\-\_\-power\-\_\-of\-\_\-2\-\_\-exp} (const I\-N\-T N, I\-N\-T $\ast$N2, I\-N\-T $\ast$t)}\label{group__nfftutil_ga10f55db3a6476cdfa1c36ff07fc1568f}
+
+\item 
+\hypertarget{group__nfftutil_gabfd6cf111d6285d0bd12b4dd648a4bc8}{void {\bfseries nfft\-\_\-next\-\_\-power\-\_\-of\-\_\-2\-\_\-exp\-\_\-int} (const int N, int $\ast$N2, int $\ast$t)}\label{group__nfftutil_gabfd6cf111d6285d0bd12b4dd648a4bc8}
+
+\item 
+\hypertarget{group__nfftutil_ga260526a350cdcd654dd0c1d4ee4b118f}{R {\bfseries nfft\-\_\-error\-\_\-l\-\_\-infty\-\_\-double} (const R $\ast$x, const R $\ast$y, const I\-N\-T n)}\label{group__nfftutil_ga260526a350cdcd654dd0c1d4ee4b118f}
+
+\item 
+\hypertarget{group__nfftutil_ga091f85ebad9ae1209ac8461be9e6df05}{R {\bfseries nfft\-\_\-error\-\_\-l\-\_\-infty\-\_\-1\-\_\-double} (const R $\ast$x, const R $\ast$y, const I\-N\-T n, const R $\ast$z, const I\-N\-T m)}\label{group__nfftutil_ga091f85ebad9ae1209ac8461be9e6df05}
+
+\item 
+\hypertarget{group__nfftutil_gaf0f39ca69fab6b689e55b5d203318472}{R {\bfseries nfft\-\_\-error\-\_\-l\-\_\-2\-\_\-complex} (const C $\ast$x, const C $\ast$y, const I\-N\-T n)}\label{group__nfftutil_gaf0f39ca69fab6b689e55b5d203318472}
+
+\item 
+\hypertarget{group__nfftutil_ga887b020a765b537139a758a0b7a69323}{R {\bfseries nfft\-\_\-error\-\_\-l\-\_\-2\-\_\-double} (const R $\ast$x, const R $\ast$y, const I\-N\-T n)}\label{group__nfftutil_ga887b020a765b537139a758a0b7a69323}
+
+\item 
+\hypertarget{group__nfftutil_gab83a1d69a2627b717f2847ef95dbd18c}{void {\bfseries nfft\-\_\-sort\-\_\-node\-\_\-indices\-\_\-radix\-\_\-msdf} (I\-N\-T n, I\-N\-T $\ast$keys0, I\-N\-T $\ast$keys1, I\-N\-T rhigh)}\label{group__nfftutil_gab83a1d69a2627b717f2847ef95dbd18c}
+
+\item 
+\hypertarget{group__nfftutil_ga216ecc3b92623559712dc43ff4e20c50}{void {\bfseries nfft\-\_\-sort\-\_\-node\-\_\-indices\-\_\-radix\-\_\-lsdf} (I\-N\-T n, I\-N\-T $\ast$keys0, I\-N\-T $\ast$keys1, I\-N\-T rhigh)}\label{group__nfftutil_ga216ecc3b92623559712dc43ff4e20c50}
+
+\item 
+\hypertarget{group__nfftutil_ga4b6ec9a276de323bfbd84df3b24225d6}{void {\bfseries nfft\-\_\-assertion\-\_\-failed} (const char $\ast$s, int line, const char $\ast$file)}\label{group__nfftutil_ga4b6ec9a276de323bfbd84df3b24225d6}
+
+\item 
+R \hyperlink{group__nfftutil_ga3a8e45549ed46ebbac636756becdc927}{nfft\-\_\-dot\-\_\-double} (R $\ast$x, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the inner/dot product $x^H x$. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_ga77cbe24e3bd4f770ef8161c3570dbfe2}{nfft\-\_\-dot\-\_\-w\-\_\-complex} (C $\ast$x, R $\ast$w, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the weighted inner/dot product $x^H (w \odot x)$. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_ga6f531fc19029c1ac2bdc4310f3556e83}{nfft\-\_\-dot\-\_\-w\-\_\-double} (R $\ast$x, R $\ast$w, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the weighted inner/dot product $x^H (w \odot x)$. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_gabd3c4af5172820c11e647dff955f8ff6}{nfft\-\_\-dot\-\_\-w\-\_\-w2\-\_\-complex} (C $\ast$x, R $\ast$w, R $\ast$w2, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the weighted inner/dot product $x^H (w\odot w2\odot w2 \odot x)$. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_gaa4fa87321bb4eb9b3a9958bee41af236}{nfft\-\_\-dot\-\_\-w2\-\_\-complex} (C $\ast$x, R $\ast$w2, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the weighted inner/dot product $x^H (w2\odot w2 \odot x)$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gae3b3665512df83e5872f8472ca20140a}{nfft\-\_\-cp\-\_\-complex} (C $\ast$x, C $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Copies $x \leftarrow y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_ga67c605dd3279d411dba44fb23d8bf558}{nfft\-\_\-cp\-\_\-double} (R $\ast$x, R $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Copies $x \leftarrow y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gab2479a7efb636f28b9b956d22fcf3309}{nfft\-\_\-cp\-\_\-a\-\_\-complex} (C $\ast$x, R a, C $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Copies $x \leftarrow a y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_ga309919b444a3326ecc4da035803830d7}{nfft\-\_\-cp\-\_\-a\-\_\-double} (R $\ast$x, R a, R $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Copies $x \leftarrow a y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_ga0c722ce70d8678ad9c75f37b446a2684}{nfft\-\_\-cp\-\_\-w\-\_\-complex} (C $\ast$x, R $\ast$w, C $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Copies $x \leftarrow w\odot y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gab5bafeb90780eba0342bc4ba3890cb08}{nfft\-\_\-cp\-\_\-w\-\_\-double} (R $\ast$x, R $\ast$w, R $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Copies $x \leftarrow w\odot y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_ga199963decfcccd0038f96eb236cf6b36}{nfft\-\_\-upd\-\_\-axpy\-\_\-double} (R $\ast$x, R a, R $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_ga6c9f09e54d57b4f85a5533e7a271133d}{nfft\-\_\-upd\-\_\-xpay\-\_\-complex} (C $\ast$x, R a, C $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow x + a y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gac340fb9c1e5ab1a7060ad418590bc586}{nfft\-\_\-upd\-\_\-xpay\-\_\-double} (R $\ast$x, R a, R $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow x + a y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gac52805b6e99ef2d83bcdcb0804a15237}{nfft\-\_\-upd\-\_\-axpby\-\_\-complex} (C $\ast$x, R a, C $\ast$y, R b, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + b y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_ga3ac1abfac87bda56f00b39254aa83f20}{nfft\-\_\-upd\-\_\-axpby\-\_\-double} (R $\ast$x, R a, R $\ast$y, R b, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + b y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gaaa82b892bd26ed940e7f0138f47a9607}{nfft\-\_\-upd\-\_\-xpawy\-\_\-complex} (C $\ast$x, R a, R $\ast$w, C $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow x + a w\odot y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gab1de8878b4b8e5016d0ec115e76b1941}{nfft\-\_\-upd\-\_\-xpawy\-\_\-double} (R $\ast$x, R a, R $\ast$w, R $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow x + a w\odot y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_ga1a7d3fc56e776544d61c1ba16ff503ab}{nfft\-\_\-upd\-\_\-axpwy\-\_\-complex} (C $\ast$x, R a, R $\ast$w, C $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + w\odot y$. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfftutil_gaa9e49e004f4feac29f0524a1fd91c8a2}{nfft\-\_\-upd\-\_\-axpwy\-\_\-double} (R $\ast$x, R a, R $\ast$w, R $\ast$y, I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + w\odot y$. \end{DoxyCompactList}\item 
+\hypertarget{group__nfftutil_ga3737d0c792171aaae2e35f68fb8324a7}{void {\bfseries nfft\-\_\-voronoi\-\_\-weights\-\_\-1d} (R $\ast$w, R $\ast$x, const I\-N\-T M)}\label{group__nfftutil_ga3737d0c792171aaae2e35f68fb8324a7}
+
+\item 
+\hypertarget{group__nfftutil_ga96a06587202a96f85ddc3c9c157bd527}{R \hyperlink{group__nfftutil_ga96a06587202a96f85ddc3c9c157bd527}{nfft\-\_\-modified\-\_\-fejer} (const I\-N\-T N, const I\-N\-T kk)}\label{group__nfftutil_ga96a06587202a96f85ddc3c9c157bd527}
+
+\begin{DoxyCompactList}\small\item\em Compute damping factor for modified Fejer kernel\-: /f\$\{2\}\{N\}(1-\/\{$\vert$2k+1$\vert$\}\{N\})/f\$. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_gaf451ea819919e655c8c969f1bb77e48a}{nfft\-\_\-modified\-\_\-jackson2} (const I\-N\-T N, const I\-N\-T kk)
+\begin{DoxyCompactList}\small\item\em Compute damping factor for modified Jackson kernel. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_ga3665807727074424012cd35eed12ab97}{nfft\-\_\-modified\-\_\-jackson4} (const I\-N\-T N, const I\-N\-T kk)
+\begin{DoxyCompactList}\small\item\em Compute damping factor for modified generalised Jackson kernel. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_ga6ff9fccb583a5892a56d8cad99282ce9}{nfft\-\_\-modified\-\_\-sobolev} (const R mu, const I\-N\-T kk)
+\begin{DoxyCompactList}\small\item\em Compute damping factor for modified Sobolev kernel. \end{DoxyCompactList}\item 
+R \hyperlink{group__nfftutil_gaa9f833b1478690f3cbaa8aac906aa7f7}{nfft\-\_\-modified\-\_\-multiquadric} (const R mu, const R c, const I\-N\-T kk)
+\begin{DoxyCompactList}\small\item\em Comput damping factor for modified multiquadric kernel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This module implements frequently used utility functions. In particular, this includes simple measurement of resources, evaluation of window functions, vector routines for basic linear algebra tasks, and computation of weights for the inverse transforms. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{group__nfftutil_ga18cf66b4ff69fd69cf3b8291c629e80b}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!C\-S\-W\-A\-P@{C\-S\-W\-A\-P}}
+\index{C\-S\-W\-A\-P@{C\-S\-W\-A\-P}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{C\-S\-W\-A\-P}]{\setlength{\rightskip}{0pt plus 5cm}\#define C\-S\-W\-A\-P(
+\begin{DoxyParamCaption}
+\item[{}]{x, }
+\item[{}]{y}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga18cf66b4ff69fd69cf3b8291c629e80b}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\{C* NFFT\_SWAP\_temp\_\_; \(\backslash\)
+  NFFT\_SWAP\_temp\_\_=(x); (x)=(y); (y)=NFFT\_SWAP\_temp\_\_;\}
+\end{DoxyCode}
+
+
+Swap two vectors. 
+
+
+
+Definition at line 139 of file infft.\-h.
+
+
+
+Referenced by main(), solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgnr\-\_\-complex(), solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-landweber\-\_\-complex(), solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-steepest\-\_\-descent\-\_\-complex(), and taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{group__nfftutil_ga134a708e91eb0967369f42de15be4c85}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!R\-S\-W\-A\-P@{R\-S\-W\-A\-P}}
+\index{R\-S\-W\-A\-P@{R\-S\-W\-A\-P}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{R\-S\-W\-A\-P}]{\setlength{\rightskip}{0pt plus 5cm}\#define R\-S\-W\-A\-P(
+\begin{DoxyParamCaption}
+\item[{}]{x, }
+\item[{}]{y}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga134a708e91eb0967369f42de15be4c85}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\{R* NFFT\_SWAP\_temp\_\_; NFFT\_SWAP\_temp\_\_=(x); \(\backslash\)
+  (x)=(y); (y)=NFFT\_SWAP\_temp\_\_;\}
+\end{DoxyCode}
+
+
+Swap two vectors. 
+
+
+
+Definition at line 143 of file infft.\-h.
+
+
+
+Referenced by solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgnr\-\_\-double(), solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-landweber\-\_\-double(), and solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-steepest\-\_\-descent\-\_\-double().
+
+\hypertarget{group__nfftutil_ga33e59257f6143bb5c0a9d9a5e31307f0}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!P\-H\-I@{P\-H\-I}}
+\index{P\-H\-I@{P\-H\-I}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{P\-H\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-H\-I(
+\begin{DoxyParamCaption}
+\item[{}]{n, }
+\item[{}]{x, }
+\item[{}]{d}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga33e59257f6143bb5c0a9d9a5e31307f0}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+(  (((R)(ths->m) * (R)(ths->m) - (x) * (R)(n) * (x) * (R)(n)) > K(0.0)) \(\backslash\)
+                      ?   SINH(ths->b[d] * SQRT((R)(ths->m) * (R)(ths->m) - (x) * (R)(n) * (x) * (R)(n))) \(\backslash\)
+                        / (KPI * SQRT((R)(ths->m) * (R)(ths->m) - (x) * (R)(n) * (x) * (R)(n))) \(\backslash\)
+                      :   ((((R)(ths->m) * (R)(ths->m) - (x) * (R)(n) * (x) * (R)(n)) < K(0.0)) \(\backslash\)
+                        ?   SIN(ths->b[d] * SQRT((x) * (R)(n) * (x) * (R)(n) - (R)(ths->m) * (R)(ths->m))) 
+      \(\backslash\)
+                          / (KPI * SQRT((x) * (R)(n) * (x) * (R)(n) - (R)(ths->m) * (R)(ths->m))) \(\backslash\)
+                        : ths->b[d] / KPI))
+\end{DoxyCode}
+
+
+Definition at line 209 of file infft.\-h.
+
+\hypertarget{group__nfftutil_gaa6e5c41e21d1dc3f0efc580ba782b245}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-I\-N\-I\-T@{W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-I\-N\-I\-T}}
+\index{W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-I\-N\-I\-T@{W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-I\-N\-I\-T}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-I\-N\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define W\-I\-N\-D\-O\-W\-\_\-\-H\-E\-L\-P\-\_\-\-I\-N\-I\-T}}\label{group__nfftutil_gaa6e5c41e21d1dc3f0efc580ba782b245}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\{ \(\backslash\)
+      int WINDOW\_idx; \(\backslash\)
+      ths->b = (R*) Y(malloc)((size\_t)(ths->d) * \textcolor{keyword}{sizeof}(R)); \(\backslash\)
+      for (WINDOW\_idx = 0; WINDOW\_idx < ths->d; WINDOW\_idx++) \(\backslash\)
+        ths->b[WINDOW\_idx] = (KPI * (K(2.0) - K(1.0) / ths->sigma[WINDOW\_idx])); \(\backslash\)
+  \}
+\end{DoxyCode}
+
+
+Definition at line 216 of file infft.\-h.
+
+\hypertarget{group__nfftutil_ga05909fc22b7177d1bd50119f40fbb1ec}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!T\-I\-C@{T\-I\-C}}
+\index{T\-I\-C@{T\-I\-C}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{T\-I\-C}]{\setlength{\rightskip}{0pt plus 5cm}\#define T\-I\-C(
+\begin{DoxyParamCaption}
+\item[{}]{a}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga05909fc22b7177d1bd50119f40fbb1ec}
+
+
+Timing, method works since the inaccurate timer is updated mostly in the measured function. 
+
+For small times not every call of the measured function will also produce a 'unit' time step. Measuring the fftw might cause a wrong output vector due to the repeated ffts. 
+
+Definition at line 1397 of file infft.\-h.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{group__nfftutil_ga6991b7df7efdecc93da6e4426e106d67}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-elapsed\-\_\-seconds@{nfft\-\_\-elapsed\-\_\-seconds}}
+\index{nfft\-\_\-elapsed\-\_\-seconds@{nfft\-\_\-elapsed\-\_\-seconds}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-elapsed\-\_\-seconds}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-elapsed\-\_\-seconds (
+\begin{DoxyParamCaption}
+\item[{ticks}]{t1, }
+\item[{ticks}]{t0}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga6991b7df7efdecc93da6e4426e106d67}
+
+
+Return number of elapsed seconds between two time points. 
+
+
+
+Referenced by fastsum\-\_\-precompute\-\_\-source\-\_\-nodes(), fastsum\-\_\-trafo(), main(), nfsft\-\_\-adjoint(), and nfsft\-\_\-trafo().
+
+\hypertarget{group__nfftutil_ga3a8e45549ed46ebbac636756becdc927}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-dot\-\_\-double@{nfft\-\_\-dot\-\_\-double}}
+\index{nfft\-\_\-dot\-\_\-double@{nfft\-\_\-dot\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-dot\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-dot\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga3a8e45549ed46ebbac636756becdc927}
+
+
+Computes the inner/dot product $x^H x$. 
+
+\hypertarget{group__nfftutil_ga77cbe24e3bd4f770ef8161c3570dbfe2}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-dot\-\_\-w\-\_\-complex@{nfft\-\_\-dot\-\_\-w\-\_\-complex}}
+\index{nfft\-\_\-dot\-\_\-w\-\_\-complex@{nfft\-\_\-dot\-\_\-w\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-dot\-\_\-w\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-dot\-\_\-w\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R $\ast$}]{w, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga77cbe24e3bd4f770ef8161c3570dbfe2}
+
+
+Computes the weighted inner/dot product $x^H (w \odot x)$. 
+
+\hypertarget{group__nfftutil_ga6f531fc19029c1ac2bdc4310f3556e83}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-dot\-\_\-w\-\_\-double@{nfft\-\_\-dot\-\_\-w\-\_\-double}}
+\index{nfft\-\_\-dot\-\_\-w\-\_\-double@{nfft\-\_\-dot\-\_\-w\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-dot\-\_\-w\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-dot\-\_\-w\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R $\ast$}]{w, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga6f531fc19029c1ac2bdc4310f3556e83}
+
+
+Computes the weighted inner/dot product $x^H (w \odot x)$. 
+
+\hypertarget{group__nfftutil_gabd3c4af5172820c11e647dff955f8ff6}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-dot\-\_\-w\-\_\-w2\-\_\-complex@{nfft\-\_\-dot\-\_\-w\-\_\-w2\-\_\-complex}}
+\index{nfft\-\_\-dot\-\_\-w\-\_\-w2\-\_\-complex@{nfft\-\_\-dot\-\_\-w\-\_\-w2\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-dot\-\_\-w\-\_\-w2\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-dot\-\_\-w\-\_\-w2\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R $\ast$}]{w, }
+\item[{R $\ast$}]{w2, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gabd3c4af5172820c11e647dff955f8ff6}
+
+
+Computes the weighted inner/dot product $x^H (w\odot w2\odot w2 \odot x)$. 
+
+\hypertarget{group__nfftutil_gaa4fa87321bb4eb9b3a9958bee41af236}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-dot\-\_\-w2\-\_\-complex@{nfft\-\_\-dot\-\_\-w2\-\_\-complex}}
+\index{nfft\-\_\-dot\-\_\-w2\-\_\-complex@{nfft\-\_\-dot\-\_\-w2\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-dot\-\_\-w2\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-dot\-\_\-w2\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R $\ast$}]{w2, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gaa4fa87321bb4eb9b3a9958bee41af236}
+
+
+Computes the weighted inner/dot product $x^H (w2\odot w2 \odot x)$. 
+
+\hypertarget{group__nfftutil_gae3b3665512df83e5872f8472ca20140a}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-cp\-\_\-complex@{nfft\-\_\-cp\-\_\-complex}}
+\index{nfft\-\_\-cp\-\_\-complex@{nfft\-\_\-cp\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-cp\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-cp\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{C $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gae3b3665512df83e5872f8472ca20140a}
+
+
+Copies $x \leftarrow y$. 
+
+\hypertarget{group__nfftutil_ga67c605dd3279d411dba44fb23d8bf558}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-cp\-\_\-double@{nfft\-\_\-cp\-\_\-double}}
+\index{nfft\-\_\-cp\-\_\-double@{nfft\-\_\-cp\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-cp\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-cp\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga67c605dd3279d411dba44fb23d8bf558}
+
+
+Copies $x \leftarrow y$. 
+
+\hypertarget{group__nfftutil_gab2479a7efb636f28b9b956d22fcf3309}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-cp\-\_\-a\-\_\-complex@{nfft\-\_\-cp\-\_\-a\-\_\-complex}}
+\index{nfft\-\_\-cp\-\_\-a\-\_\-complex@{nfft\-\_\-cp\-\_\-a\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-cp\-\_\-a\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-cp\-\_\-a\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{C $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gab2479a7efb636f28b9b956d22fcf3309}
+
+
+Copies $x \leftarrow a y$. 
+
+\hypertarget{group__nfftutil_ga309919b444a3326ecc4da035803830d7}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-cp\-\_\-a\-\_\-double@{nfft\-\_\-cp\-\_\-a\-\_\-double}}
+\index{nfft\-\_\-cp\-\_\-a\-\_\-double@{nfft\-\_\-cp\-\_\-a\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-cp\-\_\-a\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-cp\-\_\-a\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga309919b444a3326ecc4da035803830d7}
+
+
+Copies $x \leftarrow a y$. 
+
+\hypertarget{group__nfftutil_ga0c722ce70d8678ad9c75f37b446a2684}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-cp\-\_\-w\-\_\-complex@{nfft\-\_\-cp\-\_\-w\-\_\-complex}}
+\index{nfft\-\_\-cp\-\_\-w\-\_\-complex@{nfft\-\_\-cp\-\_\-w\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-cp\-\_\-w\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-cp\-\_\-w\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R $\ast$}]{w, }
+\item[{C $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga0c722ce70d8678ad9c75f37b446a2684}
+
+
+Copies $x \leftarrow w\odot y$. 
+
+\hypertarget{group__nfftutil_gab5bafeb90780eba0342bc4ba3890cb08}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-cp\-\_\-w\-\_\-double@{nfft\-\_\-cp\-\_\-w\-\_\-double}}
+\index{nfft\-\_\-cp\-\_\-w\-\_\-double@{nfft\-\_\-cp\-\_\-w\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-cp\-\_\-w\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-cp\-\_\-w\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R $\ast$}]{w, }
+\item[{R $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gab5bafeb90780eba0342bc4ba3890cb08}
+
+
+Copies $x \leftarrow w\odot y$. 
+
+\hypertarget{group__nfftutil_ga199963decfcccd0038f96eb236cf6b36}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-axpy\-\_\-double@{nfft\-\_\-upd\-\_\-axpy\-\_\-double}}
+\index{nfft\-\_\-upd\-\_\-axpy\-\_\-double@{nfft\-\_\-upd\-\_\-axpy\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-axpy\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-axpy\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga199963decfcccd0038f96eb236cf6b36}
+
+
+Updates $x \leftarrow a x + y$. 
+
+\hypertarget{group__nfftutil_ga6c9f09e54d57b4f85a5533e7a271133d}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-xpay\-\_\-complex@{nfft\-\_\-upd\-\_\-xpay\-\_\-complex}}
+\index{nfft\-\_\-upd\-\_\-xpay\-\_\-complex@{nfft\-\_\-upd\-\_\-xpay\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-xpay\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-xpay\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{C $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga6c9f09e54d57b4f85a5533e7a271133d}
+
+
+Updates $x \leftarrow x + a y$. 
+
+\hypertarget{group__nfftutil_gac340fb9c1e5ab1a7060ad418590bc586}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-xpay\-\_\-double@{nfft\-\_\-upd\-\_\-xpay\-\_\-double}}
+\index{nfft\-\_\-upd\-\_\-xpay\-\_\-double@{nfft\-\_\-upd\-\_\-xpay\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-xpay\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-xpay\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gac340fb9c1e5ab1a7060ad418590bc586}
+
+
+Updates $x \leftarrow x + a y$. 
+
+\hypertarget{group__nfftutil_gac52805b6e99ef2d83bcdcb0804a15237}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-axpby\-\_\-complex@{nfft\-\_\-upd\-\_\-axpby\-\_\-complex}}
+\index{nfft\-\_\-upd\-\_\-axpby\-\_\-complex@{nfft\-\_\-upd\-\_\-axpby\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-axpby\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-axpby\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{C $\ast$}]{y, }
+\item[{R}]{b, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gac52805b6e99ef2d83bcdcb0804a15237}
+
+
+Updates $x \leftarrow a x + b y$. 
+
+\hypertarget{group__nfftutil_ga3ac1abfac87bda56f00b39254aa83f20}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-axpby\-\_\-double@{nfft\-\_\-upd\-\_\-axpby\-\_\-double}}
+\index{nfft\-\_\-upd\-\_\-axpby\-\_\-double@{nfft\-\_\-upd\-\_\-axpby\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-axpby\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-axpby\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{y, }
+\item[{R}]{b, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga3ac1abfac87bda56f00b39254aa83f20}
+
+
+Updates $x \leftarrow a x + b y$. 
+
+\hypertarget{group__nfftutil_gaaa82b892bd26ed940e7f0138f47a9607}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-xpawy\-\_\-complex@{nfft\-\_\-upd\-\_\-xpawy\-\_\-complex}}
+\index{nfft\-\_\-upd\-\_\-xpawy\-\_\-complex@{nfft\-\_\-upd\-\_\-xpawy\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-xpawy\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-xpawy\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{w, }
+\item[{C $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gaaa82b892bd26ed940e7f0138f47a9607}
+
+
+Updates $x \leftarrow x + a w\odot y$. 
+
+\hypertarget{group__nfftutil_gab1de8878b4b8e5016d0ec115e76b1941}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-xpawy\-\_\-double@{nfft\-\_\-upd\-\_\-xpawy\-\_\-double}}
+\index{nfft\-\_\-upd\-\_\-xpawy\-\_\-double@{nfft\-\_\-upd\-\_\-xpawy\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-xpawy\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-xpawy\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{w, }
+\item[{R $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gab1de8878b4b8e5016d0ec115e76b1941}
+
+
+Updates $x \leftarrow x + a w\odot y$. 
+
+\hypertarget{group__nfftutil_ga1a7d3fc56e776544d61c1ba16ff503ab}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-axpwy\-\_\-complex@{nfft\-\_\-upd\-\_\-axpwy\-\_\-complex}}
+\index{nfft\-\_\-upd\-\_\-axpwy\-\_\-complex@{nfft\-\_\-upd\-\_\-axpwy\-\_\-complex}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-axpwy\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-axpwy\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{C $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{w, }
+\item[{C $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga1a7d3fc56e776544d61c1ba16ff503ab}
+
+
+Updates $x \leftarrow a x + w\odot y$. 
+
+\hypertarget{group__nfftutil_gaa9e49e004f4feac29f0524a1fd91c8a2}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-upd\-\_\-axpwy\-\_\-double@{nfft\-\_\-upd\-\_\-axpwy\-\_\-double}}
+\index{nfft\-\_\-upd\-\_\-axpwy\-\_\-double@{nfft\-\_\-upd\-\_\-axpwy\-\_\-double}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-upd\-\_\-axpwy\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-axpwy\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{R $\ast$}]{x, }
+\item[{R}]{a, }
+\item[{R $\ast$}]{w, }
+\item[{R $\ast$}]{y, }
+\item[{I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gaa9e49e004f4feac29f0524a1fd91c8a2}
+
+
+Updates $x \leftarrow a x + w\odot y$. 
+
+\hypertarget{group__nfftutil_gaf451ea819919e655c8c969f1bb77e48a}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-modified\-\_\-jackson2@{nfft\-\_\-modified\-\_\-jackson2}}
+\index{nfft\-\_\-modified\-\_\-jackson2@{nfft\-\_\-modified\-\_\-jackson2}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-modified\-\_\-jackson2}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-modified\-\_\-jackson2 (
+\begin{DoxyParamCaption}
+\item[{const I\-N\-T}]{N, }
+\item[{const I\-N\-T}]{kk}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gaf451ea819919e655c8c969f1bb77e48a}
+
+
+Compute damping factor for modified Jackson kernel. 
+
+\hypertarget{group__nfftutil_ga3665807727074424012cd35eed12ab97}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-modified\-\_\-jackson4@{nfft\-\_\-modified\-\_\-jackson4}}
+\index{nfft\-\_\-modified\-\_\-jackson4@{nfft\-\_\-modified\-\_\-jackson4}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-modified\-\_\-jackson4}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-modified\-\_\-jackson4 (
+\begin{DoxyParamCaption}
+\item[{const I\-N\-T}]{N, }
+\item[{const I\-N\-T}]{kk}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga3665807727074424012cd35eed12ab97}
+
+
+Compute damping factor for modified generalised Jackson kernel. 
+
+\hypertarget{group__nfftutil_ga6ff9fccb583a5892a56d8cad99282ce9}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-modified\-\_\-sobolev@{nfft\-\_\-modified\-\_\-sobolev}}
+\index{nfft\-\_\-modified\-\_\-sobolev@{nfft\-\_\-modified\-\_\-sobolev}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-modified\-\_\-sobolev}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-modified\-\_\-sobolev (
+\begin{DoxyParamCaption}
+\item[{const R}]{mu, }
+\item[{const I\-N\-T}]{kk}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_ga6ff9fccb583a5892a56d8cad99282ce9}
+
+
+Compute damping factor for modified Sobolev kernel. 
+
+\hypertarget{group__nfftutil_gaa9f833b1478690f3cbaa8aac906aa7f7}{\index{Util -\/ Auxiliary functions@{Util -\/ Auxiliary functions}!nfft\-\_\-modified\-\_\-multiquadric@{nfft\-\_\-modified\-\_\-multiquadric}}
+\index{nfft\-\_\-modified\-\_\-multiquadric@{nfft\-\_\-modified\-\_\-multiquadric}!Util - Auxiliary functions@{Util -\/ Auxiliary functions}}
+\subsubsection[{nfft\-\_\-modified\-\_\-multiquadric}]{\setlength{\rightskip}{0pt plus 5cm}R nfft\-\_\-modified\-\_\-multiquadric (
+\begin{DoxyParamCaption}
+\item[{const R}]{mu, }
+\item[{const R}]{c, }
+\item[{const I\-N\-T}]{kk}
+\end{DoxyParamCaption}
+)}}\label{group__nfftutil_gaa9f833b1478690f3cbaa8aac906aa7f7}
+
+
+Comput damping factor for modified multiquadric kernel. 
+

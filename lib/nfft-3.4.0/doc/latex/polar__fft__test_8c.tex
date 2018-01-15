@@ -1,0 +1,42 @@
+\hypertarget{polar__fft__test_8c}{\section{polar\-\_\-fft\-\_\-test.\-c File Reference}
+\label{polar__fft__test_8c}\index{polar\-\_\-fft\-\_\-test.\-c@{polar\-\_\-fft\-\_\-test.\-c}}
+}
+
+
+N\-F\-F\-T-\/based polar F\-F\-T and inverse.  
+
+
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$complex.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}nfft3mp.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{group__applications__polarFFT__polar_ga39e0090863b1c4213a9d21f4a19c3418}{polar\-\_\-grid} (int T, int S, N\-F\-F\-T\-\_\-\-R $\ast$x, N\-F\-F\-T\-\_\-\-R $\ast$w)
+\begin{DoxyCompactList}\small\item\em Generates the points $x_{t,j}$ with weights $w_{t,j}$ for the polar grid with $T$ angles and $R$ offsets. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__polar_ga184bf7ebf72e4716eaabdc2817cd6c77}{static int \hyperlink{group__applications__polarFFT__polar_ga184bf7ebf72e4716eaabdc2817cd6c77}{polar\-\_\-dft} (N\-F\-F\-T\-\_\-\-C $\ast$f\-\_\-hat, int N\-N, N\-F\-F\-T\-\_\-\-C $\ast$f, int T, int S, int m)}\label{group__applications__polarFFT__polar_ga184bf7ebf72e4716eaabdc2817cd6c77}
+
+\begin{DoxyCompactList}\small\item\em discrete polar F\-F\-T \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__polar_ga283f1b649bf35ef656cfcd1d6dd257cd}{static int \hyperlink{group__applications__polarFFT__polar_ga283f1b649bf35ef656cfcd1d6dd257cd}{polar\-\_\-fft} (N\-F\-F\-T\-\_\-\-C $\ast$f\-\_\-hat, int N\-N, N\-F\-F\-T\-\_\-\-C $\ast$f, int T, int S, int m)}\label{group__applications__polarFFT__polar_ga283f1b649bf35ef656cfcd1d6dd257cd}
+
+\begin{DoxyCompactList}\small\item\em N\-F\-F\-T-\/based polar F\-F\-T. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__polar_gaa3f736467a4ceb523b105c683f382d1f}{static int \hyperlink{group__applications__polarFFT__polar_gaa3f736467a4ceb523b105c683f382d1f}{inverse\-\_\-polar\-\_\-fft} (N\-F\-F\-T\-\_\-\-C $\ast$f, int T, int S, N\-F\-F\-T\-\_\-\-C $\ast$f\-\_\-hat, int N\-N, int \hyperlink{group__applications__fastsum_ga6bc571f685f894e15b83a848a0a30faa}{max\-\_\-i}, int m)}\label{group__applications__polarFFT__polar_gaa3f736467a4ceb523b105c683f382d1f}
+
+\begin{DoxyCompactList}\small\item\em inverse N\-F\-F\-T-\/based polar F\-F\-T \end{DoxyCompactList}\item 
+\hypertarget{group__applications__polarFFT__polar_ga3c04138a5bfe5d72780bb7e82a18e627}{int \hyperlink{group__applications__polarFFT__polar_ga3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)}\label{group__applications__polarFFT__polar_ga3c04138a5bfe5d72780bb7e82a18e627}
+
+\begin{DoxyCompactList}\small\item\em test program for various parameters \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+N\-F\-F\-T-\/based polar F\-F\-T and inverse. Computes the N\-F\-F\-T-\/based polar F\-F\-T and its inverse for various parameters. \begin{DoxyAuthor}{Author}
+Markus Fenn 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2006 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{polar__fft__test_8c_source}{polar\-\_\-fft\-\_\-test.\-c}.
+

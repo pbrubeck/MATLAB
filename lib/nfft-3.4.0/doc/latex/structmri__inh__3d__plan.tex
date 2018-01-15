@@ -1,0 +1,130 @@
+\hypertarget{structmri__inh__3d__plan}{\section{mri\-\_\-inh\-\_\-3d\-\_\-plan Struct Reference}
+\label{structmri__inh__3d__plan}\index{mri\-\_\-inh\-\_\-3d\-\_\-plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}}
+}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structmri__inh__3d__plan_abe6874af3f51df4ea117d9c92cf925a1}{N\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of Fourier coefficients. \end{DoxyCompactList}\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structmri__inh__3d__plan_a59d7ad3bea791ad7c2c6a808fc1e40fe}{M\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of samples. \end{DoxyCompactList}\item 
+fftw\-\_\-complex $\ast$ \hyperlink{structmri__inh__3d__plan_a91ed30b213dea4954d2d27c4d1334a50}{f\-\_\-hat}
+\begin{DoxyCompactList}\small\item\em Fourier coefficients. \end{DoxyCompactList}\item 
+fftw\-\_\-complex $\ast$ \hyperlink{structmri__inh__3d__plan_a9e51f5f4ad46d4b120c452fc962a2385}{f}
+\begin{DoxyCompactList}\small\item\em Samples. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structmri__inh__3d__plan_a780818802d5bfdc4d4174a3637254fd5}{mv\-\_\-trafo} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Transform. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structmri__inh__3d__plan_afa2e143e704b701e9a0ee1d795f46b5b}{mv\-\_\-adjoint} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Adjoint transform. \end{DoxyCompactList}\item 
+\hypertarget{structmri__inh__3d__plan_ac8386842f48b212c4132a3b151d73402}{\hyperlink{structnfft__plan}{nfft\-\_\-plan} {\bfseries plan}}\label{structmri__inh__3d__plan_ac8386842f48b212c4132a3b151d73402}
+
+\item 
+\hypertarget{structmri__inh__3d__plan_af12a214bc2e75f1188cd7ff1bb99f0ff}{int {\bfseries N3}}\label{structmri__inh__3d__plan_af12a214bc2e75f1188cd7ff1bb99f0ff}
+
+\item 
+\hypertarget{structmri__inh__3d__plan_a88b160a5bf9943ebffc65365f2b7663f}{double {\bfseries sigma3}}\label{structmri__inh__3d__plan_a88b160a5bf9943ebffc65365f2b7663f}
+
+\item 
+\hypertarget{structmri__inh__3d__plan_ae7fe0fd3fb4509abc5a7a7c07df63a1b}{double $\ast$ {\bfseries t}}\label{structmri__inh__3d__plan_ae7fe0fd3fb4509abc5a7a7c07df63a1b}
+
+\item 
+\hypertarget{structmri__inh__3d__plan_aaf6f68ab1fa5e3b852487bf12dc483ff}{double $\ast$ {\bfseries w}}\label{structmri__inh__3d__plan_aaf6f68ab1fa5e3b852487bf12dc483ff}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+The structure for the transform plan. 
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structmri__inh__3d__plan_abe6874af3f51df4ea117d9c92cf925a1}{\index{mri\-\_\-inh\-\_\-3d\-\_\-plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}!N\-\_\-total@{N\-\_\-total}}
+\index{N\-\_\-total@{N\-\_\-total}!mri_inh_3d_plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}}
+\subsubsection[{N\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T mri\-\_\-inh\-\_\-3d\-\_\-plan\-::\-N\-\_\-total}}\label{structmri__inh__3d__plan_abe6874af3f51df4ea117d9c92cf925a1}
+
+
+Total number of Fourier coefficients. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+Referenced by mri\-\_\-inh\-\_\-3d\-\_\-adjoint(), and mri\-\_\-inh\-\_\-3d\-\_\-trafo().
+
+\hypertarget{structmri__inh__3d__plan_a59d7ad3bea791ad7c2c6a808fc1e40fe}{\index{mri\-\_\-inh\-\_\-3d\-\_\-plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}!M\-\_\-total@{M\-\_\-total}}
+\index{M\-\_\-total@{M\-\_\-total}!mri_inh_3d_plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}}
+\subsubsection[{M\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T mri\-\_\-inh\-\_\-3d\-\_\-plan\-::\-M\-\_\-total}}\label{structmri__inh__3d__plan_a59d7ad3bea791ad7c2c6a808fc1e40fe}
+
+
+Total number of samples. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+Referenced by construct(), mri\-\_\-inh\-\_\-3d\-\_\-adjoint(), and mri\-\_\-inh\-\_\-3d\-\_\-trafo().
+
+\hypertarget{structmri__inh__3d__plan_a91ed30b213dea4954d2d27c4d1334a50}{\index{mri\-\_\-inh\-\_\-3d\-\_\-plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}!f\-\_\-hat@{f\-\_\-hat}}
+\index{f\-\_\-hat@{f\-\_\-hat}!mri_inh_3d_plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}}
+\subsubsection[{f\-\_\-hat}]{\setlength{\rightskip}{0pt plus 5cm}fftw\-\_\-complex$\ast$ mri\-\_\-inh\-\_\-3d\-\_\-plan\-::f\-\_\-hat}}\label{structmri__inh__3d__plan_a91ed30b213dea4954d2d27c4d1334a50}
+
+
+Fourier coefficients. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+Referenced by construct(), mri\-\_\-inh\-\_\-3d\-\_\-adjoint(), mri\-\_\-inh\-\_\-3d\-\_\-finalize(), and mri\-\_\-inh\-\_\-3d\-\_\-trafo().
+
+\hypertarget{structmri__inh__3d__plan_a9e51f5f4ad46d4b120c452fc962a2385}{\index{mri\-\_\-inh\-\_\-3d\-\_\-plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}!f@{f}}
+\index{f@{f}!mri_inh_3d_plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}}
+\subsubsection[{f}]{\setlength{\rightskip}{0pt plus 5cm}fftw\-\_\-complex$\ast$ mri\-\_\-inh\-\_\-3d\-\_\-plan\-::f}}\label{structmri__inh__3d__plan_a9e51f5f4ad46d4b120c452fc962a2385}
+
+
+Samples. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+Referenced by construct(), mri\-\_\-inh\-\_\-3d\-\_\-adjoint(), and mri\-\_\-inh\-\_\-3d\-\_\-trafo().
+
+\hypertarget{structmri__inh__3d__plan_a780818802d5bfdc4d4174a3637254fd5}{\index{mri\-\_\-inh\-\_\-3d\-\_\-plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}!mv\-\_\-trafo@{mv\-\_\-trafo}}
+\index{mv\-\_\-trafo@{mv\-\_\-trafo}!mri_inh_3d_plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}}
+\subsubsection[{mv\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ mri\-\_\-inh\-\_\-3d\-\_\-plan\-::mv\-\_\-trafo)(void $\ast$)}}\label{structmri__inh__3d__plan_a780818802d5bfdc4d4174a3637254fd5}
+
+
+Transform. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+\hypertarget{structmri__inh__3d__plan_afa2e143e704b701e9a0ee1d795f46b5b}{\index{mri\-\_\-inh\-\_\-3d\-\_\-plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}!mv\-\_\-adjoint@{mv\-\_\-adjoint}}
+\index{mv\-\_\-adjoint@{mv\-\_\-adjoint}!mri_inh_3d_plan@{mri\-\_\-inh\-\_\-3d\-\_\-plan}}
+\subsubsection[{mv\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ mri\-\_\-inh\-\_\-3d\-\_\-plan\-::mv\-\_\-adjoint)(void $\ast$)}}\label{structmri__inh__3d__plan_afa2e143e704b701e9a0ee1d795f46b5b}
+
+
+Adjoint transform. 
+
+
+
+Definition at line 525 of file nfft3.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{nfft3_8h}{nfft3.\-h}\end{DoxyCompactItemize}

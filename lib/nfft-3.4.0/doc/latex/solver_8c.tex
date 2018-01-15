@@ -1,0 +1,84 @@
+\hypertarget{solver_8c}{\section{solver.\-c File Reference}
+\label{solver_8c}\index{solver.\-c@{solver.\-c}}
+}
+
+
+Implementation file for the solver module.  
+
+
+{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}nfft3.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}infft.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{solver_8c_a826edd40636cbaa44266b97c8c6a4fa3}{\#define {\bfseries X}(name)~\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-,name)}\label{solver_8c_a826edd40636cbaa44266b97c8c6a4fa3}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{solver_8c_a00d6b4c77ad67b9c585682784392e2fc}{void {\bfseries C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, init\-\_\-advanced\-\_\-complex)}\label{solver_8c_a00d6b4c77ad67b9c585682784392e2fc}
+
+\item 
+\hypertarget{solver_8c_a3c8a77852b6d2bb540da02be02726d68}{void {\bfseries C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, init\-\_\-complex)}\label{solver_8c_a3c8a77852b6d2bb540da02be02726d68}
+
+\item 
+\hypertarget{solver_8c_a93954ec70ed34d2a5aaf2cf02264d5e0}{void {\bfseries C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, before\-\_\-loop\-\_\-complex)}\label{solver_8c_a93954ec70ed34d2a5aaf2cf02264d5e0}
+
+\item 
+\hypertarget{solver_8c_a5859499a91f200eccceca1d468bd3931}{static void \hyperlink{solver_8c_a5859499a91f200eccceca1d468bd3931}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-landweber\-\_\-complex} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-complex)$\ast$ths)}\label{solver_8c_a5859499a91f200eccceca1d468bd3931}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-landweber \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_a2e003edf16308f7bea460737545ee6e2}{static void \hyperlink{solver_8c_a2e003edf16308f7bea460737545ee6e2}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-steepest\-\_\-descent\-\_\-complex} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-complex)$\ast$ths)}\label{solver_8c_a2e003edf16308f7bea460737545ee6e2}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-steepest\-\_\-descent \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_a4462363257275ad52648162f42473fd0}{static void \hyperlink{solver_8c_a4462363257275ad52648162f42473fd0}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgnr\-\_\-complex} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-complex)$\ast$ths)}\label{solver_8c_a4462363257275ad52648162f42473fd0}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgnr \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_ae68fee75683dc7aa29902497ad84ee97}{static void \hyperlink{solver_8c_ae68fee75683dc7aa29902497ad84ee97}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgne\-\_\-complex} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-complex)$\ast$ths)}\label{solver_8c_ae68fee75683dc7aa29902497ad84ee97}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgne \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_a7681f6201bd5cacfb62004732f6fa394}{void \hyperlink{solver_8c_a7681f6201bd5cacfb62004732f6fa394}{C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, loop\-\_\-one\-\_\-step\-\_\-complex)}\label{solver_8c_a7681f6201bd5cacfb62004732f6fa394}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_aacc5ab1f2b74afeb1dfaaa9182364d7a}{void \hyperlink{solver_8c_aacc5ab1f2b74afeb1dfaaa9182364d7a}{C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, finalize\-\_\-complex)}\label{solver_8c_aacc5ab1f2b74afeb1dfaaa9182364d7a}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-finalize \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_a0d912c7688a98e597eb7cbda4f7f7321}{void \hyperlink{solver_8c_a0d912c7688a98e597eb7cbda4f7f7321}{C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, init\-\_\-advanced\-\_\-double)}\label{solver_8c_a0d912c7688a98e597eb7cbda4f7f7321}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-finalize \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_abe04b0077a031821c2b8051f655ebe56}{void {\bfseries C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, init\-\_\-double)}\label{solver_8c_abe04b0077a031821c2b8051f655ebe56}
+
+\item 
+\hypertarget{solver_8c_a1bd9c29016982aff3c599d383aad4602}{void {\bfseries C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, before\-\_\-loop\-\_\-double)}\label{solver_8c_a1bd9c29016982aff3c599d383aad4602}
+
+\item 
+\hypertarget{solver_8c_a856ad85ee2d04e63ed376ffeb7acda8b}{static void \hyperlink{solver_8c_a856ad85ee2d04e63ed376ffeb7acda8b}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-landweber\-\_\-double} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-double)$\ast$ths)}\label{solver_8c_a856ad85ee2d04e63ed376ffeb7acda8b}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-landweber \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_aa272e41317481933e49778ee68426905}{static void \hyperlink{solver_8c_aa272e41317481933e49778ee68426905}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-steepest\-\_\-descent\-\_\-double} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-double)$\ast$ths)}\label{solver_8c_aa272e41317481933e49778ee68426905}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-steepest\-\_\-descent \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_a1b6c3114f6e7ac6d372ea5ab909e0f25}{static void \hyperlink{solver_8c_a1b6c3114f6e7ac6d372ea5ab909e0f25}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgnr\-\_\-double} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-double)$\ast$ths)}\label{solver_8c_a1b6c3114f6e7ac6d372ea5ab909e0f25}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgnr \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_ae7b785c2346e19d91ad2d074503a3cbe}{static void \hyperlink{solver_8c_ae7b785c2346e19d91ad2d074503a3cbe}{solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgne\-\_\-double} (\hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T}(solver\-\_\-, plan\-\_\-double)$\ast$ths)}\label{solver_8c_ae7b785c2346e19d91ad2d074503a3cbe}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-cgne \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_af1e0612a9051e79edd390972ca1d6268}{void \hyperlink{solver_8c_af1e0612a9051e79edd390972ca1d6268}{C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, loop\-\_\-one\-\_\-step\-\_\-double)}\label{solver_8c_af1e0612a9051e79edd390972ca1d6268}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-loop\-\_\-one\-\_\-step \end{DoxyCompactList}\item 
+\hypertarget{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{void \hyperlink{solver_8c_a04583350aeb5e936b6fb328093ad4e62}{C\-O\-N\-C\-A\-T} (C\-O\-N\-C\-A\-T(solver\-\_\-, finalize\-\_\-double)}\label{solver_8c_a04583350aeb5e936b6fb328093ad4e62}
+
+\begin{DoxyCompactList}\small\item\em void solver\-\_\-finalize \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation file for the solver module. \begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition in file \hyperlink{solver_8c_source}{solver.\-c}.
+

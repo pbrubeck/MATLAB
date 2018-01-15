@@ -1,0 +1,195 @@
+\hypertarget{group__nsfft}{\section{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}
+\label{group__nsfft}\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+}
+
+
+Direct and fast computation of the nonequispaced F\-F\-T on the hyperbolic cross.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structnsfft__plan}{nsfft\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-S\-F\-F\-T (nonequispaced sparse fast Fourier transform) plan with double precision \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__nsfft_ga3a5a1f8be42adf0575f0e0c4b8e0a32a}{N\-S\-D\-F\-T}~(1\-U$<$$<$ 12)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__nsfft_gaee06e4a864e22e2c41f71606a8e2644e}{nsfft\-\_\-trafo} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nsfft_gab3de4bceeffaea05a29daf75cad04d38}{nsfft\-\_\-adjoint} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nsfft_gaa90a04e2110e52bedb70382704f3f004}{nsfft\-\_\-cp} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths, \hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths\-\_\-nfft)
+\item 
+void \hyperlink{group__nsfft_ga7cbc20c44eeecadc5c30f4159616f30a}{nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nsfft_ga1b7f87f960cb22420a933e915c539aaf}{nsfft\-\_\-init} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths, int d, int J, int M, int m, unsigned flags)
+\item 
+void \hyperlink{group__nsfft_gaef170ad12eff8fde1c78bc6071142b36}{nsfft\-\_\-finalize} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Direct and fast computation of the nonequispaced F\-F\-T on the hyperbolic cross. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{group__nsfft_ga3a5a1f8be42adf0575f0e0c4b8e0a32a}{\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}!N\-S\-D\-F\-T@{N\-S\-D\-F\-T}}
+\index{N\-S\-D\-F\-T@{N\-S\-D\-F\-T}!NSFFT - Nonequispaced sparse FFT@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+\subsubsection[{N\-S\-D\-F\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\-S\-D\-F\-T~(1\-U$<$$<$ 12)}}\label{group__nsfft_ga3a5a1f8be42adf0575f0e0c4b8e0a32a}
+If this flag is set, the member index\-\_\-sparse\-\_\-to\-\_\-full is (de)allocated and initialised for the use in the routine nsfft\-\_\-direct\-\_\-trafo and nsdft\-\_\-adjoint.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nsfft_ga1b7f87f960cb22420a933e915c539aaf}{nsfft\-\_\-init} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 476 of file nfft3.\-h.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{group__nsfft_gaee06e4a864e22e2c41f71606a8e2644e}{\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}!nsfft\-\_\-trafo@{nsfft\-\_\-trafo}}
+\index{nsfft\-\_\-trafo@{nsfft\-\_\-trafo}!NSFFT - Nonequispaced sparse FFT@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+\subsubsection[{nsfft\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void nsfft\-\_\-trafo (
+\begin{DoxyParamCaption}
+\item[{{\bf nsfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nsfft_gaee06e4a864e22e2c41f71606a8e2644e}
+Executes an N\-S\-F\-F\-T, computes {\bfseries fast} and {\bfseries approximate} for $j=0,\dots,M-1$\-: \[ f_j = \sum_{k\in H_N^d}\hat f_k {\rm e}^{-2\pi{\rm\scriptsize i}k x_j} \]
+
+\begin{DoxyItemize}
+\item ths The pointer to a nsfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Markus Fenn, Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 1541 of file nsfft.\-c.
+
+
+
+References nsfft\-\_\-plan\-::d.
+
+\hypertarget{group__nsfft_gab3de4bceeffaea05a29daf75cad04d38}{\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}!nsfft\-\_\-adjoint@{nsfft\-\_\-adjoint}}
+\index{nsfft\-\_\-adjoint@{nsfft\-\_\-adjoint}!NSFFT - Nonequispaced sparse FFT@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+\subsubsection[{nsfft\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void nsfft\-\_\-adjoint (
+\begin{DoxyParamCaption}
+\item[{{\bf nsfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nsfft_gab3de4bceeffaea05a29daf75cad04d38}
+Executes an adjoint N\-S\-F\-F\-T, computes {\bfseries fast} and {\bfseries approximate} for $k\in H_N^d$\-: \[ \hat f_k = \sum_{j=0,\dots,M-1} f_j {\rm e}^{+2\pi{\rm\scriptsize i}k x_j} \]
+
+\begin{DoxyItemize}
+\item ths The pointer to a nsfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 1549 of file nsfft.\-c.
+
+
+
+References nsfft\-\_\-plan\-::d.
+
+\hypertarget{group__nsfft_gaa90a04e2110e52bedb70382704f3f004}{\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}!nsfft\-\_\-cp@{nsfft\-\_\-cp}}
+\index{nsfft\-\_\-cp@{nsfft\-\_\-cp}!NSFFT - Nonequispaced sparse FFT@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+\subsubsection[{nsfft\-\_\-cp}]{\setlength{\rightskip}{0pt plus 5cm}void nsfft\-\_\-cp (
+\begin{DoxyParamCaption}
+\item[{{\bf nsfft\-\_\-plan} $\ast$}]{ths, }
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths\-\_\-nfft}
+\end{DoxyParamCaption}
+)}}\label{group__nsfft_gaa90a04e2110e52bedb70382704f3f004}
+Copy coefficients from nsfft plan to a nfft plan.
+
+\begin{DoxyItemize}
+\item ths Pointers to a nsfft plan and to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Markus Fenn, Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 599 of file nsfft.\-c.
+
+
+
+References nsfft\-\_\-plan\-::act\-\_\-nfft\-\_\-plan, nsfft\-\_\-plan\-::d, nfft\-\_\-plan\-::f\-\_\-hat, nsfft\-\_\-plan\-::f\-\_\-hat, nsfft\-\_\-plan\-::index\-\_\-sparse\-\_\-to\-\_\-full, nsfft\-\_\-plan\-::\-M\-\_\-total, nfft\-\_\-plan\-::\-N\-\_\-total, nsfft\-\_\-plan\-::\-N\-\_\-total, and nfft\-\_\-plan\-::x.
+
+\hypertarget{group__nsfft_ga7cbc20c44eeecadc5c30f4159616f30a}{\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}!nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs@{nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs}}
+\index{nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs@{nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs}!NSFFT - Nonequispaced sparse FFT@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+\subsubsection[{nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs}]{\setlength{\rightskip}{0pt plus 5cm}void nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs (
+\begin{DoxyParamCaption}
+\item[{{\bf nsfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nsfft_ga7cbc20c44eeecadc5c30f4159616f30a}
+Initialisation of pseudo random nodes and coefficients.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nsfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Markus Fenn, Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 723 of file nsfft.\-c.
+
+
+
+References nsfft\-\_\-plan\-::act\-\_\-nfft\-\_\-plan, nsfft\-\_\-plan\-::d, nsfft\-\_\-plan\-::f\-\_\-hat, nsfft\-\_\-plan\-::\-M\-\_\-total, nsfft\-\_\-plan\-::\-N\-\_\-total, nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double(), nfft\-\_\-vrand\-\_\-unit\-\_\-complex(), nfft\-\_\-plan\-::x, nsfft\-\_\-plan\-::x\-\_\-021, and nsfft\-\_\-plan\-::x\-\_\-transposed.
+
+\hypertarget{group__nsfft_ga1b7f87f960cb22420a933e915c539aaf}{\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}!nsfft\-\_\-init@{nsfft\-\_\-init}}
+\index{nsfft\-\_\-init@{nsfft\-\_\-init}!NSFFT - Nonequispaced sparse FFT@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+\subsubsection[{nsfft\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void nsfft\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf nsfft\-\_\-plan} $\ast$}]{ths, }
+\item[{int}]{d, }
+\item[{int}]{J, }
+\item[{int}]{M, }
+\item[{int}]{m, }
+\item[{unsigned}]{flags}
+\end{DoxyParamCaption}
+)}}\label{group__nsfft_ga1b7f87f960cb22420a933e915c539aaf}
+Initialisation of a transform plan.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nsfft plan \item d The dimension \item J The problem size \item M The number of nodes \item m nfft cut-\/off parameter \item flags\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Markus Fenn, Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 1778 of file nsfft.\-c.
+
+
+
+References U\-N\-U\-S\-E\-D.
+
+\hypertarget{group__nsfft_gaef170ad12eff8fde1c78bc6071142b36}{\index{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}!nsfft\-\_\-finalize@{nsfft\-\_\-finalize}}
+\index{nsfft\-\_\-finalize@{nsfft\-\_\-finalize}!NSFFT - Nonequispaced sparse FFT@{N\-S\-F\-F\-T -\/ Nonequispaced sparse F\-F\-T}}
+\subsubsection[{nsfft\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void nsfft\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{{\bf nsfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nsfft_gaef170ad12eff8fde1c78bc6071142b36}
+Destroys a transform plan.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nsfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Markus Fenn, Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 1885 of file nsfft.\-c.
+
+
+
+References nsfft\-\_\-plan\-::d.
+

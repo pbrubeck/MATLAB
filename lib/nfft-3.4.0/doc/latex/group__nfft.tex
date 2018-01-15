@@ -1,0 +1,575 @@
+\hypertarget{group__nfft}{\section{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}
+\label{group__nfft}\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+}
+
+
+Direct and fast computation of the nonequispaced discrete Fourier transform.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structnfft__plan}{nfft\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-F\-T (nonequispaced fast Fourier transform) plan with double precision \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__nfft_gada3a356fdaf5840f98374a0a7aaf3e9c}{P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T}~(1\-U$<$$<$0)
+\item 
+\#define \hyperlink{group__nfft_ga01ebac2d2071639df189f083fc9f24eb}{F\-G\-\_\-\-P\-S\-I}~(1\-U$<$$<$1)
+\item 
+\#define \hyperlink{group__nfft_gabb1ad048b695cb806baf010c5d1b2caf}{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}~(1\-U$<$$<$2)
+\item 
+\#define \hyperlink{group__nfft_ga9c5a5ab61009a801082897ca40a1658c}{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}~(1\-U$<$$<$3)
+\item 
+\#define \hyperlink{group__nfft_ga959463a5c7723ccef5057ddcb784b40c}{P\-R\-E\-\_\-\-P\-S\-I}~(1\-U$<$$<$4)
+\item 
+\#define \hyperlink{group__nfft_ga7ad8a7e19519b16340dabec48899c6a4}{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I}~(1\-U$<$$<$5)
+\item 
+\#define \hyperlink{group__nfft_ga353185384f87de0dc4320a82652ef724}{M\-A\-L\-L\-O\-C\-\_\-\-X}~(1\-U$<$$<$6)
+\item 
+\#define \hyperlink{group__nfft_ga02d52cb02b6cfdbc3e4d5fd4de1aef9e}{M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U$<$$<$7)
+\item 
+\#define \hyperlink{group__nfft_gaa7b5098f4136080bbe0dd989973e2a69}{M\-A\-L\-L\-O\-C\-\_\-\-F}~(1\-U$<$$<$8)
+\item 
+\#define \hyperlink{group__nfft_ga9193f768d5839892d0e303080c370eaf}{F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E}~(1\-U$<$$<$9)
+\item 
+\#define \hyperlink{group__nfft_gad3fe6867a3351441c6f44dd5a3746f5b}{F\-F\-T\-W\-\_\-\-I\-N\-I\-T}~(1\-U$<$$<$10)
+\item 
+\#define \hyperlink{group__nfft_ga44c85197c6bdcf4b632aeff5e94d5329}{P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I}~(\hyperlink{group__nfft_gabb1ad048b695cb806baf010c5d1b2caf}{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}$\vert$ \hyperlink{group__nfft_ga9c5a5ab61009a801082897ca40a1658c}{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}$\vert$ \hyperlink{group__nfft_ga959463a5c7723ccef5057ddcb784b40c}{P\-R\-E\-\_\-\-P\-S\-I}$\vert$ \hyperlink{group__nfft_ga7ad8a7e19519b16340dabec48899c6a4}{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I})
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__nfft_ga9f1e6bd9f7f956a8679e6b413c97b421}{nfft\-\_\-trafo} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_ga4b44c1dd52026dcb494dc735f0fa5b08}{nfft\-\_\-adjoint} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_ga01dbd2cfc9cc8577fc097e607e3c845f}{nfft\-\_\-init\-\_\-1d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int N1, int M)
+\item 
+void \hyperlink{group__nfft_ga54ab08124f47fe412b2979abdc28cc16}{nfft\-\_\-init\-\_\-2d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int N1, int N2, int M)
+\item 
+void \hyperlink{group__nfft_ga67493342a23bdbb4301063f96e13fd88}{nfft\-\_\-init\-\_\-3d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int N1, int N2, int N3, int M)
+\item 
+void \hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M)
+\item 
+void \hyperlink{group__nfft_gafd7b278b6ed04d929212b4807dd195f0}{nfft\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_gaee7a88956c66b2113014084d6dd04b3a}{nfft\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_gae6a8367b03fd75b2af42dbbaccb78bf2}{nfft\-\_\-precompute\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_ga3f91a7a005cc31a8b05f33fea0507ddc}{nfft\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+const char $\ast$ \hyperlink{group__nfft_ga7af648ae0503976536b8db18200f99fe}{nfft\-\_\-check} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Direct and fast computation of the nonequispaced discrete Fourier transform. This module implements the nonequispaced fast Fourier transforms. In the following, we abbreviate the term \char`\"{}nonequispaced fast Fourier
+transform\char`\"{} by N\-F\-F\-T.
+
+We introduce our notation and nomenclature for discrete Fourier transforms. Let the torus \[ \mathbb{T}^d := \left\{ \mathbf{x}=\left(x_t\right)_{t=0,\dots,d-1}\in\mathbb{R}^{d}: \; - \frac{1}{2} \le x_t < \frac{1}{2},\; t=0,\dots,d-1 \right\} \] of dimension $d$ be given. It will serve as domain from which the nonequispaced nodes $\mathbf{x}$ are taken. The sampling set is given by ${\cal X}:=\{\mathbf{x}_j \in {\mathbb T}^d: \,j=0,\dots,M-1\}$. Possible frequencies $\mathbf{k}$ are collected in the multi index set \[ I_{\mathbf{N}} := \left\{ \mathbf{k}=\left(k_t\right)_{t=0,\dots,d-1}\in \mathbb{Z}^d: - \frac{N_t}{2} \le k_t < \frac{N_t}{2} ,\;t=0,\dots,d-1 \right\}. \]
+
+Our concern is the computation of the {\itshape nonequispaced} discrete Fourier transform {\itshape }(N\-D\-F\-T)\label{group__nfft_ndft_formula}%
+\hypertarget{group__nfft_ndft_formula}{}%
+ \[ f_j = \sum_{\mathbf{k}\in I_{\mathbf{N}}} \hat{f}_{\mathbf{k}} {\rm e}^{-2\pi{\rm i} \mathbf{k}\mathbf{x}_j}, \qquad j=0,\dots,M-1. \] The corresponding adjoint N\-D\-F\-T is the computation of \[ \hat f_{\mathbf{k}}=\sum_{j=0}^{M-1} f_j {\rm e}^{+2\pi{\rm i} \mathbf{k}\mathbf{x}_j}, \qquad \mathbf{k}\in I_{\mathbf{N}}. \] Direct implementations are given by nfft\-\_\-direct\-\_\-trafo and nfft\-\_\-direct\-\_\-adjoint taking ${\cal O}(|I_{\mathbf{N}}|M)$ floating point operations. Approximative realisations take only ${\cal O}(|I_{\mathbf{N}}|\log|I_{\mathbf{N}}|+M)$ floating point operations. These are provided by \hyperlink{group__nfft_ga9f1e6bd9f7f956a8679e6b413c97b421}{nfft\-\_\-trafo} and \hyperlink{group__nfft_ga4b44c1dd52026dcb494dc735f0fa5b08}{nfft\-\_\-adjoint}, respectively. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{group__nfft_gada3a356fdaf5840f98374a0a7aaf3e9c}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T@{P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T}}
+\index{P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T@{P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T~(1\-U$<$$<$0)}}\label{group__nfft_gada3a356fdaf5840f98374a0a7aaf3e9c}
+If this flag is set, the deconvolution step (the multiplication with the diagonal matrix $\mathbf{D}$) uses precomputed values of the Fourier transformed window function.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 193 of file nfft3.\-h.
+
+
+
+Referenced by construct(), fastsum\-\_\-init\-\_\-guru\-\_\-source\-\_\-nodes(), fastsum\-\_\-init\-\_\-guru\-\_\-target\-\_\-nodes(), fgt\-\_\-init\-\_\-guru(), glacier(), glacier\-\_\-cv(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-dft(), linogram\-\_\-fft(), main(), mpolar\-\_\-dft(), mpolar\-\_\-fft(), nfsft\-\_\-init\-\_\-advanced(), nfsoft\-\_\-init\-\_\-advanced(), nnfft\-\_\-finalize(), nnfft\-\_\-init(), nnfft\-\_\-init\-\_\-guru(), polar\-\_\-dft(), polar\-\_\-fft(), Radon\-\_\-trafo(), reconstruct(), and taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{group__nfft_ga01ebac2d2071639df189f083fc9f24eb}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!F\-G\-\_\-\-P\-S\-I@{F\-G\-\_\-\-P\-S\-I}}
+\index{F\-G\-\_\-\-P\-S\-I@{F\-G\-\_\-\-P\-S\-I}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{F\-G\-\_\-\-P\-S\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-G\-\_\-\-P\-S\-I~(1\-U$<$$<$1)}}\label{group__nfft_ga01ebac2d2071639df189f083fc9f24eb}
+If this flag is set, the convolution step (the multiplication with the sparse matrix $\mathbf{B}$) uses particular properties of the Gaussian window function to trade multiplications for direct calls to exponential function.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 194 of file nfft3.\-h.
+
+
+
+Referenced by nfsoft\-\_\-precompute().
+
+\hypertarget{group__nfft_gabb1ad048b695cb806baf010c5d1b2caf}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}}
+\index{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I~(1\-U$<$$<$2)}}\label{group__nfft_gabb1ad048b695cb806baf010c5d1b2caf}
+If this flag is set, the convolution step (the multiplication with the sparse matrix $\mathbf{B}$) uses linear interpolation from a lookup table of equispaced samples of the window function instead of exact values of the window function. At the moment a table of size $(K+1)d$ is used, where $K=2^{10}(m+1)$. An estimate for the size of the lookup table with respect to the target accuracy should be implemented.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 195 of file nfft3.\-h.
+
+
+
+Referenced by fastsum\-\_\-precompute\-\_\-source\-\_\-nodes(), fastsum\-\_\-precompute\-\_\-target\-\_\-nodes(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-fft(), mpolar\-\_\-fft(), nnfft\-\_\-finalize(), nnfft\-\_\-init\-\_\-guru(), polar\-\_\-fft(), Radon\-\_\-trafo(), and reconstruct().
+
+\hypertarget{group__nfft_ga9c5a5ab61009a801082897ca40a1658c}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}}
+\index{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I~(1\-U$<$$<$3)}}\label{group__nfft_ga9c5a5ab61009a801082897ca40a1658c}
+If this flag is set, the convolution step (the multiplication with the sparse matrix $\mathbf{B}$) uses particular properties of the Gaussian window function to trade multiplications for direct calls to exponential function (the remaining $2dM$ direct calls are precomputed).
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 196 of file nfft3.\-h.
+
+
+
+Referenced by taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{group__nfft_ga959463a5c7723ccef5057ddcb784b40c}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!P\-R\-E\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-P\-S\-I}}
+\index{P\-R\-E\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-P\-S\-I}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{P\-R\-E\-\_\-\-P\-S\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-E\-\_\-\-P\-S\-I~(1\-U$<$$<$4)}}\label{group__nfft_ga959463a5c7723ccef5057ddcb784b40c}
+If this flag is set, the convolution step (the multiplication with the sparse matrix $\mathbf{B}$) uses $(2m+2)dM$ precomputed values of the window function.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 197 of file nfft3.\-h.
+
+
+
+Referenced by construct(), fastsum\-\_\-init\-\_\-guru\-\_\-source\-\_\-nodes(), fastsum\-\_\-init\-\_\-guru\-\_\-target\-\_\-nodes(), fastsum\-\_\-precompute\-\_\-source\-\_\-nodes(), fastsum\-\_\-precompute\-\_\-target\-\_\-nodes(), fgt\-\_\-init\-\_\-guru(), fgt\-\_\-init\-\_\-node\-\_\-dependent(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-dft(), linogram\-\_\-fft(), main(), mpolar\-\_\-dft(), mpolar\-\_\-fft(), nfsft\-\_\-init\-\_\-advanced(), nfsoft\-\_\-init\-\_\-advanced(), nfsoft\-\_\-precompute(), nnfft\-\_\-finalize(), nnfft\-\_\-init(), nnfft\-\_\-init\-\_\-guru(), polar\-\_\-dft(), polar\-\_\-fft(), Radon\-\_\-trafo(), and reconstruct().
+
+\hypertarget{group__nfft_ga7ad8a7e19519b16340dabec48899c6a4}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I}}
+\index{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I~(1\-U$<$$<$5)}}\label{group__nfft_ga7ad8a7e19519b16340dabec48899c6a4}
+If this flag is set, the convolution step (the multiplication with the sparse matrix $\mathbf{B}$) uses $(2m+2)^dM$ precomputed values of the window function, in addition indices of source and target vectors are stored.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 198 of file nfft3.\-h.
+
+
+
+Referenced by fastsum\-\_\-precompute\-\_\-source\-\_\-nodes(), fastsum\-\_\-precompute\-\_\-target\-\_\-nodes(), glacier(), glacier\-\_\-cv(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-fft(), mpolar\-\_\-fft(), nnfft\-\_\-finalize(), nnfft\-\_\-init\-\_\-guru(), polar\-\_\-fft(), Radon\-\_\-trafo(), and reconstruct().
+
+\hypertarget{group__nfft_ga353185384f87de0dc4320a82652ef724}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!M\-A\-L\-L\-O\-C\-\_\-\-X@{M\-A\-L\-L\-O\-C\-\_\-\-X}}
+\index{M\-A\-L\-L\-O\-C\-\_\-\-X@{M\-A\-L\-L\-O\-C\-\_\-\-X}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{M\-A\-L\-L\-O\-C\-\_\-\-X}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-L\-L\-O\-C\-\_\-\-X~(1\-U$<$$<$6)}}\label{group__nfft_ga353185384f87de0dc4320a82652ef724}
+If this flag is set, (de)allocation of the node vector is done.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+
+\hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 199 of file nfft3.\-h.
+
+
+
+Referenced by construct(), fgt\-\_\-init\-\_\-guru(), glacier(), glacier\-\_\-cv(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-dft(), linogram\-\_\-fft(), mpolar\-\_\-dft(), mpolar\-\_\-fft(), nfsoft\-\_\-init\-\_\-advanced(), nnfft\-\_\-finalize(), nnfft\-\_\-init(), polar\-\_\-dft(), polar\-\_\-fft(), Radon\-\_\-trafo(), reconstruct(), and taylor\-\_\-init().
+
+\hypertarget{group__nfft_ga02d52cb02b6cfdbc3e4d5fd4de1aef9e}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T@{M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T}}
+\index{M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T@{M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T~(1\-U$<$$<$7)}}\label{group__nfft_ga02d52cb02b6cfdbc3e4d5fd4de1aef9e}
+If this flag is set, (de)allocation of the vector of Fourier coefficients is done.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+
+\hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 200 of file nfft3.\-h.
+
+
+
+Referenced by construct(), fgt\-\_\-init\-\_\-guru(), glacier(), glacier\-\_\-cv(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-dft(), linogram\-\_\-fft(), mpolar\-\_\-dft(), mpolar\-\_\-fft(), nfsoft\-\_\-init\-\_\-advanced(), nnfft\-\_\-finalize(), nnfft\-\_\-init(), nnfft\-\_\-init\-\_\-guru(), polar\-\_\-dft(), polar\-\_\-fft(), Radon\-\_\-trafo(), reconstruct(), and taylor\-\_\-init().
+
+\hypertarget{group__nfft_gaa7b5098f4136080bbe0dd989973e2a69}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!M\-A\-L\-L\-O\-C\-\_\-\-F@{M\-A\-L\-L\-O\-C\-\_\-\-F}}
+\index{M\-A\-L\-L\-O\-C\-\_\-\-F@{M\-A\-L\-L\-O\-C\-\_\-\-F}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{M\-A\-L\-L\-O\-C\-\_\-\-F}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-L\-L\-O\-C\-\_\-\-F~(1\-U$<$$<$8)}}\label{group__nfft_gaa7b5098f4136080bbe0dd989973e2a69}
+If this flag is set, (de)allocation of the vector of samples is done.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+
+\hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 201 of file nfft3.\-h.
+
+
+
+Referenced by construct(), glacier(), glacier\-\_\-cv(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-dft(), linogram\-\_\-fft(), mpolar\-\_\-dft(), mpolar\-\_\-fft(), nfsoft\-\_\-init\-\_\-advanced(), nnfft\-\_\-finalize(), nnfft\-\_\-init(), polar\-\_\-dft(), polar\-\_\-fft(), Radon\-\_\-trafo(), reconstruct(), and taylor\-\_\-init().
+
+\hypertarget{group__nfft_ga9193f768d5839892d0e303080c370eaf}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E@{F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E}}
+\index{F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E@{F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E~(1\-U$<$$<$9)}}\label{group__nfft_ga9193f768d5839892d0e303080c370eaf}
+If this flag is set, F\-F\-T\-W uses disjoint input/output vectors.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+
+\hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 202 of file nfft3.\-h.
+
+
+
+Referenced by construct(), fastsum\-\_\-init\-\_\-guru\-\_\-source\-\_\-nodes(), fastsum\-\_\-init\-\_\-guru\-\_\-target\-\_\-nodes(), glacier(), glacier\-\_\-cv(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-dft(), linogram\-\_\-fft(), main(), mpolar\-\_\-dft(), mpolar\-\_\-fft(), nfsft\-\_\-init\-\_\-advanced(), nfsoft\-\_\-init\-\_\-advanced(), nnfft\-\_\-init(), nnfft\-\_\-init\-\_\-guru(), polar\-\_\-dft(), polar\-\_\-fft(), Radon\-\_\-trafo(), reconstruct(), taylor\-\_\-init(), and taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{group__nfft_gad3fe6867a3351441c6f44dd5a3746f5b}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!F\-F\-T\-W\-\_\-\-I\-N\-I\-T@{F\-F\-T\-W\-\_\-\-I\-N\-I\-T}}
+\index{F\-F\-T\-W\-\_\-\-I\-N\-I\-T@{F\-F\-T\-W\-\_\-\-I\-N\-I\-T}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{F\-F\-T\-W\-\_\-\-I\-N\-I\-T}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-F\-T\-W\-\_\-\-I\-N\-I\-T~(1\-U$<$$<$10)}}\label{group__nfft_gad3fe6867a3351441c6f44dd5a3746f5b}
+If this flag is set, fftw\-\_\-init/fftw\-\_\-finalize is called.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+
+\hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 203 of file nfft3.\-h.
+
+
+
+Referenced by construct(), fastsum\-\_\-init\-\_\-guru\-\_\-source\-\_\-nodes(), fastsum\-\_\-init\-\_\-guru\-\_\-target\-\_\-nodes(), fgt\-\_\-init\-\_\-guru(), glacier(), glacier\-\_\-cv(), inverse\-\_\-linogram\-\_\-fft(), inverse\-\_\-mpolar\-\_\-fft(), inverse\-\_\-polar\-\_\-fft(), inverse\-\_\-radon\-\_\-trafo(), linogram\-\_\-dft(), linogram\-\_\-fft(), main(), mpolar\-\_\-dft(), mpolar\-\_\-fft(), nfsft\-\_\-init\-\_\-advanced(), nfsoft\-\_\-init\-\_\-advanced(), nnfft\-\_\-init(), nnfft\-\_\-init\-\_\-guru(), polar\-\_\-dft(), polar\-\_\-fft(), Radon\-\_\-trafo(), reconstruct(), taylor\-\_\-init(), and taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{group__nfft_ga44c85197c6bdcf4b632aeff5e94d5329}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I}}
+\index{P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I@{P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I~({\bf P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}$\vert$ {\bf P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}$\vert$ {\bf P\-R\-E\-\_\-\-P\-S\-I}$\vert$ {\bf P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I})}}\label{group__nfft_ga44c85197c6bdcf4b632aeff5e94d5329}
+Summarises if precomputation is used within the convolution step (the multiplication with the sparse matrix $\mathbf{B}$). If testing against this flag is positive, \hyperlink{group__nfft_gafd7b278b6ed04d929212b4807dd195f0}{nfft\-\_\-precompute\-\_\-one\-\_\-psi} has to be called.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} 
+
+nfft\-\_\-init\-\_\-advanced 
+
+nfft\-\_\-init\-\_\-guru 
+
+\hyperlink{group__nfft_gafd7b278b6ed04d929212b4807dd195f0}{nfft\-\_\-precompute\-\_\-one\-\_\-psi} 
+
+\hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 206 of file nfft3.\-h.
+
+
+
+Referenced by glacier(), glacier\-\_\-cv(), and taylor\-\_\-time\-\_\-accuracy().
+
+
+
+\subsection{Function Documentation}
+\hypertarget{group__nfft_ga9f1e6bd9f7f956a8679e6b413c97b421}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-trafo@{nfft\-\_\-trafo}}
+\index{nfft\-\_\-trafo@{nfft\-\_\-trafo}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-trafo (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga9f1e6bd9f7f956a8679e6b413c97b421}
+Computes a N\-F\-F\-T, see the \hyperlink{group__nfft_ndft_formula}{definition}.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+
+
+Referenced by construct(), mri\-\_\-inh\-\_\-2d1d\-\_\-trafo(), mri\-\_\-inh\-\_\-3d\-\_\-trafo(), nfsoft\-\_\-trafo(), and nnfft\-\_\-trafo().
+
+\hypertarget{group__nfft_ga4b44c1dd52026dcb494dc735f0fa5b08}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-adjoint@{nfft\-\_\-adjoint}}
+\index{nfft\-\_\-adjoint@{nfft\-\_\-adjoint}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-adjoint (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga4b44c1dd52026dcb494dc735f0fa5b08}
+Computes an adjoint N\-F\-F\-T, see the definition.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+
+
+Referenced by mri\-\_\-inh\-\_\-3d\-\_\-adjoint(), nfsoft\-\_\-adjoint(), nnfft\-\_\-adjoint(), and reconstruct().
+
+\hypertarget{group__nfft_ga01dbd2cfc9cc8577fc097e607e3c845f}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-init\-\_\-1d@{nfft\-\_\-init\-\_\-1d}}
+\index{nfft\-\_\-init\-\_\-1d@{nfft\-\_\-init\-\_\-1d}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-init\-\_\-1d}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-init\-\_\-1d (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths, }
+\item[{int}]{N1, }
+\item[{int}]{M}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga01dbd2cfc9cc8577fc097e607e3c845f}
+Initialisation of a transform plan, wrapper d=1.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan \item N1 bandwidth \item M The number of nodes\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+\hypertarget{group__nfft_ga54ab08124f47fe412b2979abdc28cc16}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-init\-\_\-2d@{nfft\-\_\-init\-\_\-2d}}
+\index{nfft\-\_\-init\-\_\-2d@{nfft\-\_\-init\-\_\-2d}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-init\-\_\-2d}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-init\-\_\-2d (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths, }
+\item[{int}]{N1, }
+\item[{int}]{N2, }
+\item[{int}]{M}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga54ab08124f47fe412b2979abdc28cc16}
+Initialisation of a transform plan, wrapper d=2.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan \item N1 bandwidth \item N2 bandwidth \item M The number of nodes\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+
+
+Referenced by construct().
+
+\hypertarget{group__nfft_ga67493342a23bdbb4301063f96e13fd88}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-init\-\_\-3d@{nfft\-\_\-init\-\_\-3d}}
+\index{nfft\-\_\-init\-\_\-3d@{nfft\-\_\-init\-\_\-3d}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-init\-\_\-3d}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-init\-\_\-3d (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths, }
+\item[{int}]{N1, }
+\item[{int}]{N2, }
+\item[{int}]{N3, }
+\item[{int}]{M}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga67493342a23bdbb4301063f96e13fd88}
+Initialisation of a transform plan, wrapper d=3.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan \item N1 bandwidth \item N2 bandwidth \item N3 bandwidth \item M The number of nodes\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+\hypertarget{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-init@{nfft\-\_\-init}}
+\index{nfft\-\_\-init@{nfft\-\_\-init}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths, }
+\item[{int}]{d, }
+\item[{int $\ast$}]{N, }
+\item[{int}]{M}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}
+Initialisation of a transform plan, simple.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan \item d The dimension \item N The multi bandwidth \item M The number of nodes\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+\hypertarget{group__nfft_gafd7b278b6ed04d929212b4807dd195f0}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-precompute\-\_\-one\-\_\-psi@{nfft\-\_\-precompute\-\_\-one\-\_\-psi}}
+\index{nfft\-\_\-precompute\-\_\-one\-\_\-psi@{nfft\-\_\-precompute\-\_\-one\-\_\-psi}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-precompute\-\_\-one\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-precompute\-\_\-one\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_gafd7b278b6ed04d929212b4807dd195f0}
+Precomputation for a transform plan.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis
+\end{DoxyAuthor}
+wrapper for precompute$\ast$\-\_\-psi
+
+if P\-R\-E\-\_\-$\ast$\-\_\-\-P\-S\-I is set the application program has to call this routine (after) setting the nodes x 
+
+Referenced by nfsoft\-\_\-precompute().
+
+\hypertarget{group__nfft_gaee7a88956c66b2113014084d6dd04b3a}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-precompute\-\_\-full\-\_\-psi@{nfft\-\_\-precompute\-\_\-full\-\_\-psi}}
+\index{nfft\-\_\-precompute\-\_\-full\-\_\-psi@{nfft\-\_\-precompute\-\_\-full\-\_\-psi}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-precompute\-\_\-full\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-precompute\-\_\-full\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_gaee7a88956c66b2113014084d6dd04b3a}
+Superceded by nfft\-\_\-precompute\-\_\-one\-\_\-psi. \begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Referenced by nnfft\-\_\-precompute\-\_\-full\-\_\-psi(), and reconstruct().
+
+\hypertarget{group__nfft_gae6a8367b03fd75b2af42dbbaccb78bf2}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-precompute\-\_\-psi@{nfft\-\_\-precompute\-\_\-psi}}
+\index{nfft\-\_\-precompute\-\_\-psi@{nfft\-\_\-precompute\-\_\-psi}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-precompute\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-precompute\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_gae6a8367b03fd75b2af42dbbaccb78bf2}
+Superceded by nfft\-\_\-precompute\-\_\-one\-\_\-psi. \begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Referenced by construct(), nnfft\-\_\-precompute\-\_\-psi(), and reconstruct().
+
+\hypertarget{group__nfft_ga3f91a7a005cc31a8b05f33fea0507ddc}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-precompute\-\_\-lin\-\_\-psi@{nfft\-\_\-precompute\-\_\-lin\-\_\-psi}}
+\index{nfft\-\_\-precompute\-\_\-lin\-\_\-psi@{nfft\-\_\-precompute\-\_\-lin\-\_\-psi}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-precompute\-\_\-lin\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-precompute\-\_\-lin\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga3f91a7a005cc31a8b05f33fea0507ddc}
+Superceded by nfft\-\_\-precompute\-\_\-one\-\_\-psi. \begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Referenced by nnfft\-\_\-precompute\-\_\-lin\-\_\-psi(), and reconstruct().
+
+\hypertarget{group__nfft_ga7af648ae0503976536b8db18200f99fe}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-check@{nfft\-\_\-check}}
+\index{nfft\-\_\-check@{nfft\-\_\-check}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-check}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-check (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga7af648ae0503976536b8db18200f99fe}
+Checks a transform plan for frequently used bad parameter.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+\hypertarget{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{\index{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}!nfft\-\_\-finalize@{nfft\-\_\-finalize}}
+\index{nfft\-\_\-finalize@{nfft\-\_\-finalize}!NFFT - Nonequispaced fast Fourier transform@{N\-F\-F\-T -\/ Nonequispaced fast Fourier transform}}
+\subsubsection[{nfft\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}
+Destroys a transform plan.
+
+\begin{DoxyItemize}
+\item ths The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+
+
+Referenced by construct(), mri\-\_\-inh\-\_\-2d1d\-\_\-finalize(), mri\-\_\-inh\-\_\-3d\-\_\-finalize(), nfsft\-\_\-finalize(), nfsoft\-\_\-finalize(), nnfft\-\_\-finalize(), and reconstruct().
+

@@ -1,0 +1,126 @@
+\hypertarget{structnfsoftl__plan__}{\section{nfsoftl\-\_\-plan\-\_\- Struct Reference}
+\label{structnfsoftl__plan__}\index{nfsoftl\-\_\-plan\-\_\-@{nfsoftl\-\_\-plan\-\_\-}}
+}
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfsoftl__plan___aa0655ed287e448f93827572cec3c90c9}{N\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of Fourier coefficients. \end{DoxyCompactList}\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfsoftl__plan___a376e6b85b55fc057e94823eef19e15b7}{M\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of samples. \end{DoxyCompactList}\item 
+fftwl\-\_\-complex $\ast$ \hyperlink{structnfsoftl__plan___ab280522456fe4f49ccb91d4aa195702d}{f\-\_\-hat}
+\begin{DoxyCompactList}\small\item\em Fourier coefficients. \end{DoxyCompactList}\item 
+fftwl\-\_\-complex $\ast$ \hyperlink{structnfsoftl__plan___a62073b403c90aa2b527d5f62f190112e}{f}
+\begin{DoxyCompactList}\small\item\em Samples. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structnfsoftl__plan___aeab94862046b7688470f3f1d78ca927d}{mv\-\_\-trafo} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Transform. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structnfsoftl__plan___a2f7123e0975b4a7cd693d01abf117949}{mv\-\_\-adjoint} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Adjoint transform. \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___a92211c64713d72c3d3cf45ac39601214}{long double $\ast$ \hyperlink{structnfsoftl__plan___a92211c64713d72c3d3cf45ac39601214}{x}}\label{structnfsoftl__plan___a92211c64713d72c3d3cf45ac39601214}
+
+\begin{DoxyCompactList}\small\item\em input nodes \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___a452e16848e81fd0b072d4e3347345455}{fftwl\-\_\-complex $\ast$ \hyperlink{structnfsoftl__plan___a452e16848e81fd0b072d4e3347345455}{wig\-\_\-coeffs}}\label{structnfsoftl__plan___a452e16848e81fd0b072d4e3347345455}
+
+\begin{DoxyCompactList}\small\item\em contains a set of S\-O(3) Fourier coefficients for fixed orders m and n \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___a681110b5c15effe7ef2781249e049119}{fftwl\-\_\-complex $\ast$ \hyperlink{structnfsoftl__plan___a681110b5c15effe7ef2781249e049119}{cheby}}\label{structnfsoftl__plan___a681110b5c15effe7ef2781249e049119}
+
+\begin{DoxyCompactList}\small\item\em contains a set of Chebychev coefficients for fixed orders m and n \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___ae669348fbbb187c8c521f6a89c8f3720}{fftwl\-\_\-complex $\ast$ \hyperlink{structnfsoftl__plan___ae669348fbbb187c8c521f6a89c8f3720}{aux}}\label{structnfsoftl__plan___ae669348fbbb187c8c521f6a89c8f3720}
+
+\begin{DoxyCompactList}\small\item\em used when converting Chebychev to Fourier coeffcients \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___acd18e8a2b89aacd8034b49033449f979}{int \hyperlink{structnfsoftl__plan___acd18e8a2b89aacd8034b49033449f979}{t}}\label{structnfsoftl__plan___acd18e8a2b89aacd8034b49033449f979}
+
+\begin{DoxyCompactList}\small\item\em the logaritm of N\-P\-T with respect to the basis 2 \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___a2f236235168535b9f9833bcc7e50e695}{unsigned int \hyperlink{structnfsoftl__plan___a2f236235168535b9f9833bcc7e50e695}{flags}}\label{structnfsoftl__plan___a2f236235168535b9f9833bcc7e50e695}
+
+\begin{DoxyCompactList}\small\item\em the planner flags \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___ac1230a81665ed7aa68cb7b4bc3a0c0c1}{\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} \hyperlink{structnfsoftl__plan___ac1230a81665ed7aa68cb7b4bc3a0c0c1}{p\-\_\-nfft}}\label{structnfsoftl__plan___ac1230a81665ed7aa68cb7b4bc3a0c0c1}
+
+\begin{DoxyCompactList}\small\item\em the internal N\-F\-F\-T plan \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___a8cf750d58de22209962bd9cb96f48864}{\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} \hyperlink{structnfsoftl__plan___a8cf750d58de22209962bd9cb96f48864}{internal\-\_\-fpt\-\_\-set}}\label{structnfsoftl__plan___a8cf750d58de22209962bd9cb96f48864}
+
+\begin{DoxyCompactList}\small\item\em the internal F\-P\-T plan \end{DoxyCompactList}\item 
+\hypertarget{structnfsoftl__plan___a5738717c7006e1756863debb43395d5a}{int {\bfseries fpt\-\_\-kappa}}\label{structnfsoftl__plan___a5738717c7006e1756863debb43395d5a}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 685 of file nfft3.\-h.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structnfsoftl__plan___aa0655ed287e448f93827572cec3c90c9}{\index{nfsoftl\-\_\-plan\-\_\-@{nfsoftl\-\_\-plan\-\_\-}!N\-\_\-total@{N\-\_\-total}}
+\index{N\-\_\-total@{N\-\_\-total}!nfsoftl_plan_@{nfsoftl\-\_\-plan\-\_\-}}
+\subsubsection[{N\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfsoftl\-\_\-plan\-\_\-\-::\-N\-\_\-total}}\label{structnfsoftl__plan___aa0655ed287e448f93827572cec3c90c9}
+
+
+Total number of Fourier coefficients. 
+
+
+
+Definition at line 685 of file nfft3.\-h.
+
+\hypertarget{structnfsoftl__plan___a376e6b85b55fc057e94823eef19e15b7}{\index{nfsoftl\-\_\-plan\-\_\-@{nfsoftl\-\_\-plan\-\_\-}!M\-\_\-total@{M\-\_\-total}}
+\index{M\-\_\-total@{M\-\_\-total}!nfsoftl_plan_@{nfsoftl\-\_\-plan\-\_\-}}
+\subsubsection[{M\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfsoftl\-\_\-plan\-\_\-\-::\-M\-\_\-total}}\label{structnfsoftl__plan___a376e6b85b55fc057e94823eef19e15b7}
+
+
+Total number of samples. 
+
+
+
+Definition at line 685 of file nfft3.\-h.
+
+\hypertarget{structnfsoftl__plan___ab280522456fe4f49ccb91d4aa195702d}{\index{nfsoftl\-\_\-plan\-\_\-@{nfsoftl\-\_\-plan\-\_\-}!f\-\_\-hat@{f\-\_\-hat}}
+\index{f\-\_\-hat@{f\-\_\-hat}!nfsoftl_plan_@{nfsoftl\-\_\-plan\-\_\-}}
+\subsubsection[{f\-\_\-hat}]{\setlength{\rightskip}{0pt plus 5cm}fftwl\-\_\-complex$\ast$ nfsoftl\-\_\-plan\-\_\-\-::f\-\_\-hat}}\label{structnfsoftl__plan___ab280522456fe4f49ccb91d4aa195702d}
+
+
+Fourier coefficients. 
+
+
+
+Definition at line 685 of file nfft3.\-h.
+
+\hypertarget{structnfsoftl__plan___a62073b403c90aa2b527d5f62f190112e}{\index{nfsoftl\-\_\-plan\-\_\-@{nfsoftl\-\_\-plan\-\_\-}!f@{f}}
+\index{f@{f}!nfsoftl_plan_@{nfsoftl\-\_\-plan\-\_\-}}
+\subsubsection[{f}]{\setlength{\rightskip}{0pt plus 5cm}fftwl\-\_\-complex$\ast$ nfsoftl\-\_\-plan\-\_\-\-::f}}\label{structnfsoftl__plan___a62073b403c90aa2b527d5f62f190112e}
+
+
+Samples. 
+
+
+
+Definition at line 685 of file nfft3.\-h.
+
+\hypertarget{structnfsoftl__plan___aeab94862046b7688470f3f1d78ca927d}{\index{nfsoftl\-\_\-plan\-\_\-@{nfsoftl\-\_\-plan\-\_\-}!mv\-\_\-trafo@{mv\-\_\-trafo}}
+\index{mv\-\_\-trafo@{mv\-\_\-trafo}!nfsoftl_plan_@{nfsoftl\-\_\-plan\-\_\-}}
+\subsubsection[{mv\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ nfsoftl\-\_\-plan\-\_\-\-::mv\-\_\-trafo)(void $\ast$)}}\label{structnfsoftl__plan___aeab94862046b7688470f3f1d78ca927d}
+
+
+Transform. 
+
+
+
+Definition at line 685 of file nfft3.\-h.
+
+\hypertarget{structnfsoftl__plan___a2f7123e0975b4a7cd693d01abf117949}{\index{nfsoftl\-\_\-plan\-\_\-@{nfsoftl\-\_\-plan\-\_\-}!mv\-\_\-adjoint@{mv\-\_\-adjoint}}
+\index{mv\-\_\-adjoint@{mv\-\_\-adjoint}!nfsoftl_plan_@{nfsoftl\-\_\-plan\-\_\-}}
+\subsubsection[{mv\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ nfsoftl\-\_\-plan\-\_\-\-::mv\-\_\-adjoint)(void $\ast$)}}\label{structnfsoftl__plan___a2f7123e0975b4a7cd693d01abf117949}
+
+
+Adjoint transform. 
+
+
+
+Definition at line 685 of file nfft3.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{nfft3_8h}{nfft3.\-h}\end{DoxyCompactItemize}

@@ -1,0 +1,129 @@
+\hypertarget{structnfsftl__plan}{\section{nfsftl\-\_\-plan Struct Reference}
+\label{structnfsftl__plan}\index{nfsftl\-\_\-plan@{nfsftl\-\_\-plan}}
+}
+
+
+data structure for an N\-F\-S\-F\-T (nonequispaced fast spherical Fourier transform) plan with long double precision  
+
+
+
+
+{\ttfamily \#include $<$nfft3.\-h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfsftl__plan_a1bfa1de211ea27da5675678e363ff1ab}{N\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of Fourier coefficients. \end{DoxyCompactList}\item 
+N\-F\-F\-T\-\_\-\-I\-N\-T \hyperlink{structnfsftl__plan_adae433d8abf67e89b1aa194db96b1ff8}{M\-\_\-total}
+\begin{DoxyCompactList}\small\item\em Total number of samples. \end{DoxyCompactList}\item 
+fftwl\-\_\-complex $\ast$ \hyperlink{structnfsftl__plan_ab9243951baccdf59de326cada1c08853}{f\-\_\-hat}
+\begin{DoxyCompactList}\small\item\em Fourier coefficients. \end{DoxyCompactList}\item 
+fftwl\-\_\-complex $\ast$ \hyperlink{structnfsftl__plan_ad27b30233039fea75a9e1bc885324f3d}{f}
+\begin{DoxyCompactList}\small\item\em Samples. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structnfsftl__plan_ab1a7dae6c0f2b18d4eda2e32195bba95}{mv\-\_\-trafo} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Transform. \end{DoxyCompactList}\item 
+void($\ast$ \hyperlink{structnfsftl__plan_a162601fc8aa3248af806908e160d3c14}{mv\-\_\-adjoint} )(void $\ast$)
+\begin{DoxyCompactList}\small\item\em Adjoint transform. \end{DoxyCompactList}\item 
+\hypertarget{structnfsftl__plan_a8740f26f76947fcc07a636002217a8db}{int \hyperlink{structnfsftl__plan_a8740f26f76947fcc07a636002217a8db}{N}}\label{structnfsftl__plan_a8740f26f76947fcc07a636002217a8db}
+
+\begin{DoxyCompactList}\small\item\em the bandwidth $N$ \end{DoxyCompactList}\item 
+\hypertarget{structnfsftl__plan_a59d00d103ebc0746d9cbf2d49077dfe8}{long double $\ast$ \hyperlink{structnfsftl__plan_a59d00d103ebc0746d9cbf2d49077dfe8}{x}}\label{structnfsftl__plan_a59d00d103ebc0746d9cbf2d49077dfe8}
+
+\begin{DoxyCompactList}\small\item\em the nodes $\mathbf{x}(m) = \left(x_1,x_2\right) \in [-\frac{1}{2},\frac{1}{2}) \times [0,\frac{1}{2}]$ for $m=0,\ldots, M-1$, $M \in \mathbb{N},$ \end{DoxyCompactList}\item 
+\hypertarget{structnfsftl__plan_af5ba15c85f29ea8ba05a03c2f2fc2611}{int \hyperlink{structnfsftl__plan_af5ba15c85f29ea8ba05a03c2f2fc2611}{t}}\label{structnfsftl__plan_af5ba15c85f29ea8ba05a03c2f2fc2611}
+
+\begin{DoxyCompactList}\small\item\em the logarithm of N\-P\-T with respect to the basis 2 \end{DoxyCompactList}\item 
+\hypertarget{structnfsftl__plan_a15d53809b4f86c20e7fd99ea1b71efcb}{unsigned int \hyperlink{structnfsftl__plan_a15d53809b4f86c20e7fd99ea1b71efcb}{flags}}\label{structnfsftl__plan_a15d53809b4f86c20e7fd99ea1b71efcb}
+
+\begin{DoxyCompactList}\small\item\em the planner flags \end{DoxyCompactList}\item 
+\hypertarget{structnfsftl__plan_a2c016b15b6b33c44b8218c43619ef784}{\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} \hyperlink{structnfsftl__plan_a2c016b15b6b33c44b8218c43619ef784}{plan\-\_\-nfft}}\label{structnfsftl__plan_a2c016b15b6b33c44b8218c43619ef784}
+
+\begin{DoxyCompactList}\small\item\em the internal N\-F\-F\-T plan \end{DoxyCompactList}\item 
+\hypertarget{structnfsftl__plan_ab3914490d1c4767c0127783cac5098e4}{fftwl\-\_\-complex $\ast$ \hyperlink{structnfsftl__plan_ab3914490d1c4767c0127783cac5098e4}{f\-\_\-hat\-\_\-intern}}\label{structnfsftl__plan_ab3914490d1c4767c0127783cac5098e4}
+
+\begin{DoxyCompactList}\small\item\em Internally used pointer to spherical Fourier coefficients. \end{DoxyCompactList}\item 
+\hypertarget{structnfsftl__plan_ae2870ad5b902cb4724c2ab47e5e012e1}{double \hyperlink{structnfsftl__plan_ae2870ad5b902cb4724c2ab47e5e012e1}{M\-E\-A\-S\-U\-R\-E\-\_\-\-T\-I\-M\-E\-\_\-t} \mbox{[}3\mbox{]}}\label{structnfsftl__plan_ae2870ad5b902cb4724c2ab47e5e012e1}
+
+\begin{DoxyCompactList}\small\item\em Measured time for each step if M\-E\-A\-S\-U\-R\-E\-\_\-\-T\-I\-M\-E is set. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+data structure for an N\-F\-S\-F\-T (nonequispaced fast spherical Fourier transform) plan with long double precision 
+
+Definition at line 574 of file nfft3.\-h.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structnfsftl__plan_a1bfa1de211ea27da5675678e363ff1ab}{\index{nfsftl\-\_\-plan@{nfsftl\-\_\-plan}!N\-\_\-total@{N\-\_\-total}}
+\index{N\-\_\-total@{N\-\_\-total}!nfsftl_plan@{nfsftl\-\_\-plan}}
+\subsubsection[{N\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfsftl\-\_\-plan\-::\-N\-\_\-total}}\label{structnfsftl__plan_a1bfa1de211ea27da5675678e363ff1ab}
+
+
+Total number of Fourier coefficients. 
+
+
+
+Definition at line 574 of file nfft3.\-h.
+
+\hypertarget{structnfsftl__plan_adae433d8abf67e89b1aa194db96b1ff8}{\index{nfsftl\-\_\-plan@{nfsftl\-\_\-plan}!M\-\_\-total@{M\-\_\-total}}
+\index{M\-\_\-total@{M\-\_\-total}!nfsftl_plan@{nfsftl\-\_\-plan}}
+\subsubsection[{M\-\_\-total}]{\setlength{\rightskip}{0pt plus 5cm}N\-F\-F\-T\-\_\-\-I\-N\-T nfsftl\-\_\-plan\-::\-M\-\_\-total}}\label{structnfsftl__plan_adae433d8abf67e89b1aa194db96b1ff8}
+
+
+Total number of samples. 
+
+
+
+Definition at line 574 of file nfft3.\-h.
+
+\hypertarget{structnfsftl__plan_ab9243951baccdf59de326cada1c08853}{\index{nfsftl\-\_\-plan@{nfsftl\-\_\-plan}!f\-\_\-hat@{f\-\_\-hat}}
+\index{f\-\_\-hat@{f\-\_\-hat}!nfsftl_plan@{nfsftl\-\_\-plan}}
+\subsubsection[{f\-\_\-hat}]{\setlength{\rightskip}{0pt plus 5cm}fftwl\-\_\-complex$\ast$ nfsftl\-\_\-plan\-::f\-\_\-hat}}\label{structnfsftl__plan_ab9243951baccdf59de326cada1c08853}
+
+
+Fourier coefficients. 
+
+
+
+Definition at line 574 of file nfft3.\-h.
+
+\hypertarget{structnfsftl__plan_ad27b30233039fea75a9e1bc885324f3d}{\index{nfsftl\-\_\-plan@{nfsftl\-\_\-plan}!f@{f}}
+\index{f@{f}!nfsftl_plan@{nfsftl\-\_\-plan}}
+\subsubsection[{f}]{\setlength{\rightskip}{0pt plus 5cm}fftwl\-\_\-complex$\ast$ nfsftl\-\_\-plan\-::f}}\label{structnfsftl__plan_ad27b30233039fea75a9e1bc885324f3d}
+
+
+Samples. 
+
+
+
+Definition at line 574 of file nfft3.\-h.
+
+\hypertarget{structnfsftl__plan_ab1a7dae6c0f2b18d4eda2e32195bba95}{\index{nfsftl\-\_\-plan@{nfsftl\-\_\-plan}!mv\-\_\-trafo@{mv\-\_\-trafo}}
+\index{mv\-\_\-trafo@{mv\-\_\-trafo}!nfsftl_plan@{nfsftl\-\_\-plan}}
+\subsubsection[{mv\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ nfsftl\-\_\-plan\-::mv\-\_\-trafo)(void $\ast$)}}\label{structnfsftl__plan_ab1a7dae6c0f2b18d4eda2e32195bba95}
+
+
+Transform. 
+
+
+
+Definition at line 574 of file nfft3.\-h.
+
+\hypertarget{structnfsftl__plan_a162601fc8aa3248af806908e160d3c14}{\index{nfsftl\-\_\-plan@{nfsftl\-\_\-plan}!mv\-\_\-adjoint@{mv\-\_\-adjoint}}
+\index{mv\-\_\-adjoint@{mv\-\_\-adjoint}!nfsftl_plan@{nfsftl\-\_\-plan}}
+\subsubsection[{mv\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void($\ast$ nfsftl\-\_\-plan\-::mv\-\_\-adjoint)(void $\ast$)}}\label{structnfsftl__plan_a162601fc8aa3248af806908e160d3c14}
+
+
+Adjoint transform. 
+
+
+
+Definition at line 574 of file nfft3.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{nfft3_8h}{nfft3.\-h}\end{DoxyCompactItemize}

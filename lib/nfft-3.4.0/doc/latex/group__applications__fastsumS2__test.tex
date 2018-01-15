@@ -1,0 +1,276 @@
+\hypertarget{group__applications__fastsumS2__test}{\section{fastsum\-S2\-\_\-matlab}
+\label{group__applications__fastsumS2__test}\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}}
+}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__applications__fastsumS2__test_ga0512f12a35b9bcac68ac0d36cd9b50d5}{\#define {\bfseries S\-Y\-M\-B\-O\-L\-\_\-\-A\-B\-E\-L\-\_\-\-P\-O\-I\-S\-S\-O\-N}(k, h)~(pow(h,k))}\label{group__applications__fastsumS2__test_ga0512f12a35b9bcac68ac0d36cd9b50d5}
+
+\item 
+\hypertarget{group__applications__fastsumS2__test_ga580e1a9e3fba99e0750908b58010dc00}{\#define {\bfseries S\-Y\-M\-B\-O\-L\-\_\-\-S\-I\-N\-G\-U\-L\-A\-R\-I\-T\-Y}(k, h)~((2.\-0/(2$\ast$k+1))$\ast$pow(h,k))}\label{group__applications__fastsumS2__test_ga580e1a9e3fba99e0750908b58010dc00}
+
+\item 
+\hypertarget{group__applications__fastsumS2__test_ga0452118afd292fc346ed8116915d001e}{\#define \hyperlink{group__applications__fastsumS2__test_ga0452118afd292fc346ed8116915d001e}{K\-T\-\_\-\-A\-B\-E\-L\-\_\-\-P\-O\-I\-S\-S\-O\-N}~(0)}\label{group__applications__fastsumS2__test_ga0452118afd292fc346ed8116915d001e}
+
+\begin{DoxyCompactList}\small\item\em Abel-\/\-Poisson kernel. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsumS2__test_ga814ba1b58f017f7a67a85f68d4719814}{\#define \hyperlink{group__applications__fastsumS2__test_ga814ba1b58f017f7a67a85f68d4719814}{K\-T\-\_\-\-S\-I\-N\-G\-U\-L\-A\-R\-I\-T\-Y}~(1)}\label{group__applications__fastsumS2__test_ga814ba1b58f017f7a67a85f68d4719814}
+
+\begin{DoxyCompactList}\small\item\em Singularity kernel. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsumS2__test_gae2a54d1d59448d9f02697f89a6ec7306}{\#define \hyperlink{group__applications__fastsumS2__test_gae2a54d1d59448d9f02697f89a6ec7306}{K\-T\-\_\-\-L\-O\-C\-\_\-\-S\-U\-P\-P}~(2)}\label{group__applications__fastsumS2__test_gae2a54d1d59448d9f02697f89a6ec7306}
+
+\begin{DoxyCompactList}\small\item\em Locally supported kernel. \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsumS2__test_ga3a03d7fde39f1ba22a4549e72c8cbf39}{\#define \hyperlink{group__applications__fastsumS2__test_ga3a03d7fde39f1ba22a4549e72c8cbf39}{K\-T\-\_\-\-G\-A\-U\-S\-S\-I\-A\-N}~(3)}\label{group__applications__fastsumS2__test_ga3a03d7fde39f1ba22a4549e72c8cbf39}
+
+\begin{DoxyCompactList}\small\item\em Gaussian kernel. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{group__applications__fastsumS2__test_gad09943f93b91eb526d8081a4963eead8}{pvalue} \{ {\bfseries N\-O} = 0, 
+{\bfseries Y\-E\-S} = 1, 
+{\bfseries B\-O\-T\-H} = 2
+ \}
+\begin{DoxyCompactList}\small\item\em Enumeration type for yes/no/both-\/type parameters. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__applications__fastsumS2__test_ga54cdbbc74ffb567a185b5dcbc06a8f72}{static int {\bfseries scaled\-\_\-modified\-\_\-bessel\-\_\-i\-\_\-series} (const R x, const R alpha, const int nb, const int ize, R $\ast$b)}\label{group__applications__fastsumS2__test_ga54cdbbc74ffb567a185b5dcbc06a8f72}
+
+\item 
+\hypertarget{group__applications__fastsumS2__test_gaaa64831aa16e7dc4ceadbb42efd30621}{static void {\bfseries scaled\-\_\-modified\-\_\-bessel\-\_\-i\-\_\-normalize} (const R x, const R alpha, const int nb, const int ize, R $\ast$b, const R sum\-\_\-)}\label{group__applications__fastsumS2__test_gaaa64831aa16e7dc4ceadbb42efd30621}
+
+\item 
+static int \hyperlink{group__applications__fastsumS2__test_ga1d5bd4e21dc8f7d7c31cb53a2fe79915}{smbi} (const R x, const R alpha, const int nb, const int ize, R $\ast$b)
+\begin{DoxyCompactList}\small\item\em Calculates the modified bessel function $I_{n+\alpha}(x)$, possibly scaled by $\mathrm{e}^{-x}$, for real non-\/negative $x,alpha$ with $0 \le \alpha < 1$, and $n=0,1,\ldots,nb-1$. \end{DoxyCompactList}\item 
+static double \hyperlink{group__applications__fastsumS2__test_ga764f956ac40df99e776155bfa8da2e93}{inner\-Product} (const double phi1, const double theta1, const double phi2, const double theta2)
+\begin{DoxyCompactList}\small\item\em Computes the $\mathbb{R}^3$ standard inner product between two vectors on the unit sphere $\mathbb{S}^2$ given in spherical coordinates. \end{DoxyCompactList}\item 
+static double \hyperlink{group__applications__fastsumS2__test_ga6db9bf5c4ee6ca573d6d08a8202a5314}{poisson\-Kernel} (const double x, const double h)
+\begin{DoxyCompactList}\small\item\em Evaluates the Poisson kernel $Q_h: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. \end{DoxyCompactList}\item 
+static double \hyperlink{group__applications__fastsumS2__test_ga3f82140c739f6fcf9bc17a03a09f580d}{singularity\-Kernel} (const double x, const double h)
+\begin{DoxyCompactList}\small\item\em Evaluates the singularity kernel $S_h: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. \end{DoxyCompactList}\item 
+static double \hyperlink{group__applications__fastsumS2__test_ga226aec741614e0a2d2a9305bc2c28063}{locally\-Supported\-Kernel} (const double x, const double h, const double lambda)
+\begin{DoxyCompactList}\small\item\em Evaluates the locally supported kernel $L_{h,\lambda}: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. \end{DoxyCompactList}\item 
+static double \hyperlink{group__applications__fastsumS2__test_ga22bfa09881115e4c4f8fef59538d1ce7}{gaussian\-Kernel} (const double x, const double sigma)
+\begin{DoxyCompactList}\small\item\em Evaluates the spherical Gaussian kernel $G_\sigma: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. \end{DoxyCompactList}\item 
+int \hyperlink{group__applications__fastsumS2__test_ga3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\begin{DoxyCompactList}\small\item\em The main program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__applications__fastsumS2__test_ga1d5bd4e21dc8f7d7c31cb53a2fe79915}{\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}!smbi@{smbi}}
+\index{smbi@{smbi}!fastsumS2_matlab@{fastsum\-S2\-\_\-matlab}}
+\subsubsection[{smbi}]{\setlength{\rightskip}{0pt plus 5cm}static int smbi (
+\begin{DoxyParamCaption}
+\item[{const R}]{x, }
+\item[{const R}]{alpha, }
+\item[{const int}]{nb, }
+\item[{const int}]{ize, }
+\item[{R $\ast$}]{b}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{group__applications__fastsumS2__test_ga1d5bd4e21dc8f7d7c31cb53a2fe79915}
+
+
+Calculates the modified bessel function $I_{n+\alpha}(x)$, possibly scaled by $\mathrm{e}^{-x}$, for real non-\/negative $x,alpha$ with $0 \le \alpha < 1$, and $n=0,1,\ldots,nb-1$. 
+
+\begin{DoxyItemize}
+\item \mbox{[}in\mbox{]} {\ttfamily x} non-\/negative real number in $I_{n+\alpha}(x)$ \item \mbox{[}in\mbox{]} {\ttfamily alpha} non-\/negative real number with $0 \le \alpha < 1$ in $I_{n+\alpha}(x)$ \item \mbox{[}in\mbox{]} {\ttfamily nb} number of functions to be calculated \item \mbox{[}in\mbox{]} {\ttfamily ize} switch between no scaling ({\ttfamily ize} = 1) and exponential scaling ({\ttfamily ize} = 2) \item \mbox{[}out\mbox{]} {\ttfamily b} real output vector to contain $I_{n+\alpha}(x)$, $n=0,1,\ldots,nb-1$ \begin{DoxyReturn}{Returns}
+error indicator. Only if this value is identical to {\ttfamily nb}, then all values in {\ttfamily b} have been calculated to full accuracy. If not, errors are indicated using the following scheme\-:
+\begin{DoxyItemize}
+\item ncalc $<$ 0\-: At least one of the arguments was out of range (e.\-g. nb $<$= 0, ize neither equals 1 nor 2, $|x| \ge exparg$). In this case, the output vector b is not calculated and {\ttfamily ncalc} is set to $\min(nb,0)-1$.
+\item 0 $<$ ncalc $<$ nb\-: Not all requested functions could be calculated to full accuracy. This can occur when nb is much larger than $\vert$x$\vert$. in this case, the values $I_{n+\alpha}(x)$ are calculated to full accuracy for $n=0,1,\ldots,ncalc$. The rest of the values up to $n=0,1,\ldots,nb-1$ is calculated to a lower accuracy.
+\end{DoxyItemize}
+\end{DoxyReturn}
+\end{DoxyItemize}
+This program is based on a program written by David J. Sookne \mbox{[}2\mbox{]} that computes values of the Bessel functions $J_{\nu}(x)$ or $I_{\nu}(x)$ for real argument $x$ and integer order $\nu$. modifications include the restriction of the computation to the Bessel function $I_{\nu}(x)$ for non-\/negative real argument, the extension of the computation to arbitrary non-\/negative orders $\nu$, and the elimination of most underflow.
+
+References\-: \mbox{[}1\mbox{]} F. W. J. Olver and D. J. Sookne, A note on backward recurrence algorithms\char`\"{}, Math. Comput. (26), 1972, pp 125 -\/-\/ 132.
+\mbox{[}2\mbox{]} D. J. Sookne, \char`\"{}Bessel functions of real argument and int order", N\-B\-S Jour. of Res. B. (77\-B), 1973, pp. 125 -- 132.
+
+Modified by W. J. Cody, Applied Mathematics Division, Argonne National Laboratory, Argonne, I\-L, 60439, U\-S\-A
+
+Modified by Jens Keiner, Institute of Mathematics, University of Lübeck, 23560 Lübeck, Germany 
+
+Definition at line 192 of file fastsum\-S2.\-c.
+
+
+
+Referenced by main().
+
+\hypertarget{group__applications__fastsumS2__test_ga764f956ac40df99e776155bfa8da2e93}{\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}!inner\-Product@{inner\-Product}}
+\index{inner\-Product@{inner\-Product}!fastsumS2_matlab@{fastsum\-S2\-\_\-matlab}}
+\subsubsection[{inner\-Product}]{\setlength{\rightskip}{0pt plus 5cm}static double inner\-Product (
+\begin{DoxyParamCaption}
+\item[{const double}]{phi1, }
+\item[{const double}]{theta1, }
+\item[{const double}]{phi2, }
+\item[{const double}]{theta2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{group__applications__fastsumS2__test_ga764f956ac40df99e776155bfa8da2e93}
+
+
+Computes the $\mathbb{R}^3$ standard inner product between two vectors on the unit sphere $\mathbb{S}^2$ given in spherical coordinates. 
+
+\begin{DoxyItemize}
+\item phi1 The angle $\varphi_1 \in [-\pi,\pi)$ of the first vector \item theta1 The angle $\vartheta_1 \in [0,\pi]$ of the first vector \item phi2 The angle $\varphi_2 \in [-\pi,\pi)$ of the second vector \item theta2 The angle $\vartheta_2 \in [0,\pi]$ of the second vector\end{DoxyItemize}
+\begin{DoxyReturn}{Returns}
+The inner product $\cos \vartheta_1 \cos \vartheta_2 + \sin \vartheta_1 \sin(\vartheta_2 \cos(\varphi_1 - \varphi_2)$
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jens Keiner 
+\end{DoxyAuthor}
+
+
+Definition at line 449 of file fastsum\-S2.\-c.
+
+
+
+Referenced by main().
+
+\hypertarget{group__applications__fastsumS2__test_ga6db9bf5c4ee6ca573d6d08a8202a5314}{\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}!poisson\-Kernel@{poisson\-Kernel}}
+\index{poisson\-Kernel@{poisson\-Kernel}!fastsumS2_matlab@{fastsum\-S2\-\_\-matlab}}
+\subsubsection[{poisson\-Kernel}]{\setlength{\rightskip}{0pt plus 5cm}static double poisson\-Kernel (
+\begin{DoxyParamCaption}
+\item[{const double}]{x, }
+\item[{const double}]{h}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{group__applications__fastsumS2__test_ga6db9bf5c4ee6ca573d6d08a8202a5314}
+
+
+Evaluates the Poisson kernel $Q_h: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. 
+
+\begin{DoxyItemize}
+\item x The node $x \in [-1,1]$ \item h The parameter $h \in (0,1)$\end{DoxyItemize}
+\begin{DoxyReturn}{Returns}
+The value of the Poisson kernel $Q_h(x)$ at the node $x$
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jens Keiner 
+\end{DoxyAuthor}
+
+
+Definition at line 468 of file fastsum\-S2.\-c.
+
+
+
+Referenced by main().
+
+\hypertarget{group__applications__fastsumS2__test_ga3f82140c739f6fcf9bc17a03a09f580d}{\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}!singularity\-Kernel@{singularity\-Kernel}}
+\index{singularity\-Kernel@{singularity\-Kernel}!fastsumS2_matlab@{fastsum\-S2\-\_\-matlab}}
+\subsubsection[{singularity\-Kernel}]{\setlength{\rightskip}{0pt plus 5cm}static double singularity\-Kernel (
+\begin{DoxyParamCaption}
+\item[{const double}]{x, }
+\item[{const double}]{h}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{group__applications__fastsumS2__test_ga3f82140c739f6fcf9bc17a03a09f580d}
+
+
+Evaluates the singularity kernel $S_h: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. 
+
+\begin{DoxyItemize}
+\item x The node $x \in [-1,1]$ \item h The parameter $h \in (0,1)$\end{DoxyItemize}
+\begin{DoxyReturn}{Returns}
+The value of the Poisson kernel $S_h(x)$ at the node $x$
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jens Keiner 
+\end{DoxyAuthor}
+
+
+Definition at line 484 of file fastsum\-S2.\-c.
+
+
+
+Referenced by main().
+
+\hypertarget{group__applications__fastsumS2__test_ga226aec741614e0a2d2a9305bc2c28063}{\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}!locally\-Supported\-Kernel@{locally\-Supported\-Kernel}}
+\index{locally\-Supported\-Kernel@{locally\-Supported\-Kernel}!fastsumS2_matlab@{fastsum\-S2\-\_\-matlab}}
+\subsubsection[{locally\-Supported\-Kernel}]{\setlength{\rightskip}{0pt plus 5cm}static double locally\-Supported\-Kernel (
+\begin{DoxyParamCaption}
+\item[{const double}]{x, }
+\item[{const double}]{h, }
+\item[{const double}]{lambda}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{group__applications__fastsumS2__test_ga226aec741614e0a2d2a9305bc2c28063}
+
+
+Evaluates the locally supported kernel $L_{h,\lambda}: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. 
+
+\begin{DoxyItemize}
+\item x The node $x \in [-1,1]$ \item h The parameter $h \in (0,1)$ \item lambda The parameter $\lambda \in \mathbb{N}_0$\end{DoxyItemize}
+\begin{DoxyReturn}{Returns}
+The value of the locally supported kernel $L_{h,\lambda}(x)$ at the node $x$
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jens Keiner 
+\end{DoxyAuthor}
+
+
+Definition at line 502 of file fastsum\-S2.\-c.
+
+
+
+Referenced by main().
+
+\hypertarget{group__applications__fastsumS2__test_ga22bfa09881115e4c4f8fef59538d1ce7}{\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}!gaussian\-Kernel@{gaussian\-Kernel}}
+\index{gaussian\-Kernel@{gaussian\-Kernel}!fastsumS2_matlab@{fastsum\-S2\-\_\-matlab}}
+\subsubsection[{gaussian\-Kernel}]{\setlength{\rightskip}{0pt plus 5cm}static double gaussian\-Kernel (
+\begin{DoxyParamCaption}
+\item[{const double}]{x, }
+\item[{const double}]{sigma}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [static]}}}\label{group__applications__fastsumS2__test_ga22bfa09881115e4c4f8fef59538d1ce7}
+
+
+Evaluates the spherical Gaussian kernel $G_\sigma: [-1,1] \rightarrow \mathbb{R}$ at a node $x \in [-1,1]$. 
+
+\begin{DoxyItemize}
+\item x The node $x \in [-1,1]$ \item sigma The parameter $\sigma \in \mathbb{R}_+$\end{DoxyItemize}
+\begin{DoxyReturn}{Returns}
+The value of the pherical Gaussian kernel $G_\sigma(x)$ at the node $x$
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jens Keiner 
+\end{DoxyAuthor}
+
+
+Definition at line 520 of file fastsum\-S2.\-c.
+
+
+
+Referenced by main().
+
+\hypertarget{group__applications__fastsumS2__test_ga3c04138a5bfe5d72780bb7e82a18e627}{\index{fastsum\-S2\-\_\-matlab@{fastsum\-S2\-\_\-matlab}!main@{main}}
+\index{main@{main}!fastsumS2_matlab@{fastsum\-S2\-\_\-matlab}}
+\subsubsection[{main}]{\setlength{\rightskip}{0pt plus 5cm}int main (
+\begin{DoxyParamCaption}
+\item[{int}]{argc, }
+\item[{char $\ast$$\ast$}]{argv}
+\end{DoxyParamCaption}
+)}}\label{group__applications__fastsumS2__test_ga3c04138a5bfe5d72780bb7e82a18e627}
+
+
+The main program. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em argc} & The number of arguments \\
+\hline
+{\em argv} & An array containing the arguments as C-\/strings\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Exit code
+\end{DoxyReturn}
+\begin{DoxyAuthor}{Author}
+Jens Keiner 
+\end{DoxyAuthor}
+
+
+Definition at line 535 of file fastsum\-S2.\-c.
+
+
+
+References nfsft\-\_\-plan\-::f, nfsft\-\_\-plan\-::f\-\_\-hat, F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E, F\-F\-T\-W\-\_\-\-I\-N\-I\-T, gaussian\-Kernel(), inner\-Product(), K\-T\-\_\-\-A\-B\-E\-L\-\_\-\-P\-O\-I\-S\-S\-O\-N, K\-T\-\_\-\-G\-A\-U\-S\-S\-I\-A\-N, K\-T\-\_\-\-L\-O\-C\-\_\-\-S\-U\-P\-P, K\-T\-\_\-\-S\-I\-N\-G\-U\-L\-A\-R\-I\-T\-Y, locally\-Supported\-Kernel(), nfft\-\_\-elapsed\-\_\-seconds(), nfft\-\_\-free(), nfft\-\_\-malloc(), nfsft\-\_\-adjoint(), N\-F\-S\-F\-T\-\_\-\-F\-\_\-\-H\-A\-T\-\_\-\-S\-I\-Z\-E, nfsft\-\_\-finalize(), nfsft\-\_\-forget(), N\-F\-S\-F\-T\-\_\-\-I\-N\-D\-E\-X, N\-F\-S\-F\-T\-\_\-\-N\-O\-\_\-\-F\-A\-S\-T\-\_\-\-A\-L\-G\-O\-R\-I\-T\-H\-M, nfsft\-\_\-precompute(), nfsft\-\_\-trafo(), N\-F\-S\-F\-T\-\_\-\-U\-S\-E\-\_\-\-D\-P\-T, N\-F\-S\-F\-T\-\_\-\-U\-S\-E\-\_\-\-N\-D\-F\-T, poisson\-Kernel(), P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T, P\-R\-E\-\_\-\-P\-S\-I, singularity\-Kernel(), smbi(), X, and nfsft\-\_\-plan\-::x.
+

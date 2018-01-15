@@ -1,0 +1,81 @@
+\hypertarget{structinfst__adjoint__plan}{\section{infst\-\_\-adjoint\-\_\-plan Struct Reference}
+\label{structinfst__adjoint__plan}\index{infst\-\_\-adjoint\-\_\-plan@{infst\-\_\-adjoint\-\_\-plan}}
+}
+
+
+Structure for an adjoint transform plan.  
+
+
+
+
+{\ttfamily \#include $<$solver\-\_\-adjoint.\-h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structinfst__adjoint__plan_a02395790ff1d9e7ffc2e3fae3b927df0}{\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ \hyperlink{structinfst__adjoint__plan_a02395790ff1d9e7ffc2e3fae3b927df0}{mv}}\label{structinfst__adjoint__plan_a02395790ff1d9e7ffc2e3fae3b927df0}
+
+\begin{DoxyCompactList}\small\item\em matrix vector multiplication \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a8771c95bc65a49fe974389825f005ec9}{unsigned \hyperlink{structinfst__adjoint__plan_a8771c95bc65a49fe974389825f005ec9}{flags}}\label{structinfst__adjoint__plan_a8771c95bc65a49fe974389825f005ec9}
+
+\begin{DoxyCompactList}\small\item\em iteration type \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a5b64034f7c01c3ce0a7ab02fd8477bdc}{double $\ast$ \hyperlink{structinfst__adjoint__plan_a5b64034f7c01c3ce0a7ab02fd8477bdc}{w}}\label{structinfst__adjoint__plan_a5b64034f7c01c3ce0a7ab02fd8477bdc}
+
+\begin{DoxyCompactList}\small\item\em weighting factors \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a00f860d5af6ada0c99a252b5d7548f5b}{double $\ast$ \hyperlink{structinfst__adjoint__plan_a00f860d5af6ada0c99a252b5d7548f5b}{w\-\_\-hat}}\label{structinfst__adjoint__plan_a00f860d5af6ada0c99a252b5d7548f5b}
+
+\begin{DoxyCompactList}\small\item\em damping factors \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a52d2b0b0d208e673eada45dff01e9c13}{double $\ast$ \hyperlink{structinfst__adjoint__plan_a52d2b0b0d208e673eada45dff01e9c13}{y\-\_\-hat}}\label{structinfst__adjoint__plan_a52d2b0b0d208e673eada45dff01e9c13}
+
+\begin{DoxyCompactList}\small\item\em right hand side, samples \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a53b03057778ae78ee06efd6b135e23fb}{double $\ast$ \hyperlink{structinfst__adjoint__plan_a53b03057778ae78ee06efd6b135e23fb}{f\-\_\-iter}}\label{structinfst__adjoint__plan_a53b03057778ae78ee06efd6b135e23fb}
+
+\begin{DoxyCompactList}\small\item\em iterative solution \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_abd086bc019b356986e38f3db8039051f}{double $\ast$ \hyperlink{structinfst__adjoint__plan_abd086bc019b356986e38f3db8039051f}{r\-\_\-hat\-\_\-iter}}\label{structinfst__adjoint__plan_abd086bc019b356986e38f3db8039051f}
+
+\begin{DoxyCompactList}\small\item\em iterated residual vector \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a254d587d2d91f18fb55a2ccae89198a5}{double $\ast$ \hyperlink{structinfst__adjoint__plan_a254d587d2d91f18fb55a2ccae89198a5}{z\-\_\-iter}}\label{structinfst__adjoint__plan_a254d587d2d91f18fb55a2ccae89198a5}
+
+\begin{DoxyCompactList}\small\item\em residual of normal equation of \textbackslash{} first kind \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a53b6ba348be2011c1cfecdb9f16829fd}{double $\ast$ \hyperlink{structinfst__adjoint__plan_a53b6ba348be2011c1cfecdb9f16829fd}{p\-\_\-iter}}\label{structinfst__adjoint__plan_a53b6ba348be2011c1cfecdb9f16829fd}
+
+\begin{DoxyCompactList}\small\item\em search direction \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a10da470b963e2d631f48e8eb81bad94e}{double $\ast$ \hyperlink{structinfst__adjoint__plan_a10da470b963e2d631f48e8eb81bad94e}{v\-\_\-hat\-\_\-iter}}\label{structinfst__adjoint__plan_a10da470b963e2d631f48e8eb81bad94e}
+
+\begin{DoxyCompactList}\small\item\em residual vector update \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_aef3f9b375d7e43fbcbea60380c5e9f34}{double \hyperlink{structinfst__adjoint__plan_aef3f9b375d7e43fbcbea60380c5e9f34}{alpha\-\_\-iter}}\label{structinfst__adjoint__plan_aef3f9b375d7e43fbcbea60380c5e9f34}
+
+\begin{DoxyCompactList}\small\item\em step size for search direction \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a0aa7b8faeab03acb6011b673882282ea}{double \hyperlink{structinfst__adjoint__plan_a0aa7b8faeab03acb6011b673882282ea}{beta\-\_\-iter}}\label{structinfst__adjoint__plan_a0aa7b8faeab03acb6011b673882282ea}
+
+\begin{DoxyCompactList}\small\item\em step size for search correction \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a3dfbd628846af0683c8fc263f8cf6418}{double \hyperlink{structinfst__adjoint__plan_a3dfbd628846af0683c8fc263f8cf6418}{dot\-\_\-r\-\_\-hat\-\_\-iter}}\label{structinfst__adjoint__plan_a3dfbd628846af0683c8fc263f8cf6418}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of r\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_ae8dfd86274f0e3bba8c01730449d0474}{double \hyperlink{structinfst__adjoint__plan_ae8dfd86274f0e3bba8c01730449d0474}{dot\-\_\-r\-\_\-hat\-\_\-iter\-\_\-old}}\label{structinfst__adjoint__plan_ae8dfd86274f0e3bba8c01730449d0474}
+
+\begin{DoxyCompactList}\small\item\em previous dot\-\_\-r\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a2309d1161fdf96711f3251e41a65eef0}{double \hyperlink{structinfst__adjoint__plan_a2309d1161fdf96711f3251e41a65eef0}{dot\-\_\-z\-\_\-iter}}\label{structinfst__adjoint__plan_a2309d1161fdf96711f3251e41a65eef0}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of \textbackslash{} z\-\_\-hat\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a9bdd6b4dfcb1b22bd010444ef34b5903}{double \hyperlink{structinfst__adjoint__plan_a9bdd6b4dfcb1b22bd010444ef34b5903}{dot\-\_\-z\-\_\-iter\-\_\-old}}\label{structinfst__adjoint__plan_a9bdd6b4dfcb1b22bd010444ef34b5903}
+
+\begin{DoxyCompactList}\small\item\em previous dot\-\_\-z\-\_\-hat\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_a6dfb17d6feade963b31c16e6278aa6ee}{double \hyperlink{structinfst__adjoint__plan_a6dfb17d6feade963b31c16e6278aa6ee}{dot\-\_\-p\-\_\-iter}}\label{structinfst__adjoint__plan_a6dfb17d6feade963b31c16e6278aa6ee}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of \textbackslash{} p\-\_\-hat\-\_\-iter \end{DoxyCompactList}\item 
+\hypertarget{structinfst__adjoint__plan_ab4e8f85dfe25ba2b90f86d7d39362e5c}{double \hyperlink{structinfst__adjoint__plan_ab4e8f85dfe25ba2b90f86d7d39362e5c}{dot\-\_\-v\-\_\-hat\-\_\-iter}}\label{structinfst__adjoint__plan_ab4e8f85dfe25ba2b90f86d7d39362e5c}
+
+\begin{DoxyCompactList}\small\item\em weighted dotproduct of v\-\_\-iter \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Structure for an adjoint transform plan. 
+
+Definition at line 82 of file solver\-\_\-adjoint.\-h.
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{solver__adjoint_8h}{solver\-\_\-adjoint.\-h}\end{DoxyCompactItemize}

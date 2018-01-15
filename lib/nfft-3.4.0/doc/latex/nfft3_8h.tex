@@ -1,0 +1,2288 @@
+\hypertarget{nfft3_8h}{\section{nfft3.\-h File Reference}
+\label{nfft3_8h}\index{nfft3.\-h@{nfft3.\-h}}
+}
+
+
+Header file for the nfft3 library.  
+
+
+{\ttfamily \#include $<$fftw3.\-h$>$}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structnfftf__mv__plan__complex}{nfftf\-\_\-mv\-\_\-plan\-\_\-complex}
+\item 
+struct \hyperlink{structnfftf__mv__plan__double}{nfftf\-\_\-mv\-\_\-plan\-\_\-double}
+\item 
+struct \hyperlink{structnfftf__plan}{nfftf\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-F\-T (nonequispaced fast Fourier transform) plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfft__mv__plan__complex}{nfft\-\_\-mv\-\_\-plan\-\_\-complex}
+\item 
+struct \hyperlink{structnfft__mv__plan__double}{nfft\-\_\-mv\-\_\-plan\-\_\-double}
+\item 
+struct \hyperlink{structnfft__plan}{nfft\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-F\-T (nonequispaced fast Fourier transform) plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfftl__mv__plan__complex}{nfftl\-\_\-mv\-\_\-plan\-\_\-complex}
+\item 
+struct \hyperlink{structnfftl__mv__plan__double}{nfftl\-\_\-mv\-\_\-plan\-\_\-double}
+\item 
+struct \hyperlink{structnfftl__plan}{nfftl\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-F\-T (nonequispaced fast Fourier transform) plan with long double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfctf__plan}{nfctf\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-C\-T (nonequispaced fast cosine transform) plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfct__plan}{nfct\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-C\-T (nonequispaced fast cosine transform) plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfctl__plan}{nfctl\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-C\-T (nonequispaced fast cosine transform) plan with long double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfstf__plan}{nfstf\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-S\-T (nonequispaced fast sine transform) plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfst__plan}{nfst\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-S\-T (nonequispaced fast sine transform) plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfstl__plan}{nfstl\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-S\-T (nonequispaced fast sine transform) plan with long double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-N\-F\-F\-T (nonequispaced in time and frequency fast Fourier transform) plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnnfft__plan}{nnfft\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-N\-F\-F\-T (nonequispaced in time and frequency fast Fourier transform) plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-N\-F\-F\-T (nonequispaced in time and frequency fast Fourier transform) plan with long double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-S\-F\-F\-T (nonequispaced sparse fast Fourier transform) plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnsfft__plan}{nsfft\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-S\-F\-F\-T (nonequispaced sparse fast Fourier transform) plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-S\-F\-F\-T (nonequispaced sparse fast Fourier transform) plan with long double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structmrif__inh__2d1d__plan}{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan}
+\item 
+struct \hyperlink{structmrif__inh__3d__plan}{mrif\-\_\-inh\-\_\-3d\-\_\-plan}
+\item 
+struct \hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan}
+\item 
+struct \hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan}
+\item 
+struct \hyperlink{structmril__inh__2d1d__plan}{mril\-\_\-inh\-\_\-2d1d\-\_\-plan}
+\item 
+struct \hyperlink{structmril__inh__3d__plan}{mril\-\_\-inh\-\_\-3d\-\_\-plan}
+\item 
+struct \hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-S\-F\-T (nonequispaced fast spherical Fourier transform) plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfsft__plan}{nfsft\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-S\-F\-T (nonequispaced fast spherical Fourier transform) plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-F\-S\-F\-T (nonequispaced fast spherical Fourier transform) plan with long double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan\-\_\-}
+\item 
+struct \hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan\-\_\-}
+\item 
+struct \hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan\-\_\-}
+\item 
+struct \hyperlink{structsolverf__plan__complex}{solverf\-\_\-plan\-\_\-complex}
+\begin{DoxyCompactList}\small\item\em data structure for an inverse N\-F\-F\-T plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structsolverf__plan__double}{solverf\-\_\-plan\-\_\-double}
+\begin{DoxyCompactList}\small\item\em data structure for an inverse N\-F\-F\-T plan with float precision \end{DoxyCompactList}\item 
+struct \hyperlink{structsolver__plan__complex}{solver\-\_\-plan\-\_\-complex}
+\begin{DoxyCompactList}\small\item\em data structure for an inverse N\-F\-F\-T plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structsolver__plan__double}{solver\-\_\-plan\-\_\-double}
+\begin{DoxyCompactList}\small\item\em data structure for an inverse N\-F\-F\-T plan with double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structsolverl__plan__complex}{solverl\-\_\-plan\-\_\-complex}
+\begin{DoxyCompactList}\small\item\em data structure for an inverse N\-F\-F\-T plan with long double precision \end{DoxyCompactList}\item 
+struct \hyperlink{structsolverl__plan__double}{solverl\-\_\-plan\-\_\-double}
+\begin{DoxyCompactList}\small\item\em data structure for an inverse N\-F\-F\-T plan with long double precision \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{nfft3_8h_ae517f6bde0ab33b87890bb20a018546a}{\#define {\bfseries N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T}(prefix, name)~prefix \#\# name}\label{nfft3_8h_ae517f6bde0ab33b87890bb20a018546a}
+
+\item 
+\hypertarget{nfft3_8h_a3aee7f9abb803d4208e483d24ce23847}{\#define {\bfseries N\-F\-F\-T\-\_\-\-E\-X\-T\-E\-R\-N}~extern}\label{nfft3_8h_a3aee7f9abb803d4208e483d24ce23847}
+
+\item 
+\#define \hyperlink{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{M\-A\-C\-R\-O\-\_\-\-M\-V\-\_\-\-P\-L\-A\-N}(R\-C)
+\begin{DoxyCompactList}\small\item\em Adjoint transform. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_abb27e11cf00ef4d6c30c8bcedf7da849}{\#define {\bfseries N\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfft\-\_\-, name)}\label{nfft3_8h_abb27e11cf00ef4d6c30c8bcedf7da849}
+
+\item 
+\hypertarget{nfft3_8h_acace1e2cd22c39b9b6f0fee89315e092}{\#define {\bfseries N\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfftf\-\_\-, name)}\label{nfft3_8h_acace1e2cd22c39b9b6f0fee89315e092}
+
+\item 
+\hypertarget{nfft3_8h_a2cf83ec3ae466fbda3fa01f5cf6263fe}{\#define {\bfseries N\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfftl\-\_\-, name)}\label{nfft3_8h_a2cf83ec3ae466fbda3fa01f5cf6263fe}
+
+\item 
+\#define {\bfseries N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X})
+\item 
+\hypertarget{nfft3_8h_a038f615fdd7fd2ef683924657745121a}{\#define {\bfseries N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, R, C)}\label{nfft3_8h_a038f615fdd7fd2ef683924657745121a}
+
+\item 
+\#define \hyperlink{group__nfft_gada3a356fdaf5840f98374a0a7aaf3e9c}{P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T}~(1\-U$<$$<$0)
+\item 
+\#define \hyperlink{group__nfft_ga01ebac2d2071639df189f083fc9f24eb}{F\-G\-\_\-\-P\-S\-I}~(1\-U$<$$<$1)
+\item 
+\#define \hyperlink{group__nfft_gabb1ad048b695cb806baf010c5d1b2caf}{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}~(1\-U$<$$<$2)
+\item 
+\#define \hyperlink{group__nfft_ga9c5a5ab61009a801082897ca40a1658c}{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}~(1\-U$<$$<$3)
+\item 
+\#define \hyperlink{group__nfft_ga959463a5c7723ccef5057ddcb784b40c}{P\-R\-E\-\_\-\-P\-S\-I}~(1\-U$<$$<$4)
+\item 
+\#define \hyperlink{group__nfft_ga7ad8a7e19519b16340dabec48899c6a4}{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I}~(1\-U$<$$<$5)
+\item 
+\#define \hyperlink{group__nfft_ga353185384f87de0dc4320a82652ef724}{M\-A\-L\-L\-O\-C\-\_\-\-X}~(1\-U$<$$<$6)
+\item 
+\#define \hyperlink{group__nfft_ga02d52cb02b6cfdbc3e4d5fd4de1aef9e}{M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U$<$$<$7)
+\item 
+\#define \hyperlink{group__nfft_gaa7b5098f4136080bbe0dd989973e2a69}{M\-A\-L\-L\-O\-C\-\_\-\-F}~(1\-U$<$$<$8)
+\item 
+\#define \hyperlink{group__nfft_ga9193f768d5839892d0e303080c370eaf}{F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E}~(1\-U$<$$<$9)
+\item 
+\#define \hyperlink{group__nfft_gad3fe6867a3351441c6f44dd5a3746f5b}{F\-F\-T\-W\-\_\-\-I\-N\-I\-T}~(1\-U$<$$<$10)
+\item 
+\hypertarget{nfft3_8h_a4915d42afc8200ce7e0bf3c60f5a5164}{\#define {\bfseries N\-F\-F\-T\-\_\-\-S\-O\-R\-T\-\_\-\-N\-O\-D\-E\-S}~(1\-U$<$$<$11)}\label{nfft3_8h_a4915d42afc8200ce7e0bf3c60f5a5164}
+
+\item 
+\hypertarget{nfft3_8h_a0dc58c2f9ab115527fce4553e523fe65}{\#define {\bfseries N\-F\-F\-T\-\_\-\-O\-M\-P\-\_\-\-B\-L\-O\-C\-K\-W\-I\-S\-E\-\_\-\-A\-D\-J\-O\-I\-N\-T}~(1\-U$<$$<$12)}\label{nfft3_8h_a0dc58c2f9ab115527fce4553e523fe65}
+
+\item 
+\#define \hyperlink{group__nfft_ga44c85197c6bdcf4b632aeff5e94d5329}{P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I}~(\hyperlink{group__nfft_gabb1ad048b695cb806baf010c5d1b2caf}{P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I}$\vert$ \hyperlink{group__nfft_ga9c5a5ab61009a801082897ca40a1658c}{P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I}$\vert$ \hyperlink{group__nfft_ga959463a5c7723ccef5057ddcb784b40c}{P\-R\-E\-\_\-\-P\-S\-I}$\vert$ \hyperlink{group__nfft_ga7ad8a7e19519b16340dabec48899c6a4}{P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I})
+\item 
+\hypertarget{nfft3_8h_a8aca2e82cc4aad289d766e9081db2342}{\#define {\bfseries N\-F\-C\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfct\-\_\-, name)}\label{nfft3_8h_a8aca2e82cc4aad289d766e9081db2342}
+
+\item 
+\hypertarget{nfft3_8h_aae454c5f4fb644fc43fcbcb38aa2ad21}{\#define {\bfseries N\-F\-C\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfctf\-\_\-, name)}\label{nfft3_8h_aae454c5f4fb644fc43fcbcb38aa2ad21}
+
+\item 
+\hypertarget{nfft3_8h_ac5f221d2bdedda863256ad71afb59aa8}{\#define {\bfseries N\-F\-C\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfctl\-\_\-, name)}\label{nfft3_8h_ac5f221d2bdedda863256ad71afb59aa8}
+
+\item 
+\hypertarget{nfft3_8h_acc3e466d456fb09b49d1419c700b17a8}{\#define {\bfseries N\-F\-C\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, R, C)}\label{nfft3_8h_acc3e466d456fb09b49d1419c700b17a8}
+
+\item 
+\hypertarget{nfft3_8h_a31de74e769995b389a073cc1a11a635d}{\#define {\bfseries N\-F\-S\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfst\-\_\-, name)}\label{nfft3_8h_a31de74e769995b389a073cc1a11a635d}
+
+\item 
+\hypertarget{nfft3_8h_a2179856efcede20ea65f4258a0d0d733}{\#define {\bfseries N\-F\-S\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfstf\-\_\-, name)}\label{nfft3_8h_a2179856efcede20ea65f4258a0d0d733}
+
+\item 
+\hypertarget{nfft3_8h_ac580ff2588b8c11fe4afff54283f59f5}{\#define {\bfseries N\-F\-S\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfstl\-\_\-, name)}\label{nfft3_8h_ac580ff2588b8c11fe4afff54283f59f5}
+
+\item 
+\hypertarget{nfft3_8h_a903d25a4862e94e5f89cda05c6e37b91}{\#define {\bfseries N\-F\-S\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, R, C)}\label{nfft3_8h_a903d25a4862e94e5f89cda05c6e37b91}
+
+\item 
+\hypertarget{nfft3_8h_a47809430feb060b7a83995abd8a1463e}{\#define {\bfseries N\-N\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nnfft\-\_\-, name)}\label{nfft3_8h_a47809430feb060b7a83995abd8a1463e}
+
+\item 
+\hypertarget{nfft3_8h_a3ad081c46c1cab2db96655b39606c35d}{\#define {\bfseries N\-N\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nnfftf\-\_\-, name)}\label{nfft3_8h_a3ad081c46c1cab2db96655b39606c35d}
+
+\item 
+\hypertarget{nfft3_8h_a42846731d87023ee66232e72c613ad41}{\#define {\bfseries N\-N\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nnfftl\-\_\-, name)}\label{nfft3_8h_a42846731d87023ee66232e72c613ad41}
+
+\item 
+\hypertarget{nfft3_8h_a8700e802f404ffbc5c550435fc424cad}{\#define {\bfseries N\-N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, Z, R, C)}\label{nfft3_8h_a8700e802f404ffbc5c550435fc424cad}
+
+\item 
+\#define \hyperlink{group__nnfft_gabfc80597fb6dcd28f3b9728bd7082642}{M\-A\-L\-L\-O\-C\-\_\-\-V}~(1\-U$<$$<$ 11)
+\item 
+\hypertarget{nfft3_8h_adf3e9bfac19f91b9ddc0b4d7e6a6d058}{\#define {\bfseries N\-S\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nsfft\-\_\-, name)}\label{nfft3_8h_adf3e9bfac19f91b9ddc0b4d7e6a6d058}
+
+\item 
+\hypertarget{nfft3_8h_a3c980c7d23c9e5613e89f6e9eeb61522}{\#define {\bfseries N\-S\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nsfftf\-\_\-, name)}\label{nfft3_8h_a3c980c7d23c9e5613e89f6e9eeb61522}
+
+\item 
+\hypertarget{nfft3_8h_abf287fadc0bd736d90c31cbf94403765}{\#define {\bfseries N\-S\-F\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nsfftl\-\_\-, name)}\label{nfft3_8h_abf287fadc0bd736d90c31cbf94403765}
+
+\item 
+\hypertarget{nfft3_8h_a84826a12df920d845086a31bd4256c7b}{\#define {\bfseries N\-S\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, Z, R, C)}\label{nfft3_8h_a84826a12df920d845086a31bd4256c7b}
+
+\item 
+\#define \hyperlink{group__nsfft_ga3a5a1f8be42adf0575f0e0c4b8e0a32a}{N\-S\-D\-F\-T}~(1\-U$<$$<$ 12)
+\item 
+\hypertarget{nfft3_8h_aa0c7f7ad1ad1f371eef969d543b57fb8}{\#define {\bfseries M\-R\-I\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(mri\-\_\-, name)}\label{nfft3_8h_aa0c7f7ad1ad1f371eef969d543b57fb8}
+
+\item 
+\hypertarget{nfft3_8h_a73bcb00b7f86d1862cd1fb121e3d5924}{\#define {\bfseries M\-R\-I\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(mrif\-\_\-, name)}\label{nfft3_8h_a73bcb00b7f86d1862cd1fb121e3d5924}
+
+\item 
+\hypertarget{nfft3_8h_a2af03d945f2809254dfda35ce8ce933f}{\#define {\bfseries M\-R\-I\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(mril\-\_\-, name)}\label{nfft3_8h_a2af03d945f2809254dfda35ce8ce933f}
+
+\item 
+\#define {\bfseries M\-R\-I\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Z, R, C)
+\item 
+\hypertarget{nfft3_8h_aadd481b947f7d9c24f54b386e3579da1}{\#define {\bfseries N\-F\-S\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfsft\-\_\-, name)}\label{nfft3_8h_aadd481b947f7d9c24f54b386e3579da1}
+
+\item 
+\hypertarget{nfft3_8h_a02786180402d502acfa410bc0c0f5c6b}{\#define {\bfseries N\-F\-S\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfsftf\-\_\-, name)}\label{nfft3_8h_a02786180402d502acfa410bc0c0f5c6b}
+
+\item 
+\hypertarget{nfft3_8h_ab05ba2d6ff05bf13a77a0a26d0adedb2}{\#define {\bfseries N\-F\-S\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfsftl\-\_\-, name)}\label{nfft3_8h_ab05ba2d6ff05bf13a77a0a26d0adedb2}
+
+\item 
+\hypertarget{nfft3_8h_a80ade6852f7c1215d2ebc936a734250e}{\#define {\bfseries N\-F\-S\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Z, R, C)}\label{nfft3_8h_a80ade6852f7c1215d2ebc936a734250e}
+
+\item 
+\#define \hyperlink{group__nfsft_ga65036f479a7421863956c02aa78bc9be}{N\-F\-S\-F\-T\-\_\-\-N\-O\-R\-M\-A\-L\-I\-Z\-E\-D}~(1\-U $<$$<$ 0)
+\item 
+\#define \hyperlink{group__nfsft_gaba029560a4a506c8f2dad185511db827}{N\-F\-S\-F\-T\-\_\-\-U\-S\-E\-\_\-\-N\-D\-F\-T}~(1\-U $<$$<$ 1)
+\item 
+\#define \hyperlink{group__nfsft_ga6b9eed1e7bcf862dcc3111509075fcbb}{N\-F\-S\-F\-T\-\_\-\-U\-S\-E\-\_\-\-D\-P\-T}~(1\-U $<$$<$ 2)
+\item 
+\#define \hyperlink{group__nfsft_ga02e4313d15b24c79e6802f853d452454}{N\-F\-S\-F\-T\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-X}~(1\-U $<$$<$ 3)
+\item 
+\#define \hyperlink{group__nfsft_gab76dcf8db948f18cc87403dac804fc68}{N\-F\-S\-F\-T\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 5)
+\item 
+\#define \hyperlink{group__nfsft_gaf3bc3ab774cda0c1c765e97066893d30}{N\-F\-S\-F\-T\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-F}~(1\-U $<$$<$ 6)
+\item 
+\#define \hyperlink{group__nfsft_gac8a292845f0bdec6b0d8ef6eb693a00e}{N\-F\-S\-F\-T\-\_\-\-P\-R\-E\-S\-E\-R\-V\-E\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 7)
+\item 
+\#define \hyperlink{group__nfsft_gacf7d73753b74dbf148167c3d46226f09}{N\-F\-S\-F\-T\-\_\-\-P\-R\-E\-S\-E\-R\-V\-E\-\_\-\-X}~(1\-U $<$$<$ 8)
+\item 
+\#define \hyperlink{group__nfsft_ga45962e763c2c551c1ea764a68b686b5c}{N\-F\-S\-F\-T\-\_\-\-P\-R\-E\-S\-E\-R\-V\-E\-\_\-\-F}~(1\-U $<$$<$ 9)
+\item 
+\#define \hyperlink{group__nfsft_gaa808899fc4db422c7b23470e6baad904}{N\-F\-S\-F\-T\-\_\-\-D\-E\-S\-T\-R\-O\-Y\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 10)
+\item 
+\#define \hyperlink{group__nfsft_ga6f22df0b292db920d795b3e3569181f2}{N\-F\-S\-F\-T\-\_\-\-D\-E\-S\-T\-R\-O\-Y\-\_\-\-X}~(1\-U $<$$<$ 11)
+\item 
+\#define \hyperlink{group__nfsft_ga2b32e2eabd33bf0886f6df45365d04c0}{N\-F\-S\-F\-T\-\_\-\-D\-E\-S\-T\-R\-O\-Y\-\_\-\-F}~(1\-U $<$$<$ 12)
+\item 
+\#define \hyperlink{group__nfsft_ga9ed987164acf6e362ab2878506fbca95}{N\-F\-S\-F\-T\-\_\-\-N\-O\-\_\-\-D\-I\-R\-E\-C\-T\-\_\-\-A\-L\-G\-O\-R\-I\-T\-H\-M}~(1\-U $<$$<$ 13)
+\item 
+\#define \hyperlink{group__nfsft_gaa228bbed7ddbbb4a15f1cd11ec27b415}{N\-F\-S\-F\-T\-\_\-\-N\-O\-\_\-\-F\-A\-S\-T\-\_\-\-A\-L\-G\-O\-R\-I\-T\-H\-M}~(1\-U $<$$<$ 14)
+\item 
+\#define \hyperlink{group__nfsft_ga7797dfe75149e88ee680fc2579c31505}{N\-F\-S\-F\-T\-\_\-\-Z\-E\-R\-O\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 16)
+\item 
+\#define \hyperlink{group__nfsft_ga8be22087991e0a82cfa59a3f0f2a5e86}{N\-F\-S\-F\-T\-\_\-\-I\-N\-D\-E\-X}(k, n, plan)~((2$\ast$(plan)-\/$>$N+2)$\ast$((plan)-\/$>$N-\/n+1)+(plan)-\/$>$N+k+1)
+\item 
+\#define \hyperlink{group__nfsft_gad426bf64ff72d6e3c2450fbb56146a44}{N\-F\-S\-F\-T\-\_\-\-F\-\_\-\-H\-A\-T\-\_\-\-S\-I\-Z\-E}(N)~((2$\ast$N+2)$\ast$(2$\ast$N+2))
+\item 
+\hypertarget{nfft3_8h_a44d97472ab10ca3b256fd0c33cb3737e}{\#define {\bfseries F\-P\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(fpt\-\_\-, name)}\label{nfft3_8h_a44d97472ab10ca3b256fd0c33cb3737e}
+
+\item 
+\hypertarget{nfft3_8h_a80067368d7e171b07bfa417af75775d3}{\#define {\bfseries F\-P\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(fptf\-\_\-, name)}\label{nfft3_8h_a80067368d7e171b07bfa417af75775d3}
+
+\item 
+\hypertarget{nfft3_8h_aa27ec6913fe46da3571d2080c6d722d5}{\#define {\bfseries F\-P\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(fptl\-\_\-, name)}\label{nfft3_8h_aa27ec6913fe46da3571d2080c6d722d5}
+
+\item 
+\#define {\bfseries F\-P\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, R, C)
+\item 
+\hypertarget{group__fpt_ga43cffc40fea4280ae0bcbe948109a3be}{\#define \hyperlink{group__fpt_ga43cffc40fea4280ae0bcbe948109a3be}{F\-P\-T\-\_\-\-N\-O\-\_\-\-S\-T\-A\-B\-I\-L\-I\-Z\-A\-T\-I\-O\-N}~(1\-U $<$$<$ 0)}\label{group__fpt_ga43cffc40fea4280ae0bcbe948109a3be}
+
+\begin{DoxyCompactList}\small\item\em If set, no stabilization will be used. \end{DoxyCompactList}\item 
+\hypertarget{group__fpt_ga33b9330253f419a91ef09a1b0d7a2667}{\#define \hyperlink{group__fpt_ga33b9330253f419a91ef09a1b0d7a2667}{F\-P\-T\-\_\-\-N\-O\-\_\-\-F\-A\-S\-T\-\_\-\-A\-L\-G\-O\-R\-I\-T\-H\-M}~(1\-U $<$$<$ 2)}\label{group__fpt_ga33b9330253f419a91ef09a1b0d7a2667}
+
+\begin{DoxyCompactList}\small\item\em If set, T\-O\-D\-O complete comment. \end{DoxyCompactList}\item 
+\hypertarget{group__fpt_gadbf3440a08ccd763556ff4caa36693d9}{\#define \hyperlink{group__fpt_gadbf3440a08ccd763556ff4caa36693d9}{F\-P\-T\-\_\-\-N\-O\-\_\-\-D\-I\-R\-E\-C\-T\-\_\-\-A\-L\-G\-O\-R\-I\-T\-H\-M}~(1\-U $<$$<$ 3)}\label{group__fpt_gadbf3440a08ccd763556ff4caa36693d9}
+
+\begin{DoxyCompactList}\small\item\em If set, T\-O\-D\-O complete comment. \end{DoxyCompactList}\item 
+\hypertarget{group__fpt_ga1ee771544214aba96ee012095feeead1}{\#define \hyperlink{group__fpt_ga1ee771544214aba96ee012095feeead1}{F\-P\-T\-\_\-\-P\-E\-R\-S\-I\-S\-T\-E\-N\-T\-\_\-\-D\-A\-T\-A}~(1\-U $<$$<$ 4)}\label{group__fpt_ga1ee771544214aba96ee012095feeead1}
+
+\begin{DoxyCompactList}\small\item\em If set, T\-O\-D\-O complete comment. \end{DoxyCompactList}\item 
+\hypertarget{group__fpt_gad5594ac14b8a368f0103761361af5691}{\#define \hyperlink{group__fpt_gad5594ac14b8a368f0103761361af5691}{F\-P\-T\-\_\-\-F\-U\-N\-C\-T\-I\-O\-N\-\_\-\-V\-A\-L\-U\-E\-S}~(1\-U $<$$<$ 5)}\label{group__fpt_gad5594ac14b8a368f0103761361af5691}
+
+\begin{DoxyCompactList}\small\item\em If set, the output are function values at Chebyshev nodes rather than Chebyshev coefficients. \end{DoxyCompactList}\item 
+\hypertarget{group__fpt_gaba75cd704c2ca4153c1733b4cb3c977f}{\#define \hyperlink{group__fpt_gaba75cd704c2ca4153c1733b4cb3c977f}{F\-P\-T\-\_\-\-A\-L\-\_\-\-S\-Y\-M\-M\-E\-T\-R\-Y}~(1\-U $<$$<$ 6)}\label{group__fpt_gaba75cd704c2ca4153c1733b4cb3c977f}
+
+\begin{DoxyCompactList}\small\item\em If set, T\-O\-D\-O complete comment. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_ab40821fed9fe63e42e2ee665f0dae7ef}{\#define {\bfseries N\-F\-S\-O\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfsoft\-\_\-, name)}\label{nfft3_8h_ab40821fed9fe63e42e2ee665f0dae7ef}
+
+\item 
+\hypertarget{nfft3_8h_a4e387b12df84d52678c2734f5b94d217}{\#define {\bfseries N\-F\-S\-O\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfsoftf\-\_\-, name)}\label{nfft3_8h_a4e387b12df84d52678c2734f5b94d217}
+
+\item 
+\hypertarget{nfft3_8h_a492d027375c61b20ee5ad37d61ddb6a9}{\#define {\bfseries N\-F\-S\-O\-F\-T\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(nfsoftl\-\_\-, name)}\label{nfft3_8h_a492d027375c61b20ee5ad37d61ddb6a9}
+
+\item 
+\#define {\bfseries N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, Z, R, C)
+\item 
+\#define \hyperlink{group__nfsoft_ga8c53e32dd194bda4a828c15ad044d44a}{N\-F\-S\-O\-F\-T\-\_\-\-N\-O\-R\-M\-A\-L\-I\-Z\-E\-D}~(1\-U $<$$<$ 0)
+\item 
+\#define \hyperlink{group__nfsoft_ga14cae92f8ee539b4a41aebdf913ef2c5}{N\-F\-S\-O\-F\-T\-\_\-\-U\-S\-E\-\_\-\-N\-D\-F\-T}~(1\-U $<$$<$ 1)
+\item 
+\#define \hyperlink{group__nfsoft_ga619b249b5d4b4675d2ce9a17d7817590}{N\-F\-S\-O\-F\-T\-\_\-\-U\-S\-E\-\_\-\-D\-P\-T}~(1\-U $<$$<$ 2)
+\item 
+\#define \hyperlink{group__nfsoft_gabe0d04599c1b06144e9a66fc2ac7b09d}{N\-F\-S\-O\-F\-T\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-X}~(1\-U $<$$<$ 3)
+\item 
+\#define \hyperlink{group__nfsoft_ga379d5bf88e399cf492d86090ce47d47d}{N\-F\-S\-O\-F\-T\-\_\-\-R\-E\-P\-R\-E\-S\-E\-N\-T}~(1\-U $<$$<$ 4)
+\item 
+\#define \hyperlink{group__nfsoft_ga846e8298ed59219f7072230bd61c7a2a}{N\-F\-S\-O\-F\-T\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 5)
+\item 
+\#define \hyperlink{group__nfsoft_gac65bdc42b4c11296197dc991bbebbd12}{N\-F\-S\-O\-F\-T\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-F}~(1\-U $<$$<$ 6)
+\item 
+\#define \hyperlink{group__nfsoft_ga83119b0d4e62f7cd83e0f74c5ef08dec}{N\-F\-S\-O\-F\-T\-\_\-\-P\-R\-E\-S\-E\-R\-V\-E\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 7)
+\item 
+\#define \hyperlink{group__nfsoft_ga2650cbfde4c8259e5059d6e9b91e0ec3}{N\-F\-S\-O\-F\-T\-\_\-\-P\-R\-E\-S\-E\-R\-V\-E\-\_\-\-X}~(1\-U $<$$<$ 8)
+\item 
+\#define \hyperlink{group__nfsoft_ga629a86dd29a3cf09872755cd82bf7062}{N\-F\-S\-O\-F\-T\-\_\-\-P\-R\-E\-S\-E\-R\-V\-E\-\_\-\-F}~(1\-U $<$$<$ 9)
+\item 
+\#define \hyperlink{group__nfsoft_gad324d67114a4f52a9fc86d2639745acd}{N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-S\-T\-R\-O\-Y\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 10)
+\item 
+\#define \hyperlink{group__nfsoft_gab7ca87a4bb214bcc25d544aa0b6dd503}{N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-S\-T\-R\-O\-Y\-\_\-\-X}~(1\-U $<$$<$ 11)
+\item 
+\#define \hyperlink{group__nfsoft_ga93ab283dcb14d5b37b130e2556bb6e7d}{N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-S\-T\-R\-O\-Y\-\_\-\-F}~(1\-U $<$$<$ 12)
+\item 
+\#define \hyperlink{group__nfsoft_gae6c22599d21b5d8a8f144a39b49d3677}{N\-F\-S\-O\-F\-T\-\_\-\-N\-O\-\_\-\-S\-T\-A\-B\-I\-L\-I\-Z\-A\-T\-I\-O\-N}~(1\-U $<$$<$ 13)
+\item 
+\#define \hyperlink{group__nfsoft_ga43ce16ed2d1893df2b997e637ccde4d4}{N\-F\-S\-O\-F\-T\-\_\-\-C\-H\-O\-O\-S\-E\-\_\-\-D\-P\-T}~(1\-U $<$$<$ 14)
+\item 
+\#define \hyperlink{group__nfsoft_ga07ad8a429e8451bd153563eedc3ef0bf}{N\-F\-S\-O\-F\-T\-\_\-\-S\-O\-F\-T}~(1\-U $<$$<$ 15)
+\item 
+\#define \hyperlink{group__nfsoft_gadaa4a4436a6a9e8b491660bb5fc54f8e}{N\-F\-S\-O\-F\-T\-\_\-\-Z\-E\-R\-O\-\_\-\-F\-\_\-\-H\-A\-T}~(1\-U $<$$<$ 16)
+\item 
+\#define \hyperlink{group__nfsoft_ga796e2f298278bbed00bf0704b553be98}{N\-F\-S\-O\-F\-T\-\_\-\-I\-N\-D\-E\-X}(m, n, l, B)~(((l)+((B)+1))+(2$\ast$(B)+2)$\ast$(((n)+((B)+1))+(2$\ast$(B)+2)$\ast$((m)+((B)+1))))
+\item 
+\hypertarget{nfft3_8h_a67274491cbbbca79a4170608dec640ce}{\#define {\bfseries N\-F\-S\-O\-F\-T\-\_\-\-I\-N\-D\-E\-X\-\_\-\-T\-W\-O}(m, n, l, B)~((B+1)$\ast$(B+1)+(B+1)$\ast$(B+1)$\ast$(m+B)-\/((m-\/1)$\ast$m$\ast$(2$\ast$m-\/1)+(B+1)$\ast$(B+2)$\ast$(2$\ast$B+3))/6)+(pos\-N(n,m,B))+(l-\/M\-A\-X(A\-B\-S(m),A\-B\-S(n)))}\label{nfft3_8h_a67274491cbbbca79a4170608dec640ce}
+
+\item 
+\#define \hyperlink{group__nfsoft_gad214901ec9451e6076e05d22eb734d49}{N\-F\-S\-O\-F\-T\-\_\-\-F\-\_\-\-H\-A\-T\-\_\-\-S\-I\-Z\-E}(B)~(((B)+1)$\ast$(4$\ast$((B)+1)$\ast$((B)+1)-\/1)/3)
+\item 
+\hypertarget{nfft3_8h_a2e779defec2c348c6d8a8c6f8421a242}{\#define {\bfseries S\-O\-L\-V\-E\-R\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(solver\-\_\-, name)}\label{nfft3_8h_a2e779defec2c348c6d8a8c6f8421a242}
+
+\item 
+\hypertarget{nfft3_8h_acca5f1d40d99c32b16eb8096b1339d50}{\#define {\bfseries S\-O\-L\-V\-E\-R\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-F\-L\-O\-A\-T}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(solverf\-\_\-, name)}\label{nfft3_8h_acca5f1d40d99c32b16eb8096b1339d50}
+
+\item 
+\hypertarget{nfft3_8h_acd9b2356a04e9b982826211c51c600c6}{\#define {\bfseries S\-O\-L\-V\-E\-R\-\_\-\-M\-A\-N\-G\-L\-E\-\_\-\-L\-O\-N\-G\-\_\-\-D\-O\-U\-B\-L\-E}(name)~N\-F\-F\-T\-\_\-\-C\-O\-N\-C\-A\-T(solverl\-\_\-, name)}\label{nfft3_8h_acd9b2356a04e9b982826211c51c600c6}
+
+\item 
+\hypertarget{nfft3_8h_a582e092f0b5e3b447e1a884e8495c99b}{\#define {\bfseries S\-O\-L\-V\-E\-R\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}, Y, R, C)}\label{nfft3_8h_a582e092f0b5e3b447e1a884e8495c99b}
+
+\item 
+\#define \hyperlink{group__solver_ga84bae5d48296d5a0d1e548ed58b9e495}{L\-A\-N\-D\-W\-E\-B\-E\-R}~(1\-U$<$$<$ 0)
+\item 
+\#define \hyperlink{group__solver_ga1f016d06d661c80eacb5182d80813cd9}{S\-T\-E\-E\-P\-E\-S\-T\-\_\-\-D\-E\-S\-C\-E\-N\-T}~(1\-U$<$$<$ 1)
+\item 
+\#define \hyperlink{group__solver_ga5716b96b5141dfb52b747a78b11defa7}{C\-G\-N\-R}~(1\-U$<$$<$ 2)
+\item 
+\#define \hyperlink{group__solver_gaae8290aa6a83fd56699a98cc0a55baf5}{C\-G\-N\-E}~(1\-U$<$$<$ 3)
+\item 
+\#define \hyperlink{group__solver_ga6be0dda24e7cbd9f3f1d1b299e815973}{N\-O\-R\-M\-S\-\_\-\-F\-O\-R\-\_\-\-L\-A\-N\-D\-W\-E\-B\-E\-R}~(1\-U$<$$<$ 4)
+\item 
+\#define \hyperlink{group__solver_gaa59267dba2cd3247c5ee4eb493d31c2d}{P\-R\-E\-C\-O\-M\-P\-U\-T\-E\-\_\-\-W\-E\-I\-G\-H\-T}~(1\-U$<$$<$ 5)
+\item 
+\#define \hyperlink{group__solver_ga9ccacd28b2d441a797a5c0d9e6c17fa7}{P\-R\-E\-C\-O\-M\-P\-U\-T\-E\-\_\-\-D\-A\-M\-P}~(1\-U$<$$<$ 6)
+\item 
+\hypertarget{nfft3_8h_a2824bf9c13befa5484662c6cdc5420a1}{\#define {\bfseries N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-U\-T\-I\-L\-\_\-\-A\-P\-I}(Y, R, C)}\label{nfft3_8h_a2824bf9c13befa5484662c6cdc5420a1}
+
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{nfft3_8h_a5069b7e6dba7d46d6b0b9c020e62b4b8}{typedef ptrdiff\-\_\-t {\bfseries N\-F\-F\-T\-\_\-\-I\-N\-T}}\label{nfft3_8h_a5069b7e6dba7d46d6b0b9c020e62b4b8}
+
+\item 
+\hypertarget{nfft3_8h_a5936c6a330ac0dc89a49b9e988658b4a}{typedef void $\ast$($\ast$ {\bfseries nfftf\-\_\-malloc\-\_\-type\-\_\-function} )(size\-\_\-t n)}\label{nfft3_8h_a5936c6a330ac0dc89a49b9e988658b4a}
+
+\item 
+\hypertarget{nfft3_8h_ac9ff55adf746611bd6fc1dafe6eab0dd}{typedef void($\ast$ {\bfseries nfftf\-\_\-free\-\_\-type\-\_\-function} )(void $\ast$p)}\label{nfft3_8h_ac9ff55adf746611bd6fc1dafe6eab0dd}
+
+\item 
+\hypertarget{nfft3_8h_a20f3c6a4267c379d77e87b75fa20fa7b}{typedef void($\ast$ {\bfseries nfftf\-\_\-die\-\_\-type\-\_\-function} )(const char $\ast$err\-String)}\label{nfft3_8h_a20f3c6a4267c379d77e87b75fa20fa7b}
+
+\item 
+typedef void $\ast$($\ast$ \hyperlink{nfft3_8h_ae2db105c02d4b63d1962dc94d4e7a4c2}{nfft\-\_\-malloc\-\_\-type\-\_\-function} )(size\-\_\-t n)
+\item 
+typedef void($\ast$ \hyperlink{nfft3_8h_acdec9723f6ea0ea162d5f3fc6f1f1906}{nfft\-\_\-free\-\_\-type\-\_\-function} )(void $\ast$p)
+\item 
+\hypertarget{nfft3_8h_a932cae10bbd890705af10ce7c0552f7e}{typedef void($\ast$ {\bfseries nfft\-\_\-die\-\_\-type\-\_\-function} )(const char $\ast$err\-String)}\label{nfft3_8h_a932cae10bbd890705af10ce7c0552f7e}
+
+\item 
+\hypertarget{nfft3_8h_ae28b4a01a5908ed80414def9b8762475}{typedef void $\ast$($\ast$ {\bfseries nfftl\-\_\-malloc\-\_\-type\-\_\-function} )(size\-\_\-t n)}\label{nfft3_8h_ae28b4a01a5908ed80414def9b8762475}
+
+\item 
+\hypertarget{nfft3_8h_a38dd43449df2f6b07d81e06b24d75c4a}{typedef void($\ast$ {\bfseries nfftl\-\_\-free\-\_\-type\-\_\-function} )(void $\ast$p)}\label{nfft3_8h_a38dd43449df2f6b07d81e06b24d75c4a}
+
+\item 
+\hypertarget{nfft3_8h_a6218baec46541717d53ed2ea03b1042a}{typedef void($\ast$ {\bfseries nfftl\-\_\-die\-\_\-type\-\_\-function} )(const char $\ast$err\-String)}\label{nfft3_8h_a6218baec46541717d53ed2ea03b1042a}
+
+\item 
+typedef struct fptf\-\_\-set\-\_\-s\-\_\- $\ast$ \hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set}
+\begin{DoxyCompactList}\small\item\em A set of precomputed data for a set of D\-P\-T transforms of equal maximum length. \end{DoxyCompactList}\item 
+typedef struct \hyperlink{structfpt__set__s__}{fpt\-\_\-set\-\_\-s\-\_\-} $\ast$ \hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set}
+\begin{DoxyCompactList}\small\item\em A set of precomputed data for a set of D\-P\-T transforms of equal maximum length. \end{DoxyCompactList}\item 
+typedef struct fptl\-\_\-set\-\_\-s\-\_\- $\ast$ \hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set}
+\begin{DoxyCompactList}\small\item\em A set of precomputed data for a set of D\-P\-T transforms of equal maximum length. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_ad09d4f327f3d1510be6bcf4375906176}{typedef struct \hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan\-\_\-} {\bfseries nfsoftf\-\_\-plan}}\label{nfft3_8h_ad09d4f327f3d1510be6bcf4375906176}
+
+\item 
+\hypertarget{nfft3_8h_aa862e783e0563487b2c8e0e83b9dc742}{typedef struct \hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan\-\_\-} {\bfseries nfsoft\-\_\-plan}}\label{nfft3_8h_aa862e783e0563487b2c8e0e83b9dc742}
+
+\item 
+\hypertarget{nfft3_8h_a6d67c17c3744095b57a3c4491d0a3109}{typedef struct \hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan\-\_\-} {\bfseries nfsoftl\-\_\-plan}}\label{nfft3_8h_a6d67c17c3744095b57a3c4491d0a3109}
+
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{nfft3_8h_a0513fa4a919d75eb0123984917678b39}{void $\ast$ {\bfseries nfftf\-\_\-malloc} (size\-\_\-t n)}\label{nfft3_8h_a0513fa4a919d75eb0123984917678b39}
+
+\item 
+\hypertarget{nfft3_8h_a99f40092e9d7542a61d3fda3eb2f8142}{void {\bfseries nfftf\-\_\-free} (void $\ast$p)}\label{nfft3_8h_a99f40092e9d7542a61d3fda3eb2f8142}
+
+\item 
+\hypertarget{nfft3_8h_a00dddb7d228904fada3d896fbcec739e}{void {\bfseries nfftf\-\_\-die} (const char $\ast$s)}\label{nfft3_8h_a00dddb7d228904fada3d896fbcec739e}
+
+\item 
+void $\ast$ \hyperlink{nfft3_8h_aafe6167438c5de4d3d4c509f66a6694e}{nfft\-\_\-malloc} (size\-\_\-t n)
+\item 
+void \hyperlink{nfft3_8h_ab8a0db03dda1317a8a3d922e0e4e8aaa}{nfft\-\_\-free} (void $\ast$p)
+\item 
+\hypertarget{nfft3_8h_ad895403d953faf92ab38c82b7287f4a5}{void {\bfseries nfft\-\_\-die} (const char $\ast$s)}\label{nfft3_8h_ad895403d953faf92ab38c82b7287f4a5}
+
+\item 
+\hypertarget{nfft3_8h_a4d0e3a1b89787277f356094d7970b4ec}{void $\ast$ {\bfseries nfftl\-\_\-malloc} (size\-\_\-t n)}\label{nfft3_8h_a4d0e3a1b89787277f356094d7970b4ec}
+
+\item 
+\hypertarget{nfft3_8h_aaaa2d84f9f87be2d81e13853f9216051}{void {\bfseries nfftl\-\_\-free} (void $\ast$p)}\label{nfft3_8h_aaaa2d84f9f87be2d81e13853f9216051}
+
+\item 
+\hypertarget{nfft3_8h_a5dc82fb0fbdf40901b4f7a5088f367d5}{void {\bfseries nfftl\-\_\-die} (const char $\ast$s)}\label{nfft3_8h_a5dc82fb0fbdf40901b4f7a5088f367d5}
+
+\item 
+\hypertarget{nfft3_8h_abfb0c5ab611908b92d83b1750a664468}{void {\bfseries nfftf\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_abfb0c5ab611908b92d83b1750a664468}
+
+\item 
+\hypertarget{nfft3_8h_a0b7ab316035b3635ac2c2f86b729d84e}{void {\bfseries nfftf\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a0b7ab316035b3635ac2c2f86b729d84e}
+
+\item 
+\hypertarget{nfft3_8h_a6a99e8e25843bf6f3b503a5030ebcfcb}{void {\bfseries nfftf\-\_\-trafo} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a6a99e8e25843bf6f3b503a5030ebcfcb}
+
+\item 
+\hypertarget{nfft3_8h_a71e3ddb963596b177c9f3d94b8961cc8}{void {\bfseries nfftf\-\_\-trafo\-\_\-1d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a71e3ddb963596b177c9f3d94b8961cc8}
+
+\item 
+\hypertarget{nfft3_8h_a062bd142005b5fc523db95e41c665f24}{void {\bfseries nfftf\-\_\-trafo\-\_\-2d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a062bd142005b5fc523db95e41c665f24}
+
+\item 
+\hypertarget{nfft3_8h_a501a0b91c433ed4857943dd777e7e16a}{void {\bfseries nfftf\-\_\-trafo\-\_\-3d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a501a0b91c433ed4857943dd777e7e16a}
+
+\item 
+\hypertarget{nfft3_8h_a7bfe9f714ceb6a9d3911de1eb140f5dd}{void {\bfseries nfftf\-\_\-adjoint} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a7bfe9f714ceb6a9d3911de1eb140f5dd}
+
+\item 
+\hypertarget{nfft3_8h_aaeec2252ee63c95ab2471fe59f341c01}{void {\bfseries nfftf\-\_\-adjoint\-\_\-1d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aaeec2252ee63c95ab2471fe59f341c01}
+
+\item 
+\hypertarget{nfft3_8h_a214d4e491256491ae71b2c66767b5db5}{void {\bfseries nfftf\-\_\-adjoint\-\_\-2d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a214d4e491256491ae71b2c66767b5db5}
+
+\item 
+\hypertarget{nfft3_8h_adc41672222d378897caaa87b0b70fa2f}{void {\bfseries nfftf\-\_\-adjoint\-\_\-3d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_adc41672222d378897caaa87b0b70fa2f}
+
+\item 
+\hypertarget{nfft3_8h_a6ff5563bc1f9c37250cced03ed21d961}{void {\bfseries nfftf\-\_\-init\-\_\-1d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths, int N1, int M)}\label{nfft3_8h_a6ff5563bc1f9c37250cced03ed21d961}
+
+\item 
+\hypertarget{nfft3_8h_ab5cc14480a2380acaa8433dcde2e7b70}{void {\bfseries nfftf\-\_\-init\-\_\-2d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths, int N1, int N2, int M)}\label{nfft3_8h_ab5cc14480a2380acaa8433dcde2e7b70}
+
+\item 
+\hypertarget{nfft3_8h_a00c248803a48939d9d5c8c78365d1bac}{void {\bfseries nfftf\-\_\-init\-\_\-3d} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths, int N1, int N2, int N3, int M)}\label{nfft3_8h_a00c248803a48939d9d5c8c78365d1bac}
+
+\item 
+\hypertarget{nfft3_8h_a1ca11660915a2e57e4ca2134465bd179}{void {\bfseries nfftf\-\_\-init} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M)}\label{nfft3_8h_a1ca11660915a2e57e4ca2134465bd179}
+
+\item 
+\hypertarget{nfft3_8h_a620b4a9f6d3dcf9f18204ebe091c69bd}{void {\bfseries nfftf\-\_\-init\-\_\-guru} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_a620b4a9f6d3dcf9f18204ebe091c69bd}
+
+\item 
+\hypertarget{nfft3_8h_a34b2cde3000b061645d11b79b8287f2d}{void {\bfseries nfftf\-\_\-init\-\_\-lin} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M, int $\ast$n, int m, int K, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_a34b2cde3000b061645d11b79b8287f2d}
+
+\item 
+\hypertarget{nfft3_8h_a85210f098260b748aa3da2d37bfd5ce6}{void {\bfseries nfftf\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a85210f098260b748aa3da2d37bfd5ce6}
+
+\item 
+\hypertarget{nfft3_8h_afe253a9f00f666f7d99e6276f25fe70a}{void {\bfseries nfftf\-\_\-precompute\-\_\-psi} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_afe253a9f00f666f7d99e6276f25fe70a}
+
+\item 
+\hypertarget{nfft3_8h_a1aa91a41f8c652a5b82bc013f234adcd}{void {\bfseries nfftf\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a1aa91a41f8c652a5b82bc013f234adcd}
+
+\item 
+\hypertarget{nfft3_8h_a0021b04566b6ca4f03c5a79e5ade5b02}{void {\bfseries nfftf\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a0021b04566b6ca4f03c5a79e5ade5b02}
+
+\item 
+\hypertarget{nfft3_8h_a4a931f44a44954ab94576e6d4554182f}{void {\bfseries nfftf\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a4a931f44a44954ab94576e6d4554182f}
+
+\item 
+\hypertarget{nfft3_8h_a95688574035044784d8179168561f176}{const char $\ast$ {\bfseries nfftf\-\_\-check} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a95688574035044784d8179168561f176}
+
+\item 
+\hypertarget{nfft3_8h_a991e56a61be1686499777e6cf97ac08e}{void {\bfseries nfftf\-\_\-finalize} (\hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a991e56a61be1686499777e6cf97ac08e}
+
+\item 
+\hypertarget{nfft3_8h_ae44608ecf8dd94ce9c39e89664f69a63}{void {\bfseries nfft\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae44608ecf8dd94ce9c39e89664f69a63}
+
+\item 
+\hypertarget{nfft3_8h_aaa21daf7c475f0dd78b4980eebd94399}{void {\bfseries nfft\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aaa21daf7c475f0dd78b4980eebd94399}
+
+\item 
+void \hyperlink{group__nfft_ga9f1e6bd9f7f956a8679e6b413c97b421}{nfft\-\_\-trafo} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_ae6dff0553d273fc53a15ce4535df8087}{void {\bfseries nfft\-\_\-trafo\-\_\-1d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae6dff0553d273fc53a15ce4535df8087}
+
+\item 
+\hypertarget{nfft3_8h_ac05ae265993ff8e1396ac6c801c47ffe}{void {\bfseries nfft\-\_\-trafo\-\_\-2d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ac05ae265993ff8e1396ac6c801c47ffe}
+
+\item 
+\hypertarget{nfft3_8h_a503e48334b8cdefb63f55941460354bf}{void {\bfseries nfft\-\_\-trafo\-\_\-3d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a503e48334b8cdefb63f55941460354bf}
+
+\item 
+void \hyperlink{group__nfft_ga4b44c1dd52026dcb494dc735f0fa5b08}{nfft\-\_\-adjoint} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_a13f8052bab72ec8994354cdd6ccb6982}{void {\bfseries nfft\-\_\-adjoint\-\_\-1d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a13f8052bab72ec8994354cdd6ccb6982}
+
+\item 
+\hypertarget{nfft3_8h_ada6d6c809694e08aac88fa0204192325}{void {\bfseries nfft\-\_\-adjoint\-\_\-2d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ada6d6c809694e08aac88fa0204192325}
+
+\item 
+\hypertarget{nfft3_8h_a4469a1fc88e71eaff7b6912a15079195}{void {\bfseries nfft\-\_\-adjoint\-\_\-3d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a4469a1fc88e71eaff7b6912a15079195}
+
+\item 
+void \hyperlink{group__nfft_ga01dbd2cfc9cc8577fc097e607e3c845f}{nfft\-\_\-init\-\_\-1d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int N1, int M)
+\item 
+void \hyperlink{group__nfft_ga54ab08124f47fe412b2979abdc28cc16}{nfft\-\_\-init\-\_\-2d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int N1, int N2, int M)
+\item 
+void \hyperlink{group__nfft_ga67493342a23bdbb4301063f96e13fd88}{nfft\-\_\-init\-\_\-3d} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int N1, int N2, int N3, int M)
+\item 
+void \hyperlink{group__nfft_ga1dfeaf18f3735f035afa62ca768d99c4}{nfft\-\_\-init} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M)
+\item 
+\hypertarget{nfft3_8h_aa8c41e40ccac66c920ba42406149acdf}{void {\bfseries nfft\-\_\-init\-\_\-guru} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_aa8c41e40ccac66c920ba42406149acdf}
+
+\item 
+\hypertarget{nfft3_8h_ac06d9f48513ce748058830ebc8f300d5}{void {\bfseries nfft\-\_\-init\-\_\-lin} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M, int $\ast$n, int m, int K, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_ac06d9f48513ce748058830ebc8f300d5}
+
+\item 
+void \hyperlink{group__nfft_gafd7b278b6ed04d929212b4807dd195f0}{nfft\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_gae6a8367b03fd75b2af42dbbaccb78bf2}{nfft\-\_\-precompute\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_gaee7a88956c66b2113014084d6dd04b3a}{nfft\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_ad322e8eb802e9d6f97e85bc7375a05d1}{void {\bfseries nfft\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ad322e8eb802e9d6f97e85bc7375a05d1}
+
+\item 
+void \hyperlink{group__nfft_ga3f91a7a005cc31a8b05f33fea0507ddc}{nfft\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+const char $\ast$ \hyperlink{group__nfft_ga7af648ae0503976536b8db18200f99fe}{nfft\-\_\-check} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nfft_ga614f9f7af5b0d5491afa9495393c4dc3}{nfft\-\_\-finalize} (\hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_a777bdb72da069359f2c784e4bdc99a91}{void {\bfseries nfftl\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a777bdb72da069359f2c784e4bdc99a91}
+
+\item 
+\hypertarget{nfft3_8h_aab322aa940e992f29e9db586cc853ba3}{void {\bfseries nfftl\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aab322aa940e992f29e9db586cc853ba3}
+
+\item 
+\hypertarget{nfft3_8h_a239d94aa7ede469acccd137b816632c8}{void {\bfseries nfftl\-\_\-trafo} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a239d94aa7ede469acccd137b816632c8}
+
+\item 
+\hypertarget{nfft3_8h_a7a7438f1eda9c46ab2378e94317c2b6c}{void {\bfseries nfftl\-\_\-trafo\-\_\-1d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a7a7438f1eda9c46ab2378e94317c2b6c}
+
+\item 
+\hypertarget{nfft3_8h_a5a08729af6bfae8bdcdd23a948303678}{void {\bfseries nfftl\-\_\-trafo\-\_\-2d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a5a08729af6bfae8bdcdd23a948303678}
+
+\item 
+\hypertarget{nfft3_8h_aeef91bc707567a4da86d5d7d8813b654}{void {\bfseries nfftl\-\_\-trafo\-\_\-3d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aeef91bc707567a4da86d5d7d8813b654}
+
+\item 
+\hypertarget{nfft3_8h_acc437673282c8cbbdc057d1f447df412}{void {\bfseries nfftl\-\_\-adjoint} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_acc437673282c8cbbdc057d1f447df412}
+
+\item 
+\hypertarget{nfft3_8h_aaf80f8f97f566ce6bf814590fff412ab}{void {\bfseries nfftl\-\_\-adjoint\-\_\-1d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aaf80f8f97f566ce6bf814590fff412ab}
+
+\item 
+\hypertarget{nfft3_8h_a79cb762faa374f897c63784654178ba3}{void {\bfseries nfftl\-\_\-adjoint\-\_\-2d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a79cb762faa374f897c63784654178ba3}
+
+\item 
+\hypertarget{nfft3_8h_ac67b1fa2c19e23ae4cdf40ce6fc22c54}{void {\bfseries nfftl\-\_\-adjoint\-\_\-3d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ac67b1fa2c19e23ae4cdf40ce6fc22c54}
+
+\item 
+\hypertarget{nfft3_8h_a44f2703f03552f3282f64ebcbbc4d10e}{void {\bfseries nfftl\-\_\-init\-\_\-1d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths, int N1, int M)}\label{nfft3_8h_a44f2703f03552f3282f64ebcbbc4d10e}
+
+\item 
+\hypertarget{nfft3_8h_a5a23efb04a7efe72618970c1c38833a7}{void {\bfseries nfftl\-\_\-init\-\_\-2d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths, int N1, int N2, int M)}\label{nfft3_8h_a5a23efb04a7efe72618970c1c38833a7}
+
+\item 
+\hypertarget{nfft3_8h_ad3f182c73964739a8d37aa53a6b3f08e}{void {\bfseries nfftl\-\_\-init\-\_\-3d} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths, int N1, int N2, int N3, int M)}\label{nfft3_8h_ad3f182c73964739a8d37aa53a6b3f08e}
+
+\item 
+\hypertarget{nfft3_8h_ac1bb75bcc340c22a5cf743bf1f9e5173}{void {\bfseries nfftl\-\_\-init} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M)}\label{nfft3_8h_ac1bb75bcc340c22a5cf743bf1f9e5173}
+
+\item 
+\hypertarget{nfft3_8h_ad960c042404959510203d5b9f0b2076a}{void {\bfseries nfftl\-\_\-init\-\_\-guru} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_ad960c042404959510203d5b9f0b2076a}
+
+\item 
+\hypertarget{nfft3_8h_a1e7cffc86cec40f210a5165a1862736d}{void {\bfseries nfftl\-\_\-init\-\_\-lin} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths, int d, int $\ast$N, int M, int $\ast$n, int m, int K, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_a1e7cffc86cec40f210a5165a1862736d}
+
+\item 
+\hypertarget{nfft3_8h_a5fac8d29d45f72e44cd89cab07d0d059}{void {\bfseries nfftl\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a5fac8d29d45f72e44cd89cab07d0d059}
+
+\item 
+\hypertarget{nfft3_8h_ad60f5459cde8f650a09ccab58daa702b}{void {\bfseries nfftl\-\_\-precompute\-\_\-psi} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ad60f5459cde8f650a09ccab58daa702b}
+
+\item 
+\hypertarget{nfft3_8h_a797c4d47a0932fef1724da790901ad31}{void {\bfseries nfftl\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a797c4d47a0932fef1724da790901ad31}
+
+\item 
+\hypertarget{nfft3_8h_acb949e02a825933dd1f9d24658e14923}{void {\bfseries nfftl\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_acb949e02a825933dd1f9d24658e14923}
+
+\item 
+\hypertarget{nfft3_8h_ac3dd031c004b1e36add9996d7d27fe07}{void {\bfseries nfftl\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ac3dd031c004b1e36add9996d7d27fe07}
+
+\item 
+\hypertarget{nfft3_8h_a9a88020d6fdf2f0e71e59d2d46351acc}{const char $\ast$ {\bfseries nfftl\-\_\-check} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a9a88020d6fdf2f0e71e59d2d46351acc}
+
+\item 
+\hypertarget{nfft3_8h_a4c53403d49c55788fc7d7f16fbeb0294}{void {\bfseries nfftl\-\_\-finalize} (\hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a4c53403d49c55788fc7d7f16fbeb0294}
+
+\item 
+\hypertarget{nfft3_8h_ad1b85989c8f6296202c5ead97b2a4d3b}{void {\bfseries nfctf\-\_\-init\-\_\-1d} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int M\-\_\-total)}\label{nfft3_8h_ad1b85989c8f6296202c5ead97b2a4d3b}
+
+\item 
+\hypertarget{nfft3_8h_a54475a045421b8c7d4a2e284ac98b68e}{void {\bfseries nfctf\-\_\-init\-\_\-2d} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int M\-\_\-total)}\label{nfft3_8h_a54475a045421b8c7d4a2e284ac98b68e}
+
+\item 
+\hypertarget{nfft3_8h_adadcd59ed27befb417baf6f23d92903b}{void {\bfseries nfctf\-\_\-init\-\_\-3d} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int N2, int M\-\_\-total)}\label{nfft3_8h_adadcd59ed27befb417baf6f23d92903b}
+
+\item 
+\hypertarget{nfft3_8h_a948aec7c8b620bda3580d3d073be54b6}{void {\bfseries nfctf\-\_\-init} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total)}\label{nfft3_8h_a948aec7c8b620bda3580d3d073be54b6}
+
+\item 
+\hypertarget{nfft3_8h_a46338faeeeacb4e9c7d05bf847eb2c2d}{void {\bfseries nfctf\-\_\-init\-\_\-guru} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_a46338faeeeacb4e9c7d05bf847eb2c2d}
+
+\item 
+\hypertarget{nfft3_8h_a6d54475d74b097b8bf515b8d86661e6c}{void {\bfseries nfctf\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a6d54475d74b097b8bf515b8d86661e6c}
+
+\item 
+\hypertarget{nfft3_8h_adc64b6bac8be850483209bf02a991596}{void {\bfseries nfctf\-\_\-precompute\-\_\-psi} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_adc64b6bac8be850483209bf02a991596}
+
+\item 
+\hypertarget{nfft3_8h_ac6bfba6899549afd71edbce8bb9bc9ef}{void {\bfseries nfctf\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ac6bfba6899549afd71edbce8bb9bc9ef}
+
+\item 
+\hypertarget{nfft3_8h_a712fd9f93015c436ae3127f593474f96}{void {\bfseries nfctf\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a712fd9f93015c436ae3127f593474f96}
+
+\item 
+\hypertarget{nfft3_8h_a3af1e3a86db1bdf57497ede1d9d5b3fd}{void {\bfseries nfctf\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a3af1e3a86db1bdf57497ede1d9d5b3fd}
+
+\item 
+\hypertarget{nfft3_8h_af407452ab0b930263950cd9432c0a3de}{void {\bfseries nfctf\-\_\-trafo} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_af407452ab0b930263950cd9432c0a3de}
+
+\item 
+\hypertarget{nfft3_8h_a94b2ac874552245e3b84d719918249ad}{void {\bfseries nfctf\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a94b2ac874552245e3b84d719918249ad}
+
+\item 
+\hypertarget{nfft3_8h_a8a7e3c8c2f47b2c215a9f43419c41218}{void {\bfseries nfctf\-\_\-adjoint} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a8a7e3c8c2f47b2c215a9f43419c41218}
+
+\item 
+\hypertarget{nfft3_8h_ac1f2db5fe71ad2d39b3263d262d014d4}{void {\bfseries nfctf\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ac1f2db5fe71ad2d39b3263d262d014d4}
+
+\item 
+\hypertarget{nfft3_8h_a3a02b6f270d953e892c98357452ea10c}{const char $\ast$ {\bfseries nfctf\-\_\-check} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a3a02b6f270d953e892c98357452ea10c}
+
+\item 
+\hypertarget{nfft3_8h_a7d1f18e46748f9cfe0d5f26ee8c58610}{void {\bfseries nfctf\-\_\-finalize} (\hyperlink{structnfctf__plan}{nfctf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a7d1f18e46748f9cfe0d5f26ee8c58610}
+
+\item 
+void \hyperlink{group__nfct_gacdaa71ef0c4ea05c55a09a08845b3043}{nfct\-\_\-init\-\_\-1d} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfct_ga84c8a611ea11546b90a7db424ebced7c}{nfct\-\_\-init\-\_\-2d} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfct_ga7894f72320bda7850ccf43b9a227fe09}{nfct\-\_\-init\-\_\-3d} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int N2, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfct_ga69ac40972c84cfd04909723da056004b}{nfct\-\_\-init} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total)
+\item 
+\hypertarget{nfft3_8h_aaf960af1d15b3fe52c7582d7a0b6828a}{void {\bfseries nfct\-\_\-init\-\_\-guru} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_aaf960af1d15b3fe52c7582d7a0b6828a}
+
+\item 
+\hypertarget{nfft3_8h_ad5adf080bd4eed209fe3e7944dfa45b7}{void {\bfseries nfct\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ad5adf080bd4eed209fe3e7944dfa45b7}
+
+\item 
+void \hyperlink{group__nfct_gadfcdf2b4ab8d47c2391ac760c307939f}{nfct\-\_\-precompute\-\_\-psi} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_a088d5660d94cb527c0f672b4eec8556b}{void {\bfseries nfct\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a088d5660d94cb527c0f672b4eec8556b}
+
+\item 
+\hypertarget{nfft3_8h_a0dc77dff36dd0693e374d083e124ea8e}{void {\bfseries nfct\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a0dc77dff36dd0693e374d083e124ea8e}
+
+\item 
+\hypertarget{nfft3_8h_adb99eed842b3b43f7d8a4b045c214c09}{void {\bfseries nfct\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths)}\label{nfft3_8h_adb99eed842b3b43f7d8a4b045c214c09}
+
+\item 
+void \hyperlink{group__nfct_ga73327e4f32328dcae3e9f86572a0e15a}{nfct\-\_\-trafo} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+\hypertarget{nfft3_8h_ad0b7f7b1947cbcc3d46d90762bc27485}{void {\bfseries nfct\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ad0b7f7b1947cbcc3d46d90762bc27485}
+
+\item 
+void \hyperlink{group__nfct_gabc14753b2aa4ae8af85fc9632720514e}{nfct\-\_\-adjoint} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+\hypertarget{nfft3_8h_a6a7779f3c066f57c984eed4c04c3354c}{void {\bfseries nfct\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a6a7779f3c066f57c984eed4c04c3354c}
+
+\item 
+\hypertarget{nfft3_8h_a1a3f7af5157ffb85552239d8d6511ef3}{const char $\ast$ {\bfseries nfct\-\_\-check} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a1a3f7af5157ffb85552239d8d6511ef3}
+
+\item 
+void \hyperlink{group__nfct_ga5613906eb739a977bd862fbdb25224f6}{nfct\-\_\-finalize} (\hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+\hypertarget{nfft3_8h_a2b2c7c01bf971f33edc3acb1139bf161}{void {\bfseries nfctl\-\_\-init\-\_\-1d} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int M\-\_\-total)}\label{nfft3_8h_a2b2c7c01bf971f33edc3acb1139bf161}
+
+\item 
+\hypertarget{nfft3_8h_aed79e0497c45176f43d8fa911d6f069a}{void {\bfseries nfctl\-\_\-init\-\_\-2d} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int M\-\_\-total)}\label{nfft3_8h_aed79e0497c45176f43d8fa911d6f069a}
+
+\item 
+\hypertarget{nfft3_8h_ad637a73bde08d33d9c30381d16d4ba3b}{void {\bfseries nfctl\-\_\-init\-\_\-3d} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int N2, int M\-\_\-total)}\label{nfft3_8h_ad637a73bde08d33d9c30381d16d4ba3b}
+
+\item 
+\hypertarget{nfft3_8h_a2b3eb969859db7cf581a54541445ffb0}{void {\bfseries nfctl\-\_\-init} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total)}\label{nfft3_8h_a2b3eb969859db7cf581a54541445ffb0}
+
+\item 
+\hypertarget{nfft3_8h_ace7a7ffd485082b0ef19b46ae53ae5c2}{void {\bfseries nfctl\-\_\-init\-\_\-guru} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_ace7a7ffd485082b0ef19b46ae53ae5c2}
+
+\item 
+\hypertarget{nfft3_8h_ae40e77d187bb0b7ee47c9b5263c5e997}{void {\bfseries nfctl\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae40e77d187bb0b7ee47c9b5263c5e997}
+
+\item 
+\hypertarget{nfft3_8h_ae569b816b9ace9b36823c764c1f2b52a}{void {\bfseries nfctl\-\_\-precompute\-\_\-psi} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae569b816b9ace9b36823c764c1f2b52a}
+
+\item 
+\hypertarget{nfft3_8h_a153b9c3044a9df856f1005398bea16c4}{void {\bfseries nfctl\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a153b9c3044a9df856f1005398bea16c4}
+
+\item 
+\hypertarget{nfft3_8h_ae3991cbba7afd4a7caea2964448dfbd9}{void {\bfseries nfctl\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae3991cbba7afd4a7caea2964448dfbd9}
+
+\item 
+\hypertarget{nfft3_8h_a81a073d926125f6033315680ea7d3408}{void {\bfseries nfctl\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a81a073d926125f6033315680ea7d3408}
+
+\item 
+\hypertarget{nfft3_8h_ade7830710d428e89f9fa01ef364e6378}{void {\bfseries nfctl\-\_\-trafo} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ade7830710d428e89f9fa01ef364e6378}
+
+\item 
+\hypertarget{nfft3_8h_a0edb87cf23228423acae0d6b19a2f85f}{void {\bfseries nfctl\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a0edb87cf23228423acae0d6b19a2f85f}
+
+\item 
+\hypertarget{nfft3_8h_ae292cc7d0b3c315f0d5a26ec4fe711c5}{void {\bfseries nfctl\-\_\-adjoint} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ae292cc7d0b3c315f0d5a26ec4fe711c5}
+
+\item 
+\hypertarget{nfft3_8h_acace32cdc35f87be200e927f41a3710d}{void {\bfseries nfctl\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_acace32cdc35f87be200e927f41a3710d}
+
+\item 
+\hypertarget{nfft3_8h_a36ee55eb7045bcc98424a1d3f6e975a6}{const char $\ast$ {\bfseries nfctl\-\_\-check} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a36ee55eb7045bcc98424a1d3f6e975a6}
+
+\item 
+\hypertarget{nfft3_8h_adf343b3aa0408dff9907dfaf5e44a916}{void {\bfseries nfctl\-\_\-finalize} (\hyperlink{structnfctl__plan}{nfctl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_adf343b3aa0408dff9907dfaf5e44a916}
+
+\item 
+\hypertarget{nfft3_8h_a436cf366c1bf5124fec4a48affe5ed33}{void {\bfseries nfstf\-\_\-init\-\_\-1d} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int M\-\_\-total)}\label{nfft3_8h_a436cf366c1bf5124fec4a48affe5ed33}
+
+\item 
+\hypertarget{nfft3_8h_a28f62d4f47f327bbcd814c5f8881269d}{void {\bfseries nfstf\-\_\-init\-\_\-2d} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int M\-\_\-total)}\label{nfft3_8h_a28f62d4f47f327bbcd814c5f8881269d}
+
+\item 
+\hypertarget{nfft3_8h_a4bad3dcbf566247ce521d2b836f19cd9}{void {\bfseries nfstf\-\_\-init\-\_\-3d} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int N2, int M\-\_\-total)}\label{nfft3_8h_a4bad3dcbf566247ce521d2b836f19cd9}
+
+\item 
+\hypertarget{nfft3_8h_aa535ec3a94b56443c9ac6a770e242cc9}{void {\bfseries nfstf\-\_\-init} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total)}\label{nfft3_8h_aa535ec3a94b56443c9ac6a770e242cc9}
+
+\item 
+\hypertarget{nfft3_8h_a9d109a0812e87ec5511df3777661f0b6}{void {\bfseries nfstf\-\_\-init\-\_\-guru} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_a9d109a0812e87ec5511df3777661f0b6}
+
+\item 
+\hypertarget{nfft3_8h_a9258e280d9ae2e6070f6f905e36fa079}{void {\bfseries nfstf\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a9258e280d9ae2e6070f6f905e36fa079}
+
+\item 
+\hypertarget{nfft3_8h_a5e8fd720d07eb059799944948cc5ceb5}{void {\bfseries nfstf\-\_\-precompute\-\_\-psi} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a5e8fd720d07eb059799944948cc5ceb5}
+
+\item 
+\hypertarget{nfft3_8h_a0e31910e4fba3e5b10175672d2e528d5}{void {\bfseries nfstf\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a0e31910e4fba3e5b10175672d2e528d5}
+
+\item 
+\hypertarget{nfft3_8h_a6b1245095eebb01e764bbb97c9046986}{void {\bfseries nfstf\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a6b1245095eebb01e764bbb97c9046986}
+
+\item 
+\hypertarget{nfft3_8h_a69b2ddbb1a415b902471a0d8dc1a1337}{void {\bfseries nfstf\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a69b2ddbb1a415b902471a0d8dc1a1337}
+
+\item 
+\hypertarget{nfft3_8h_a479977674224d07ba369e2005ccae29e}{void {\bfseries nfstf\-\_\-trafo} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a479977674224d07ba369e2005ccae29e}
+
+\item 
+\hypertarget{nfft3_8h_a9a426199a9e80857e1df459c0cced7fd}{void {\bfseries nfstf\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a9a426199a9e80857e1df459c0cced7fd}
+
+\item 
+\hypertarget{nfft3_8h_aa5c75d98de3086bb0c8d0b9f56f2daee}{void {\bfseries nfstf\-\_\-adjoint} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_aa5c75d98de3086bb0c8d0b9f56f2daee}
+
+\item 
+\hypertarget{nfft3_8h_ad3af930b3c4b87873fa6a6dca55b713e}{void {\bfseries nfstf\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ad3af930b3c4b87873fa6a6dca55b713e}
+
+\item 
+\hypertarget{nfft3_8h_a552c5fdc3240b800d79ef3db208297a1}{const char $\ast$ {\bfseries nfstf\-\_\-check} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a552c5fdc3240b800d79ef3db208297a1}
+
+\item 
+\hypertarget{nfft3_8h_a0759e77328bfaac4e7fe5022cf1cfd55}{void {\bfseries nfstf\-\_\-finalize} (\hyperlink{structnfstf__plan}{nfstf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a0759e77328bfaac4e7fe5022cf1cfd55}
+
+\item 
+void \hyperlink{group__nfst_gac13a4c85f5cd43cfc3b5c3895021a9a9}{nfst\-\_\-init\-\_\-1d} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_ga44eff771382180419936a6dbf51505fa}{nfst\-\_\-init\-\_\-2d} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_gaf1dd972b1831e75d3cfba0a0a2671711}{nfst\-\_\-init\-\_\-3d} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int N2, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_gae4043a9926de23326b21b8722648bafa}{nfst\-\_\-init} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total)
+\item 
+void \hyperlink{group__nfst_ga99bcf33a3cc6b3bb4842124d7894cee2}{nfst\-\_\-init\-\_\-guru} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)
+\item 
+\hypertarget{nfft3_8h_a21bd2eec2fa32420f5cd894c6d636f30}{void {\bfseries nfst\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a21bd2eec2fa32420f5cd894c6d636f30}
+
+\item 
+void \hyperlink{group__nfst_gaa0cc88f5b76b758181688d3b438526e2}{nfst\-\_\-precompute\-\_\-psi} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_af84d1e1465e7a185d22b39df62c4f25f}{void {\bfseries nfst\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths)}\label{nfft3_8h_af84d1e1465e7a185d22b39df62c4f25f}
+
+\item 
+\hypertarget{nfft3_8h_aeace894b31b3ea587ab3475411b2020a}{void {\bfseries nfst\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aeace894b31b3ea587ab3475411b2020a}
+
+\item 
+\hypertarget{nfft3_8h_ac58cf3179e1f12682de7a8052d115de7}{void {\bfseries nfst\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ac58cf3179e1f12682de7a8052d115de7}
+
+\item 
+void \hyperlink{group__nfst_gac80b86521428ec2191919cc96c82f416}{nfst\-\_\-trafo} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+\hypertarget{nfft3_8h_aae9d7867dcc00d6d3f2ac694df65a044}{void {\bfseries nfst\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_aae9d7867dcc00d6d3f2ac694df65a044}
+
+\item 
+void \hyperlink{group__nfst_ga0ae3871b80dda28e7aabe541a48d34e2}{nfst\-\_\-adjoint} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+\hypertarget{nfft3_8h_a59e0df4e499e4b673dbac0eead3a1298}{void {\bfseries nfst\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a59e0df4e499e4b673dbac0eead3a1298}
+
+\item 
+\hypertarget{nfft3_8h_ab98ae842e9a8e78ce67757420caacd9c}{const char $\ast$ {\bfseries nfst\-\_\-check} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ab98ae842e9a8e78ce67757420caacd9c}
+
+\item 
+void \hyperlink{group__nfst_gab5d03eeff969c872061d96998f9f0405}{nfst\-\_\-finalize} (\hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+\hypertarget{nfft3_8h_a85ac488c78b0ba84aeb87b0fcf72b0f0}{void {\bfseries nfstl\-\_\-init\-\_\-1d} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int M\-\_\-total)}\label{nfft3_8h_a85ac488c78b0ba84aeb87b0fcf72b0f0}
+
+\item 
+\hypertarget{nfft3_8h_a1f222ef8f5d4882d61bc2b6754f2ffc7}{void {\bfseries nfstl\-\_\-init\-\_\-2d} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int M\-\_\-total)}\label{nfft3_8h_a1f222ef8f5d4882d61bc2b6754f2ffc7}
+
+\item 
+\hypertarget{nfft3_8h_aed4a64b8c12141a35943abbbdbe12d9d}{void {\bfseries nfstl\-\_\-init\-\_\-3d} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan, int N0, int N1, int N2, int M\-\_\-total)}\label{nfft3_8h_aed4a64b8c12141a35943abbbdbe12d9d}
+
+\item 
+\hypertarget{nfft3_8h_a3fbc166b35241c5d64631b082f013045}{void {\bfseries nfstl\-\_\-init} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total)}\label{nfft3_8h_a3fbc166b35241c5d64631b082f013045}
+
+\item 
+\hypertarget{nfft3_8h_a7b00223cbf8443d78e4cf261de318f33}{void {\bfseries nfstl\-\_\-init\-\_\-guru} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan, int d, int $\ast$N, int M\-\_\-total, int $\ast$n, int m, unsigned flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_a7b00223cbf8443d78e4cf261de318f33}
+
+\item 
+\hypertarget{nfft3_8h_adce53750590e86b600810d664fd41c99}{void {\bfseries nfstl\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_adce53750590e86b600810d664fd41c99}
+
+\item 
+\hypertarget{nfft3_8h_a6301b61bbb26b81c540ba29c5c4f17bb}{void {\bfseries nfstl\-\_\-precompute\-\_\-psi} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a6301b61bbb26b81c540ba29c5c4f17bb}
+
+\item 
+\hypertarget{nfft3_8h_aa5b9f97cdddb2199326e6ca78529ae56}{void {\bfseries nfstl\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aa5b9f97cdddb2199326e6ca78529ae56}
+
+\item 
+\hypertarget{nfft3_8h_a432ae45af4fd72589ee0780fb5e05227}{void {\bfseries nfstl\-\_\-precompute\-\_\-fg\-\_\-psi} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a432ae45af4fd72589ee0780fb5e05227}
+
+\item 
+\hypertarget{nfft3_8h_a93cf101099c5bd191afebc8c362a3692}{void {\bfseries nfstl\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a93cf101099c5bd191afebc8c362a3692}
+
+\item 
+\hypertarget{nfft3_8h_a720da4873a2b621c04137f5c9a631e4a}{void {\bfseries nfstl\-\_\-trafo} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a720da4873a2b621c04137f5c9a631e4a}
+
+\item 
+\hypertarget{nfft3_8h_a39a2f94100d6a331a9a4ae52d04b4d7f}{void {\bfseries nfstl\-\_\-trafo\-\_\-direct} (const \hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a39a2f94100d6a331a9a4ae52d04b4d7f}
+
+\item 
+\hypertarget{nfft3_8h_ac00306a2df327d5b38e39ee4d555e81d}{void {\bfseries nfstl\-\_\-adjoint} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ac00306a2df327d5b38e39ee4d555e81d}
+
+\item 
+\hypertarget{nfft3_8h_a31f47dc0d98b7dbd98b98894348629b0}{void {\bfseries nfstl\-\_\-adjoint\-\_\-direct} (const \hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a31f47dc0d98b7dbd98b98894348629b0}
+
+\item 
+\hypertarget{nfft3_8h_a53fe7e342da024ca1db74cecf84ad1ec}{const char $\ast$ {\bfseries nfstl\-\_\-check} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a53fe7e342da024ca1db74cecf84ad1ec}
+
+\item 
+\hypertarget{nfft3_8h_a6f1de42997582d6acaed4749d27dc945}{void {\bfseries nfstl\-\_\-finalize} (\hyperlink{structnfstl__plan}{nfstl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a6f1de42997582d6acaed4749d27dc945}
+
+\item 
+\hypertarget{nfft3_8h_a0853e9518eca0ab78beb72447d9bcac7}{void {\bfseries nnfftf\-\_\-init} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N)}\label{nfft3_8h_a0853e9518eca0ab78beb72447d9bcac7}
+
+\item 
+\hypertarget{nfft3_8h_aebcc29bde88e818f46ad6d3278f06bf1}{void {\bfseries nnfftf\-\_\-init\-\_\-1d} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan, int N, int M\-\_\-total)}\label{nfft3_8h_aebcc29bde88e818f46ad6d3278f06bf1}
+
+\item 
+\hypertarget{nfft3_8h_a1db7790fab59cd8e7ae7ee4103fcf179}{void {\bfseries nnfftf\-\_\-init\-\_\-guru} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N, int $\ast$N1, int m, unsigned nnfft\-\_\-flags)}\label{nfft3_8h_a1db7790fab59cd8e7ae7ee4103fcf179}
+
+\item 
+\hypertarget{nfft3_8h_a9ef01f6b9c0c562bf0ad784bf3c9dd02}{void {\bfseries nnfftf\-\_\-trafo\-\_\-direct} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a9ef01f6b9c0c562bf0ad784bf3c9dd02}
+
+\item 
+\hypertarget{nfft3_8h_a81208f117a1ff58be4b2f7bde83284a3}{void {\bfseries nnfftf\-\_\-adjoint\-\_\-direct} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a81208f117a1ff58be4b2f7bde83284a3}
+
+\item 
+\hypertarget{nfft3_8h_ac46acd46be18dc621cfa9db06e5a6904}{void {\bfseries nnfftf\-\_\-trafo} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ac46acd46be18dc621cfa9db06e5a6904}
+
+\item 
+\hypertarget{nfft3_8h_ae6fbd48312d1f898bc815d9d24ab997b}{void {\bfseries nnfftf\-\_\-adjoint} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ae6fbd48312d1f898bc815d9d24ab997b}
+
+\item 
+\hypertarget{nfft3_8h_af6d97c9d5c11383330c1eb4a8af7845e}{void {\bfseries nnfftf\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_af6d97c9d5c11383330c1eb4a8af7845e}
+
+\item 
+\hypertarget{nfft3_8h_ac088286367ae957d1d1b86702d730602}{void {\bfseries nnfftf\-\_\-precompute\-\_\-psi} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ac088286367ae957d1d1b86702d730602}
+
+\item 
+\hypertarget{nfft3_8h_a95da6a6d7c9c46c4452ceb89030be07f}{void {\bfseries nnfftf\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a95da6a6d7c9c46c4452ceb89030be07f}
+
+\item 
+\hypertarget{nfft3_8h_a18026c7f9d32b1b726713359105e81e4}{void {\bfseries nnfftf\-\_\-precompute\-\_\-phi\-\_\-hut} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a18026c7f9d32b1b726713359105e81e4}
+
+\item 
+\hypertarget{nfft3_8h_abfa6cb29d1886535d91ac126f65f1971}{void {\bfseries nnfftf\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_abfa6cb29d1886535d91ac126f65f1971}
+
+\item 
+\hypertarget{nfft3_8h_ac767d45622f34b7182b9ee3ed955023d}{void {\bfseries nnfftf\-\_\-finalize} (\hyperlink{structnnfftf__plan}{nnfftf\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ac767d45622f34b7182b9ee3ed955023d}
+
+\item 
+void \hyperlink{group__nnfft_gad1f2d4b5b20fd14087364714f6475b19}{nnfft\-\_\-init} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N)
+\item 
+\hypertarget{nfft3_8h_a43f6f8fc284136990cda26f16605537f}{void {\bfseries nnfft\-\_\-init\-\_\-1d} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan, int N, int M\-\_\-total)}\label{nfft3_8h_a43f6f8fc284136990cda26f16605537f}
+
+\item 
+void \hyperlink{group__nnfft_ga75a2cb786f4cc4c87082c87a2c32046a}{nnfft\-\_\-init\-\_\-guru} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N, int $\ast$N1, int m, unsigned nnfft\-\_\-flags)
+\item 
+\hypertarget{nfft3_8h_a7a1000e0d0302bb33c70b63464d4b065}{void {\bfseries nnfft\-\_\-trafo\-\_\-direct} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a7a1000e0d0302bb33c70b63464d4b065}
+
+\item 
+\hypertarget{nfft3_8h_ad35e9f7ca7bf1c7451a554c2592fddb4}{void {\bfseries nnfft\-\_\-adjoint\-\_\-direct} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ad35e9f7ca7bf1c7451a554c2592fddb4}
+
+\item 
+void \hyperlink{group__nnfft_ga994c1748ebe1371c53dd2cb437054d4f}{nnfft\-\_\-trafo} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em user routines \end{DoxyCompactList}\item 
+void \hyperlink{group__nnfft_gad4f536f3aee7e85acc75c5fcad307b7d}{nnfft\-\_\-adjoint} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+void \hyperlink{group__nnfft_ga65983eef73b9f5740214bf720f62fcd6}{nnfft\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em create a lookup table \end{DoxyCompactList}\item 
+void \hyperlink{group__nnfft_ga962d6f449cbad4faf81e20328a911c46}{nnfft\-\_\-precompute\-\_\-psi} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+void \hyperlink{group__nnfft_ga78cf7bac65f6de46182ea1ff509c2af9}{nnfft\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em computes all entries of B explicitly \end{DoxyCompactList}\item 
+void \hyperlink{group__nnfft_ga9e4663c2cdbff65da327400657528580}{nnfft\-\_\-precompute\-\_\-phi\-\_\-hut} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em initialisation of direct transform \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_aa525969dd7f5a8cb84d02f2b1669ee5b}{void {\bfseries nnfft\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aa525969dd7f5a8cb84d02f2b1669ee5b}
+
+\item 
+void \hyperlink{group__nnfft_ga9b5bcde6c436f8fe0e8d8dc4fa7a4230}{nnfft\-\_\-finalize} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+\hypertarget{nfft3_8h_a010a880c1cdc5901fc568774e8117380}{void {\bfseries nnfftl\-\_\-init} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N)}\label{nfft3_8h_a010a880c1cdc5901fc568774e8117380}
+
+\item 
+\hypertarget{nfft3_8h_a2a41ad17d88607371e1b96cc52b74800}{void {\bfseries nnfftl\-\_\-init\-\_\-1d} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan, int N, int M\-\_\-total)}\label{nfft3_8h_a2a41ad17d88607371e1b96cc52b74800}
+
+\item 
+\hypertarget{nfft3_8h_af291f15fa5efec136c99f7a74f6f333b}{void {\bfseries nnfftl\-\_\-init\-\_\-guru} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N, int $\ast$N1, int m, unsigned nnfft\-\_\-flags)}\label{nfft3_8h_af291f15fa5efec136c99f7a74f6f333b}
+
+\item 
+\hypertarget{nfft3_8h_a31789d574c1ce35f6c2726b55b9c3e4a}{void {\bfseries nnfftl\-\_\-trafo\-\_\-direct} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a31789d574c1ce35f6c2726b55b9c3e4a}
+
+\item 
+\hypertarget{nfft3_8h_a69f0e2320028ddb45ab12a3be7ca6f3e}{void {\bfseries nnfftl\-\_\-adjoint\-\_\-direct} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a69f0e2320028ddb45ab12a3be7ca6f3e}
+
+\item 
+\hypertarget{nfft3_8h_a81228a2d7d5d54aba3cffe5fbd1866d3}{void {\bfseries nnfftl\-\_\-trafo} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a81228a2d7d5d54aba3cffe5fbd1866d3}
+
+\item 
+\hypertarget{nfft3_8h_a7b3e34dfc295bd18d9a8fe5a43dc0736}{void {\bfseries nnfftl\-\_\-adjoint} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a7b3e34dfc295bd18d9a8fe5a43dc0736}
+
+\item 
+\hypertarget{nfft3_8h_afd5503eff636fcfd4b731b4d6bfc2119}{void {\bfseries nnfftl\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_afd5503eff636fcfd4b731b4d6bfc2119}
+
+\item 
+\hypertarget{nfft3_8h_a011e2cf68784c0015eecfd23443067f5}{void {\bfseries nnfftl\-\_\-precompute\-\_\-psi} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a011e2cf68784c0015eecfd23443067f5}
+
+\item 
+\hypertarget{nfft3_8h_ae7b90ce759730f0b0ac3e4e35379f7e6}{void {\bfseries nnfftl\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_ae7b90ce759730f0b0ac3e4e35379f7e6}
+
+\item 
+\hypertarget{nfft3_8h_a5ffb3e0c715973be44b71f55c425668a}{void {\bfseries nnfftl\-\_\-precompute\-\_\-phi\-\_\-hut} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a5ffb3e0c715973be44b71f55c425668a}
+
+\item 
+\hypertarget{nfft3_8h_a9a8d01c378f99453c676c6ea3d6bfa37}{void {\bfseries nnfftl\-\_\-precompute\-\_\-one\-\_\-psi} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a9a8d01c378f99453c676c6ea3d6bfa37}
+
+\item 
+\hypertarget{nfft3_8h_a05483e8f729f280b755ebe038425969c}{void {\bfseries nnfftl\-\_\-finalize} (\hyperlink{structnnfftl__plan}{nnfftl\-\_\-plan} $\ast$ths\-\_\-plan)}\label{nfft3_8h_a05483e8f729f280b755ebe038425969c}
+
+\item 
+\hypertarget{nfft3_8h_aae08f8a7b735787dbd5eb8ded76ce619}{void {\bfseries nsfftf\-\_\-trafo\-\_\-direct} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aae08f8a7b735787dbd5eb8ded76ce619}
+
+\item 
+\hypertarget{nfft3_8h_a150a780df08f4548980af604e3bf2f03}{void {\bfseries nsfftf\-\_\-adjoint\-\_\-direct} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a150a780df08f4548980af604e3bf2f03}
+
+\item 
+\hypertarget{nfft3_8h_a813b32fc4e3df02faf046b8145b7ec04}{void {\bfseries nsfftf\-\_\-trafo} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a813b32fc4e3df02faf046b8145b7ec04}
+
+\item 
+\hypertarget{nfft3_8h_ae2a73ce3575102670d5fd4075fd60299}{void {\bfseries nsfftf\-\_\-adjoint} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae2a73ce3575102670d5fd4075fd60299}
+
+\item 
+\hypertarget{nfft3_8h_a8b730993c5a578afa78f2c69413e477a}{void {\bfseries nsfftf\-\_\-cp} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths, \hyperlink{structnfftf__plan}{nfftf\-\_\-plan} $\ast$ths\-\_\-nfft)}\label{nfft3_8h_a8b730993c5a578afa78f2c69413e477a}
+
+\item 
+\hypertarget{nfft3_8h_a3363adf9baa0f8b37468db82b6d03286}{void {\bfseries nsfftf\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a3363adf9baa0f8b37468db82b6d03286}
+
+\item 
+\hypertarget{nfft3_8h_a466e274abdf984c5b5621fd9dc43f6af}{void {\bfseries nsfftf\-\_\-init} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths, int d, int J, int M, int m, unsigned flags)}\label{nfft3_8h_a466e274abdf984c5b5621fd9dc43f6af}
+
+\item 
+\hypertarget{nfft3_8h_a82bbeb139266dc60fb5fcd2089b3f9fe}{void {\bfseries nsfftf\-\_\-finalize} (\hyperlink{structnsfftf__plan}{nsfftf\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a82bbeb139266dc60fb5fcd2089b3f9fe}
+
+\item 
+\hypertarget{nfft3_8h_a5d7a89ea903b670bc790a08ea37f073c}{void {\bfseries nsfft\-\_\-trafo\-\_\-direct} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a5d7a89ea903b670bc790a08ea37f073c}
+
+\item 
+\hypertarget{nfft3_8h_a816b55033620b857ff80b6315400c448}{void {\bfseries nsfft\-\_\-adjoint\-\_\-direct} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a816b55033620b857ff80b6315400c448}
+
+\item 
+void \hyperlink{group__nsfft_gaee06e4a864e22e2c41f71606a8e2644e}{nsfft\-\_\-trafo} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nsfft_gab3de4bceeffaea05a29daf75cad04d38}{nsfft\-\_\-adjoint} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nsfft_gaa90a04e2110e52bedb70382704f3f004}{nsfft\-\_\-cp} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths, \hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$ths\-\_\-nfft)
+\item 
+void \hyperlink{group__nsfft_ga7cbc20c44eeecadc5c30f4159616f30a}{nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__nsfft_ga1b7f87f960cb22420a933e915c539aaf}{nsfft\-\_\-init} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths, int d, int J, int M, int m, unsigned flags)
+\item 
+void \hyperlink{group__nsfft_gaef170ad12eff8fde1c78bc6071142b36}{nsfft\-\_\-finalize} (\hyperlink{structnsfft__plan}{nsfft\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_a8f34911d7f056c5206ce9efe81477774}{void {\bfseries nsfftl\-\_\-trafo\-\_\-direct} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a8f34911d7f056c5206ce9efe81477774}
+
+\item 
+\hypertarget{nfft3_8h_af08a9578e5926022bfd2032f14f78b15}{void {\bfseries nsfftl\-\_\-adjoint\-\_\-direct} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_af08a9578e5926022bfd2032f14f78b15}
+
+\item 
+\hypertarget{nfft3_8h_ad13e87c32603d30c0fcfabf017feac6f}{void {\bfseries nsfftl\-\_\-trafo} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ad13e87c32603d30c0fcfabf017feac6f}
+
+\item 
+\hypertarget{nfft3_8h_a1ac447e3fb8ccb5a7b50a5af8709f33e}{void {\bfseries nsfftl\-\_\-adjoint} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a1ac447e3fb8ccb5a7b50a5af8709f33e}
+
+\item 
+\hypertarget{nfft3_8h_a78f38bd6d8f554ef1c8e318234ca0f3e}{void {\bfseries nsfftl\-\_\-cp} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths, \hyperlink{structnfftl__plan}{nfftl\-\_\-plan} $\ast$ths\-\_\-nfft)}\label{nfft3_8h_a78f38bd6d8f554ef1c8e318234ca0f3e}
+
+\item 
+\hypertarget{nfft3_8h_af6d3d908336159a4be2f16966c70ebc0}{void {\bfseries nsfftl\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_af6d3d908336159a4be2f16966c70ebc0}
+
+\item 
+\hypertarget{nfft3_8h_a64c1bf471a36994117e7e660d7ba99d2}{void {\bfseries nsfftl\-\_\-init} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths, int d, int J, int M, int m, unsigned flags)}\label{nfft3_8h_a64c1bf471a36994117e7e660d7ba99d2}
+
+\item 
+\hypertarget{nfft3_8h_ab243ff1dc03d549b6ee72a986a905386}{void {\bfseries nsfftl\-\_\-finalize} (\hyperlink{structnsfftl__plan}{nsfftl\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ab243ff1dc03d549b6ee72a986a905386}
+
+\item 
+\hypertarget{nfft3_8h_a5651ec188110aa7615f2342f0e50ea52}{void {\bfseries mrif\-\_\-inh\-\_\-2d1d\-\_\-trafo} (\hyperlink{structmrif__inh__2d1d__plan}{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a5651ec188110aa7615f2342f0e50ea52}
+
+\item 
+\hypertarget{nfft3_8h_a92cb0fe77b9cf4c4c61af21a207262b6}{void {\bfseries mrif\-\_\-inh\-\_\-2d1d\-\_\-adjoint} (\hyperlink{structmrif__inh__2d1d__plan}{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a92cb0fe77b9cf4c4c61af21a207262b6}
+
+\item 
+\hypertarget{nfft3_8h_abc16967817cccb9f22c42d65541907b3}{void {\bfseries mrif\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru} (\hyperlink{structmrif__inh__2d1d__plan}{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths, int $\ast$N, int M, int $\ast$n, int m, float sigma, unsigned nfft\-\_\-flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_abc16967817cccb9f22c42d65541907b3}
+
+\item 
+\hypertarget{nfft3_8h_a2ae8486acde371aec1c5f6e7d9b39703}{void {\bfseries mrif\-\_\-inh\-\_\-2d1d\-\_\-finalize} (\hyperlink{structmrif__inh__2d1d__plan}{mrif\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a2ae8486acde371aec1c5f6e7d9b39703}
+
+\item 
+\hypertarget{nfft3_8h_acf24e20c973caf86bfeb1929b67034fa}{void {\bfseries mrif\-\_\-inh\-\_\-3d\-\_\-trafo} (\hyperlink{structmrif__inh__3d__plan}{mrif\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_acf24e20c973caf86bfeb1929b67034fa}
+
+\item 
+\hypertarget{nfft3_8h_addb2caf1322371cee040f80d9c6d86b5}{void {\bfseries mrif\-\_\-inh\-\_\-3d\-\_\-adjoint} (\hyperlink{structmrif__inh__3d__plan}{mrif\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_addb2caf1322371cee040f80d9c6d86b5}
+
+\item 
+\hypertarget{nfft3_8h_ac133e266d5c1887ddc374a52cd86ba51}{void {\bfseries mrif\-\_\-inh\-\_\-3d\-\_\-init\-\_\-guru} (\hyperlink{structmrif__inh__3d__plan}{mrif\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths, int $\ast$N, int M, int $\ast$n, int m, float sigma, unsigned nfft\-\_\-flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_ac133e266d5c1887ddc374a52cd86ba51}
+
+\item 
+\hypertarget{nfft3_8h_a823d3b63a31d3e320a42c94f7d4c760e}{void {\bfseries mrif\-\_\-inh\-\_\-3d\-\_\-finalize} (\hyperlink{structmrif__inh__3d__plan}{mrif\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a823d3b63a31d3e320a42c94f7d4c760e}
+
+\item 
+void \hyperlink{group__mri_ga7c8cc36ba07eafdf8e2b5333c9c9a479}{mri\-\_\-inh\-\_\-2d1d\-\_\-trafo} (\hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_ae431fe3e0ef4dc056f58d827f804d0a4}{void {\bfseries mri\-\_\-inh\-\_\-2d1d\-\_\-adjoint} (\hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae431fe3e0ef4dc056f58d827f804d0a4}
+
+\item 
+void \hyperlink{group__mri_ga8010f0f3bd86f3bd6516751b876e6b14}{mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru} (\hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths, int $\ast$N, int M, int $\ast$n, int m, double sigma, unsigned nfft\-\_\-flags, unsigned fftw\-\_\-flags)
+\item 
+void \hyperlink{group__mri_gaecee20a5ddbcc562e794a20e0d3e0f71}{mri\-\_\-inh\-\_\-2d1d\-\_\-finalize} (\hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__mri_ga6bb9c6a50a3ba0ff081d25bf8c3262d9}{mri\-\_\-inh\-\_\-3d\-\_\-trafo} (\hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__mri_gaf07fe676aecd6493bf253d62927c3a46}{mri\-\_\-inh\-\_\-3d\-\_\-adjoint} (\hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_adaab02ce08e45dab866fd5f841700afb}{void {\bfseries mri\-\_\-inh\-\_\-3d\-\_\-init\-\_\-guru} (\hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths, int $\ast$N, int M, int $\ast$n, int m, double sigma, unsigned nfft\-\_\-flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_adaab02ce08e45dab866fd5f841700afb}
+
+\item 
+void \hyperlink{group__mri_ga371d6771a68d262c15ec83516c9dada3}{mri\-\_\-inh\-\_\-3d\-\_\-finalize} (\hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)
+\item 
+\hypertarget{nfft3_8h_a3979a630f875c2548e7e7860fa2a4234}{void {\bfseries mril\-\_\-inh\-\_\-2d1d\-\_\-trafo} (\hyperlink{structmril__inh__2d1d__plan}{mril\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a3979a630f875c2548e7e7860fa2a4234}
+
+\item 
+\hypertarget{nfft3_8h_aed8d14ef64bb1702965856d648bb0e81}{void {\bfseries mril\-\_\-inh\-\_\-2d1d\-\_\-adjoint} (\hyperlink{structmril__inh__2d1d__plan}{mril\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_aed8d14ef64bb1702965856d648bb0e81}
+
+\item 
+\hypertarget{nfft3_8h_a51539d9bdb03bc862c172f4553310006}{void {\bfseries mril\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru} (\hyperlink{structmril__inh__2d1d__plan}{mril\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths, int $\ast$N, int M, int $\ast$n, int m, long double sigma, unsigned nfft\-\_\-flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_a51539d9bdb03bc862c172f4553310006}
+
+\item 
+\hypertarget{nfft3_8h_af00281fab7999742510498d0235027c9}{void {\bfseries mril\-\_\-inh\-\_\-2d1d\-\_\-finalize} (\hyperlink{structmril__inh__2d1d__plan}{mril\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_af00281fab7999742510498d0235027c9}
+
+\item 
+\hypertarget{nfft3_8h_a9a935b5e070c44bb7ef68cfd166ed818}{void {\bfseries mril\-\_\-inh\-\_\-3d\-\_\-trafo} (\hyperlink{structmril__inh__3d__plan}{mril\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a9a935b5e070c44bb7ef68cfd166ed818}
+
+\item 
+\hypertarget{nfft3_8h_ae40e4f02cdb2fadeac9f4663d2e72a9e}{void {\bfseries mril\-\_\-inh\-\_\-3d\-\_\-adjoint} (\hyperlink{structmril__inh__3d__plan}{mril\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_ae40e4f02cdb2fadeac9f4663d2e72a9e}
+
+\item 
+\hypertarget{nfft3_8h_af29e97397fd45aebea1cc6a17f344aae}{void {\bfseries mril\-\_\-inh\-\_\-3d\-\_\-init\-\_\-guru} (\hyperlink{structmril__inh__3d__plan}{mril\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths, int $\ast$N, int M, int $\ast$n, int m, long double sigma, unsigned nfft\-\_\-flags, unsigned fftw\-\_\-flags)}\label{nfft3_8h_af29e97397fd45aebea1cc6a17f344aae}
+
+\item 
+\hypertarget{nfft3_8h_a5e3f5c6460102eaf60170aa832cd6b20}{void {\bfseries mril\-\_\-inh\-\_\-3d\-\_\-finalize} (\hyperlink{structmril__inh__3d__plan}{mril\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)}\label{nfft3_8h_a5e3f5c6460102eaf60170aa832cd6b20}
+
+\item 
+\hypertarget{nfft3_8h_a3aff93c37d515728069bf5be55130f61}{void {\bfseries nfsftf\-\_\-init} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan, int N, int M)}\label{nfft3_8h_a3aff93c37d515728069bf5be55130f61}
+
+\item 
+\hypertarget{nfft3_8h_a43209c6040e32b10470f814734fddbd9}{void {\bfseries nfsftf\-\_\-init\-\_\-advanced} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsft\-\_\-flags)}\label{nfft3_8h_a43209c6040e32b10470f814734fddbd9}
+
+\item 
+\hypertarget{nfft3_8h_a708f132f101d3e5281d5e55db2b0fbc0}{void {\bfseries nfsftf\-\_\-init\-\_\-guru} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff)}\label{nfft3_8h_a708f132f101d3e5281d5e55db2b0fbc0}
+
+\item 
+\hypertarget{nfft3_8h_a9adc8da9ffdeb957aa2df5807d12172e}{void {\bfseries nfsftf\-\_\-precompute} (int N, float kappa, unsigned int nfsft\-\_\-flags, unsigned int fpt\-\_\-flags)}\label{nfft3_8h_a9adc8da9ffdeb957aa2df5807d12172e}
+
+\item 
+\hypertarget{nfft3_8h_a5401f9eb13507d7f9bf9f95300380268}{void {\bfseries nfsftf\-\_\-forget} (void)}\label{nfft3_8h_a5401f9eb13507d7f9bf9f95300380268}
+
+\item 
+\hypertarget{nfft3_8h_a18ee188d7021103bdd1589b802a7e407}{void {\bfseries nfsftf\-\_\-trafo\-\_\-direct} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a18ee188d7021103bdd1589b802a7e407}
+
+\item 
+\hypertarget{nfft3_8h_a52a2acd6b761ce7a884a136524a18584}{void {\bfseries nfsftf\-\_\-adjoint\-\_\-direct} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a52a2acd6b761ce7a884a136524a18584}
+
+\item 
+\hypertarget{nfft3_8h_ab50b55785a02c4ffd0b3b1399cb9ccf1}{void {\bfseries nfsftf\-\_\-trafo} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_ab50b55785a02c4ffd0b3b1399cb9ccf1}
+
+\item 
+\hypertarget{nfft3_8h_acfa6e095a34d2045182ea22cde56ed24}{void {\bfseries nfsftf\-\_\-adjoint} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_acfa6e095a34d2045182ea22cde56ed24}
+
+\item 
+\hypertarget{nfft3_8h_a70ff7515207398223d232d0687dee80c}{void {\bfseries nfsftf\-\_\-finalize} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a70ff7515207398223d232d0687dee80c}
+
+\item 
+\hypertarget{nfft3_8h_adce47b633284c7b29e644a4e16230ed3}{void {\bfseries nfsftf\-\_\-precompute\-\_\-x} (\hyperlink{structnfsftf__plan}{nfsftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_adce47b633284c7b29e644a4e16230ed3}
+
+\item 
+void \hyperlink{group__nfsft_ga65cda3f4a3edc5eb39c697cf34b1f0b9}{nfsft\-\_\-init} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan, int N, int M)
+\item 
+void \hyperlink{group__nfsft_ga2812aa5beba0eb7efd3072bf323a0155}{nfsft\-\_\-init\-\_\-advanced} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsft\-\_\-flags)
+\item 
+\hypertarget{group__nfsft_gafff6158abcefa9a75bcfa41af5a79089}{void {\bfseries nfsft\-\_\-init\-\_\-guru} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff)}\label{group__nfsft_gafff6158abcefa9a75bcfa41af5a79089}
+
+\item 
+void \hyperlink{group__nfsft_gabe87aeea1f7cfef9ae8febb16d702f3b}{nfsft\-\_\-precompute} (int N, double kappa, unsigned int nfsft\-\_\-flags, unsigned int fpt\-\_\-flags)
+\item 
+void \hyperlink{group__nfsft_ga3b69bca6c76a63877534f5a9781bf285}{nfsft\-\_\-forget} (void)
+\item 
+\hypertarget{group__nfsft_ga7628057164579a29cc77487cda6772e5}{void {\bfseries nfsft\-\_\-trafo\-\_\-direct} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)}\label{group__nfsft_ga7628057164579a29cc77487cda6772e5}
+
+\item 
+\hypertarget{group__nfsft_ga7cfaacc3393dea5c895859fa035e3e06}{void {\bfseries nfsft\-\_\-adjoint\-\_\-direct} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)}\label{group__nfsft_ga7cfaacc3393dea5c895859fa035e3e06}
+
+\item 
+void \hyperlink{group__nfsft_ga5796fc68c432d46dfcab7abd8c56ee22}{nfsft\-\_\-trafo} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\item 
+void \hyperlink{group__nfsft_ga813bb48d404c7286310733c99a81a169}{nfsft\-\_\-adjoint} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\item 
+void \hyperlink{group__nfsft_gaa63e193a27d84059742ff25ff81e2ed1}{nfsft\-\_\-finalize} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\item 
+\hypertarget{group__nfsft_ga7a7fa6722d6ba3aade4c69299af86e4e}{void {\bfseries nfsft\-\_\-precompute\-\_\-x} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)}\label{group__nfsft_ga7a7fa6722d6ba3aade4c69299af86e4e}
+
+\item 
+\hypertarget{nfft3_8h_a7ba9fe6d07ea6928286876aaad517edf}{void {\bfseries nfsftl\-\_\-init} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan, int N, int M)}\label{nfft3_8h_a7ba9fe6d07ea6928286876aaad517edf}
+
+\item 
+\hypertarget{nfft3_8h_a7cf6938e64d62373ecfb94bfe9dce8ef}{void {\bfseries nfsftl\-\_\-init\-\_\-advanced} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsft\-\_\-flags)}\label{nfft3_8h_a7cf6938e64d62373ecfb94bfe9dce8ef}
+
+\item 
+\hypertarget{nfft3_8h_a2b186aa674c4c3a923bcb3b15109f7cf}{void {\bfseries nfsftl\-\_\-init\-\_\-guru} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff)}\label{nfft3_8h_a2b186aa674c4c3a923bcb3b15109f7cf}
+
+\item 
+\hypertarget{nfft3_8h_a9759900e56cb74834b01e57e34218a4f}{void {\bfseries nfsftl\-\_\-precompute} (int N, long double kappa, unsigned int nfsft\-\_\-flags, unsigned int fpt\-\_\-flags)}\label{nfft3_8h_a9759900e56cb74834b01e57e34218a4f}
+
+\item 
+\hypertarget{nfft3_8h_a3d09a53a36a1ca79748ee6f0852cd77c}{void {\bfseries nfsftl\-\_\-forget} (void)}\label{nfft3_8h_a3d09a53a36a1ca79748ee6f0852cd77c}
+
+\item 
+\hypertarget{nfft3_8h_abe5f98e7b22b8aebe56f79bd84d2c43a}{void {\bfseries nfsftl\-\_\-trafo\-\_\-direct} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_abe5f98e7b22b8aebe56f79bd84d2c43a}
+
+\item 
+\hypertarget{nfft3_8h_a2540dc3f9b3cf3d117e7282bb91cbe2f}{void {\bfseries nfsftl\-\_\-adjoint\-\_\-direct} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a2540dc3f9b3cf3d117e7282bb91cbe2f}
+
+\item 
+\hypertarget{nfft3_8h_aa6c645664adc5fc32e0ad4ad2c39ad8c}{void {\bfseries nfsftl\-\_\-trafo} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_aa6c645664adc5fc32e0ad4ad2c39ad8c}
+
+\item 
+\hypertarget{nfft3_8h_a3d1b4b881054aee1d006f2de008a28ca}{void {\bfseries nfsftl\-\_\-adjoint} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a3d1b4b881054aee1d006f2de008a28ca}
+
+\item 
+\hypertarget{nfft3_8h_ab5d37f72aa8caef32a3b664df1aff334}{void {\bfseries nfsftl\-\_\-finalize} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_ab5d37f72aa8caef32a3b664df1aff334}
+
+\item 
+\hypertarget{nfft3_8h_a7b20b3319d95c11edb6703976c97d5aa}{void {\bfseries nfsftl\-\_\-precompute\-\_\-x} (\hyperlink{structnfsftl__plan}{nfsftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a7b20b3319d95c11edb6703976c97d5aa}
+
+\item 
+\hypertarget{nfft3_8h_a99ed7214bd4ac2629f025c418de4cce6}{\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} {\bfseries fptf\-\_\-init} (const int M, const int t, const unsigned int flags)}\label{nfft3_8h_a99ed7214bd4ac2629f025c418de4cce6}
+
+\item 
+\hypertarget{nfft3_8h_af6fd137ff8a9d4e4bfadbdd286fed22c}{void {\bfseries fptf\-\_\-precompute} (\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set, const int m, float $\ast$alpha, float $\ast$beta, float $\ast$gam, int k\-\_\-start, const float threshold)}\label{nfft3_8h_af6fd137ff8a9d4e4bfadbdd286fed22c}
+
+\item 
+\hypertarget{nfft3_8h_a006e0ccb6b9cb6f93cf65943104cb526}{void {\bfseries fptf\-\_\-trafo\-\_\-direct} (\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set, const int m, const fftwf\-\_\-complex $\ast$x, fftwf\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a006e0ccb6b9cb6f93cf65943104cb526}
+
+\item 
+\hypertarget{nfft3_8h_ab9088c2cface913de972e5fda67b7318}{void {\bfseries fptf\-\_\-trafo} (\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set, const int m, const fftwf\-\_\-complex $\ast$x, fftwf\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_ab9088c2cface913de972e5fda67b7318}
+
+\item 
+\hypertarget{nfft3_8h_a0047f35347e74bf2d37e1329697532f2}{void {\bfseries fptf\-\_\-transposed\-\_\-direct} (\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set, const int m, fftwf\-\_\-complex $\ast$x, fftwf\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a0047f35347e74bf2d37e1329697532f2}
+
+\item 
+\hypertarget{nfft3_8h_a739fb9ad942ef7112f99801cb88b2a8b}{void {\bfseries fptf\-\_\-transposed} (\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set, const int m, fftwf\-\_\-complex $\ast$x, fftwf\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a739fb9ad942ef7112f99801cb88b2a8b}
+
+\item 
+\hypertarget{nfft3_8h_a5b986d2fd4647b0d42df6f593ba3245e}{void {\bfseries fptf\-\_\-finalize} (\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set)}\label{nfft3_8h_a5b986d2fd4647b0d42df6f593ba3245e}
+
+\item 
+\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} \hyperlink{group__fpt_gad103ad18c75ee5dd048392dfd1ca7305}{fpt\-\_\-init} (const int M, const int t, const unsigned int flags)
+\item 
+void \hyperlink{group__fpt_gad3c3b30fda57364c92958cc7390b6378}{fpt\-\_\-precompute} (\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set, const int m, double $\ast$alpha, double $\ast$beta, double $\ast$gam, int k\-\_\-start, const double threshold)
+\item 
+\hypertarget{nfft3_8h_a9cf316f764ebe8fc8c323ee8e25575c4}{void {\bfseries fpt\-\_\-trafo\-\_\-direct} (\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set, const int m, const fftw\-\_\-complex $\ast$x, fftw\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a9cf316f764ebe8fc8c323ee8e25575c4}
+
+\item 
+\hypertarget{nfft3_8h_a16d416e80a919ac119d5cea13fce79d0}{void {\bfseries fpt\-\_\-trafo} (\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set, const int m, const fftw\-\_\-complex $\ast$x, fftw\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a16d416e80a919ac119d5cea13fce79d0}
+
+\item 
+\hypertarget{nfft3_8h_ac0236446f79ad475c1cdc2b44c6dcc09}{void {\bfseries fpt\-\_\-transposed\-\_\-direct} (\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set, const int m, fftw\-\_\-complex $\ast$x, fftw\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_ac0236446f79ad475c1cdc2b44c6dcc09}
+
+\item 
+\hypertarget{nfft3_8h_abacb4c41365ca6f32b72688376aa86e1}{void {\bfseries fpt\-\_\-transposed} (\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set, const int m, fftw\-\_\-complex $\ast$x, fftw\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_abacb4c41365ca6f32b72688376aa86e1}
+
+\item 
+\hypertarget{nfft3_8h_a7f2a1b915af8d0e7f2eb2f37ddb6772c}{void {\bfseries fpt\-\_\-finalize} (\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set)}\label{nfft3_8h_a7f2a1b915af8d0e7f2eb2f37ddb6772c}
+
+\item 
+\hypertarget{nfft3_8h_a29a588fe645ac374090459950d9a6670}{\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} {\bfseries fptl\-\_\-init} (const int M, const int t, const unsigned int flags)}\label{nfft3_8h_a29a588fe645ac374090459950d9a6670}
+
+\item 
+\hypertarget{nfft3_8h_a5bec17cbb38bc370251f2c0c837fdeb0}{void {\bfseries fptl\-\_\-precompute} (\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set, const int m, long double $\ast$alpha, long double $\ast$beta, long double $\ast$gam, int k\-\_\-start, const long double threshold)}\label{nfft3_8h_a5bec17cbb38bc370251f2c0c837fdeb0}
+
+\item 
+\hypertarget{nfft3_8h_a192094ff3bd8fa9c2dfee9bb760c5218}{void {\bfseries fptl\-\_\-trafo\-\_\-direct} (\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set, const int m, const fftwl\-\_\-complex $\ast$x, fftwl\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a192094ff3bd8fa9c2dfee9bb760c5218}
+
+\item 
+\hypertarget{nfft3_8h_a783431b575e6823de7cb2ba9536917d4}{void {\bfseries fptl\-\_\-trafo} (\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set, const int m, const fftwl\-\_\-complex $\ast$x, fftwl\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a783431b575e6823de7cb2ba9536917d4}
+
+\item 
+\hypertarget{nfft3_8h_a02a45978d9d953a365c400c6a3a7d872}{void {\bfseries fptl\-\_\-transposed\-\_\-direct} (\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set, const int m, fftwl\-\_\-complex $\ast$x, fftwl\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a02a45978d9d953a365c400c6a3a7d872}
+
+\item 
+\hypertarget{nfft3_8h_a55a8bcd4d06045f1bd40265e181d0d31}{void {\bfseries fptl\-\_\-transposed} (\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set, const int m, fftwl\-\_\-complex $\ast$x, fftwl\-\_\-complex $\ast$y, const int k\-\_\-end, const unsigned int flags)}\label{nfft3_8h_a55a8bcd4d06045f1bd40265e181d0d31}
+
+\item 
+\hypertarget{nfft3_8h_ac9f254034246b927eaa45f8398da096a}{void {\bfseries fptl\-\_\-finalize} (\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set)}\label{nfft3_8h_ac9f254034246b927eaa45f8398da096a}
+
+\item 
+\hypertarget{nfft3_8h_a126dc23ff74589bf7717f0d5eb92934d}{void {\bfseries nfsoftf\-\_\-precompute} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a126dc23ff74589bf7717f0d5eb92934d}
+
+\item 
+\hypertarget{nfft3_8h_aab919ac542ffa0c99c311ff8a0787e5c}{\hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} {\bfseries nfsoftf\-\_\-\-S\-O3\-\_\-single\-\_\-fpt\-\_\-init} (int l, int k, int m, unsigned int flags, int kappa)}\label{nfft3_8h_aab919ac542ffa0c99c311ff8a0787e5c}
+
+\item 
+\hypertarget{nfft3_8h_ab85f7c141114c260127f0e8a507c295d}{void {\bfseries nfsoftf\-\_\-\-S\-O3\-\_\-fpt} (fftwf\-\_\-complex $\ast$coeffs, \hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set, int l, int k, int m, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_ab85f7c141114c260127f0e8a507c295d}
+
+\item 
+\hypertarget{nfft3_8h_a0cfd79f6121c052cfa2e8e07d76dd92c}{void {\bfseries nfsoftf\-\_\-\-S\-O3\-\_\-fpt\-\_\-transposed} (fftwf\-\_\-complex $\ast$coeffs, \hyperlink{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{fptf\-\_\-set} set, int l, int k, int m, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_a0cfd79f6121c052cfa2e8e07d76dd92c}
+
+\item 
+\hypertarget{nfft3_8h_aff3382f0ef7121a0877d678b1cfeb3a4}{void {\bfseries nfsoftf\-\_\-init} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan, int N, int M)}\label{nfft3_8h_aff3382f0ef7121a0877d678b1cfeb3a4}
+
+\item 
+\hypertarget{nfft3_8h_aee344825ad78ff13375f194b3533f3f4}{void {\bfseries nfsoftf\-\_\-init\-\_\-advanced} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_aee344825ad78ff13375f194b3533f3f4}
+
+\item 
+\hypertarget{nfft3_8h_ae3bb027d4ec83a8a0b92ea96bc5cabad}{void {\bfseries nfsoftf\-\_\-init\-\_\-guru} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff, int fpt\-\_\-kappa)}\label{nfft3_8h_ae3bb027d4ec83a8a0b92ea96bc5cabad}
+
+\item 
+\hypertarget{nfft3_8h_abca9090d65d1ba481ea77a78affa2000}{void {\bfseries nfsoftf\-\_\-init\-\_\-guru\-\_\-advanced} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff, int fpt\-\_\-kappa, int nn\-\_\-oversampled)}\label{nfft3_8h_abca9090d65d1ba481ea77a78affa2000}
+
+\item 
+\hypertarget{nfft3_8h_ad44ae4f31e450bd5757b6498d668d02f}{void {\bfseries nfsoftf\-\_\-trafo} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan\-\_\-nfsoft)}\label{nfft3_8h_ad44ae4f31e450bd5757b6498d668d02f}
+
+\item 
+\hypertarget{nfft3_8h_ab6701999f8f6cc4c115a6b780eea9d77}{void {\bfseries nfsoftf\-\_\-adjoint} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan\-\_\-nfsoft)}\label{nfft3_8h_ab6701999f8f6cc4c115a6b780eea9d77}
+
+\item 
+\hypertarget{nfft3_8h_ac19e7732a4ffd5f9a31a121c040370a5}{void {\bfseries nfsoftf\-\_\-finalize} (\hyperlink{structnfsoftf__plan__}{nfsoftf\-\_\-plan} $\ast$plan)}\label{nfft3_8h_ac19e7732a4ffd5f9a31a121c040370a5}
+
+\item 
+\hypertarget{nfft3_8h_a40f362a2e5589c83315cec24d42af7f9}{int {\bfseries nfsoftf\-\_\-pos\-N} (int n, int m, int B)}\label{nfft3_8h_a40f362a2e5589c83315cec24d42af7f9}
+
+\item 
+void \hyperlink{group__nfsoft_ga123df5d17a0d43fe5e061ac0fb8c1d23}{nfsoft\-\_\-precompute} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan)
+\item 
+\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} \hyperlink{group__nfsoft_gad8bf7646fcf34c3cda08123798ca5c95}{nfsoft\-\_\-\-S\-O3\-\_\-single\-\_\-fpt\-\_\-init} (int l, int k, int m, unsigned int flags, int kappa)
+\item 
+\hypertarget{nfft3_8h_a112f47515a696db8b9c5fd15b6b9232b}{void {\bfseries nfsoft\-\_\-\-S\-O3\-\_\-fpt} (fftw\-\_\-complex $\ast$coeffs, \hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set, int l, int k, int m, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_a112f47515a696db8b9c5fd15b6b9232b}
+
+\item 
+\hypertarget{nfft3_8h_a3f64d6d2a6b3e9f52a2090aa51867c03}{void {\bfseries nfsoft\-\_\-\-S\-O3\-\_\-fpt\-\_\-transposed} (fftw\-\_\-complex $\ast$coeffs, \hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} set, int l, int k, int m, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_a3f64d6d2a6b3e9f52a2090aa51867c03}
+
+\item 
+void \hyperlink{group__nfsoft_ga31c884458165fa204073c6c16c10775e}{nfsoft\-\_\-init} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan, int N, int M)
+\item 
+void \hyperlink{group__nfsoft_gaf4aec4ee2a2a5d56ca27c4f1a7f90b18}{nfsoft\-\_\-init\-\_\-advanced} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags)
+\item 
+void \hyperlink{group__nfsoft_ga1c13cdd3f82f48fa41acdd313cdc2052}{nfsoft\-\_\-init\-\_\-guru} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff, int fpt\-\_\-kappa)
+\item 
+\hypertarget{nfft3_8h_a5c40388f5cadbf947e3d99fe184ae928}{void {\bfseries nfsoft\-\_\-init\-\_\-guru\-\_\-advanced} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff, int fpt\-\_\-kappa, int nn\-\_\-oversampled)}\label{nfft3_8h_a5c40388f5cadbf947e3d99fe184ae928}
+
+\item 
+void \hyperlink{group__nfsoft_gae243cd75d7571a99eae53818e32355fb}{nfsoft\-\_\-trafo} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan\-\_\-nfsoft)
+\item 
+void \hyperlink{group__nfsoft_ga08395b1dd90f9a2565685d17460afc5b}{nfsoft\-\_\-adjoint} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan\-\_\-nfsoft)
+\item 
+void \hyperlink{group__nfsoft_ga30b5c6ae1ff496680f11ddcaad2d5a47}{nfsoft\-\_\-finalize} (\hyperlink{structnfsoft__plan__}{nfsoft\-\_\-plan} $\ast$plan)
+\item 
+\hypertarget{nfft3_8h_a7a81dd322c0de63c61c238e32bd8969d}{int {\bfseries nfsoft\-\_\-pos\-N} (int n, int m, int B)}\label{nfft3_8h_a7a81dd322c0de63c61c238e32bd8969d}
+
+\item 
+\hypertarget{nfft3_8h_a85ade4ba1f835c82bcb2acbd9adc24b9}{void {\bfseries nfsoftl\-\_\-precompute} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_a85ade4ba1f835c82bcb2acbd9adc24b9}
+
+\item 
+\hypertarget{nfft3_8h_ab3a39f78ce9698d55f368e3df7fb0198}{\hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} {\bfseries nfsoftl\-\_\-\-S\-O3\-\_\-single\-\_\-fpt\-\_\-init} (int l, int k, int m, unsigned int flags, int kappa)}\label{nfft3_8h_ab3a39f78ce9698d55f368e3df7fb0198}
+
+\item 
+\hypertarget{nfft3_8h_a3d51082ff48d917c2c8aa485a01810d8}{void {\bfseries nfsoftl\-\_\-\-S\-O3\-\_\-fpt} (fftwl\-\_\-complex $\ast$coeffs, \hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set, int l, int k, int m, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_a3d51082ff48d917c2c8aa485a01810d8}
+
+\item 
+\hypertarget{nfft3_8h_acdaa6dd5d2fe9cba39e41c9553ed8cae}{void {\bfseries nfsoftl\-\_\-\-S\-O3\-\_\-fpt\-\_\-transposed} (fftwl\-\_\-complex $\ast$coeffs, \hyperlink{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{fptl\-\_\-set} set, int l, int k, int m, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_acdaa6dd5d2fe9cba39e41c9553ed8cae}
+
+\item 
+\hypertarget{nfft3_8h_a1ad37a52b2fa051bb5fe92d37cf0bf84}{void {\bfseries nfsoftl\-\_\-init} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan, int N, int M)}\label{nfft3_8h_a1ad37a52b2fa051bb5fe92d37cf0bf84}
+
+\item 
+\hypertarget{nfft3_8h_a7547538a90a8d41999e2546c667e7102}{void {\bfseries nfsoftl\-\_\-init\-\_\-advanced} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags)}\label{nfft3_8h_a7547538a90a8d41999e2546c667e7102}
+
+\item 
+\hypertarget{nfft3_8h_af3ce458721f4e5b420b61613525137e0}{void {\bfseries nfsoftl\-\_\-init\-\_\-guru} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff, int fpt\-\_\-kappa)}\label{nfft3_8h_af3ce458721f4e5b420b61613525137e0}
+
+\item 
+\hypertarget{nfft3_8h_a90ef1d445bcf447a91df9791cad34641}{void {\bfseries nfsoftl\-\_\-init\-\_\-guru\-\_\-advanced} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan, int N, int M, unsigned int nfsoft\-\_\-flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff, int fpt\-\_\-kappa, int nn\-\_\-oversampled)}\label{nfft3_8h_a90ef1d445bcf447a91df9791cad34641}
+
+\item 
+\hypertarget{nfft3_8h_ad2c5c958d3c13b0cd9527025af0f6e29}{void {\bfseries nfsoftl\-\_\-trafo} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan\-\_\-nfsoft)}\label{nfft3_8h_ad2c5c958d3c13b0cd9527025af0f6e29}
+
+\item 
+\hypertarget{nfft3_8h_af440be0c56d2d1953cf5316582b84ede}{void {\bfseries nfsoftl\-\_\-adjoint} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan\-\_\-nfsoft)}\label{nfft3_8h_af440be0c56d2d1953cf5316582b84ede}
+
+\item 
+\hypertarget{nfft3_8h_af0805495fc6c08955599186bf721cf13}{void {\bfseries nfsoftl\-\_\-finalize} (\hyperlink{structnfsoftl__plan__}{nfsoftl\-\_\-plan} $\ast$plan)}\label{nfft3_8h_af0805495fc6c08955599186bf721cf13}
+
+\item 
+\hypertarget{nfft3_8h_a51ad8bfaa076e695c082a7cfa60f3f12}{int {\bfseries nfsoftl\-\_\-pos\-N} (int n, int m, int B)}\label{nfft3_8h_a51ad8bfaa076e695c082a7cfa60f3f12}
+
+\item 
+\hypertarget{nfft3_8h_ae23d5ef292fbe751bc0d5ed6cfcae2b5}{void {\bfseries solverf\-\_\-init\-\_\-advanced\-\_\-complex} (\hyperlink{structsolverf__plan__complex}{solverf\-\_\-plan\-\_\-complex} $\ast$ths, \hyperlink{structnfftf__mv__plan__complex}{nfftf\-\_\-mv\-\_\-plan\-\_\-complex} $\ast$mv, unsigned flags)}\label{nfft3_8h_ae23d5ef292fbe751bc0d5ed6cfcae2b5}
+
+\item 
+\hypertarget{nfft3_8h_a76250063357080589a41db463e113dab}{void {\bfseries solverf\-\_\-init\-\_\-complex} (\hyperlink{structsolverf__plan__complex}{solverf\-\_\-plan\-\_\-complex} $\ast$ths, \hyperlink{structnfftf__mv__plan__complex}{nfftf\-\_\-mv\-\_\-plan\-\_\-complex} $\ast$mv)}\label{nfft3_8h_a76250063357080589a41db463e113dab}
+
+\item 
+\hypertarget{nfft3_8h_a49fae3a25f94a5e8b04c41205e942ea5}{void {\bfseries solverf\-\_\-before\-\_\-loop\-\_\-complex} (\hyperlink{structsolverf__plan__complex}{solverf\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_a49fae3a25f94a5e8b04c41205e942ea5}
+
+\item 
+\hypertarget{nfft3_8h_aac2301a124b586c1fba6363edc152872}{void {\bfseries solverf\-\_\-loop\-\_\-one\-\_\-step\-\_\-complex} (\hyperlink{structsolverf__plan__complex}{solverf\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_aac2301a124b586c1fba6363edc152872}
+
+\item 
+\hypertarget{nfft3_8h_ae481120286ed0c292151ce62c6b3d2f1}{void {\bfseries solverf\-\_\-finalize\-\_\-complex} (\hyperlink{structsolverf__plan__complex}{solverf\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_ae481120286ed0c292151ce62c6b3d2f1}
+
+\item 
+\hypertarget{nfft3_8h_a7aab180f1d34c63103c98cb1335b621e}{void {\bfseries solverf\-\_\-init\-\_\-advanced\-\_\-double} (\hyperlink{structsolverf__plan__double}{solverf\-\_\-plan\-\_\-double} $\ast$ths, \hyperlink{structnfftf__mv__plan__double}{nfftf\-\_\-mv\-\_\-plan\-\_\-double} $\ast$mv, unsigned flags)}\label{nfft3_8h_a7aab180f1d34c63103c98cb1335b621e}
+
+\item 
+\hypertarget{nfft3_8h_aeb88153864e16fe19f52380b883c5929}{void {\bfseries solverf\-\_\-init\-\_\-double} (\hyperlink{structsolverf__plan__double}{solverf\-\_\-plan\-\_\-double} $\ast$ths, \hyperlink{structnfftf__mv__plan__double}{nfftf\-\_\-mv\-\_\-plan\-\_\-double} $\ast$mv)}\label{nfft3_8h_aeb88153864e16fe19f52380b883c5929}
+
+\item 
+\hypertarget{nfft3_8h_a53dadc2c4cae0ff84452a7e34439f02f}{void {\bfseries solverf\-\_\-before\-\_\-loop\-\_\-double} (\hyperlink{structsolverf__plan__double}{solverf\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_a53dadc2c4cae0ff84452a7e34439f02f}
+
+\item 
+\hypertarget{nfft3_8h_af8e5f0f9a4c6bba72e55cc4295e36430}{void {\bfseries solverf\-\_\-loop\-\_\-one\-\_\-step\-\_\-double} (\hyperlink{structsolverf__plan__double}{solverf\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_af8e5f0f9a4c6bba72e55cc4295e36430}
+
+\item 
+\hypertarget{nfft3_8h_a7726073074bf39974bda84998e8853ae}{void {\bfseries solverf\-\_\-finalize\-\_\-double} (\hyperlink{structsolverf__plan__double}{solverf\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_a7726073074bf39974bda84998e8853ae}
+
+\item 
+\hypertarget{nfft3_8h_ad8962fc79683a67a84b10593d8e0103c}{void {\bfseries solver\-\_\-init\-\_\-advanced\-\_\-complex} (\hyperlink{structsolver__plan__complex}{solver\-\_\-plan\-\_\-complex} $\ast$ths, \hyperlink{structnfft__mv__plan__complex}{nfft\-\_\-mv\-\_\-plan\-\_\-complex} $\ast$mv, unsigned flags)}\label{nfft3_8h_ad8962fc79683a67a84b10593d8e0103c}
+
+\item 
+\hypertarget{nfft3_8h_a6662c51f86e40ded7773d1954ec77ca2}{void {\bfseries solver\-\_\-init\-\_\-complex} (\hyperlink{structsolver__plan__complex}{solver\-\_\-plan\-\_\-complex} $\ast$ths, \hyperlink{structnfft__mv__plan__complex}{nfft\-\_\-mv\-\_\-plan\-\_\-complex} $\ast$mv)}\label{nfft3_8h_a6662c51f86e40ded7773d1954ec77ca2}
+
+\item 
+\hypertarget{nfft3_8h_a54498806e5ab4046a2ef8fc426e5b141}{void {\bfseries solver\-\_\-before\-\_\-loop\-\_\-complex} (\hyperlink{structsolver__plan__complex}{solver\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_a54498806e5ab4046a2ef8fc426e5b141}
+
+\item 
+\hypertarget{nfft3_8h_a3b80b04ee3429b04c310992fb0a12420}{void {\bfseries solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-complex} (\hyperlink{structsolver__plan__complex}{solver\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_a3b80b04ee3429b04c310992fb0a12420}
+
+\item 
+\hypertarget{nfft3_8h_a2f44c78734390e47d72578f4c9cbe709}{void {\bfseries solver\-\_\-finalize\-\_\-complex} (\hyperlink{structsolver__plan__complex}{solver\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_a2f44c78734390e47d72578f4c9cbe709}
+
+\item 
+\hypertarget{nfft3_8h_a1a4544ab96d14c812e3b330c439c3d80}{void {\bfseries solver\-\_\-init\-\_\-advanced\-\_\-double} (\hyperlink{structsolver__plan__double}{solver\-\_\-plan\-\_\-double} $\ast$ths, \hyperlink{structnfft__mv__plan__double}{nfft\-\_\-mv\-\_\-plan\-\_\-double} $\ast$mv, unsigned flags)}\label{nfft3_8h_a1a4544ab96d14c812e3b330c439c3d80}
+
+\item 
+\hypertarget{nfft3_8h_a4d22430ddf98d0837f710964474e3429}{void {\bfseries solver\-\_\-init\-\_\-double} (\hyperlink{structsolver__plan__double}{solver\-\_\-plan\-\_\-double} $\ast$ths, \hyperlink{structnfft__mv__plan__double}{nfft\-\_\-mv\-\_\-plan\-\_\-double} $\ast$mv)}\label{nfft3_8h_a4d22430ddf98d0837f710964474e3429}
+
+\item 
+\hypertarget{nfft3_8h_a101de2753c7c709e635b7c70a5fb5fe8}{void {\bfseries solver\-\_\-before\-\_\-loop\-\_\-double} (\hyperlink{structsolver__plan__double}{solver\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_a101de2753c7c709e635b7c70a5fb5fe8}
+
+\item 
+\hypertarget{nfft3_8h_ad4f10ac01c0f0361e6c12b9c522ae5f6}{void {\bfseries solver\-\_\-loop\-\_\-one\-\_\-step\-\_\-double} (\hyperlink{structsolver__plan__double}{solver\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_ad4f10ac01c0f0361e6c12b9c522ae5f6}
+
+\item 
+\hypertarget{nfft3_8h_a1b474dc7b8c84ac43e6c8cb2b5a66e47}{void {\bfseries solver\-\_\-finalize\-\_\-double} (\hyperlink{structsolver__plan__double}{solver\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_a1b474dc7b8c84ac43e6c8cb2b5a66e47}
+
+\item 
+\hypertarget{nfft3_8h_a3d083e820487819be320c29e6f453a2c}{void {\bfseries solverl\-\_\-init\-\_\-advanced\-\_\-complex} (\hyperlink{structsolverl__plan__complex}{solverl\-\_\-plan\-\_\-complex} $\ast$ths, \hyperlink{structnfftl__mv__plan__complex}{nfftl\-\_\-mv\-\_\-plan\-\_\-complex} $\ast$mv, unsigned flags)}\label{nfft3_8h_a3d083e820487819be320c29e6f453a2c}
+
+\item 
+\hypertarget{nfft3_8h_a739e47736aee0e65ad64f7e3c2c78575}{void {\bfseries solverl\-\_\-init\-\_\-complex} (\hyperlink{structsolverl__plan__complex}{solverl\-\_\-plan\-\_\-complex} $\ast$ths, \hyperlink{structnfftl__mv__plan__complex}{nfftl\-\_\-mv\-\_\-plan\-\_\-complex} $\ast$mv)}\label{nfft3_8h_a739e47736aee0e65ad64f7e3c2c78575}
+
+\item 
+\hypertarget{nfft3_8h_aac9042f700453c4730f3a015d502e5dd}{void {\bfseries solverl\-\_\-before\-\_\-loop\-\_\-complex} (\hyperlink{structsolverl__plan__complex}{solverl\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_aac9042f700453c4730f3a015d502e5dd}
+
+\item 
+\hypertarget{nfft3_8h_a09a9110704ce69fda1fb556c0bcd223d}{void {\bfseries solverl\-\_\-loop\-\_\-one\-\_\-step\-\_\-complex} (\hyperlink{structsolverl__plan__complex}{solverl\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_a09a9110704ce69fda1fb556c0bcd223d}
+
+\item 
+\hypertarget{nfft3_8h_af3e16a8e0b7c37c162797e469d5da57d}{void {\bfseries solverl\-\_\-finalize\-\_\-complex} (\hyperlink{structsolverl__plan__complex}{solverl\-\_\-plan\-\_\-complex} $\ast$ths)}\label{nfft3_8h_af3e16a8e0b7c37c162797e469d5da57d}
+
+\item 
+\hypertarget{nfft3_8h_a76d058dd91d4cd6399c3b1c68687f900}{void {\bfseries solverl\-\_\-init\-\_\-advanced\-\_\-double} (\hyperlink{structsolverl__plan__double}{solverl\-\_\-plan\-\_\-double} $\ast$ths, \hyperlink{structnfftl__mv__plan__double}{nfftl\-\_\-mv\-\_\-plan\-\_\-double} $\ast$mv, unsigned flags)}\label{nfft3_8h_a76d058dd91d4cd6399c3b1c68687f900}
+
+\item 
+\hypertarget{nfft3_8h_a5b290b595edac87cc2123a5e842bc9f4}{void {\bfseries solverl\-\_\-init\-\_\-double} (\hyperlink{structsolverl__plan__double}{solverl\-\_\-plan\-\_\-double} $\ast$ths, \hyperlink{structnfftl__mv__plan__double}{nfftl\-\_\-mv\-\_\-plan\-\_\-double} $\ast$mv)}\label{nfft3_8h_a5b290b595edac87cc2123a5e842bc9f4}
+
+\item 
+\hypertarget{nfft3_8h_ade64fbe091249392f285f6b9176cbf14}{void {\bfseries solverl\-\_\-before\-\_\-loop\-\_\-double} (\hyperlink{structsolverl__plan__double}{solverl\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_ade64fbe091249392f285f6b9176cbf14}
+
+\item 
+\hypertarget{nfft3_8h_a9dc0a83def1b758171258ec758fd7c5b}{void {\bfseries solverl\-\_\-loop\-\_\-one\-\_\-step\-\_\-double} (\hyperlink{structsolverl__plan__double}{solverl\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_a9dc0a83def1b758171258ec758fd7c5b}
+
+\item 
+\hypertarget{nfft3_8h_a30ce491f821ce46361fcc40d235ca268}{void {\bfseries solverl\-\_\-finalize\-\_\-double} (\hyperlink{structsolverl__plan__double}{solverl\-\_\-plan\-\_\-double} $\ast$ths)}\label{nfft3_8h_a30ce491f821ce46361fcc40d235ca268}
+
+\item 
+\hypertarget{nfft3_8h_adf983834284b770e9eddb2462add030e}{float {\bfseries nfftf\-\_\-drand48} (void)}\label{nfft3_8h_adf983834284b770e9eddb2462add030e}
+
+\item 
+\hypertarget{nfft3_8h_ac6c41ae1183f4b2effb1f58e45921a3a}{void {\bfseries nfftf\-\_\-srand48} (long int seed)}\label{nfft3_8h_ac6c41ae1183f4b2effb1f58e45921a3a}
+
+\item 
+void \hyperlink{nfft3_8h_a830666ca7902ad76138e1ab8d7d2e41f}{nfftf\-\_\-vrand\-\_\-unit\-\_\-complex} (fftwf\-\_\-complex $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Inits a vector of random complex numbers in $[0,1]\times[0,1]{\rm i}$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a4f3c35e95b2e7c8a62593bc612338c60}{nfftf\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double} (float $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Inits a vector of random double numbers in $[-1/2,1/2]$. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a361d7df5a1d5230e4150006ae9eefa6f}{void {\bfseries nfftf\-\_\-vrand\-\_\-real} (float $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const float a, const float b)}\label{nfft3_8h_a361d7df5a1d5230e4150006ae9eefa6f}
+
+\item 
+void \hyperlink{nfft3_8h_a3753b3efd7553fe822b5430b12868ddc}{nfftf\-\_\-vpr\-\_\-double} (float $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Print real vector to standard output. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_ae1ca80ca52afffbddc1408ee29832993}{nfftf\-\_\-vpr\-\_\-complex} (fftwf\-\_\-complex $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Print complex vector to standard output. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a13636b49bc8d7a84922128547f379537}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfftf\-\_\-get\-\_\-num\-\_\-threads} (void)}\label{nfft3_8h_a13636b49bc8d7a84922128547f379537}
+
+\item 
+\hypertarget{nfft3_8h_afd00bd8f05fe018af03db0c9bc753744}{float {\bfseries nfftf\-\_\-clock\-\_\-gettime\-\_\-seconds} (void)}\label{nfft3_8h_afd00bd8f05fe018af03db0c9bc753744}
+
+\item 
+\hypertarget{nfft3_8h_acaf2a5b79872e9ec07b31e1790feb12b}{float {\bfseries nfftf\-\_\-error\-\_\-l\-\_\-infty\-\_\-complex} (const fftwf\-\_\-complex $\ast$x, const fftwf\-\_\-complex $\ast$y, const N\-F\-F\-T\-\_\-\-I\-N\-T n)}\label{nfft3_8h_acaf2a5b79872e9ec07b31e1790feb12b}
+
+\item 
+\hypertarget{nfft3_8h_af025e04abdebb3bf88c5d64fe023392d}{float {\bfseries nfftf\-\_\-error\-\_\-l\-\_\-infty\-\_\-1\-\_\-complex} (const fftwf\-\_\-complex $\ast$x, const fftwf\-\_\-complex $\ast$y, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const fftwf\-\_\-complex $\ast$z, const N\-F\-F\-T\-\_\-\-I\-N\-T m)}\label{nfft3_8h_af025e04abdebb3bf88c5d64fe023392d}
+
+\item 
+\hypertarget{nfft3_8h_a1e4de8c0a652ff21001cba9ad1c977f8}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfftf\-\_\-exp2i} (const N\-F\-F\-T\-\_\-\-I\-N\-T a)}\label{nfft3_8h_a1e4de8c0a652ff21001cba9ad1c977f8}
+
+\item 
+\hypertarget{nfft3_8h_a71850a80576e35d82ac50f34ae0b6a91}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfftf\-\_\-next\-\_\-power\-\_\-of\-\_\-2} (const N\-F\-F\-T\-\_\-\-I\-N\-T N)}\label{nfft3_8h_a71850a80576e35d82ac50f34ae0b6a91}
+
+\item 
+float \hyperlink{nfft3_8h_a5964806ffe3b77dea148cdec375bf5d9}{nfftf\-\_\-dot\-\_\-complex} (fftwf\-\_\-complex $\ast$x, N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the inner/dot product $x^H x$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_adadb918256be45d9324119ca00c12740}{nfftf\-\_\-upd\-\_\-axpy\-\_\-complex} (fftwf\-\_\-complex $\ast$x, float a, fftwf\-\_\-complex $\ast$y, N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + y$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a5806dbd5e5290460f2bdd8184bf873db}{nfftf\-\_\-fftshift\-\_\-complex} (fftwf\-\_\-complex $\ast$x, N\-F\-F\-T\-\_\-\-I\-N\-T d, N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$N)
+\begin{DoxyCompactList}\small\item\em Swaps each half over N\mbox{[}d\mbox{]}/2. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a43566ef372047df3c078ab1bc3b7ce86}{void {\bfseries nfftf\-\_\-fftshift\-\_\-complex\-\_\-int} (fftwf\-\_\-complex $\ast$x, int d, int $\ast$N)}\label{nfft3_8h_a43566ef372047df3c078ab1bc3b7ce86}
+
+\item 
+void \hyperlink{nfft3_8h_a220787f5dd6845c47cc48a1f06a0670e}{nfftf\-\_\-get\-\_\-version} (unsigned $\ast$major, unsigned $\ast$minor, unsigned $\ast$patch)
+\begin{DoxyCompactList}\small\item\em Return library version. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{nfft3_8h_af8ebde3afc0d8be69061a8eea4a492a8}{nfftf\-\_\-get\-\_\-window\-\_\-name} ()
+\begin{DoxyCompactList}\small\item\em \textbackslash{} $\ast$ Return name of window function. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a574571239f7dcf7474736d35a6242bb1}{double {\bfseries nfft\-\_\-drand48} (void)}\label{nfft3_8h_a574571239f7dcf7474736d35a6242bb1}
+
+\item 
+\hypertarget{nfft3_8h_aef3ecf626cc0aab6ccdc363fd43ef0d8}{void {\bfseries nfft\-\_\-srand48} (long int seed)}\label{nfft3_8h_aef3ecf626cc0aab6ccdc363fd43ef0d8}
+
+\item 
+void \hyperlink{nfft3_8h_a00b8de180c1d38a600014f76ab446206}{nfft\-\_\-vrand\-\_\-unit\-\_\-complex} (fftw\-\_\-complex $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Inits a vector of random complex numbers in $[0,1]\times[0,1]{\rm i}$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a87772136ba9b0169cf70c62a13693e11}{nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double} (double $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Inits a vector of random double numbers in $[-1/2,1/2]$. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a32d7d9e9ea06a774c54fe8eddf1609e8}{void {\bfseries nfft\-\_\-vrand\-\_\-real} (double $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const double a, const double b)}\label{nfft3_8h_a32d7d9e9ea06a774c54fe8eddf1609e8}
+
+\item 
+void \hyperlink{nfft3_8h_a3f20376093795d5dc8134b14a0506677}{nfft\-\_\-vpr\-\_\-double} (double $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Print real vector to standard output. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_ae350d622310a25b48d9b1d14c200c4a5}{nfft\-\_\-vpr\-\_\-complex} (fftw\-\_\-complex $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Print complex vector to standard output. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_aa1eb6e8ce5a12bc188a6ec5fa39f9f55}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfft\-\_\-get\-\_\-num\-\_\-threads} (void)}\label{nfft3_8h_aa1eb6e8ce5a12bc188a6ec5fa39f9f55}
+
+\item 
+\hypertarget{nfft3_8h_a9df01e269374c32d1a05a1a5cd0fbcd8}{double {\bfseries nfft\-\_\-clock\-\_\-gettime\-\_\-seconds} (void)}\label{nfft3_8h_a9df01e269374c32d1a05a1a5cd0fbcd8}
+
+\item 
+\hypertarget{nfft3_8h_a95aafac61038d0729628214a268e9a6b}{double {\bfseries nfft\-\_\-error\-\_\-l\-\_\-infty\-\_\-complex} (const fftw\-\_\-complex $\ast$x, const fftw\-\_\-complex $\ast$y, const N\-F\-F\-T\-\_\-\-I\-N\-T n)}\label{nfft3_8h_a95aafac61038d0729628214a268e9a6b}
+
+\item 
+\hypertarget{nfft3_8h_a340e8f0ae3449e6b9e0710a1b817b2a5}{double {\bfseries nfft\-\_\-error\-\_\-l\-\_\-infty\-\_\-1\-\_\-complex} (const fftw\-\_\-complex $\ast$x, const fftw\-\_\-complex $\ast$y, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const fftw\-\_\-complex $\ast$z, const N\-F\-F\-T\-\_\-\-I\-N\-T m)}\label{nfft3_8h_a340e8f0ae3449e6b9e0710a1b817b2a5}
+
+\item 
+\hypertarget{nfft3_8h_a6b5310391cc1f9d35f1fc963b078fe9b}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfft\-\_\-exp2i} (const N\-F\-F\-T\-\_\-\-I\-N\-T a)}\label{nfft3_8h_a6b5310391cc1f9d35f1fc963b078fe9b}
+
+\item 
+\hypertarget{nfft3_8h_ab5385633fb5fd493a4dc58fb99615ef3}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfft\-\_\-next\-\_\-power\-\_\-of\-\_\-2} (const N\-F\-F\-T\-\_\-\-I\-N\-T N)}\label{nfft3_8h_ab5385633fb5fd493a4dc58fb99615ef3}
+
+\item 
+double \hyperlink{nfft3_8h_aef03d70e4add5a0ccfc0ea62c2f6049d}{nfft\-\_\-dot\-\_\-complex} (fftw\-\_\-complex $\ast$x, N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the inner/dot product $x^H x$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a01c1c5a824902758d6ddcfd8b1acb77d}{nfft\-\_\-upd\-\_\-axpy\-\_\-complex} (fftw\-\_\-complex $\ast$x, double a, fftw\-\_\-complex $\ast$y, N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + y$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a51cc4e6bf145cde77171dd5bbed7630e}{nfft\-\_\-fftshift\-\_\-complex} (fftw\-\_\-complex $\ast$x, N\-F\-F\-T\-\_\-\-I\-N\-T d, N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$N)
+\begin{DoxyCompactList}\small\item\em Swaps each half over N\mbox{[}d\mbox{]}/2. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a425b16c546bea1080373757cd1e9a857}{void {\bfseries nfft\-\_\-fftshift\-\_\-complex\-\_\-int} (fftw\-\_\-complex $\ast$x, int d, int $\ast$N)}\label{nfft3_8h_a425b16c546bea1080373757cd1e9a857}
+
+\item 
+void \hyperlink{nfft3_8h_aa9084d7474acf47742edbb2055f39cdb}{nfft\-\_\-get\-\_\-version} (unsigned $\ast$major, unsigned $\ast$minor, unsigned $\ast$patch)
+\begin{DoxyCompactList}\small\item\em Return library version. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{nfft3_8h_abd3d4bb93f7462a6d9ff035b2c129d2f}{nfft\-\_\-get\-\_\-window\-\_\-name} ()
+\begin{DoxyCompactList}\small\item\em \textbackslash{} $\ast$ Return name of window function. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a76afdb221876eb552ed30b05494717ed}{long double {\bfseries nfftl\-\_\-drand48} (void)}\label{nfft3_8h_a76afdb221876eb552ed30b05494717ed}
+
+\item 
+\hypertarget{nfft3_8h_a8190a0cf3c6a46e45003abf6a216b20a}{void {\bfseries nfftl\-\_\-srand48} (long int seed)}\label{nfft3_8h_a8190a0cf3c6a46e45003abf6a216b20a}
+
+\item 
+void \hyperlink{nfft3_8h_ae0c18a2f67bdd49756ec4802849d6ec7}{nfftl\-\_\-vrand\-\_\-unit\-\_\-complex} (fftwl\-\_\-complex $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Inits a vector of random complex numbers in $[0,1]\times[0,1]{\rm i}$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a503a806613886d3b03240e00ef861598}{nfftl\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double} (long double $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Inits a vector of random double numbers in $[-1/2,1/2]$. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a8a3613e5872ce6ddafbdb329abfa6105}{void {\bfseries nfftl\-\_\-vrand\-\_\-real} (long double $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const long double a, const long double b)}\label{nfft3_8h_a8a3613e5872ce6ddafbdb329abfa6105}
+
+\item 
+void \hyperlink{nfft3_8h_a56cfa08c9de52017899cf8f8aa754b57}{nfftl\-\_\-vpr\-\_\-double} (long double $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Print real vector to standard output. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a821fd8cc594f3f07b2f9754dcb7fa978}{nfftl\-\_\-vpr\-\_\-complex} (fftwl\-\_\-complex $\ast$x, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const char $\ast$text)
+\begin{DoxyCompactList}\small\item\em Print complex vector to standard output. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_a27e0526d259f0bdeb09439a3224ed331}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfftl\-\_\-get\-\_\-num\-\_\-threads} (void)}\label{nfft3_8h_a27e0526d259f0bdeb09439a3224ed331}
+
+\item 
+\hypertarget{nfft3_8h_afe4d9499f293b8e52656322eb0b79baa}{long double {\bfseries nfftl\-\_\-clock\-\_\-gettime\-\_\-seconds} (void)}\label{nfft3_8h_afe4d9499f293b8e52656322eb0b79baa}
+
+\item 
+\hypertarget{nfft3_8h_a12b4c0c6b3890cfafa84e1c3c6ddecb1}{long double {\bfseries nfftl\-\_\-error\-\_\-l\-\_\-infty\-\_\-complex} (const fftwl\-\_\-complex $\ast$x, const fftwl\-\_\-complex $\ast$y, const N\-F\-F\-T\-\_\-\-I\-N\-T n)}\label{nfft3_8h_a12b4c0c6b3890cfafa84e1c3c6ddecb1}
+
+\item 
+\hypertarget{nfft3_8h_a9a7fbd786df74eeea98d1a652ed134fc}{long double {\bfseries nfftl\-\_\-error\-\_\-l\-\_\-infty\-\_\-1\-\_\-complex} (const fftwl\-\_\-complex $\ast$x, const fftwl\-\_\-complex $\ast$y, const N\-F\-F\-T\-\_\-\-I\-N\-T n, const fftwl\-\_\-complex $\ast$z, const N\-F\-F\-T\-\_\-\-I\-N\-T m)}\label{nfft3_8h_a9a7fbd786df74eeea98d1a652ed134fc}
+
+\item 
+\hypertarget{nfft3_8h_a8a6c86f4f5dec8b5e1e8029f2795c387}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfftl\-\_\-exp2i} (const N\-F\-F\-T\-\_\-\-I\-N\-T a)}\label{nfft3_8h_a8a6c86f4f5dec8b5e1e8029f2795c387}
+
+\item 
+\hypertarget{nfft3_8h_abe882e02ce29cf32519503d2858da9ab}{N\-F\-F\-T\-\_\-\-I\-N\-T {\bfseries nfftl\-\_\-next\-\_\-power\-\_\-of\-\_\-2} (const N\-F\-F\-T\-\_\-\-I\-N\-T N)}\label{nfft3_8h_abe882e02ce29cf32519503d2858da9ab}
+
+\item 
+long double \hyperlink{nfft3_8h_a5eadfdfbf93a79bb3a92749521f88a8e}{nfftl\-\_\-dot\-\_\-complex} (fftwl\-\_\-complex $\ast$x, N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Computes the inner/dot product $x^H x$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_a153ae54c2e7be097120da84b3a107d11}{nfftl\-\_\-upd\-\_\-axpy\-\_\-complex} (fftwl\-\_\-complex $\ast$x, long double a, fftwl\-\_\-complex $\ast$y, N\-F\-F\-T\-\_\-\-I\-N\-T n)
+\begin{DoxyCompactList}\small\item\em Updates $x \leftarrow a x + y$. \end{DoxyCompactList}\item 
+void \hyperlink{nfft3_8h_addfc827ea0c5781540073a4b2d0f5f2d}{nfftl\-\_\-fftshift\-\_\-complex} (fftwl\-\_\-complex $\ast$x, N\-F\-F\-T\-\_\-\-I\-N\-T d, N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$N)
+\begin{DoxyCompactList}\small\item\em Swaps each half over N\mbox{[}d\mbox{]}/2. \end{DoxyCompactList}\item 
+\hypertarget{nfft3_8h_abe7560d18bf5343e7eb7d9cbdf271faa}{void {\bfseries nfftl\-\_\-fftshift\-\_\-complex\-\_\-int} (fftwl\-\_\-complex $\ast$x, int d, int $\ast$N)}\label{nfft3_8h_abe7560d18bf5343e7eb7d9cbdf271faa}
+
+\item 
+void \hyperlink{nfft3_8h_abe61ee60c89ac17c1ab2b9d079dc1e9e}{nfftl\-\_\-get\-\_\-version} (unsigned $\ast$major, unsigned $\ast$minor, unsigned $\ast$patch)
+\begin{DoxyCompactList}\small\item\em Return library version. \end{DoxyCompactList}\item 
+const char $\ast$ \hyperlink{nfft3_8h_a82bef40fd2403bbd0db33a6ceb326095}{nfftl\-\_\-get\-\_\-window\-\_\-name} ()
+\begin{DoxyCompactList}\small\item\em \textbackslash{} $\ast$ Return name of window function. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{nfft3_8h_a20d7f7c05866919fe5672bfae80c2668}{nfftf\-\_\-malloc\-\_\-type\-\_\-function {\bfseries nfftf\-\_\-malloc\-\_\-hook}}\label{nfft3_8h_a20d7f7c05866919fe5672bfae80c2668}
+
+\item 
+\hypertarget{nfft3_8h_a0c0dc6b11efd8d8518f7b92b02957d99}{nfftf\-\_\-free\-\_\-type\-\_\-function {\bfseries nfftf\-\_\-free\-\_\-hook}}\label{nfft3_8h_a0c0dc6b11efd8d8518f7b92b02957d99}
+
+\item 
+\hypertarget{nfft3_8h_a60e06f70f4532dba76f11a9fffe9ed91}{nfftf\-\_\-die\-\_\-type\-\_\-function {\bfseries nfftf\-\_\-die\-\_\-hook}}\label{nfft3_8h_a60e06f70f4532dba76f11a9fffe9ed91}
+
+\item 
+\hyperlink{nfft3_8h_ae2db105c02d4b63d1962dc94d4e7a4c2}{nfft\-\_\-malloc\-\_\-type\-\_\-function} \hyperlink{nfft3_8h_aa578dec914d95bda5a2fad3fbd90c76f}{nfft\-\_\-malloc\-\_\-hook}
+\item 
+\hyperlink{nfft3_8h_acdec9723f6ea0ea162d5f3fc6f1f1906}{nfft\-\_\-free\-\_\-type\-\_\-function} \hyperlink{nfft3_8h_a5b4d02593a82ded7c1d3c3c868e72347}{nfft\-\_\-free\-\_\-hook}
+\item 
+\hypertarget{nfft3_8h_a7bd67de0993700f3ff4ed9d6475bc105}{nfft\-\_\-die\-\_\-type\-\_\-function {\bfseries nfft\-\_\-die\-\_\-hook}}\label{nfft3_8h_a7bd67de0993700f3ff4ed9d6475bc105}
+
+\item 
+\hypertarget{nfft3_8h_a8bad52b5a9c4a4596ce30fb499498f01}{nfftl\-\_\-malloc\-\_\-type\-\_\-function {\bfseries nfftl\-\_\-malloc\-\_\-hook}}\label{nfft3_8h_a8bad52b5a9c4a4596ce30fb499498f01}
+
+\item 
+\hypertarget{nfft3_8h_a9500b9f70eb85a31489aa2ae8c4fb99c}{nfftl\-\_\-free\-\_\-type\-\_\-function {\bfseries nfftl\-\_\-free\-\_\-hook}}\label{nfft3_8h_a9500b9f70eb85a31489aa2ae8c4fb99c}
+
+\item 
+\hypertarget{nfft3_8h_a87d06e06f9dbb142fd042fe6cc009524}{nfftl\-\_\-die\-\_\-type\-\_\-function {\bfseries nfftl\-\_\-die\-\_\-hook}}\label{nfft3_8h_a87d06e06f9dbb142fd042fe6cc009524}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header file for the nfft3 library. Header file for N\-F\-F\-T3 
+
+Definition in file \hyperlink{nfft3_8h_source}{nfft3.\-h}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{\index{nfft3.\-h@{nfft3.\-h}!M\-A\-C\-R\-O\-\_\-\-M\-V\-\_\-\-P\-L\-A\-N@{M\-A\-C\-R\-O\-\_\-\-M\-V\-\_\-\-P\-L\-A\-N}}
+\index{M\-A\-C\-R\-O\-\_\-\-M\-V\-\_\-\-P\-L\-A\-N@{M\-A\-C\-R\-O\-\_\-\-M\-V\-\_\-\-P\-L\-A\-N}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{M\-A\-C\-R\-O\-\_\-\-M\-V\-\_\-\-P\-L\-A\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-C\-R\-O\-\_\-\-M\-V\-\_\-\-P\-L\-A\-N(
+\begin{DoxyParamCaption}
+\item[{}]{R\-C}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+NFFT\_INT N\_total; \(\backslash\)
+  NFFT\_INT M\_total; \(\backslash\)
+  RC *f\_hat; \(\backslash\)
+  RC *f; \(\backslash\)
+  void (*mv\_trafo)(\textcolor{keywordtype}{void}*); \(\backslash\)
+  void (*mv\_adjoint)(\textcolor{keywordtype}{void}*);
+\end{DoxyCode}
+
+
+Adjoint transform. 
+
+Macros for public members inherited by all plan structures.
+
+Definition at line 54 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_aef24ff4b59752ce9a7699eefad7c60c5}{\index{nfft3.\-h@{nfft3.\-h}!N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-A\-P\-I@{N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-A\-P\-I}}
+\index{N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-A\-P\-I@{N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-A\-P\-I}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-A\-P\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\-F\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-M\-A\-L\-L\-O\-C\-\_\-\-A\-P\-I(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf X}}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_aef24ff4b59752ce9a7699eefad7c60c5}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{comment}{/* our own memory allocation and exit functions */} \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} *\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(malloc)(\textcolor{keywordtype}{size\_t} n); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(free)(\textcolor{keywordtype}{void} *p); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(die)(\textcolor{keyword}{const} \textcolor{keywordtype}{char} *s); \(\backslash\)
+\(\backslash\)
+\textcolor{comment}{/* You can replace the hooks with your own functions, if necessary. We */} \(\backslash\)
+\textcolor{comment}{/* need this for the Matlab interface. */} \(\backslash\)
+typedef \textcolor{keywordtype}{void} *(*\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(malloc\_type\_function)) (\textcolor{keywordtype}{size\_t} n); \(\backslash\)
+typedef void  (*\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(free\_type\_function)) (\textcolor{keywordtype}{void} *p); \(\backslash\)
+typedef void  (*\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(die\_type\_function)) (\textcolor{keyword}{const} \textcolor{keywordtype}{char} *errString); \(\backslash\)
+NFFT\_EXTERN \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(malloc\_type\_function) \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(malloc\_hook); \(\backslash\)
+NFFT\_EXTERN \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(free\_type\_function) \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(free\_hook); \(\backslash\)
+NFFT\_EXTERN \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(die\_type\_function) \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(die\_hook);
+\end{DoxyCode}
+
+
+Definition at line 75 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_a50af9dcbe46f6cc4fee5141873098415}{\index{nfft3.\-h@{nfft3.\-h}!M\-R\-I\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I@{M\-R\-I\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}}
+\index{M\-R\-I\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I@{M\-R\-I\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{M\-R\-I\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-R\-I\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf X}, }
+\item[{}]{Z, }
+\item[{}]{R, }
+\item[{}]{C}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a50af9dcbe46f6cc4fee5141873098415}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{struct}\(\backslash\)
+\{\hyperlink{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{\(\backslash\)}
+\hyperlink{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{  MACRO\_MV\_PLAN}(C)\(\backslash\)
+  Z(plan) plan;\(\backslash\)
+  \textcolor{keywordtype}{int} N3;\(\backslash\)
+  R sigma3;\(\backslash\)
+  R *t;\(\backslash\)
+  R *w;\(\backslash\)
+\} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_plan);\(\backslash\)
+\(\backslash\)
+typedef struct\(\backslash\)
+\{\hyperlink{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{\(\backslash\)}
+\hyperlink{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{  MACRO\_MV\_PLAN}(C)\(\backslash\)
+  Z(plan) plan;\(\backslash\)
+  \textcolor{keywordtype}{int} N3;\(\backslash\)
+  R sigma3;\(\backslash\)
+  R *t;\(\backslash\)
+  R *w;\(\backslash\)
+\} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_plan);\(\backslash\)
+\(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_trafo)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_plan) *ths); \(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_adjoint)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_plan) *ths); \(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_init\_guru)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_plan) *ths, \textcolor{keywordtype}{int} *N, \textcolor{keywordtype}{int} M, \textcolor{keywordtype}{int} *n, \(\backslash\)
+  \textcolor{keywordtype}{int} m, R sigma, \textcolor{keywordtype}{unsigned} nfft\_flags, \textcolor{keywordtype}{unsigned} fftw\_flags); \(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_finalize)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_2d1d\_plan) *ths); \(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_trafo)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_plan) *ths); \(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_adjoint)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_plan) *ths); \(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_init\_guru)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_plan) *ths, \textcolor{keywordtype}{int} *N, \textcolor{keywordtype}{int} M, \textcolor{keywordtype}{int} *n, \(\backslash\)
+  \textcolor{keywordtype}{int} m, R sigma, \textcolor{keywordtype}{unsigned} nfft\_flags, \textcolor{keywordtype}{unsigned} fftw\_flags); \(\backslash\)
+\textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_finalize)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(inh\_3d\_plan) *ths);
+\end{DoxyCode}
+
+
+Definition at line 492 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_a8bfac1df57d74c1d7bed37487e241bcd}{\index{nfft3.\-h@{nfft3.\-h}!F\-P\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I@{F\-P\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}}
+\index{F\-P\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I@{F\-P\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{F\-P\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define F\-P\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf X}, }
+\item[{}]{Y, }
+\item[{}]{R, }
+\item[{}]{C}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a8bfac1df57d74c1d7bed37487e241bcd}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{struct }X(set\_s\_) *\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set); \(\backslash\)
+\(\backslash\)
+NFFT\_EXTERN \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set) \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(init)(const \textcolor{keywordtype}{int} M, const \textcolor{keywordtype}{int} t, const \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(precompute)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set) set, const \textcolor{keywordtype}{int} m, R *alpha, R *beta, \(\backslash\)
+  R *gam, \textcolor{keywordtype}{int} k\_start, const R threshold); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(trafo\_direct)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set) set, const \textcolor{keywordtype}{int} m, const C *x, C *y, \(\backslash\)
+  const \textcolor{keywordtype}{int} k\_end, const \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(trafo)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set) set, const \textcolor{keywordtype}{int} m, const C *x, C *y, \(\backslash\)
+  const \textcolor{keywordtype}{int} k\_end, const \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(transposed\_direct)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set) set, const \textcolor{keywordtype}{int} m, C *x, \(\backslash\)
+  C *y, const \textcolor{keywordtype}{int} k\_end, const \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(transposed)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set) set, const \textcolor{keywordtype}{int} m, C *x, \(\backslash\)
+  C *y, const \textcolor{keywordtype}{int} k\_end, const \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(finalize)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(set) set);
+\end{DoxyCode}
+
+
+Definition at line 610 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_ab64e7dca068fc797700ea5a1f294430f}{\index{nfft3.\-h@{nfft3.\-h}!N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I@{N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}}
+\index{N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I@{N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I}]{\setlength{\rightskip}{0pt plus 5cm}\#define N\-F\-S\-O\-F\-T\-\_\-\-D\-E\-F\-I\-N\-E\-\_\-\-A\-P\-I(
+\begin{DoxyParamCaption}
+\item[{}]{{\bf X}, }
+\item[{}]{Y, }
+\item[{}]{Z, }
+\item[{}]{R, }
+\item[{}]{C}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_ab64e7dca068fc797700ea5a1f294430f}
+{\bfseries Value\-:}
+\begin{DoxyCode}
+\textcolor{keyword}{typedef} \textcolor{keyword}{struct }X(plan\_)\(\backslash\)
+\{\hyperlink{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{\(\backslash\)}
+\hyperlink{nfft3_8h_a0d1eb31c2f64e41fa0399b1eb7b5ddd4}{  MACRO\_MV\_PLAN}(C) \(\backslash\)
+  R *x; \(\backslash\)
+  C *wig\_coeffs; \(\backslash\)
+  C *cheby; \(\backslash\)
+  C *aux; \(\backslash\)
+  \textcolor{comment}{/* internal use only */}\(\backslash\)
+  int t; \(\backslash\)
+  unsigned \textcolor{keywordtype}{int} flags; \(\backslash\)
+  Y(plan) p\_nfft; \(\backslash\)
+  Z(set) internal\_fpt\_set; \(\backslash\)
+  \textcolor{keywordtype}{int} fpt\_kappa; \(\backslash\)
+\} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan);\(\backslash\)
+\(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(precompute)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan); \(\backslash\)
+NFFT\_EXTERN Z(set) \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(SO3\_single\_fpt\_init)(\textcolor{keywordtype}{int} l, \textcolor{keywordtype}{int} k, \textcolor{keywordtype}{int} m, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} flags, \textcolor{keywordtype}{int} kappa); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(SO3\_fpt)(C *coeffs, Z(set) set, \textcolor{keywordtype}{int} l, \textcolor{keywordtype}{int} k, \textcolor{keywordtype}{int} m, \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} nfsoft\_flags); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(SO3\_fpt\_transposed)(C *coeffs, Z(set) set,\textcolor{keywordtype}{int} l, \textcolor{keywordtype}{int} k, \textcolor{keywordtype}{int} m,\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} nfsoft\_flags
+      ); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(init)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan, \textcolor{keywordtype}{int} N, \textcolor{keywordtype}{int} M); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(init\_advanced)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan, \textcolor{keywordtype}{int} N, \textcolor{keywordtype}{int} M,\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} nfsoft\_flags); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(init\_guru)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan, \textcolor{keywordtype}{int} N, \textcolor{keywordtype}{int} M,\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} nfsoft\_flags,\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} 
+      nfft\_flags,\textcolor{keywordtype}{int} nfft\_cutoff,\textcolor{keywordtype}{int} fpt\_kappa); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(init\_guru\_advanced)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan, \textcolor{keywordtype}{int} N, \textcolor{keywordtype}{int} M,\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} nfsoft\_flags,\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int}
+       nfft\_flags,\textcolor{keywordtype}{int} nfft\_cutoff,\textcolor{keywordtype}{int} fpt\_kappa, \textcolor{keywordtype}{int} nn\_oversampled); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(trafo)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan\_nfsoft); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(adjoint)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan\_nfsoft); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{void} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(finalize)(\hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(plan) *plan); \(\backslash\)
+NFFT\_EXTERN \textcolor{keywordtype}{int} \hyperlink{group__applications__fastsum_ga826edd40636cbaa44266b97c8c6a4fa3}{X}(posN)(\textcolor{keywordtype}{int} n,\textcolor{keywordtype}{int} m, \textcolor{keywordtype}{int} B);
+\end{DoxyCode}
+
+
+Definition at line 653 of file nfft3.\-h.
+
+
+
+\subsection{Typedef Documentation}
+\hypertarget{nfft3_8h_ae2db105c02d4b63d1962dc94d4e7a4c2}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-malloc\-\_\-type\-\_\-function@{nfft\-\_\-malloc\-\_\-type\-\_\-function}}
+\index{nfft\-\_\-malloc\-\_\-type\-\_\-function@{nfft\-\_\-malloc\-\_\-type\-\_\-function}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-malloc\-\_\-type\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}typedef void $\ast$($\ast$ nfft\-\_\-malloc\-\_\-type\-\_\-function)(size\-\_\-t n)}}\label{nfft3_8h_ae2db105c02d4b63d1962dc94d4e7a4c2}
+A {\ttfamily malloc} type function 
+
+Definition at line 91 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_acdec9723f6ea0ea162d5f3fc6f1f1906}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-free\-\_\-type\-\_\-function@{nfft\-\_\-free\-\_\-type\-\_\-function}}
+\index{nfft\-\_\-free\-\_\-type\-\_\-function@{nfft\-\_\-free\-\_\-type\-\_\-function}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-free\-\_\-type\-\_\-function}]{\setlength{\rightskip}{0pt plus 5cm}typedef void($\ast$ nfft\-\_\-free\-\_\-type\-\_\-function)(void $\ast$p)}}\label{nfft3_8h_acdec9723f6ea0ea162d5f3fc6f1f1906}
+A {\ttfamily free} type function 
+
+Definition at line 91 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}{\index{nfft3.\-h@{nfft3.\-h}!fptf\-\_\-set@{fptf\-\_\-set}}
+\index{fptf\-\_\-set@{fptf\-\_\-set}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{fptf\-\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct fptf\-\_\-set\-\_\-s\-\_\-$\ast$ {\bf fptf\-\_\-set}}}\label{nfft3_8h_a74cbbcba4b36c9272b3e1b309f574308}
+
+
+A set of precomputed data for a set of D\-P\-T transforms of equal maximum length. 
+
+
+
+Definition at line 628 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{\index{nfft3.\-h@{nfft3.\-h}!fpt\-\_\-set@{fpt\-\_\-set}}
+\index{fpt\-\_\-set@{fpt\-\_\-set}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{fpt\-\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct {\bf fpt\-\_\-set\-\_\-s\-\_\-}$\ast$ {\bf fpt\-\_\-set}}}\label{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}
+
+
+A set of precomputed data for a set of D\-P\-T transforms of equal maximum length. 
+
+
+
+Definition at line 628 of file nfft3.\-h.
+
+\hypertarget{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}{\index{nfft3.\-h@{nfft3.\-h}!fptl\-\_\-set@{fptl\-\_\-set}}
+\index{fptl\-\_\-set@{fptl\-\_\-set}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{fptl\-\_\-set}]{\setlength{\rightskip}{0pt plus 5cm}typedef struct fptl\-\_\-set\-\_\-s\-\_\-$\ast$ {\bf fptl\-\_\-set}}}\label{nfft3_8h_afa0a822edf2abbd8e1ab2cd0afd72efa}
+
+
+A set of precomputed data for a set of D\-P\-T transforms of equal maximum length. 
+
+
+
+Definition at line 628 of file nfft3.\-h.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{nfft3_8h_aafe6167438c5de4d3d4c509f66a6694e}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-malloc@{nfft\-\_\-malloc}}
+\index{nfft\-\_\-malloc@{nfft\-\_\-malloc}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-malloc}]{\setlength{\rightskip}{0pt plus 5cm}void $\ast$ nfft\-\_\-malloc (
+\begin{DoxyParamCaption}
+\item[{size\-\_\-t}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_aafe6167438c5de4d3d4c509f66a6694e}
+Our {\ttfamily malloc} function 
+\begin{DoxyParams}{Parameters}
+{\em n} & The number of bytes to allocate \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by fpt\-\_\-init(), fpt\-\_\-precompute(), main(), mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru(), mri\-\_\-inh\-\_\-2d1d\-\_\-trafo(), mri\-\_\-inh\-\_\-3d\-\_\-adjoint(), mri\-\_\-inh\-\_\-3d\-\_\-trafo(), nfsft\-\_\-precompute(), nnfft\-\_\-init(), nnfft\-\_\-init\-\_\-guru(), nnfft\-\_\-precompute\-\_\-phi\-\_\-hut(), and reconstruct().
+
+\hypertarget{nfft3_8h_ab8a0db03dda1317a8a3d922e0e4e8aaa}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-free@{nfft\-\_\-free}}
+\index{nfft\-\_\-free@{nfft\-\_\-free}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-free}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-free (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{p}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_ab8a0db03dda1317a8a3d922e0e4e8aaa}
+Our {\ttfamily free} function 
+\begin{DoxyParams}{Parameters}
+{\em p} & Pointer to the memory region to free \\
+\hline
+\end{DoxyParams}
+
+
+Referenced by fpt\-\_\-init(), fpt\-\_\-precompute(), main(), mri\-\_\-inh\-\_\-2d1d\-\_\-finalize(), mri\-\_\-inh\-\_\-2d1d\-\_\-trafo(), mri\-\_\-inh\-\_\-3d\-\_\-adjoint(), mri\-\_\-inh\-\_\-3d\-\_\-finalize(), mri\-\_\-inh\-\_\-3d\-\_\-trafo(), nfsft\-\_\-finalize(), nfsft\-\_\-forget(), nfsft\-\_\-precompute(), nfsoft\-\_\-finalize(), nnfft\-\_\-finalize(), and reconstruct().
+
+\hypertarget{nfft3_8h_a830666ca7902ad76138e1ab8d7d2e41f}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-vrand\-\_\-unit\-\_\-complex@{nfftf\-\_\-vrand\-\_\-unit\-\_\-complex}}
+\index{nfftf\-\_\-vrand\-\_\-unit\-\_\-complex@{nfftf\-\_\-vrand\-\_\-unit\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-vrand\-\_\-unit\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftf\-\_\-vrand\-\_\-unit\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwf\-\_\-complex $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a830666ca7902ad76138e1ab8d7d2e41f}
+
+
+Inits a vector of random complex numbers in $[0,1]\times[0,1]{\rm i}$. 
+
+\textbackslash{} \hypertarget{nfft3_8h_a4f3c35e95b2e7c8a62593bc612338c60}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double@{nfftf\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}}
+\index{nfftf\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double@{nfftf\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfftf\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a4f3c35e95b2e7c8a62593bc612338c60}
+
+
+Inits a vector of random double numbers in $[-1/2,1/2]$. 
+
+\textbackslash{} \hypertarget{nfft3_8h_a3753b3efd7553fe822b5430b12868ddc}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-vpr\-\_\-double@{nfftf\-\_\-vpr\-\_\-double}}
+\index{nfftf\-\_\-vpr\-\_\-double@{nfftf\-\_\-vpr\-\_\-double}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-vpr\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfftf\-\_\-vpr\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{float $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a3753b3efd7553fe822b5430b12868ddc}
+
+
+Print real vector to standard output. 
+
+\hypertarget{nfft3_8h_ae1ca80ca52afffbddc1408ee29832993}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-vpr\-\_\-complex@{nfftf\-\_\-vpr\-\_\-complex}}
+\index{nfftf\-\_\-vpr\-\_\-complex@{nfftf\-\_\-vpr\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-vpr\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftf\-\_\-vpr\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwf\-\_\-complex $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_ae1ca80ca52afffbddc1408ee29832993}
+
+
+Print complex vector to standard output. 
+
+\hypertarget{nfft3_8h_a5964806ffe3b77dea148cdec375bf5d9}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-dot\-\_\-complex@{nfftf\-\_\-dot\-\_\-complex}}
+\index{nfftf\-\_\-dot\-\_\-complex@{nfftf\-\_\-dot\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-dot\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}float nfftf\-\_\-dot\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwf\-\_\-complex $\ast$}]{x, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a5964806ffe3b77dea148cdec375bf5d9}
+
+
+Computes the inner/dot product $x^H x$. 
+
+\hypertarget{nfft3_8h_adadb918256be45d9324119ca00c12740}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-upd\-\_\-axpy\-\_\-complex@{nfftf\-\_\-upd\-\_\-axpy\-\_\-complex}}
+\index{nfftf\-\_\-upd\-\_\-axpy\-\_\-complex@{nfftf\-\_\-upd\-\_\-axpy\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-upd\-\_\-axpy\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftf\-\_\-upd\-\_\-axpy\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwf\-\_\-complex $\ast$}]{x, }
+\item[{float}]{a, }
+\item[{fftwf\-\_\-complex $\ast$}]{y, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_adadb918256be45d9324119ca00c12740}
+
+
+Updates $x \leftarrow a x + y$. 
+
+\hypertarget{nfft3_8h_a5806dbd5e5290460f2bdd8184bf873db}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-fftshift\-\_\-complex@{nfftf\-\_\-fftshift\-\_\-complex}}
+\index{nfftf\-\_\-fftshift\-\_\-complex@{nfftf\-\_\-fftshift\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-fftshift\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftf\-\_\-fftshift\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwf\-\_\-complex $\ast$}]{x, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{d, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$}]{N}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a5806dbd5e5290460f2bdd8184bf873db}
+
+
+Swaps each half over N\mbox{[}d\mbox{]}/2. 
+
+\hypertarget{nfft3_8h_a220787f5dd6845c47cc48a1f06a0670e}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-get\-\_\-version@{nfftf\-\_\-get\-\_\-version}}
+\index{nfftf\-\_\-get\-\_\-version@{nfftf\-\_\-get\-\_\-version}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-get\-\_\-version}]{\setlength{\rightskip}{0pt plus 5cm}void nfftf\-\_\-get\-\_\-version (
+\begin{DoxyParamCaption}
+\item[{unsigned $\ast$}]{major, }
+\item[{unsigned $\ast$}]{minor, }
+\item[{unsigned $\ast$}]{patch}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a220787f5dd6845c47cc48a1f06a0670e}
+
+
+Return library version. 
+
+\hypertarget{nfft3_8h_af8ebde3afc0d8be69061a8eea4a492a8}{\index{nfft3.\-h@{nfft3.\-h}!nfftf\-\_\-get\-\_\-window\-\_\-name@{nfftf\-\_\-get\-\_\-window\-\_\-name}}
+\index{nfftf\-\_\-get\-\_\-window\-\_\-name@{nfftf\-\_\-get\-\_\-window\-\_\-name}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftf\-\_\-get\-\_\-window\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ nfftf\-\_\-get\-\_\-window\-\_\-name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_af8ebde3afc0d8be69061a8eea4a492a8}
+
+
+\textbackslash{} $\ast$ Return name of window function. 
+
+\textbackslash{} $\ast$ \textbackslash{} $\ast$ The window function to be used is configured at compile time. \textbackslash{} \hypertarget{nfft3_8h_a00b8de180c1d38a600014f76ab446206}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-vrand\-\_\-unit\-\_\-complex@{nfft\-\_\-vrand\-\_\-unit\-\_\-complex}}
+\index{nfft\-\_\-vrand\-\_\-unit\-\_\-complex@{nfft\-\_\-vrand\-\_\-unit\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-vrand\-\_\-unit\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-vrand\-\_\-unit\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftw\-\_\-complex $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a00b8de180c1d38a600014f76ab446206}
+
+
+Inits a vector of random complex numbers in $[0,1]\times[0,1]{\rm i}$. 
+
+\textbackslash{} 
+
+Referenced by nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs().
+
+\hypertarget{nfft3_8h_a87772136ba9b0169cf70c62a13693e11}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double@{nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}}
+\index{nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double@{nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a87772136ba9b0169cf70c62a13693e11}
+
+
+Inits a vector of random double numbers in $[-1/2,1/2]$. 
+
+\textbackslash{} 
+
+Referenced by nsfft\-\_\-init\-\_\-random\-\_\-nodes\-\_\-coeffs().
+
+\hypertarget{nfft3_8h_a3f20376093795d5dc8134b14a0506677}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-vpr\-\_\-double@{nfft\-\_\-vpr\-\_\-double}}
+\index{nfft\-\_\-vpr\-\_\-double@{nfft\-\_\-vpr\-\_\-double}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-vpr\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-vpr\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a3f20376093795d5dc8134b14a0506677}
+
+
+Print real vector to standard output. 
+
+\hypertarget{nfft3_8h_ae350d622310a25b48d9b1d14c200c4a5}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-vpr\-\_\-complex@{nfft\-\_\-vpr\-\_\-complex}}
+\index{nfft\-\_\-vpr\-\_\-complex@{nfft\-\_\-vpr\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-vpr\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-vpr\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftw\-\_\-complex $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_ae350d622310a25b48d9b1d14c200c4a5}
+
+
+Print complex vector to standard output. 
+
+\hypertarget{nfft3_8h_aef03d70e4add5a0ccfc0ea62c2f6049d}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-dot\-\_\-complex@{nfft\-\_\-dot\-\_\-complex}}
+\index{nfft\-\_\-dot\-\_\-complex@{nfft\-\_\-dot\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-dot\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}double nfft\-\_\-dot\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftw\-\_\-complex $\ast$}]{x, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_aef03d70e4add5a0ccfc0ea62c2f6049d}
+
+
+Computes the inner/dot product $x^H x$. 
+
+\hypertarget{nfft3_8h_a01c1c5a824902758d6ddcfd8b1acb77d}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-upd\-\_\-axpy\-\_\-complex@{nfft\-\_\-upd\-\_\-axpy\-\_\-complex}}
+\index{nfft\-\_\-upd\-\_\-axpy\-\_\-complex@{nfft\-\_\-upd\-\_\-axpy\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-upd\-\_\-axpy\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-upd\-\_\-axpy\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftw\-\_\-complex $\ast$}]{x, }
+\item[{double}]{a, }
+\item[{fftw\-\_\-complex $\ast$}]{y, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a01c1c5a824902758d6ddcfd8b1acb77d}
+
+
+Updates $x \leftarrow a x + y$. 
+
+\hypertarget{nfft3_8h_a51cc4e6bf145cde77171dd5bbed7630e}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-fftshift\-\_\-complex@{nfft\-\_\-fftshift\-\_\-complex}}
+\index{nfft\-\_\-fftshift\-\_\-complex@{nfft\-\_\-fftshift\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-fftshift\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-fftshift\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftw\-\_\-complex $\ast$}]{x, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{d, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$}]{N}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a51cc4e6bf145cde77171dd5bbed7630e}
+
+
+Swaps each half over N\mbox{[}d\mbox{]}/2. 
+
+\hypertarget{nfft3_8h_aa9084d7474acf47742edbb2055f39cdb}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-get\-\_\-version@{nfft\-\_\-get\-\_\-version}}
+\index{nfft\-\_\-get\-\_\-version@{nfft\-\_\-get\-\_\-version}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-get\-\_\-version}]{\setlength{\rightskip}{0pt plus 5cm}void nfft\-\_\-get\-\_\-version (
+\begin{DoxyParamCaption}
+\item[{unsigned $\ast$}]{major, }
+\item[{unsigned $\ast$}]{minor, }
+\item[{unsigned $\ast$}]{patch}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_aa9084d7474acf47742edbb2055f39cdb}
+
+
+Return library version. 
+
+\hypertarget{nfft3_8h_abd3d4bb93f7462a6d9ff035b2c129d2f}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-get\-\_\-window\-\_\-name@{nfft\-\_\-get\-\_\-window\-\_\-name}}
+\index{nfft\-\_\-get\-\_\-window\-\_\-name@{nfft\-\_\-get\-\_\-window\-\_\-name}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-get\-\_\-window\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ nfft\-\_\-get\-\_\-window\-\_\-name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_abd3d4bb93f7462a6d9ff035b2c129d2f}
+
+
+\textbackslash{} $\ast$ Return name of window function. 
+
+\textbackslash{} $\ast$ \textbackslash{} $\ast$ The window function to be used is configured at compile time. \textbackslash{} \hypertarget{nfft3_8h_ae0c18a2f67bdd49756ec4802849d6ec7}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-vrand\-\_\-unit\-\_\-complex@{nfftl\-\_\-vrand\-\_\-unit\-\_\-complex}}
+\index{nfftl\-\_\-vrand\-\_\-unit\-\_\-complex@{nfftl\-\_\-vrand\-\_\-unit\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-vrand\-\_\-unit\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftl\-\_\-vrand\-\_\-unit\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwl\-\_\-complex $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_ae0c18a2f67bdd49756ec4802849d6ec7}
+
+
+Inits a vector of random complex numbers in $[0,1]\times[0,1]{\rm i}$. 
+
+\textbackslash{} \hypertarget{nfft3_8h_a503a806613886d3b03240e00ef861598}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double@{nfftl\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}}
+\index{nfftl\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double@{nfftl\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfftl\-\_\-vrand\-\_\-shifted\-\_\-unit\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{long double $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a503a806613886d3b03240e00ef861598}
+
+
+Inits a vector of random double numbers in $[-1/2,1/2]$. 
+
+\textbackslash{} \hypertarget{nfft3_8h_a56cfa08c9de52017899cf8f8aa754b57}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-vpr\-\_\-double@{nfftl\-\_\-vpr\-\_\-double}}
+\index{nfftl\-\_\-vpr\-\_\-double@{nfftl\-\_\-vpr\-\_\-double}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-vpr\-\_\-double}]{\setlength{\rightskip}{0pt plus 5cm}void nfftl\-\_\-vpr\-\_\-double (
+\begin{DoxyParamCaption}
+\item[{long double $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a56cfa08c9de52017899cf8f8aa754b57}
+
+
+Print real vector to standard output. 
+
+\hypertarget{nfft3_8h_a821fd8cc594f3f07b2f9754dcb7fa978}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-vpr\-\_\-complex@{nfftl\-\_\-vpr\-\_\-complex}}
+\index{nfftl\-\_\-vpr\-\_\-complex@{nfftl\-\_\-vpr\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-vpr\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftl\-\_\-vpr\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwl\-\_\-complex $\ast$}]{x, }
+\item[{const N\-F\-F\-T\-\_\-\-I\-N\-T}]{n, }
+\item[{const char $\ast$}]{text}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a821fd8cc594f3f07b2f9754dcb7fa978}
+
+
+Print complex vector to standard output. 
+
+\hypertarget{nfft3_8h_a5eadfdfbf93a79bb3a92749521f88a8e}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-dot\-\_\-complex@{nfftl\-\_\-dot\-\_\-complex}}
+\index{nfftl\-\_\-dot\-\_\-complex@{nfftl\-\_\-dot\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-dot\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}long double nfftl\-\_\-dot\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwl\-\_\-complex $\ast$}]{x, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a5eadfdfbf93a79bb3a92749521f88a8e}
+
+
+Computes the inner/dot product $x^H x$. 
+
+\hypertarget{nfft3_8h_a153ae54c2e7be097120da84b3a107d11}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-upd\-\_\-axpy\-\_\-complex@{nfftl\-\_\-upd\-\_\-axpy\-\_\-complex}}
+\index{nfftl\-\_\-upd\-\_\-axpy\-\_\-complex@{nfftl\-\_\-upd\-\_\-axpy\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-upd\-\_\-axpy\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftl\-\_\-upd\-\_\-axpy\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwl\-\_\-complex $\ast$}]{x, }
+\item[{long double}]{a, }
+\item[{fftwl\-\_\-complex $\ast$}]{y, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{n}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a153ae54c2e7be097120da84b3a107d11}
+
+
+Updates $x \leftarrow a x + y$. 
+
+\hypertarget{nfft3_8h_addfc827ea0c5781540073a4b2d0f5f2d}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-fftshift\-\_\-complex@{nfftl\-\_\-fftshift\-\_\-complex}}
+\index{nfftl\-\_\-fftshift\-\_\-complex@{nfftl\-\_\-fftshift\-\_\-complex}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-fftshift\-\_\-complex}]{\setlength{\rightskip}{0pt plus 5cm}void nfftl\-\_\-fftshift\-\_\-complex (
+\begin{DoxyParamCaption}
+\item[{fftwl\-\_\-complex $\ast$}]{x, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T}]{d, }
+\item[{N\-F\-F\-T\-\_\-\-I\-N\-T $\ast$}]{N}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_addfc827ea0c5781540073a4b2d0f5f2d}
+
+
+Swaps each half over N\mbox{[}d\mbox{]}/2. 
+
+\hypertarget{nfft3_8h_abe61ee60c89ac17c1ab2b9d079dc1e9e}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-get\-\_\-version@{nfftl\-\_\-get\-\_\-version}}
+\index{nfftl\-\_\-get\-\_\-version@{nfftl\-\_\-get\-\_\-version}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-get\-\_\-version}]{\setlength{\rightskip}{0pt plus 5cm}void nfftl\-\_\-get\-\_\-version (
+\begin{DoxyParamCaption}
+\item[{unsigned $\ast$}]{major, }
+\item[{unsigned $\ast$}]{minor, }
+\item[{unsigned $\ast$}]{patch}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_abe61ee60c89ac17c1ab2b9d079dc1e9e}
+
+
+Return library version. 
+
+\hypertarget{nfft3_8h_a82bef40fd2403bbd0db33a6ceb326095}{\index{nfft3.\-h@{nfft3.\-h}!nfftl\-\_\-get\-\_\-window\-\_\-name@{nfftl\-\_\-get\-\_\-window\-\_\-name}}
+\index{nfftl\-\_\-get\-\_\-window\-\_\-name@{nfftl\-\_\-get\-\_\-window\-\_\-name}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfftl\-\_\-get\-\_\-window\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ nfftl\-\_\-get\-\_\-window\-\_\-name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{nfft3_8h_a82bef40fd2403bbd0db33a6ceb326095}
+
+
+\textbackslash{} $\ast$ Return name of window function. 
+
+\textbackslash{} $\ast$ \textbackslash{} $\ast$ The window function to be used is configured at compile time. \textbackslash{} 
+
+\subsection{Variable Documentation}
+\hypertarget{nfft3_8h_aa578dec914d95bda5a2fad3fbd90c76f}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-malloc\-\_\-hook@{nfft\-\_\-malloc\-\_\-hook}}
+\index{nfft\-\_\-malloc\-\_\-hook@{nfft\-\_\-malloc\-\_\-hook}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-malloc\-\_\-hook}]{\setlength{\rightskip}{0pt plus 5cm}{\bf nfft\-\_\-malloc\-\_\-type\-\_\-function} nfft\-\_\-malloc\-\_\-hook}}\label{nfft3_8h_aa578dec914d95bda5a2fad3fbd90c76f}
+Hook for {\ttfamily nfft\-\_\-malloc} \hypertarget{nfft3_8h_a5b4d02593a82ded7c1d3c3c868e72347}{\index{nfft3.\-h@{nfft3.\-h}!nfft\-\_\-free\-\_\-hook@{nfft\-\_\-free\-\_\-hook}}
+\index{nfft\-\_\-free\-\_\-hook@{nfft\-\_\-free\-\_\-hook}!nfft3.h@{nfft3.\-h}}
+\subsubsection[{nfft\-\_\-free\-\_\-hook}]{\setlength{\rightskip}{0pt plus 5cm}{\bf nfft\-\_\-free\-\_\-type\-\_\-function} nfft\-\_\-free\-\_\-hook}}\label{nfft3_8h_a5b4d02593a82ded7c1d3c3c868e72347}
+Hook for {\ttfamily nfft\-\_\-free} 

@@ -1,0 +1,103 @@
+\hypertarget{fastsum_8c}{\section{fastsum.\-c File Reference}
+\label{fastsum_8c}\index{fastsum.\-c@{fastsum.\-c}}
+}
+
+
+Fast N\-F\-F\-T-\/based summation algorithm.  
+
+
+{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}nfft3.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}fastsum.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}infft.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}kernels.\-h\char`\"{}}\\*
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{group__applications__fastsum_ga6bc571f685f894e15b83a848a0a30faa}{static int \hyperlink{group__applications__fastsum_ga6bc571f685f894e15b83a848a0a30faa}{max\-\_\-i} (int a, int b)}\label{group__applications__fastsum_ga6bc571f685f894e15b83a848a0a30faa}
+
+\begin{DoxyCompactList}\small\item\em max \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_gab371c18008454ee9d80a2edfad754b0f}{static R \hyperlink{group__applications__fastsum_gab371c18008454ee9d80a2edfad754b0f}{fak} (int n)}\label{group__applications__fastsum_gab371c18008454ee9d80a2edfad754b0f}
+
+\begin{DoxyCompactList}\small\item\em factorial \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_ga22a0da75081664d0ef1ab899f25db944}{static R \hyperlink{group__applications__fastsum_ga22a0da75081664d0ef1ab899f25db944}{binom} (int n, int m)}\label{group__applications__fastsum_ga22a0da75081664d0ef1ab899f25db944}
+
+\begin{DoxyCompactList}\small\item\em binomial coefficient \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_gaefa4ee292e1544e1bbcca5a6211134f1}{static R \hyperlink{group__applications__fastsum_gaefa4ee292e1544e1bbcca5a6211134f1}{Basis\-Poly} (int m, int r, R xx)}\label{group__applications__fastsum_gaefa4ee292e1544e1bbcca5a6211134f1}
+
+\begin{DoxyCompactList}\small\item\em basis polynomial for regularized kernel \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_gac2308141cb9d43efd6c44a04a1dcaab0}{C \hyperlink{group__applications__fastsum_gac2308141cb9d43efd6c44a04a1dcaab0}{regkern} (kernel k, R xx, int p, const R $\ast$param, R a, R b)}\label{group__applications__fastsum_gac2308141cb9d43efd6c44a04a1dcaab0}
+
+\begin{DoxyCompactList}\small\item\em regularized kernel with K\-\_\-\-I arbitrary and K\-\_\-\-B smooth to zero \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_ga757d7cdd2cd0309f70abec04e5db12cd}{static C \hyperlink{group__applications__fastsum_ga757d7cdd2cd0309f70abec04e5db12cd}{regkern1} (kernel k, R xx, int p, const R $\ast$param, R a, R b)}\label{group__applications__fastsum_ga757d7cdd2cd0309f70abec04e5db12cd}
+
+\begin{DoxyCompactList}\small\item\em regularized kernel with K\-\_\-\-I arbitrary and K\-\_\-\-B periodized (used in 1\-D) \end{DoxyCompactList}\item 
+static C \hyperlink{group__applications__fastsum_ga9faf729384d948cc11d761c890e014c6}{regkern3} (kernel k, R xx, int p, const R $\ast$param, R a, R b)
+\begin{DoxyCompactList}\small\item\em regularized kernel for even kernels with K\-\_\-\-I even and K\-\_\-\-B mirrored \end{DoxyCompactList}\item 
+C \hyperlink{group__applications__fastsum_gaf2cbca475ce9688ffa19c9df96f47283}{kubintkern} (const R x, const C $\ast$Add, const int Ad, const R a)
+\begin{DoxyCompactList}\small\item\em linear spline interpolation in near field with even kernels \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_ga5d617d4bb61ebf42a68e2ac66131d833}{static C \hyperlink{group__applications__fastsum_ga5d617d4bb61ebf42a68e2ac66131d833}{kubintkern1} (const R x, const C $\ast$Add, const int Ad, const R a)}\label{group__applications__fastsum_ga5d617d4bb61ebf42a68e2ac66131d833}
+
+\begin{DoxyCompactList}\small\item\em cubic spline interpolation in near field with arbitrary kernels \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_gac5d0cf8c3771e5fef4422e1e14c00898}{static void \hyperlink{group__applications__fastsum_gac5d0cf8c3771e5fef4422e1e14c00898}{quicksort} (int d, int t, R $\ast$x, C $\ast$alpha, int $\ast$permutation\-\_\-x\-\_\-alpha, int N)}\label{group__applications__fastsum_gac5d0cf8c3771e5fef4422e1e14c00898}
+
+\begin{DoxyCompactList}\small\item\em quicksort algorithm for source knots and associated coefficients \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_ga8237ee0c81a2518c4849e71317a479d0}{static void \hyperlink{group__applications__fastsum_ga8237ee0c81a2518c4849e71317a479d0}{Build\-Box} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)}\label{group__applications__fastsum_ga8237ee0c81a2518c4849e71317a479d0}
+
+\begin{DoxyCompactList}\small\item\em initialize box-\/based search data structures \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_gad2a29e7922167e36332e65f1fe850a99}{static C \hyperlink{group__applications__fastsum_gad2a29e7922167e36332e65f1fe850a99}{calc\-\_\-\-Search\-Box} (int d, R $\ast$y, R $\ast$x, C $\ast$alpha, int start, int end\-\_\-lt, const C $\ast$Add, const int Ad, int p, R a, const kernel k, const R $\ast$param, const unsigned flags)}\label{group__applications__fastsum_gad2a29e7922167e36332e65f1fe850a99}
+
+\begin{DoxyCompactList}\small\item\em inner computation function for box-\/based near field correction \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_ga98e8ca1953cfc58ae708f59436ff81ca}{static C \hyperlink{group__applications__fastsum_ga98e8ca1953cfc58ae708f59436ff81ca}{Search\-Box} (R $\ast$y, \hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)}\label{group__applications__fastsum_ga98e8ca1953cfc58ae708f59436ff81ca}
+
+\begin{DoxyCompactList}\small\item\em box-\/based near field correction \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_ga1b76192eed4445c9f2bea1a91c211cc4}{static void \hyperlink{group__applications__fastsum_ga1b76192eed4445c9f2bea1a91c211cc4}{Build\-Tree} (int d, int t, R $\ast$x, C $\ast$alpha, int $\ast$permutation\-\_\-x\-\_\-alpha, int N)}\label{group__applications__fastsum_ga1b76192eed4445c9f2bea1a91c211cc4}
+
+\begin{DoxyCompactList}\small\item\em recursive sort of source knots dimension by dimension to get tree structure \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_ga9768ac98ad590c31decb9995814eb2d4}{static C \hyperlink{group__applications__fastsum_ga9768ac98ad590c31decb9995814eb2d4}{Search\-Tree} (const int d, const int t, const R $\ast$x, const C $\ast$alpha, const R $\ast$xmin, const R $\ast$xmax, const int N, const kernel k, const R $\ast$param, const int Ad, const C $\ast$Add, const int p, const unsigned flags)}\label{group__applications__fastsum_ga9768ac98ad590c31decb9995814eb2d4}
+
+\begin{DoxyCompactList}\small\item\em fast search in tree of source knots for near field computation \end{DoxyCompactList}\item 
+\hypertarget{group__applications__fastsum_gad686ea477bdbb429be87842a777f1962}{static void {\bfseries fastsum\-\_\-precompute\-\_\-kernel} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)}\label{group__applications__fastsum_gad686ea477bdbb429be87842a777f1962}
+
+\item 
+void \hyperlink{group__applications__fastsum_ga547fd44b7bdb6906b95efc246a3179b8}{fastsum\-\_\-init\-\_\-guru\-\_\-kernel} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths, int d, kernel k, R $\ast$param, unsigned flags, int nn, int p, R eps\-\_\-\-I, R eps\-\_\-\-B)
+\begin{DoxyCompactList}\small\item\em initialize node independent part of fast summation plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_gadf095a8eb7937eb97cd7776b8ef42cb0}{fastsum\-\_\-init\-\_\-guru\-\_\-source\-\_\-nodes} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths, int N\-\_\-total, int nn\-\_\-oversampled, int m)
+\begin{DoxyCompactList}\small\item\em initialize source nodes dependent part of fast summation plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_ga229081e0a9387c446b457bf9dd383261}{fastsum\-\_\-init\-\_\-guru\-\_\-target\-\_\-nodes} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths, int M\-\_\-total, int nn\-\_\-oversampled, int m)
+\begin{DoxyCompactList}\small\item\em initialize target nodes dependent part of fast summation plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_ga4892832b81aaae7dd2e0e088043ee2a2}{fastsum\-\_\-init\-\_\-guru} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths, int d, int N\-\_\-total, int M\-\_\-total, kernel k, R $\ast$param, unsigned flags, int nn, int m, int p, R eps\-\_\-\-I, R eps\-\_\-\-B)
+\begin{DoxyCompactList}\small\item\em initialization of fastsum plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_gaeb217c3abf2d63e1640468bd8f82b306}{fastsum\-\_\-finalize\-\_\-source\-\_\-nodes} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em finalization of fastsum plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_ga4353da818ef825ca6718a6c269c6ec16}{fastsum\-\_\-finalize\-\_\-target\-\_\-nodes} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em finalization of fastsum plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_gab315229b38f44544cc01583608ac12df}{fastsum\-\_\-finalize\-\_\-kernel} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em finalization of fastsum plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_gab989ea4659fe681bd4c025e82756f769}{fastsum\-\_\-finalize} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em finalization of fastsum plan \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_gaaee3dd954ffc99e4330fabe16ccad0fd}{fastsum\-\_\-exact} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em direct computation of sums \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_gaa0f96f9bbfbdf846b31f2bd31a0fe663}{fastsum\-\_\-precompute\-\_\-source\-\_\-nodes} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em precomputation for fastsum \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_ga9afba03e0a6cd6084ab837f90725c408}{fastsum\-\_\-precompute\-\_\-target\-\_\-nodes} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em precomputation for fastsum \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_ga197c16fcec7935886fc97d140f2b20ff}{fastsum\-\_\-precompute} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em precomputation for fastsum \end{DoxyCompactList}\item 
+void \hyperlink{group__applications__fastsum_gaab2cc691ba59064c18d439c9fd2185e8}{fastsum\-\_\-trafo} (\hyperlink{group__applications__fastsum_gad953252f6b309404991c4afc7b98b34b}{fastsum\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em fast N\-F\-F\-T-\/based summation \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Fast N\-F\-F\-T-\/based summation algorithm. \begin{DoxyAuthor}{Author}
+Markus Fenn 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2003-\/2006 
+\end{DoxyDate}
+
+
+Definition in file \hyperlink{fastsum_8c_source}{fastsum.\-c}.
+

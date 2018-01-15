@@ -1,0 +1,183 @@
+\hypertarget{taylor__nfft_8c}{\section{taylor\-\_\-nfft.\-c File Reference}
+\label{taylor__nfft_8c}\index{taylor\-\_\-nfft.\-c@{taylor\-\_\-nfft.\-c}}
+}
+
+
+Testing the nfft againt a Taylor expansion based version.  
+
+
+{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$stdio.\-h$>$}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}nfft3.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}infft.\-h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structtaylor__plan}{taylor\-\_\-plan}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{taylor__nfft_8c_a8aaec175a64f4ca7e15fcdcd355f56a2}{taylor\-\_\-init} (\hyperlink{structtaylor__plan}{taylor\-\_\-plan} $\ast$ths, int N, int M, int n, int m)
+\begin{DoxyCompactList}\small\item\em Initialisation of a transform plan. \end{DoxyCompactList}\item 
+static void \hyperlink{taylor__nfft_8c_a13b127b1ecbbd640bd30123c635940a5}{taylor\-\_\-precompute} (\hyperlink{structtaylor__plan}{taylor\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Precomputation of weights and indices in Taylor expansion. \end{DoxyCompactList}\item 
+static void \hyperlink{taylor__nfft_8c_a10f336e1a24851643775a0da2f338c65}{taylor\-\_\-finalize} (\hyperlink{structtaylor__plan}{taylor\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys a transform plan. \end{DoxyCompactList}\item 
+static void \hyperlink{taylor__nfft_8c_ada016505d50bb2473ce6061a342d7e20}{taylor\-\_\-trafo} (\hyperlink{structtaylor__plan}{taylor\-\_\-plan} $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Executes a Taylor-\/\-N\-F\-F\-T, see equation (1.\-1) in \mbox{[}Guide\mbox{]}, computes fast and approximate by means of a Taylor expansion for j=0,...,M-\/1 f\mbox{[}j\mbox{]} = sum\-\_\-\{k in I\-\_\-\-N$^\wedge$d\} f\-\_\-hat\mbox{[}k\mbox{]} $\ast$ exp(-\/2 (pi) k x\mbox{[}j\mbox{]}) \end{DoxyCompactList}\item 
+static void \hyperlink{taylor__nfft_8c_a7ef2d41455ffa60a2f001c4981d4cf97}{taylor\-\_\-time\-\_\-accuracy} (int N, int M, int n, int m, int n\-\_\-taylor, int m\-\_\-taylor, unsigned test\-\_\-accuracy)
+\begin{DoxyCompactList}\small\item\em Compares N\-D\-F\-T, N\-F\-F\-T, and Taylor-\/\-N\-F\-F\-T. \end{DoxyCompactList}\item 
+\hypertarget{taylor__nfft_8c_a3c04138a5bfe5d72780bb7e82a18e627}{int {\bfseries main} (int argc, char $\ast$$\ast$argv)}\label{taylor__nfft_8c_a3c04138a5bfe5d72780bb7e82a18e627}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Testing the nfft againt a Taylor expansion based version. \begin{DoxyAuthor}{Author}
+Stefan Kunis
+\end{DoxyAuthor}
+References\-: Time and memory requirements of the Nonequispaced F\-F\-T 
+
+Definition in file \hyperlink{taylor__nfft_8c_source}{taylor\-\_\-nfft.\-c}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{taylor__nfft_8c_a8aaec175a64f4ca7e15fcdcd355f56a2}{\index{taylor\-\_\-nfft.\-c@{taylor\-\_\-nfft.\-c}!taylor\-\_\-init@{taylor\-\_\-init}}
+\index{taylor\-\_\-init@{taylor\-\_\-init}!taylor_nfft.c@{taylor\-\_\-nfft.\-c}}
+\subsubsection[{taylor\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}static void taylor\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf taylor\-\_\-plan} $\ast$}]{ths, }
+\item[{int}]{N, }
+\item[{int}]{M, }
+\item[{int}]{n, }
+\item[{int}]{m}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{taylor__nfft_8c_a8aaec175a64f4ca7e15fcdcd355f56a2}
+
+
+Initialisation of a transform plan. 
+
+\begin{DoxyItemize}
+\item ths The pointer to a taylor plan \item N The multi bandwidth \item M The number of nodes \item n The fft length \item m The order of the Taylor expansion\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 59 of file taylor\-\_\-nfft.\-c.
+
+
+
+References F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E, F\-F\-T\-W\-\_\-\-I\-N\-I\-T, M\-A\-L\-L\-O\-C\-\_\-\-F, M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T, and M\-A\-L\-L\-O\-C\-\_\-\-X.
+
+
+
+Referenced by taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{taylor__nfft_8c_a13b127b1ecbbd640bd30123c635940a5}{\index{taylor\-\_\-nfft.\-c@{taylor\-\_\-nfft.\-c}!taylor\-\_\-precompute@{taylor\-\_\-precompute}}
+\index{taylor\-\_\-precompute@{taylor\-\_\-precompute}!taylor_nfft.c@{taylor\-\_\-nfft.\-c}}
+\subsubsection[{taylor\-\_\-precompute}]{\setlength{\rightskip}{0pt plus 5cm}static void taylor\-\_\-precompute (
+\begin{DoxyParamCaption}
+\item[{{\bf taylor\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{taylor__nfft_8c_a13b127b1ecbbd640bd30123c635940a5}
+
+
+Precomputation of weights and indices in Taylor expansion. 
+
+\begin{DoxyItemize}
+\item ths The pointer to a taylor plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 77 of file taylor\-\_\-nfft.\-c.
+
+
+
+Referenced by taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{taylor__nfft_8c_a10f336e1a24851643775a0da2f338c65}{\index{taylor\-\_\-nfft.\-c@{taylor\-\_\-nfft.\-c}!taylor\-\_\-finalize@{taylor\-\_\-finalize}}
+\index{taylor\-\_\-finalize@{taylor\-\_\-finalize}!taylor_nfft.c@{taylor\-\_\-nfft.\-c}}
+\subsubsection[{taylor\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}static void taylor\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{{\bf taylor\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{taylor__nfft_8c_a10f336e1a24851643775a0da2f338c65}
+
+
+Destroys a transform plan. 
+
+\begin{DoxyItemize}
+\item ths The pointer to a taylor plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis, Daniel Potts 
+\end{DoxyAuthor}
+
+
+Definition at line 99 of file taylor\-\_\-nfft.\-c.
+
+
+
+Referenced by taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{taylor__nfft_8c_ada016505d50bb2473ce6061a342d7e20}{\index{taylor\-\_\-nfft.\-c@{taylor\-\_\-nfft.\-c}!taylor\-\_\-trafo@{taylor\-\_\-trafo}}
+\index{taylor\-\_\-trafo@{taylor\-\_\-trafo}!taylor_nfft.c@{taylor\-\_\-nfft.\-c}}
+\subsubsection[{taylor\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}static void taylor\-\_\-trafo (
+\begin{DoxyParamCaption}
+\item[{{\bf taylor\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{taylor__nfft_8c_ada016505d50bb2473ce6061a342d7e20}
+
+
+Executes a Taylor-\/\-N\-F\-F\-T, see equation (1.\-1) in \mbox{[}Guide\mbox{]}, computes fast and approximate by means of a Taylor expansion for j=0,...,M-\/1 f\mbox{[}j\mbox{]} = sum\-\_\-\{k in I\-\_\-\-N$^\wedge$d\} f\-\_\-hat\mbox{[}k\mbox{]} $\ast$ exp(-\/2 (pi) k x\mbox{[}j\mbox{]}) 
+
+\begin{DoxyItemize}
+\item ths The pointer to a taylor plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 117 of file taylor\-\_\-nfft.\-c.
+
+
+
+Referenced by taylor\-\_\-time\-\_\-accuracy().
+
+\hypertarget{taylor__nfft_8c_a7ef2d41455ffa60a2f001c4981d4cf97}{\index{taylor\-\_\-nfft.\-c@{taylor\-\_\-nfft.\-c}!taylor\-\_\-time\-\_\-accuracy@{taylor\-\_\-time\-\_\-accuracy}}
+\index{taylor\-\_\-time\-\_\-accuracy@{taylor\-\_\-time\-\_\-accuracy}!taylor_nfft.c@{taylor\-\_\-nfft.\-c}}
+\subsubsection[{taylor\-\_\-time\-\_\-accuracy}]{\setlength{\rightskip}{0pt plus 5cm}static void taylor\-\_\-time\-\_\-accuracy (
+\begin{DoxyParamCaption}
+\item[{int}]{N, }
+\item[{int}]{M, }
+\item[{int}]{n, }
+\item[{int}]{m, }
+\item[{int}]{n\-\_\-taylor, }
+\item[{int}]{m\-\_\-taylor, }
+\item[{unsigned}]{test\-\_\-accuracy}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{taylor__nfft_8c_a7ef2d41455ffa60a2f001c4981d4cf97}
+
+
+Compares N\-D\-F\-T, N\-F\-F\-T, and Taylor-\/\-N\-F\-F\-T. 
+
+\begin{DoxyItemize}
+\item N The bandwidth \item N The number of nodes \item n The F\-F\-T-\/size for the N\-F\-F\-T \item m The cut-\/off for window function \item n\-\_\-taylor The F\-F\-T-\/size for the Taylor-\/\-N\-F\-F\-T \item m\-\_\-taylor The order of the Taylor approximation \item test\-\_\-accuracy Flag for N\-D\-F\-T computation\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Stefan Kunis 
+\end{DoxyAuthor}
+
+
+Definition at line 174 of file taylor\-\_\-nfft.\-c.
+
+
+
+References C\-S\-W\-A\-P, F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E, F\-F\-T\-W\-\_\-\-I\-N\-I\-T, P\-R\-E\-\_\-\-F\-G\-\_\-\-P\-S\-I, P\-R\-E\-\_\-\-O\-N\-E\-\_\-\-P\-S\-I, P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T, taylor\-\_\-finalize(), taylor\-\_\-init(), taylor\-\_\-precompute(), and taylor\-\_\-trafo().
+

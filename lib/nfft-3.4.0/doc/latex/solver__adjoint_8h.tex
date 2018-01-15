@@ -1,0 +1,547 @@
+\hypertarget{solver__adjoint_8h}{\section{solver\-\_\-adjoint.\-h File Reference}
+\label{solver__adjoint_8h}\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}}
+}
+
+
+Header file for adjoint solver.  
+
+
+{\ttfamily \#include \char`\"{}nfft3.\-h\char`\"{}}\\*
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structinfsft__adjoint__plan}{infsft\-\_\-adjoint\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em T\-O\-D\-O\-: different solvers. \end{DoxyCompactList}\item 
+struct \hyperlink{structinfft__adjoint__plan}{infft\-\_\-adjoint\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em Structure for an adjoint transform plan. \end{DoxyCompactList}\item 
+struct \hyperlink{structinfct__adjoint__plan}{infct\-\_\-adjoint\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em Structure for an adjoint transform plan. \end{DoxyCompactList}\item 
+struct \hyperlink{structinfst__adjoint__plan}{infst\-\_\-adjoint\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em Structure for an adjoint transform plan. \end{DoxyCompactList}\item 
+struct \hyperlink{structinnfft__adjoint__plan}{innfft\-\_\-adjoint\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em Structure for an adjoint transform plan. \end{DoxyCompactList}\item 
+struct \hyperlink{structimri__inh__2d1d__adjoint__plan}{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em Structure for an adjoint transform plan. \end{DoxyCompactList}\item 
+struct \hyperlink{structimri__inh__3d__adjoint__plan}{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em Structure for an adjoint transform plan. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{solver__adjoint_8h_ab0b31397c6f400b1f58af9f1c7b7b637}{M\-A\-C\-R\-O\-\_\-\-S\-O\-L\-V\-E\-R\-\_\-\-A\-D\-J\-O\-I\-N\-T\-\_\-\-P\-L\-A\-N}(M\-V, F\-L\-T, F\-L\-T\-\_\-\-T\-Y\-P\-E)
+\begin{DoxyCompactList}\small\item\em Include N\-F\-F\-T3 header. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{solver__adjoint_8h_a040cb361de66313ccbad17f746cc748d}{infsft\-\_\-adjoint\-\_\-init} (adjointnfsft\-\_\-plan $\ast$ths, \hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$mv)
+\begin{DoxyCompactList}\small\item\em Simple initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a0a162589cc358719488082d0b3e42e0e}{infsft\-\_\-adjoint\-\_\-init\-\_\-advanced} (adjointnfsft\-\_\-plan $\ast$ths, \hyperlink{structnfsft__plan}{nfsft\-\_\-plan},$\ast$mv, unsigned adjointnfsft\-\_\-flags)
+\begin{DoxyCompactList}\small\item\em Advanced initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a26dbcae80a2db01144d523cb3d22a01d}{infsft\-\_\-adjoint\-\_\-before\-\_\-loop} (adjointnfsft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Setting up residuals before the actual iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a03fc19c8d3c7b8a49c8751a2a88e0d09}{infsft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step} (adjointnfsft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Doing one step in the iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_adb479e2343fef9fbafdc5d8d65085aee}{infsft\-\_\-adjoint\-\_\-finalize} (adjointnfsft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys the plan for the adjoint transform. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_ae93aa72dcb2528111f021c952482c244}{infft\-\_\-adjoint\-\_\-init} (adjointnfft\-\_\-plan $\ast$ths, \hyperlink{structnfft__plan}{nfft\-\_\-plan} $\ast$mv)
+\begin{DoxyCompactList}\small\item\em Simple initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_adf47a7ff42ca521526db42b4d3a68f98}{infft\-\_\-adjoint\-\_\-init\-\_\-advanced} (adjointnfft\-\_\-plan $\ast$ths, \hyperlink{structnfft__plan}{nfft\-\_\-plan},$\ast$mv, unsigned adjointnfft\-\_\-flags)
+\begin{DoxyCompactList}\small\item\em Advanced initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a2a31ddf66394b88a4dd1545278e205b5}{infft\-\_\-adjoint\-\_\-before\-\_\-loop} (adjointnfft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Setting up residuals before the actual iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a219ff15a153205b04eec76860cb4d6eb}{infft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step} (adjointnfft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Doing one step in the iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a826591281cbec37c2a032eaecbbacf9d}{infft\-\_\-adjoint\-\_\-finalize} (adjointnfft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys the plan for the adjoint transform. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a695c20cc98df4bbd370240bee9703e77}{infct\-\_\-adjoint\-\_\-init} (adjointnfct\-\_\-plan $\ast$ths, \hyperlink{structnfct__plan}{nfct\-\_\-plan} $\ast$mv)
+\begin{DoxyCompactList}\small\item\em Simple initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a4fcee80a5fbbe901b8d51717dc07ae24}{infct\-\_\-adjoint\-\_\-init\-\_\-advanced} (adjointnfct\-\_\-plan $\ast$ths, \hyperlink{structnfct__plan}{nfct\-\_\-plan},$\ast$mv, unsigned adjointnfct\-\_\-flags)
+\begin{DoxyCompactList}\small\item\em Advanced initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a7bfc5594bbdc3d6c58fb10713a03bc40}{infct\-\_\-adjoint\-\_\-before\-\_\-loop} (adjointnfct\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Setting up residuals before the actual iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a36eef8da31026b71a865108b095768cc}{infct\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step} (adjointnfct\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Doing one step in the iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a48c89f97b3f452ee3aedb245d064f24e}{infct\-\_\-adjoint\-\_\-finalize} (adjointnfct\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys the plan for the adjoint transform. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a332fad4381e89b483482e53fa39604e3}{infst\-\_\-adjoint\-\_\-init} (adjointnfst\-\_\-plan $\ast$ths, \hyperlink{structnfst__plan}{nfst\-\_\-plan} $\ast$mv)
+\begin{DoxyCompactList}\small\item\em Simple initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_ac5ad72ccf1af482d623242389bc154b2}{infst\-\_\-adjoint\-\_\-init\-\_\-advanced} (adjointnfst\-\_\-plan $\ast$ths, \hyperlink{structnfst__plan}{nfst\-\_\-plan},$\ast$mv, unsigned adjointnfst\-\_\-flags)
+\begin{DoxyCompactList}\small\item\em Advanced initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a4a5720df6bfee236588f38e516e32c90}{infst\-\_\-adjoint\-\_\-before\-\_\-loop} (adjointnfst\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Setting up residuals before the actual iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a57df76147b89e6e204a465fd437fbaae}{infst\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step} (adjointnfst\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Doing one step in the iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a086451cc556027d5e909eb7d1c1249b7}{infst\-\_\-adjoint\-\_\-finalize} (adjointnfst\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys the plan for the adjoint transform. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_ab4dcbe373e99d9c010034c6eecdfea86}{innfft\-\_\-adjoint\-\_\-init} (adjointnnfft\-\_\-plan $\ast$ths, \hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$mv)
+\begin{DoxyCompactList}\small\item\em Simple initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_aac4fe9056cb5a96170ba6122e20d116a}{innfft\-\_\-adjoint\-\_\-init\-\_\-advanced} (adjointnnfft\-\_\-plan $\ast$ths, \hyperlink{structnnfft__plan}{nnfft\-\_\-plan},$\ast$mv, unsigned adjointnnfft\-\_\-flags)
+\begin{DoxyCompactList}\small\item\em Advanced initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a3c7be955a46b3d056b5d38324f2d2068}{innfft\-\_\-adjoint\-\_\-before\-\_\-loop} (adjointnnfft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Setting up residuals before the actual iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a9e80774fcedbd2a50e4146290de9ce3f}{innfft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step} (adjointnnfft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Doing one step in the iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a1316a1ad32f611899e446cd98d3b0b0d}{innfft\-\_\-adjoint\-\_\-finalize} (adjointnnfft\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys the plan for the adjoint transform. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_ae0f7ba8180888f8f70aff1b041f4ec57}{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init} (adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$ths, \hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$mv)
+\begin{DoxyCompactList}\small\item\em Simple initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a61bb41310d86e96ad1912ce486930bea}{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init\-\_\-advanced} (adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$ths, \hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan},$\ast$mv, unsigned adjointmri\-\_\-inh\-\_\-2d1d\-\_\-flags)
+\begin{DoxyCompactList}\small\item\em Advanced initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a39cce38619ea8d9ce84326173e2d091b}{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-before\-\_\-loop} (adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Setting up residuals before the actual iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a84b7c58708fe95ff8234638689a30302}{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step} (adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Doing one step in the iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a7b403058cdba0d2918690b2d1d577912}{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-finalize} (adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys the plan for the adjoint transform. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a6275d93dac2957a4acad3bda978c98cd}{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init} (adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$ths, \hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$mv)
+\begin{DoxyCompactList}\small\item\em Simple initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_afb6ade8e78c1dfdc7e513c6e8fa7ffb6}{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init\-\_\-advanced} (adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$ths, \hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan},$\ast$mv, unsigned adjointmri\-\_\-inh\-\_\-3d\-\_\-flags)
+\begin{DoxyCompactList}\small\item\em Advanced initialisation. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a9a8864136de1ff61970eeed934350238}{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-before\-\_\-loop} (adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Setting up residuals before the actual iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a7e65b366bd5003cef9c16e640591b972}{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step} (adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Doing one step in the iteration. \end{DoxyCompactList}\item 
+void \hyperlink{solver__adjoint_8h_a48c6fe11c01d742025c7eb7bf7ac9002}{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-finalize} (adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$ths)
+\begin{DoxyCompactList}\small\item\em Destroys the plan for the adjoint transform. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header file for adjoint solver. 
+
+Definition in file \hyperlink{solver__adjoint_8h_source}{solver\-\_\-adjoint.\-h}.
+
+
+
+\subsection{Macro Definition Documentation}
+\hypertarget{solver__adjoint_8h_ab0b31397c6f400b1f58af9f1c7b7b637}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!M\-A\-C\-R\-O\-\_\-\-S\-O\-L\-V\-E\-R\-\_\-\-A\-D\-J\-O\-I\-N\-T\-\_\-\-P\-L\-A\-N@{M\-A\-C\-R\-O\-\_\-\-S\-O\-L\-V\-E\-R\-\_\-\-A\-D\-J\-O\-I\-N\-T\-\_\-\-P\-L\-A\-N}}
+\index{M\-A\-C\-R\-O\-\_\-\-S\-O\-L\-V\-E\-R\-\_\-\-A\-D\-J\-O\-I\-N\-T\-\_\-\-P\-L\-A\-N@{M\-A\-C\-R\-O\-\_\-\-S\-O\-L\-V\-E\-R\-\_\-\-A\-D\-J\-O\-I\-N\-T\-\_\-\-P\-L\-A\-N}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{M\-A\-C\-R\-O\-\_\-\-S\-O\-L\-V\-E\-R\-\_\-\-A\-D\-J\-O\-I\-N\-T\-\_\-\-P\-L\-A\-N}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-C\-R\-O\-\_\-\-S\-O\-L\-V\-E\-R\-\_\-\-A\-D\-J\-O\-I\-N\-T\-\_\-\-P\-L\-A\-N(
+\begin{DoxyParamCaption}
+\item[{}]{M\-V, }
+\item[{}]{F\-L\-T, }
+\item[{}]{F\-L\-T\-\_\-\-T\-Y\-P\-E}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_ab0b31397c6f400b1f58af9f1c7b7b637}
+
+
+Include N\-F\-F\-T3 header. 
+
+
+
+Definition at line 33 of file solver\-\_\-adjoint.\-h.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{solver__adjoint_8h_a040cb361de66313ccbad17f746cc748d}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infsft\-\_\-adjoint\-\_\-init@{infsft\-\_\-adjoint\-\_\-init}}
+\index{infsft\-\_\-adjoint\-\_\-init@{infsft\-\_\-adjoint\-\_\-init}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infsft\-\_\-adjoint\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void infsft\-\_\-adjoint\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{adjointnfsft\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfsft\-\_\-plan} $\ast$}]{mv}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a040cb361de66313ccbad17f746cc748d}
+
+
+Simple initialisation. 
+
+\hypertarget{solver__adjoint_8h_a0a162589cc358719488082d0b3e42e0e}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infsft\-\_\-adjoint\-\_\-init\-\_\-advanced@{infsft\-\_\-adjoint\-\_\-init\-\_\-advanced}}
+\index{infsft\-\_\-adjoint\-\_\-init\-\_\-advanced@{infsft\-\_\-adjoint\-\_\-init\-\_\-advanced}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infsft\-\_\-adjoint\-\_\-init\-\_\-advanced}]{\setlength{\rightskip}{0pt plus 5cm}void infsft\-\_\-adjoint\-\_\-init\-\_\-advanced (
+\begin{DoxyParamCaption}
+\item[{adjointnfsft\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfsft\-\_\-plan}}]{, }
+\item[{$\ast$}]{mv, }
+\item[{unsigned}]{adjointnfsft\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a0a162589cc358719488082d0b3e42e0e}
+
+
+Advanced initialisation. 
+
+\hypertarget{solver__adjoint_8h_a26dbcae80a2db01144d523cb3d22a01d}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infsft\-\_\-adjoint\-\_\-before\-\_\-loop@{infsft\-\_\-adjoint\-\_\-before\-\_\-loop}}
+\index{infsft\-\_\-adjoint\-\_\-before\-\_\-loop@{infsft\-\_\-adjoint\-\_\-before\-\_\-loop}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infsft\-\_\-adjoint\-\_\-before\-\_\-loop}]{\setlength{\rightskip}{0pt plus 5cm}void infsft\-\_\-adjoint\-\_\-before\-\_\-loop (
+\begin{DoxyParamCaption}
+\item[{adjointnfsft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a26dbcae80a2db01144d523cb3d22a01d}
+
+
+Setting up residuals before the actual iteration. 
+
+\hypertarget{solver__adjoint_8h_a03fc19c8d3c7b8a49c8751a2a88e0d09}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infsft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infsft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}}
+\index{infsft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infsft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infsft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}void infsft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step (
+\begin{DoxyParamCaption}
+\item[{adjointnfsft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a03fc19c8d3c7b8a49c8751a2a88e0d09}
+
+
+Doing one step in the iteration. 
+
+\hypertarget{solver__adjoint_8h_adb479e2343fef9fbafdc5d8d65085aee}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infsft\-\_\-adjoint\-\_\-finalize@{infsft\-\_\-adjoint\-\_\-finalize}}
+\index{infsft\-\_\-adjoint\-\_\-finalize@{infsft\-\_\-adjoint\-\_\-finalize}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infsft\-\_\-adjoint\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void infsft\-\_\-adjoint\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{adjointnfsft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_adb479e2343fef9fbafdc5d8d65085aee}
+
+
+Destroys the plan for the adjoint transform. 
+
+\hypertarget{solver__adjoint_8h_ae93aa72dcb2528111f021c952482c244}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infft\-\_\-adjoint\-\_\-init@{infft\-\_\-adjoint\-\_\-init}}
+\index{infft\-\_\-adjoint\-\_\-init@{infft\-\_\-adjoint\-\_\-init}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infft\-\_\-adjoint\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void infft\-\_\-adjoint\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{adjointnfft\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfft\-\_\-plan} $\ast$}]{mv}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_ae93aa72dcb2528111f021c952482c244}
+
+
+Simple initialisation. 
+
+\hypertarget{solver__adjoint_8h_adf47a7ff42ca521526db42b4d3a68f98}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infft\-\_\-adjoint\-\_\-init\-\_\-advanced@{infft\-\_\-adjoint\-\_\-init\-\_\-advanced}}
+\index{infft\-\_\-adjoint\-\_\-init\-\_\-advanced@{infft\-\_\-adjoint\-\_\-init\-\_\-advanced}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infft\-\_\-adjoint\-\_\-init\-\_\-advanced}]{\setlength{\rightskip}{0pt plus 5cm}void infft\-\_\-adjoint\-\_\-init\-\_\-advanced (
+\begin{DoxyParamCaption}
+\item[{adjointnfft\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfft\-\_\-plan}}]{, }
+\item[{$\ast$}]{mv, }
+\item[{unsigned}]{adjointnfft\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_adf47a7ff42ca521526db42b4d3a68f98}
+
+
+Advanced initialisation. 
+
+\hypertarget{solver__adjoint_8h_a2a31ddf66394b88a4dd1545278e205b5}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infft\-\_\-adjoint\-\_\-before\-\_\-loop@{infft\-\_\-adjoint\-\_\-before\-\_\-loop}}
+\index{infft\-\_\-adjoint\-\_\-before\-\_\-loop@{infft\-\_\-adjoint\-\_\-before\-\_\-loop}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infft\-\_\-adjoint\-\_\-before\-\_\-loop}]{\setlength{\rightskip}{0pt plus 5cm}void infft\-\_\-adjoint\-\_\-before\-\_\-loop (
+\begin{DoxyParamCaption}
+\item[{adjointnfft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a2a31ddf66394b88a4dd1545278e205b5}
+
+
+Setting up residuals before the actual iteration. 
+
+\hypertarget{solver__adjoint_8h_a219ff15a153205b04eec76860cb4d6eb}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}}
+\index{infft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}void infft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step (
+\begin{DoxyParamCaption}
+\item[{adjointnfft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a219ff15a153205b04eec76860cb4d6eb}
+
+
+Doing one step in the iteration. 
+
+\hypertarget{solver__adjoint_8h_a826591281cbec37c2a032eaecbbacf9d}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infft\-\_\-adjoint\-\_\-finalize@{infft\-\_\-adjoint\-\_\-finalize}}
+\index{infft\-\_\-adjoint\-\_\-finalize@{infft\-\_\-adjoint\-\_\-finalize}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infft\-\_\-adjoint\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void infft\-\_\-adjoint\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{adjointnfft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a826591281cbec37c2a032eaecbbacf9d}
+
+
+Destroys the plan for the adjoint transform. 
+
+\hypertarget{solver__adjoint_8h_a695c20cc98df4bbd370240bee9703e77}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infct\-\_\-adjoint\-\_\-init@{infct\-\_\-adjoint\-\_\-init}}
+\index{infct\-\_\-adjoint\-\_\-init@{infct\-\_\-adjoint\-\_\-init}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infct\-\_\-adjoint\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void infct\-\_\-adjoint\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{adjointnfct\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfct\-\_\-plan} $\ast$}]{mv}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a695c20cc98df4bbd370240bee9703e77}
+
+
+Simple initialisation. 
+
+\hypertarget{solver__adjoint_8h_a4fcee80a5fbbe901b8d51717dc07ae24}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infct\-\_\-adjoint\-\_\-init\-\_\-advanced@{infct\-\_\-adjoint\-\_\-init\-\_\-advanced}}
+\index{infct\-\_\-adjoint\-\_\-init\-\_\-advanced@{infct\-\_\-adjoint\-\_\-init\-\_\-advanced}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infct\-\_\-adjoint\-\_\-init\-\_\-advanced}]{\setlength{\rightskip}{0pt plus 5cm}void infct\-\_\-adjoint\-\_\-init\-\_\-advanced (
+\begin{DoxyParamCaption}
+\item[{adjointnfct\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfct\-\_\-plan}}]{, }
+\item[{$\ast$}]{mv, }
+\item[{unsigned}]{adjointnfct\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a4fcee80a5fbbe901b8d51717dc07ae24}
+
+
+Advanced initialisation. 
+
+\hypertarget{solver__adjoint_8h_a7bfc5594bbdc3d6c58fb10713a03bc40}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infct\-\_\-adjoint\-\_\-before\-\_\-loop@{infct\-\_\-adjoint\-\_\-before\-\_\-loop}}
+\index{infct\-\_\-adjoint\-\_\-before\-\_\-loop@{infct\-\_\-adjoint\-\_\-before\-\_\-loop}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infct\-\_\-adjoint\-\_\-before\-\_\-loop}]{\setlength{\rightskip}{0pt plus 5cm}void infct\-\_\-adjoint\-\_\-before\-\_\-loop (
+\begin{DoxyParamCaption}
+\item[{adjointnfct\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a7bfc5594bbdc3d6c58fb10713a03bc40}
+
+
+Setting up residuals before the actual iteration. 
+
+\hypertarget{solver__adjoint_8h_a36eef8da31026b71a865108b095768cc}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infct\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infct\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}}
+\index{infct\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infct\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infct\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}void infct\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step (
+\begin{DoxyParamCaption}
+\item[{adjointnfct\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a36eef8da31026b71a865108b095768cc}
+
+
+Doing one step in the iteration. 
+
+\hypertarget{solver__adjoint_8h_a48c89f97b3f452ee3aedb245d064f24e}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infct\-\_\-adjoint\-\_\-finalize@{infct\-\_\-adjoint\-\_\-finalize}}
+\index{infct\-\_\-adjoint\-\_\-finalize@{infct\-\_\-adjoint\-\_\-finalize}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infct\-\_\-adjoint\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void infct\-\_\-adjoint\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{adjointnfct\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a48c89f97b3f452ee3aedb245d064f24e}
+
+
+Destroys the plan for the adjoint transform. 
+
+\hypertarget{solver__adjoint_8h_a332fad4381e89b483482e53fa39604e3}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infst\-\_\-adjoint\-\_\-init@{infst\-\_\-adjoint\-\_\-init}}
+\index{infst\-\_\-adjoint\-\_\-init@{infst\-\_\-adjoint\-\_\-init}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infst\-\_\-adjoint\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void infst\-\_\-adjoint\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{adjointnfst\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfst\-\_\-plan} $\ast$}]{mv}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a332fad4381e89b483482e53fa39604e3}
+
+
+Simple initialisation. 
+
+\hypertarget{solver__adjoint_8h_ac5ad72ccf1af482d623242389bc154b2}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infst\-\_\-adjoint\-\_\-init\-\_\-advanced@{infst\-\_\-adjoint\-\_\-init\-\_\-advanced}}
+\index{infst\-\_\-adjoint\-\_\-init\-\_\-advanced@{infst\-\_\-adjoint\-\_\-init\-\_\-advanced}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infst\-\_\-adjoint\-\_\-init\-\_\-advanced}]{\setlength{\rightskip}{0pt plus 5cm}void infst\-\_\-adjoint\-\_\-init\-\_\-advanced (
+\begin{DoxyParamCaption}
+\item[{adjointnfst\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nfst\-\_\-plan}}]{, }
+\item[{$\ast$}]{mv, }
+\item[{unsigned}]{adjointnfst\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_ac5ad72ccf1af482d623242389bc154b2}
+
+
+Advanced initialisation. 
+
+\hypertarget{solver__adjoint_8h_a4a5720df6bfee236588f38e516e32c90}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infst\-\_\-adjoint\-\_\-before\-\_\-loop@{infst\-\_\-adjoint\-\_\-before\-\_\-loop}}
+\index{infst\-\_\-adjoint\-\_\-before\-\_\-loop@{infst\-\_\-adjoint\-\_\-before\-\_\-loop}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infst\-\_\-adjoint\-\_\-before\-\_\-loop}]{\setlength{\rightskip}{0pt plus 5cm}void infst\-\_\-adjoint\-\_\-before\-\_\-loop (
+\begin{DoxyParamCaption}
+\item[{adjointnfst\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a4a5720df6bfee236588f38e516e32c90}
+
+
+Setting up residuals before the actual iteration. 
+
+\hypertarget{solver__adjoint_8h_a57df76147b89e6e204a465fd437fbaae}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infst\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infst\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}}
+\index{infst\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{infst\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infst\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}void infst\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step (
+\begin{DoxyParamCaption}
+\item[{adjointnfst\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a57df76147b89e6e204a465fd437fbaae}
+
+
+Doing one step in the iteration. 
+
+\hypertarget{solver__adjoint_8h_a086451cc556027d5e909eb7d1c1249b7}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!infst\-\_\-adjoint\-\_\-finalize@{infst\-\_\-adjoint\-\_\-finalize}}
+\index{infst\-\_\-adjoint\-\_\-finalize@{infst\-\_\-adjoint\-\_\-finalize}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{infst\-\_\-adjoint\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void infst\-\_\-adjoint\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{adjointnfst\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a086451cc556027d5e909eb7d1c1249b7}
+
+
+Destroys the plan for the adjoint transform. 
+
+\hypertarget{solver__adjoint_8h_ab4dcbe373e99d9c010034c6eecdfea86}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!innfft\-\_\-adjoint\-\_\-init@{innfft\-\_\-adjoint\-\_\-init}}
+\index{innfft\-\_\-adjoint\-\_\-init@{innfft\-\_\-adjoint\-\_\-init}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{innfft\-\_\-adjoint\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void innfft\-\_\-adjoint\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{adjointnnfft\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{mv}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_ab4dcbe373e99d9c010034c6eecdfea86}
+
+
+Simple initialisation. 
+
+\hypertarget{solver__adjoint_8h_aac4fe9056cb5a96170ba6122e20d116a}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!innfft\-\_\-adjoint\-\_\-init\-\_\-advanced@{innfft\-\_\-adjoint\-\_\-init\-\_\-advanced}}
+\index{innfft\-\_\-adjoint\-\_\-init\-\_\-advanced@{innfft\-\_\-adjoint\-\_\-init\-\_\-advanced}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{innfft\-\_\-adjoint\-\_\-init\-\_\-advanced}]{\setlength{\rightskip}{0pt plus 5cm}void innfft\-\_\-adjoint\-\_\-init\-\_\-advanced (
+\begin{DoxyParamCaption}
+\item[{adjointnnfft\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf nnfft\-\_\-plan}}]{, }
+\item[{$\ast$}]{mv, }
+\item[{unsigned}]{adjointnnfft\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_aac4fe9056cb5a96170ba6122e20d116a}
+
+
+Advanced initialisation. 
+
+\hypertarget{solver__adjoint_8h_a3c7be955a46b3d056b5d38324f2d2068}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!innfft\-\_\-adjoint\-\_\-before\-\_\-loop@{innfft\-\_\-adjoint\-\_\-before\-\_\-loop}}
+\index{innfft\-\_\-adjoint\-\_\-before\-\_\-loop@{innfft\-\_\-adjoint\-\_\-before\-\_\-loop}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{innfft\-\_\-adjoint\-\_\-before\-\_\-loop}]{\setlength{\rightskip}{0pt plus 5cm}void innfft\-\_\-adjoint\-\_\-before\-\_\-loop (
+\begin{DoxyParamCaption}
+\item[{adjointnnfft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a3c7be955a46b3d056b5d38324f2d2068}
+
+
+Setting up residuals before the actual iteration. 
+
+\hypertarget{solver__adjoint_8h_a9e80774fcedbd2a50e4146290de9ce3f}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!innfft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{innfft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}}
+\index{innfft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{innfft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{innfft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}void innfft\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step (
+\begin{DoxyParamCaption}
+\item[{adjointnnfft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a9e80774fcedbd2a50e4146290de9ce3f}
+
+
+Doing one step in the iteration. 
+
+\hypertarget{solver__adjoint_8h_a1316a1ad32f611899e446cd98d3b0b0d}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!innfft\-\_\-adjoint\-\_\-finalize@{innfft\-\_\-adjoint\-\_\-finalize}}
+\index{innfft\-\_\-adjoint\-\_\-finalize@{innfft\-\_\-adjoint\-\_\-finalize}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{innfft\-\_\-adjoint\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void innfft\-\_\-adjoint\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{adjointnnfft\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a1316a1ad32f611899e446cd98d3b0b0d}
+
+
+Destroys the plan for the adjoint transform. 
+
+\hypertarget{solver__adjoint_8h_ae0f7ba8180888f8f70aff1b041f4ec57}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init}}
+\index{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$}]{mv}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_ae0f7ba8180888f8f70aff1b041f4ec57}
+
+
+Simple initialisation. 
+
+\hypertarget{solver__adjoint_8h_a61bb41310d86e96ad1912ce486930bea}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init\-\_\-advanced@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init\-\_\-advanced}}
+\index{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init\-\_\-advanced@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init\-\_\-advanced}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init\-\_\-advanced}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-init\-\_\-advanced (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf mri\-\_\-inh\-\_\-2d1d\-\_\-plan}}]{, }
+\item[{$\ast$}]{mv, }
+\item[{unsigned}]{adjointmri\-\_\-inh\-\_\-2d1d\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a61bb41310d86e96ad1912ce486930bea}
+
+
+Advanced initialisation. 
+
+\hypertarget{solver__adjoint_8h_a39cce38619ea8d9ce84326173e2d091b}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-before\-\_\-loop@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-before\-\_\-loop}}
+\index{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-before\-\_\-loop@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-before\-\_\-loop}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-before\-\_\-loop}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-before\-\_\-loop (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a39cce38619ea8d9ce84326173e2d091b}
+
+
+Setting up residuals before the actual iteration. 
+
+\hypertarget{solver__adjoint_8h_a84b7c58708fe95ff8234638689a30302}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}}
+\index{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a84b7c58708fe95ff8234638689a30302}
+
+
+Doing one step in the iteration. 
+
+\hypertarget{solver__adjoint_8h_a7b403058cdba0d2918690b2d1d577912}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-finalize@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-finalize}}
+\index{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-finalize@{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-finalize}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-2d1d\-\_\-adjoint\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-2d1d\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a7b403058cdba0d2918690b2d1d577912}
+
+
+Destroys the plan for the adjoint transform. 
+
+\hypertarget{solver__adjoint_8h_a6275d93dac2957a4acad3bda978c98cd}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init}}
+\index{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$}]{mv}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a6275d93dac2957a4acad3bda978c98cd}
+
+
+Simple initialisation. 
+
+\hypertarget{solver__adjoint_8h_afb6ade8e78c1dfdc7e513c6e8fa7ffb6}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init\-\_\-advanced@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init\-\_\-advanced}}
+\index{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init\-\_\-advanced@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init\-\_\-advanced}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init\-\_\-advanced}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-init\-\_\-advanced (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$}]{ths, }
+\item[{{\bf mri\-\_\-inh\-\_\-3d\-\_\-plan}}]{, }
+\item[{$\ast$}]{mv, }
+\item[{unsigned}]{adjointmri\-\_\-inh\-\_\-3d\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_afb6ade8e78c1dfdc7e513c6e8fa7ffb6}
+
+
+Advanced initialisation. 
+
+\hypertarget{solver__adjoint_8h_a9a8864136de1ff61970eeed934350238}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-before\-\_\-loop@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-before\-\_\-loop}}
+\index{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-before\-\_\-loop@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-before\-\_\-loop}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-before\-\_\-loop}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-before\-\_\-loop (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a9a8864136de1ff61970eeed934350238}
+
+
+Setting up residuals before the actual iteration. 
+
+\hypertarget{solver__adjoint_8h_a7e65b366bd5003cef9c16e640591b972}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}}
+\index{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-loop\-\_\-one\-\_\-step (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a7e65b366bd5003cef9c16e640591b972}
+
+
+Doing one step in the iteration. 
+
+\hypertarget{solver__adjoint_8h_a48c6fe11c01d742025c7eb7bf7ac9002}{\index{solver\-\_\-adjoint.\-h@{solver\-\_\-adjoint.\-h}!imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-finalize@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-finalize}}
+\index{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-finalize@{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-finalize}!solver_adjoint.h@{solver\-\_\-adjoint.\-h}}
+\subsubsection[{imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void imri\-\_\-inh\-\_\-3d\-\_\-adjoint\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{adjointmri\-\_\-inh\-\_\-3d\-\_\-plan $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{solver__adjoint_8h_a48c6fe11c01d742025c7eb7bf7ac9002}
+
+
+Destroys the plan for the adjoint transform. 
+

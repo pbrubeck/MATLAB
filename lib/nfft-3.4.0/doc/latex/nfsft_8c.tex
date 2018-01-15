@@ -1,0 +1,73 @@
+\hypertarget{nfsft_8c}{\section{nfsft.\-c File Reference}
+\label{nfsft_8c}\index{nfsft.\-c@{nfsft.\-c}}
+}
+
+
+Implementation file for the N\-F\-S\-F\-T module.  
+
+
+{\ttfamily \#include \char`\"{}config.\-h\char`\"{}}\\*
+{\ttfamily \#include $<$math.\-h$>$}\\*
+{\ttfamily \#include $<$stdlib.\-h$>$}\\*
+{\ttfamily \#include $<$string.\-h$>$}\\*
+{\ttfamily \#include \char`\"{}nfft3.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}infft.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}legendre.\-h\char`\"{}}\\*
+{\ttfamily \#include \char`\"{}api.\-h\char`\"{}}\\*
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__nfsft_ga206c4faaf800b49dcb14e26148fa9ac6}{N\-F\-S\-F\-T\-\_\-\-D\-E\-F\-A\-U\-L\-T\-\_\-\-N\-F\-F\-T\-\_\-\-C\-U\-T\-O\-F\-F}~6
+\begin{DoxyCompactList}\small\item\em The default N\-F\-F\-T cutoff parameter. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__nfsft_gab7d25b80464387893b3c773f92e5c4f3}{N\-F\-S\-F\-T\-\_\-\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-H\-R\-E\-S\-H\-O\-L\-D}~1000
+\begin{DoxyCompactList}\small\item\em The default threshold for the F\-P\-T. \end{DoxyCompactList}\item 
+\#define \hyperlink{group__nfsft_ga54b840898df97bcd14af4cb004650ed3}{N\-F\-S\-F\-T\-\_\-\-B\-R\-E\-A\-K\-\_\-\-E\-V\-E\-N}~5
+\begin{DoxyCompactList}\small\item\em The break-\/even bandwidth $N \in \mathbb{N}_0$. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{group__nfsft_ga47209b28b6561fca7349ed8afa5f9656}{c2e} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\begin{DoxyCompactList}\small\item\em Converts coefficients $\left(b_k^n\right)_{k=0}^M$ with $M \in \mathbb{N}_0$, $-M \le n \le M$ from a linear combination of Chebyshev polynomials \[ f(\cos\vartheta) = \sum_{k=0}^{2\lfloor\frac{M}{2}\rfloor} a_k (\sin\vartheta)^{n\;\mathrm{mod}\;2} T_k(\cos\vartheta) \] to coefficients $\left(c_k^n\right)_{k=0}^M$ matching the representation by complex exponentials \[ f(\cos\vartheta) = \sum_{k=-M}^{M} c_k \mathrm{e}^{\mathrm{i}k\vartheta} \] for each order $n=-M,\ldots,M$. \end{DoxyCompactList}\item 
+static void \hyperlink{group__nfsft_ga0e033457136bc0ecb18bb57d3ee5aa37}{c2e\-\_\-transposed} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\begin{DoxyCompactList}\small\item\em Transposed version of the function \hyperlink{group__nfsft_ga47209b28b6561fca7349ed8afa5f9656}{c2e}. \end{DoxyCompactList}\item 
+void \hyperlink{group__nfsft_ga65cda3f4a3edc5eb39c697cf34b1f0b9}{nfsft\-\_\-init} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan, int N, int M)
+\item 
+void \hyperlink{group__nfsft_ga2812aa5beba0eb7efd3072bf323a0155}{nfsft\-\_\-init\-\_\-advanced} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan, int N, int M, unsigned int flags)
+\item 
+\hypertarget{group__nfsft_gafff6158abcefa9a75bcfa41af5a79089}{void {\bfseries nfsft\-\_\-init\-\_\-guru} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan, int N, int M, unsigned int flags, unsigned int nfft\-\_\-flags, int nfft\-\_\-cutoff)}\label{group__nfsft_gafff6158abcefa9a75bcfa41af5a79089}
+
+\item 
+void \hyperlink{group__nfsft_gabe87aeea1f7cfef9ae8febb16d702f3b}{nfsft\-\_\-precompute} (int N, double kappa, unsigned int nfsft\-\_\-flags, unsigned int fpt\-\_\-flags)
+\item 
+void \hyperlink{group__nfsft_ga3b69bca6c76a63877534f5a9781bf285}{nfsft\-\_\-forget} (void)
+\item 
+void \hyperlink{group__nfsft_gaa63e193a27d84059742ff25ff81e2ed1}{nfsft\-\_\-finalize} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\item 
+\hypertarget{group__nfsft_ga7628057164579a29cc77487cda6772e5}{void {\bfseries nfsft\-\_\-trafo\-\_\-direct} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)}\label{group__nfsft_ga7628057164579a29cc77487cda6772e5}
+
+\item 
+\hypertarget{group__nfsft_ga7cfaacc3393dea5c895859fa035e3e06}{void {\bfseries nfsft\-\_\-adjoint\-\_\-direct} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)}\label{group__nfsft_ga7cfaacc3393dea5c895859fa035e3e06}
+
+\item 
+void \hyperlink{group__nfsft_ga5796fc68c432d46dfcab7abd8c56ee22}{nfsft\-\_\-trafo} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\item 
+void \hyperlink{group__nfsft_ga813bb48d404c7286310733c99a81a169}{nfsft\-\_\-adjoint} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)
+\item 
+\hypertarget{group__nfsft_ga7a7fa6722d6ba3aade4c69299af86e4e}{void {\bfseries nfsft\-\_\-precompute\-\_\-x} (\hyperlink{structnfsft__plan}{nfsft\-\_\-plan} $\ast$plan)}\label{group__nfsft_ga7a7fa6722d6ba3aade4c69299af86e4e}
+
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static struct \hyperlink{structnfsft__wisdom}{nfsft\-\_\-wisdom} \hyperlink{group__nfsft_ga0af81d81e1b436949ddc46dbd27346e5}{wisdom} = \{false,0\-U,-\/1,-\/1,0,0,0,0,0\}
+\begin{DoxyCompactList}\small\item\em The global wisdom structure for precomputed data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Implementation file for the N\-F\-S\-F\-T module. \begin{DoxyAuthor}{Author}
+Jens Keiner 
+\end{DoxyAuthor}
+
+
+Definition in file \hyperlink{nfsft_8c_source}{nfsft.\-c}.
+

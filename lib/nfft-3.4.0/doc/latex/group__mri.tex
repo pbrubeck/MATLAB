@@ -1,0 +1,190 @@
+\hypertarget{group__mri}{\section{M\-R\-I -\/ Transforms in magnetic resonance imaging}
+\label{group__mri}\index{M\-R\-I -\/ Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}}
+}
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan}
+\item 
+struct \hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__mri_ga7c8cc36ba07eafdf8e2b5333c9c9a479}{mri\-\_\-inh\-\_\-2d1d\-\_\-trafo} (\hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__mri_ga8010f0f3bd86f3bd6516751b876e6b14}{mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru} (\hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths, int $\ast$N, int M, int $\ast$n, int m, double sigma, unsigned nfft\-\_\-flags, unsigned fftw\-\_\-flags)
+\item 
+void \hyperlink{group__mri_gaecee20a5ddbcc562e794a20e0d3e0f71}{mri\-\_\-inh\-\_\-2d1d\-\_\-finalize} (\hyperlink{structmri__inh__2d1d__plan}{mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__mri_ga6bb9c6a50a3ba0ff081d25bf8c3262d9}{mri\-\_\-inh\-\_\-3d\-\_\-trafo} (\hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__mri_gaf07fe676aecd6493bf253d62927c3a46}{mri\-\_\-inh\-\_\-3d\-\_\-adjoint} (\hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)
+\item 
+void \hyperlink{group__mri_ga371d6771a68d262c15ec83516c9dada3}{mri\-\_\-inh\-\_\-3d\-\_\-finalize} (\hyperlink{structmri__inh__3d__plan}{mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$ths)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+\subsection{Function Documentation}
+\hypertarget{group__mri_ga7c8cc36ba07eafdf8e2b5333c9c9a479}{\index{M\-R\-I -\/ Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}!mri\-\_\-inh\-\_\-2d1d\-\_\-trafo@{mri\-\_\-inh\-\_\-2d1d\-\_\-trafo}}
+\index{mri\-\_\-inh\-\_\-2d1d\-\_\-trafo@{mri\-\_\-inh\-\_\-2d1d\-\_\-trafo}!MRI - Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}}
+\subsubsection[{mri\-\_\-inh\-\_\-2d1d\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}mri\-\_\-inh\-\_\-2d1d\-\_\-trafo (
+\begin{DoxyParamCaption}
+\item[{{\bf mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__mri_ga7c8cc36ba07eafdf8e2b5333c9c9a479}
+Executes a mri transformation considering the field inhomogeneity with the 2d1d method, i.\-e. computes for $j=0,...,M_{total}-1$ \[ f(x_j) = \sum_{k \in I_N^2} \hat{f}(k) {\rm e}^{\mbox{\rm\scriptsize i} t_j \omega(k)} {\rm e}^{-2 \pi \mbox{\rm\scriptsize i} k x_j} \]
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 57 of file mri.\-c.
+
+
+
+References nfft\-\_\-plan\-::f, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f, nfft\-\_\-plan\-::f\-\_\-hat, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f\-\_\-hat, nfft\-\_\-plan\-::m, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::\-M\-\_\-total, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::\-N\-\_\-total, nfft\-\_\-free(), nfft\-\_\-malloc(), and nfft\-\_\-trafo().
+
+
+
+Referenced by construct(), and mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru().
+
+\hypertarget{group__mri_ga8010f0f3bd86f3bd6516751b876e6b14}{\index{M\-R\-I -\/ Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}!mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru@{mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru}}
+\index{mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru@{mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru}!MRI - Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}}
+\subsubsection[{mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru}]{\setlength{\rightskip}{0pt plus 5cm}void mri\-\_\-inh\-\_\-2d1d\-\_\-init\-\_\-guru (
+\begin{DoxyParamCaption}
+\item[{{\bf mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$}]{ths, }
+\item[{int $\ast$}]{N, }
+\item[{int}]{M, }
+\item[{int $\ast$}]{n, }
+\item[{int}]{m, }
+\item[{double}]{sigma, }
+\item[{unsigned}]{nfft\-\_\-flags, }
+\item[{unsigned}]{fftw\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{group__mri_ga8010f0f3bd86f3bd6516751b876e6b14}
+Creates a transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item N The bandwidth $N$ \item M\-\_\-total The number of nodes $x$ \item n The oversampled bandwidth $N$ \item m The cut-\/off parameter \item sigma The oversampling factor \item nnfft\-\_\-flags The flags\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 156 of file mri.\-c.
+
+
+
+References nfft\-\_\-plan\-::f, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f, nfft\-\_\-plan\-::f\-\_\-hat, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f\-\_\-hat, nfft\-\_\-plan\-::\-M\-\_\-total, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::\-M\-\_\-total, mri\-\_\-inh\-\_\-2d1d\-\_\-trafo(), mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::mv\-\_\-adjoint, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::mv\-\_\-trafo, nfft\-\_\-plan\-::\-N\-\_\-total, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::\-N\-\_\-total, and nfft\-\_\-malloc().
+
+
+
+Referenced by construct().
+
+\hypertarget{group__mri_gaecee20a5ddbcc562e794a20e0d3e0f71}{\index{M\-R\-I -\/ Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}!mri\-\_\-inh\-\_\-2d1d\-\_\-finalize@{mri\-\_\-inh\-\_\-2d1d\-\_\-finalize}}
+\index{mri\-\_\-inh\-\_\-2d1d\-\_\-finalize@{mri\-\_\-inh\-\_\-2d1d\-\_\-finalize}!MRI - Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}}
+\subsubsection[{mri\-\_\-inh\-\_\-2d1d\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}mri\-\_\-inh\-\_\-2d1d\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{{\bf mri\-\_\-inh\-\_\-2d1d\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__mri_gaecee20a5ddbcc562e794a20e0d3e0f71}
+Destroys a plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 174 of file mri.\-c.
+
+
+
+References nfft\-\_\-plan\-::f, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f, nfft\-\_\-plan\-::f\-\_\-hat, mri\-\_\-inh\-\_\-2d1d\-\_\-plan\-::f\-\_\-hat, nfft\-\_\-finalize(), and nfft\-\_\-free().
+
+
+
+Referenced by construct().
+
+\hypertarget{group__mri_ga6bb9c6a50a3ba0ff081d25bf8c3262d9}{\index{M\-R\-I -\/ Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}!mri\-\_\-inh\-\_\-3d\-\_\-trafo@{mri\-\_\-inh\-\_\-3d\-\_\-trafo}}
+\index{mri\-\_\-inh\-\_\-3d\-\_\-trafo@{mri\-\_\-inh\-\_\-3d\-\_\-trafo}!MRI - Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}}
+\subsubsection[{mri\-\_\-inh\-\_\-3d\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}mri\-\_\-inh\-\_\-3d\-\_\-trafo (
+\begin{DoxyParamCaption}
+\item[{{\bf mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__mri_ga6bb9c6a50a3ba0ff081d25bf8c3262d9}
+Executes a mri transformation considering the field inhomogeneity with the 3d method, i.\-e. computes for $j=0,...,M_{total}-1$ \[ f(x_j) = \sum_{k \in I_N^2} \hat{f}(k) {\rm e}^{\mbox{\rm\scriptsize i} t_j \omega(k)} {\rm e}^{-2 \pi \mbox{\rm\scriptsize i} k x_j} \]
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 189 of file mri.\-c.
+
+
+
+References nfft\-\_\-plan\-::f, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::f, nfft\-\_\-plan\-::f\-\_\-hat, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::f\-\_\-hat, nfft\-\_\-plan\-::m, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::\-M\-\_\-total, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::\-N\-\_\-total, nfft\-\_\-free(), nfft\-\_\-malloc(), nfft\-\_\-trafo(), and nfft\-\_\-plan\-::x.
+
+
+
+Referenced by construct().
+
+\hypertarget{group__mri_gaf07fe676aecd6493bf253d62927c3a46}{\index{M\-R\-I -\/ Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}!mri\-\_\-inh\-\_\-3d\-\_\-adjoint@{mri\-\_\-inh\-\_\-3d\-\_\-adjoint}}
+\index{mri\-\_\-inh\-\_\-3d\-\_\-adjoint@{mri\-\_\-inh\-\_\-3d\-\_\-adjoint}!MRI - Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}}
+\subsubsection[{mri\-\_\-inh\-\_\-3d\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}mri\-\_\-inh\-\_\-3d\-\_\-adjoint (
+\begin{DoxyParamCaption}
+\item[{{\bf mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__mri_gaf07fe676aecd6493bf253d62927c3a46}
+Executes an adjoint mri transformation considering the field inhomogeneity with the 3d method, i.\-e. computes for $k \in I_N^2$ \[ \hat{f}(k) = \sum_{j=0}^{M_{total}-1} f(x_j) {\rm e}^{\mbox{\rm\scriptsize i} t_j \omega(k)} {\rm e}^{-2 \pi \mbox{\rm\scriptsize i} k x_j} \]
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 221 of file mri.\-c.
+
+
+
+References nfft\-\_\-plan\-::f, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::f, nfft\-\_\-plan\-::f\-\_\-hat, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::f\-\_\-hat, nfft\-\_\-plan\-::m, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::\-M\-\_\-total, mri\-\_\-inh\-\_\-3d\-\_\-plan\-::\-N\-\_\-total, nfft\-\_\-adjoint(), nfft\-\_\-free(), nfft\-\_\-malloc(), and nfft\-\_\-plan\-::x.
+
+\hypertarget{group__mri_ga371d6771a68d262c15ec83516c9dada3}{\index{M\-R\-I -\/ Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}!mri\-\_\-inh\-\_\-3d\-\_\-finalize@{mri\-\_\-inh\-\_\-3d\-\_\-finalize}}
+\index{mri\-\_\-inh\-\_\-3d\-\_\-finalize@{mri\-\_\-inh\-\_\-3d\-\_\-finalize}!MRI - Transforms in magnetic resonance imaging@{M\-R\-I -\/ Transforms in magnetic resonance imaging}}
+\subsubsection[{mri\-\_\-inh\-\_\-3d\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}mri\-\_\-inh\-\_\-3d\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{{\bf mri\-\_\-inh\-\_\-3d\-\_\-plan} $\ast$}]{ths}
+\end{DoxyParamCaption}
+)}}\label{group__mri_ga371d6771a68d262c15ec83516c9dada3}
+Destroys a plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 266 of file mri.\-c.
+
+
+
+References mri\-\_\-inh\-\_\-3d\-\_\-plan\-::f\-\_\-hat, nfft\-\_\-finalize(), and nfft\-\_\-free().
+
+
+
+Referenced by construct().
+

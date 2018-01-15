@@ -1,0 +1,85 @@
+\hypertarget{structnfsft__wisdom}{\section{nfsft\-\_\-wisdom Struct Reference}
+\label{structnfsft__wisdom}\index{nfsft\-\_\-wisdom@{nfsft\-\_\-wisdom}}
+}
+
+
+Wisdom structure.  
+
+
+
+
+{\ttfamily \#include $<$api.\-h$>$}
+
+\subsection*{Data Fields}
+\begin{DoxyCompactItemize}
+\item 
+bool \hyperlink{structnfsft__wisdom_abb3162b2e1faa123a9ef70f1374aa740}{initialized}
+\begin{DoxyCompactList}\small\item\em Indicates wether the structure has been initialized. \end{DoxyCompactList}\item 
+\hypertarget{structnfsft__wisdom_a267b5c83fbfef2212669a2f61960e3d4}{unsigned int {\bfseries flags}}\label{structnfsft__wisdom_a267b5c83fbfef2212669a2f61960e3d4}
+
+\item 
+int \hyperlink{structnfsft__wisdom_ac0d21110fe9475646b8174b1048cda51}{N\-\_\-\-M\-A\-X}
+\begin{DoxyCompactList}\small\item\em Stores precomputation flags. \end{DoxyCompactList}\item 
+\hypertarget{structnfsft__wisdom_ae6c31fe1bc09d2894948358c2bea27e4}{int \hyperlink{structnfsft__wisdom_ae6c31fe1bc09d2894948358c2bea27e4}{T\-\_\-\-M\-A\-X}}\label{structnfsft__wisdom_ae6c31fe1bc09d2894948358c2bea27e4}
+
+\begin{DoxyCompactList}\small\item\em The logarithm /f\$t =  N\-\_\-\{\{max\}\}/f\$ of the maximum bandwidth. \end{DoxyCompactList}\item 
+\hypertarget{structnfsft__wisdom_a755da8bd28cc1322415bd0ddcfceaf4e}{double $\ast$ \hyperlink{structnfsft__wisdom_a755da8bd28cc1322415bd0ddcfceaf4e}{alpha}}\label{structnfsft__wisdom_a755da8bd28cc1322415bd0ddcfceaf4e}
+
+\begin{DoxyCompactList}\small\item\em Precomputed recursion coefficients /f\$$^\wedge$n/f\$ for /f\$k = 0,/ldots, N\-\_\-\{\{max\}\}; n=-\/k,/ldots,k/f\$ of associated Legendre-\/functions /f\$\-P\-\_\-k$^\wedge$n/f\$. \end{DoxyCompactList}\item 
+\hypertarget{structnfsft__wisdom_a6bcfe5201d3fed513c2cdb37832ee255}{double $\ast$ \hyperlink{structnfsft__wisdom_a6bcfe5201d3fed513c2cdb37832ee255}{beta}}\label{structnfsft__wisdom_a6bcfe5201d3fed513c2cdb37832ee255}
+
+\begin{DoxyCompactList}\small\item\em Precomputed recursion coefficients /f\$$^\wedge$n/f\$ for /f\$k = 0,/ldots, N\-\_\-\{\{max\}\}; n=-\/k,/ldots,k/f\$ of associated Legendre-\/functions /f\$\-P\-\_\-k$^\wedge$n/f\$. \end{DoxyCompactList}\item 
+\hypertarget{structnfsft__wisdom_a1703c0339b14ee1f0956d3e394f598e2}{double $\ast$ \hyperlink{structnfsft__wisdom_a1703c0339b14ee1f0956d3e394f598e2}{gamma}}\label{structnfsft__wisdom_a1703c0339b14ee1f0956d3e394f598e2}
+
+\begin{DoxyCompactList}\small\item\em Precomputed recursion coefficients /f\$$^\wedge$n/f\$ for /f\$k = 0,/ldots, N\-\_\-\{\{max\}\}; n=-\/k,/ldots,k/f\$ of associated Legendre-\/functions /f\$\-P\-\_\-k$^\wedge$n/f\$. \end{DoxyCompactList}\item 
+\hypertarget{structnfsft__wisdom_ac367edaa1fae041e5b049cd81b44336b}{double \hyperlink{structnfsft__wisdom_ac367edaa1fae041e5b049cd81b44336b}{threshold}}\label{structnfsft__wisdom_ac367edaa1fae041e5b049cd81b44336b}
+
+\begin{DoxyCompactList}\small\item\em The threshold /f\$/f\$. \end{DoxyCompactList}\item 
+\hypertarget{structnfsft__wisdom_a18de3dcf9ca2e2e577fccfcca712bfd2}{\hyperlink{nfft3_8h_a73d630ac21d6474ba0693f124d465e15}{fpt\-\_\-set} \hyperlink{structnfsft__wisdom_a18de3dcf9ca2e2e577fccfcca712bfd2}{set}}\label{structnfsft__wisdom_a18de3dcf9ca2e2e577fccfcca712bfd2}
+
+\begin{DoxyCompactList}\small\item\em Structure for {\itshape discrete} {\itshape polynomial} {\itshape transform} ({\itshape D\-P\-T}) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Wisdom structure. 
+
+Definition at line 56 of file kernel/nfsft/api.\-h.
+
+
+
+\subsection{Field Documentation}
+\hypertarget{structnfsft__wisdom_abb3162b2e1faa123a9ef70f1374aa740}{\index{nfsft\-\_\-wisdom@{nfsft\-\_\-wisdom}!initialized@{initialized}}
+\index{initialized@{initialized}!nfsft_wisdom@{nfsft\-\_\-wisdom}}
+\subsubsection[{initialized}]{\setlength{\rightskip}{0pt plus 5cm}bool nfsft\-\_\-wisdom\-::initialized}}\label{structnfsft__wisdom_abb3162b2e1faa123a9ef70f1374aa740}
+
+
+Indicates wether the structure has been initialized. 
+
+
+
+Definition at line 59 of file kernel/nfsft/api.\-h.
+
+
+
+Referenced by nfsft\-\_\-adjoint(), nfsft\-\_\-forget(), nfsft\-\_\-precompute(), and nfsft\-\_\-trafo().
+
+\hypertarget{structnfsft__wisdom_ac0d21110fe9475646b8174b1048cda51}{\index{nfsft\-\_\-wisdom@{nfsft\-\_\-wisdom}!N\-\_\-\-M\-A\-X@{N\-\_\-\-M\-A\-X}}
+\index{N\-\_\-\-M\-A\-X@{N\-\_\-\-M\-A\-X}!nfsft_wisdom@{nfsft\-\_\-wisdom}}
+\subsubsection[{N\-\_\-\-M\-A\-X}]{\setlength{\rightskip}{0pt plus 5cm}int nfsft\-\_\-wisdom\-::\-N\-\_\-\-M\-A\-X}}\label{structnfsft__wisdom_ac0d21110fe9475646b8174b1048cda51}
+
+
+Stores precomputation flags. 
+
+The maximum bandwidth /f\$\-N\-\_\-\{\{max\}\}  \{N\}\-\_\-0/f\$ 
+
+Definition at line 63 of file kernel/nfsft/api.\-h.
+
+
+
+Referenced by nfsft\-\_\-adjoint(), nfsft\-\_\-forget(), nfsft\-\_\-precompute(), and nfsft\-\_\-trafo().
+
+
+
+The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+kernel/nfsft/api.\-h\end{DoxyCompactItemize}

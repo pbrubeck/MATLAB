@@ -11,7 +11,7 @@ kd2=2:n-1; rd2=[1,n];
 [E2,V2,L2]=eigenfunctions(B2, B1, C2);
 
 % NKP wrapper
-nkp=@(uu,ix,iy) A1(ix,:)*uu*B1(iy,:)'+A2(ix,:)*uu*B2(iy,:)';
+nkp=@(uu,I,J) A1(I,:)*uu*B1(J,:)'+A2(I,:)*uu*B2(J,:)';
 
 % Green's function
 [Lx,Ly]=ndgrid(L1,L2);

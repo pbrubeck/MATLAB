@@ -1,0 +1,328 @@
+\hypertarget{group__nnfft}{\section{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}
+\label{group__nnfft}\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+}
+
+
+Direct and fast computation of the discrete nonequispaced in time and frequency Fourier transform.  
+
+
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structnnfft__plan}{nnfft\-\_\-plan}
+\begin{DoxyCompactList}\small\item\em data structure for an N\-N\-F\-F\-T (nonequispaced in time and frequency fast Fourier transform) plan with double precision \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{group__nnfft_gabfc80597fb6dcd28f3b9728bd7082642}{M\-A\-L\-L\-O\-C\-\_\-\-V}~(1\-U$<$$<$ 11)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{group__nnfft_gad1f2d4b5b20fd14087364714f6475b19}{nnfft\-\_\-init} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N)
+\item 
+void \hyperlink{group__nnfft_ga75a2cb786f4cc4c87082c87a2c32046a}{nnfft\-\_\-init\-\_\-guru} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan, int d, int N\-\_\-total, int M\-\_\-total, int $\ast$N, int $\ast$N1, int m, unsigned nnfft\-\_\-flags)
+\item 
+void \hyperlink{group__nnfft_ga994c1748ebe1371c53dd2cb437054d4f}{nnfft\-\_\-trafo} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em user routines \end{DoxyCompactList}\item 
+void \hyperlink{group__nnfft_gad4f536f3aee7e85acc75c5fcad307b7d}{nnfft\-\_\-adjoint} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+void \hyperlink{group__nnfft_ga65983eef73b9f5740214bf720f62fcd6}{nnfft\-\_\-precompute\-\_\-lin\-\_\-psi} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em create a lookup table \end{DoxyCompactList}\item 
+void \hyperlink{group__nnfft_ga962d6f449cbad4faf81e20328a911c46}{nnfft\-\_\-precompute\-\_\-psi} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\item 
+void \hyperlink{group__nnfft_ga78cf7bac65f6de46182ea1ff509c2af9}{nnfft\-\_\-precompute\-\_\-full\-\_\-psi} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em computes all entries of B explicitly \end{DoxyCompactList}\item 
+void \hyperlink{group__nnfft_ga9e4663c2cdbff65da327400657528580}{nnfft\-\_\-precompute\-\_\-phi\-\_\-hut} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\begin{DoxyCompactList}\small\item\em initialisation of direct transform \end{DoxyCompactList}\item 
+void \hyperlink{group__nnfft_ga9b5bcde6c436f8fe0e8d8dc4fa7a4230}{nnfft\-\_\-finalize} (\hyperlink{structnnfft__plan}{nnfft\-\_\-plan} $\ast$ths\-\_\-plan)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Direct and fast computation of the discrete nonequispaced in time and frequency Fourier transform. 
+
+\subsection{Macro Definition Documentation}
+\hypertarget{group__nnfft_gabfc80597fb6dcd28f3b9728bd7082642}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!M\-A\-L\-L\-O\-C\-\_\-\-V@{M\-A\-L\-L\-O\-C\-\_\-\-V}}
+\index{M\-A\-L\-L\-O\-C\-\_\-\-V@{M\-A\-L\-L\-O\-C\-\_\-\-V}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{M\-A\-L\-L\-O\-C\-\_\-\-V}]{\setlength{\rightskip}{0pt plus 5cm}\#define M\-A\-L\-L\-O\-C\-\_\-\-V~(1\-U$<$$<$ 11)}}\label{group__nnfft_gabfc80597fb6dcd28f3b9728bd7082642}
+If this flag is set, (de)allocation of the frequency node vector is done.
+
+\begin{DoxySeeAlso}{See Also}
+\hyperlink{group__nnfft_gad1f2d4b5b20fd14087364714f6475b19}{nnfft\-\_\-init} 
+
+\hyperlink{group__nnfft_ga75a2cb786f4cc4c87082c87a2c32046a}{nnfft\-\_\-init\-\_\-guru} 
+
+\hyperlink{group__nnfft_ga9b5bcde6c436f8fe0e8d8dc4fa7a4230}{nnfft\-\_\-finalize} 
+\end{DoxySeeAlso}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 425 of file nfft3.\-h.
+
+
+
+Referenced by nnfft\-\_\-finalize(), nnfft\-\_\-init(), and reconstruct().
+
+
+
+\subsection{Function Documentation}
+\hypertarget{group__nnfft_gad1f2d4b5b20fd14087364714f6475b19}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-init@{nnfft\-\_\-init}}
+\index{nnfft\-\_\-init@{nnfft\-\_\-init}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-init}]{\setlength{\rightskip}{0pt plus 5cm}nnfft\-\_\-init (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan, }
+\item[{int}]{d, }
+\item[{int}]{N\-\_\-total, }
+\item[{int}]{M\-\_\-total, }
+\item[{int $\ast$}]{N}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_gad1f2d4b5b20fd14087364714f6475b19}
+Creates a transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item d The dimension \item N\-\_\-total The number of nodes $v$ \item M\-\_\-total The number of nodes $x$ \item N The bandwidth $N$\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 612 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::d, F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E, F\-F\-T\-W\-\_\-\-I\-N\-I\-T, nnfft\-\_\-plan\-::m, nnfft\-\_\-plan\-::\-M\-\_\-total, M\-A\-L\-L\-O\-C\-\_\-\-F, M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T, M\-A\-L\-L\-O\-C\-\_\-\-V, M\-A\-L\-L\-O\-C\-\_\-\-X, nnfft\-\_\-plan\-::\-N, nnfft\-\_\-plan\-::\-N1, nnfft\-\_\-plan\-::\-N\-\_\-total, nfft\-\_\-malloc(), nnfft\-\_\-plan\-::nnfft\-\_\-flags, P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T, and P\-R\-E\-\_\-\-P\-S\-I.
+
+\hypertarget{group__nnfft_ga75a2cb786f4cc4c87082c87a2c32046a}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-init\-\_\-guru@{nnfft\-\_\-init\-\_\-guru}}
+\index{nnfft\-\_\-init\-\_\-guru@{nnfft\-\_\-init\-\_\-guru}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-init\-\_\-guru}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-init\-\_\-guru (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan, }
+\item[{int}]{d, }
+\item[{int}]{N\-\_\-total, }
+\item[{int}]{M\-\_\-total, }
+\item[{int $\ast$}]{N, }
+\item[{int $\ast$}]{N1, }
+\item[{int}]{m, }
+\item[{unsigned}]{nnfft\-\_\-flags}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_ga75a2cb786f4cc4c87082c87a2c32046a}
+Creates a transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan for the transform \item d The dimension \item N\-\_\-total The number of nodes $v$ \item M\-\_\-total The number of nodes $x$ \item N The bandwidth $N$ \item N1 The oversampled bandwidth $N$ \item m The cut-\/off parameter \item nnfft\-\_\-flags The flags\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 577 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::d, F\-F\-T\-\_\-\-O\-U\-T\-\_\-\-O\-F\-\_\-\-P\-L\-A\-C\-E, F\-F\-T\-W\-\_\-\-I\-N\-I\-T, nnfft\-\_\-plan\-::m, nnfft\-\_\-plan\-::\-M\-\_\-total, M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T, nnfft\-\_\-plan\-::\-N, nnfft\-\_\-plan\-::\-N1, nnfft\-\_\-plan\-::\-N\-\_\-total, nfft\-\_\-malloc(), nnfft\-\_\-plan\-::nnfft\-\_\-flags, P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I, P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I, P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T, and P\-R\-E\-\_\-\-P\-S\-I.
+
+
+
+Referenced by reconstruct().
+
+\hypertarget{group__nnfft_ga994c1748ebe1371c53dd2cb437054d4f}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-trafo@{nnfft\-\_\-trafo}}
+\index{nnfft\-\_\-trafo@{nnfft\-\_\-trafo}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-trafo}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-trafo (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_ga994c1748ebe1371c53dd2cb437054d4f}
+
+
+user routines 
+
+Executes a N\-N\-F\-F\-T, i.\-e. computes for $j=0,...,M_{total}-1$ \[ f(x_j) = \sum_{k = 0}^{N_{total}-1} \hat{f}(v_k) {\rm e}^{-2 \pi \mbox{\rm\scriptsize i} v_k x_j \odot N} \]
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 291 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::d, nnfft\-\_\-plan\-::direct\-\_\-plan, nfft\-\_\-plan\-::f, nnfft\-\_\-plan\-::f, nnfft\-\_\-plan\-::\-M\-\_\-total, nfft\-\_\-trafo(), nnfft\-\_\-plan\-::sigma, and nnfft\-\_\-plan\-::x.
+
+\hypertarget{group__nnfft_gad4f536f3aee7e85acc75c5fcad307b7d}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-adjoint@{nnfft\-\_\-adjoint}}
+\index{nnfft\-\_\-adjoint@{nnfft\-\_\-adjoint}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-adjoint}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-adjoint (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_gad4f536f3aee7e85acc75c5fcad307b7d}
+Executes a adjoint N\-N\-F\-F\-T, i.\-e. computes for $k=0,...,N_{total}-1$ \[ \hat{f}(v_k) = \sum_{j = 0}^{M_{tota}l-1} f(x_j) {\rm e}^{2 \pi \mbox{\rm\scriptsize i} v_k x_j \odot N} \]
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 319 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::d, nnfft\-\_\-plan\-::direct\-\_\-plan, nfft\-\_\-plan\-::f, nnfft\-\_\-plan\-::f, nnfft\-\_\-plan\-::\-M\-\_\-total, nfft\-\_\-adjoint(), nnfft\-\_\-plan\-::sigma, and nnfft\-\_\-plan\-::x.
+
+\hypertarget{group__nnfft_ga65983eef73b9f5740214bf720f62fcd6}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-precompute\-\_\-lin\-\_\-psi@{nnfft\-\_\-precompute\-\_\-lin\-\_\-psi}}
+\index{nnfft\-\_\-precompute\-\_\-lin\-\_\-psi@{nnfft\-\_\-precompute\-\_\-lin\-\_\-psi}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-precompute\-\_\-lin\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-precompute\-\_\-lin\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_ga65983eef73b9f5740214bf720f62fcd6}
+
+
+create a lookup table 
+
+Precomputation for a transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp
+\end{DoxyAuthor}
+precomputes equally spaced values of the window function psi
+
+if P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I is set the application program has to call this routine 
+
+Definition at line 367 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::d, nnfft\-\_\-plan\-::direct\-\_\-plan, nnfft\-\_\-plan\-::\-K, nnfft\-\_\-plan\-::m, nnfft\-\_\-plan\-::n, nnfft\-\_\-plan\-::\-N1, nfft\-\_\-precompute\-\_\-lin\-\_\-psi(), and nnfft\-\_\-plan\-::psi.
+
+
+
+Referenced by reconstruct().
+
+\hypertarget{group__nnfft_ga962d6f449cbad4faf81e20328a911c46}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-precompute\-\_\-psi@{nnfft\-\_\-precompute\-\_\-psi}}
+\index{nnfft\-\_\-precompute\-\_\-psi@{nnfft\-\_\-precompute\-\_\-psi}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-precompute\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-precompute\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_ga962d6f449cbad4faf81e20328a911c46}
+Precomputation for a transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp
+\end{DoxyAuthor}
+precomputes the values of the window function psi in a tensor product form
+
+if P\-R\-E\-\_\-\-P\-S\-I is set the application program has to call this routine after setting the nodes x 
+
+Definition at line 385 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::d, nnfft\-\_\-plan\-::direct\-\_\-plan, nnfft\-\_\-plan\-::m, nnfft\-\_\-plan\-::\-M\-\_\-total, nnfft\-\_\-plan\-::n, nnfft\-\_\-plan\-::\-N1, nnfft\-\_\-plan\-::\-N\-\_\-total, nfft\-\_\-precompute\-\_\-psi(), nnfft\-\_\-plan\-::psi, nnfft\-\_\-plan\-::sigma, nnfft\-\_\-plan\-::v, and nnfft\-\_\-plan\-::x.
+
+
+
+Referenced by nnfft\-\_\-precompute\-\_\-full\-\_\-psi(), and reconstruct().
+
+\hypertarget{group__nnfft_ga78cf7bac65f6de46182ea1ff509c2af9}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-precompute\-\_\-full\-\_\-psi@{nnfft\-\_\-precompute\-\_\-full\-\_\-psi}}
+\index{nnfft\-\_\-precompute\-\_\-full\-\_\-psi@{nnfft\-\_\-precompute\-\_\-full\-\_\-psi}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-precompute\-\_\-full\-\_\-psi}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-precompute\-\_\-full\-\_\-psi (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_ga78cf7bac65f6de46182ea1ff509c2af9}
+
+
+computes all entries of B explicitly 
+
+Precomputation for a transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp
+\end{DoxyAuthor}
+precomputes the values of the window function psi and their indices in non tensor product form
+
+if P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I is set the application program has to call this routine after setting the nodes x 
+
+Definition at line 424 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::d, nnfft\-\_\-plan\-::direct\-\_\-plan, nnfft\-\_\-plan\-::m, nnfft\-\_\-plan\-::\-M\-\_\-total, nfft\-\_\-precompute\-\_\-full\-\_\-psi(), nnfft\-\_\-precompute\-\_\-psi(), nnfft\-\_\-plan\-::psi, nnfft\-\_\-plan\-::psi\-\_\-index\-\_\-f, nnfft\-\_\-plan\-::psi\-\_\-index\-\_\-g, nnfft\-\_\-plan\-::sigma, and nnfft\-\_\-plan\-::x.
+
+
+
+Referenced by reconstruct().
+
+\hypertarget{group__nnfft_ga9e4663c2cdbff65da327400657528580}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-precompute\-\_\-phi\-\_\-hut@{nnfft\-\_\-precompute\-\_\-phi\-\_\-hut}}
+\index{nnfft\-\_\-precompute\-\_\-phi\-\_\-hut@{nnfft\-\_\-precompute\-\_\-phi\-\_\-hut}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-precompute\-\_\-phi\-\_\-hut}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-precompute\-\_\-phi\-\_\-hut (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_ga9e4663c2cdbff65da327400657528580}
+
+
+initialisation of direct transform 
+
+Precomputation for a transform plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The pointer to a nfft plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp
+\end{DoxyAuthor}
+precomputes the values of the fourier transformed window function, i.\-e. phi\-\_\-hut
+
+if P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T is set the application program has to call this routine after setting the nodes v 
+
+Definition at line 347 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::c\-\_\-phi\-\_\-inv, nnfft\-\_\-plan\-::d, nnfft\-\_\-plan\-::\-M\-\_\-total, nnfft\-\_\-plan\-::n, nnfft\-\_\-plan\-::\-N, nfft\-\_\-malloc(), and nnfft\-\_\-plan\-::x.
+
+
+
+Referenced by reconstruct().
+
+\hypertarget{group__nnfft_ga9b5bcde6c436f8fe0e8d8dc4fa7a4230}{\index{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}!nnfft\-\_\-finalize@{nnfft\-\_\-finalize}}
+\index{nnfft\-\_\-finalize@{nnfft\-\_\-finalize}!NNFFT - Nonequispaced in time and frequency FFT@{N\-N\-F\-F\-T -\/ Nonequispaced in time and frequency F\-F\-T}}
+\subsubsection[{nnfft\-\_\-finalize}]{\setlength{\rightskip}{0pt plus 5cm}void nnfft\-\_\-finalize (
+\begin{DoxyParamCaption}
+\item[{{\bf nnfft\-\_\-plan} $\ast$}]{ths\-\_\-plan}
+\end{DoxyParamCaption}
+)}}\label{group__nnfft_ga9b5bcde6c436f8fe0e8d8dc4fa7a4230}
+Destroys a plan.
+
+\begin{DoxyItemize}
+\item ths\-\_\-plan The plan\end{DoxyItemize}
+\begin{DoxyAuthor}{Author}
+Tobias Knopp 
+\end{DoxyAuthor}
+
+
+Definition at line 655 of file nnfft.\-c.
+
+
+
+References nnfft\-\_\-plan\-::a\-N1, nnfft\-\_\-plan\-::c\-\_\-phi\-\_\-inv, nnfft\-\_\-plan\-::direct\-\_\-plan, nnfft\-\_\-plan\-::f, nnfft\-\_\-plan\-::f\-\_\-hat, M\-A\-L\-L\-O\-C\-\_\-\-F, M\-A\-L\-L\-O\-C\-\_\-\-F\-\_\-\-H\-A\-T, M\-A\-L\-L\-O\-C\-\_\-\-V, M\-A\-L\-L\-O\-C\-\_\-\-X, nnfft\-\_\-plan\-::\-N, nnfft\-\_\-plan\-::\-N1, nfft\-\_\-finalize(), nfft\-\_\-free(), nnfft\-\_\-plan\-::nnfft\-\_\-flags, P\-R\-E\-\_\-\-F\-U\-L\-L\-\_\-\-P\-S\-I, P\-R\-E\-\_\-\-L\-I\-N\-\_\-\-P\-S\-I, P\-R\-E\-\_\-\-P\-H\-I\-\_\-\-H\-U\-T, P\-R\-E\-\_\-\-P\-S\-I, nnfft\-\_\-plan\-::psi, nnfft\-\_\-plan\-::psi\-\_\-index\-\_\-f, nnfft\-\_\-plan\-::psi\-\_\-index\-\_\-g, nnfft\-\_\-plan\-::v, and nnfft\-\_\-plan\-::x.
+
+
+
+Referenced by reconstruct().
+

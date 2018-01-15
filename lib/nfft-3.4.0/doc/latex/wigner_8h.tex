@@ -1,0 +1,405 @@
+\hypertarget{wigner_8h}{\section{wigner.\-h File Reference}
+\label{wigner_8h}\index{wigner.\-h@{wigner.\-h}}
+}
+
+
+Header file for functions related to Wigner-\/d/\-D functions.  
+
+
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{wigner_8h_ab67e240f23c39daa7283fee9025a8f03}{S\-O3\-\_\-alpha} (int k, int m, int l)
+\begin{DoxyCompactList}\small\item\em Computes three-\/term recurrence coefficients $\alpha_l^{km}$ of Wigner-\/d functions. \end{DoxyCompactList}\item 
+double \hyperlink{wigner_8h_a6722aa3212be1361b531751a850056f6}{S\-O3\-\_\-beta} (int k, int m, int l)
+\begin{DoxyCompactList}\small\item\em Computes three-\/term recurrence coefficients $\beta_l^{km}$ of Wigner-\/d functions. \end{DoxyCompactList}\item 
+double \hyperlink{wigner_8h_a6b13b24d727910800b9f1c0da29f5f73}{S\-O3\-\_\-gamma} (int k, int m, int l)
+\begin{DoxyCompactList}\small\item\em Computes three-\/term recurrence coefficients $\gamma_l^{km}$ of Wigner-\/d functions. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_ae9c3c9a11f1da35bb0cfbed1fb828ad2}{S\-O3\-\_\-alpha\-\_\-row} (double $\ast$alpha, int N, int m, int n)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $ \alpha_{l}^{km}$ of Wigner-\/d functions for all degrees $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_a1b82e072be0c3e0d45426ed56e4e6a9d}{S\-O3\-\_\-beta\-\_\-row} (double $\ast$beta, int N, int m, int n)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $ \beta_{l}^{km}$ of Wigner-\/d functions for all degrees $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_a46516d6ec71efab3c80eecd459ad20ee}{S\-O3\-\_\-gamma\-\_\-row} (double $\ast$gamma, int N, int m, int n)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $ \gamma_{l}^{km}$ of Wigner-\/d functions for all degrees $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_a9ab913c454dd078bed0db8b4aa9365e1}{S\-O3\-\_\-alpha\-\_\-matrix} (double $\ast$alpha, int N, int n)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $ \alpha_{l}^{km}$ of Wigner-\/d functions for all order $ m = -N,\ldots,N $ and degrees $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_a742f6babb80797e003835bc66cfe9080}{S\-O3\-\_\-beta\-\_\-matrix} (double $\ast$beta, int N, int n)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $ \beta_{l}^{km}$ of Wigner-\/d functions for all order $ m = -N,\ldots,N $ and degrees $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_aa9850cfec93784e536a728f13db4c5cb}{S\-O3\-\_\-gamma\-\_\-matrix} (double $\ast$gamma, int N, int n)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $ \gamma_{l}^{km}$ of Wigner-\/d functions for all order $ m = -N,\ldots,N $ and degrees $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_aef802fd511b566392a8b2cbb9fcd6678}{S\-O3\-\_\-alpha\-\_\-all} (double $\ast$alpha, int N)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $\alpha_{l}^{km}$ of Wigner-\/d functions for all $ k,m = -N,\ldots,N $ and $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_aa981c92edca3fac2f04a7d3524b8425a}{S\-O3\-\_\-beta\-\_\-all} (double $\ast$beta, int N)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $\beta_{l}^{km}$ of Wigner-\/d functions for all $ k,m = -N,\ldots,N $ and $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_a4ff3aa0c3afb226613100df410cbef7f}{S\-O3\-\_\-gamma\-\_\-all} (double $\ast$gamma, int N)
+\begin{DoxyCompactList}\small\item\em Compute three-\/term-\/recurrence coefficients $\gamma_{l}^{km}$ of Wigner-\/d functions for all $ k,m = -N,\ldots,N $ and $ l= 0,\ldots,N $. \end{DoxyCompactList}\item 
+void \hyperlink{wigner_8h_a86975b8841ed9b6bb3e1484130658f19}{eval\-\_\-wigner} (double $\ast$x, double $\ast$y, int size, int l, double $\ast$alpha, double $\ast$beta, double $\ast$gamma)
+\begin{DoxyCompactList}\small\item\em Evaluates Wigner-\/d functions $d_l^{km}(x,c)$ using the Clenshaw-\/algorithm. \end{DoxyCompactList}\item 
+int \hyperlink{wigner_8h_ae5933af03f4536a70ddfc744f16c9c55}{eval\-\_\-wigner\-\_\-thresh} (double $\ast$x, double $\ast$y, int size, int l, double $\ast$alpha, double $\ast$beta, double $\ast$gamma, double threshold)
+\begin{DoxyCompactList}\small\item\em Evaluates Wigner-\/d functions $d_l^{km}(x,c)$ using the Clenshaw-\/algorithm if it not exceeds a given threshold. \end{DoxyCompactList}\item 
+double \hyperlink{wigner_8h_a6c43c1f82cf3efa9cb1343ec9dcd07ed}{wigner\-\_\-start} (int n1, int n2, double theta)
+\begin{DoxyCompactList}\small\item\em A method used for debugging, gives the values to start the \char`\"{}old\char`\"{} three-\/term recurrence generates $ d^{km}_l(cos(theta)) $ W\-H\-E\-R\-E T\-H\-E D\-E\-G\-R\-E\-E l O\-F T\-H\-E F\-U\-N\-C\-T\-I\-O\-N I\-S E\-Q\-U\-A\-L T\-O T\-H\-E M\-A\-X\-I\-M\-U\-M O\-F I\-T\-S O\-R\-D\-E\-R\-S. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Header file for functions related to Wigner-\/d/\-D functions. \begin{DoxyAuthor}{Author}
+Antje Vollrath 
+\end{DoxyAuthor}
+
+
+Definition in file \hyperlink{wigner_8h_source}{wigner.\-h}.
+
+
+
+\subsection{Function Documentation}
+\hypertarget{wigner_8h_ab67e240f23c39daa7283fee9025a8f03}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-alpha@{S\-O3\-\_\-alpha}}
+\index{S\-O3\-\_\-alpha@{S\-O3\-\_\-alpha}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-alpha}]{\setlength{\rightskip}{0pt plus 5cm}double S\-O3\-\_\-alpha (
+\begin{DoxyParamCaption}
+\item[{int}]{k, }
+\item[{int}]{m, }
+\item[{int}]{l}
+\end{DoxyParamCaption}
+)}}\label{wigner_8h_ab67e240f23c39daa7283fee9025a8f03}
+
+
+Computes three-\/term recurrence coefficients $\alpha_l^{km}$ of Wigner-\/d functions. 
+
+\begin{DoxyItemize}
+\item k The order $k$ \item m The order $m$ \item l The degree $l$ \end{DoxyItemize}
+
+
+Definition at line 25 of file wigner.\-c.
+
+
+
+Referenced by S\-O3\-\_\-alpha\-\_\-all(), S\-O3\-\_\-alpha\-\_\-matrix(), and S\-O3\-\_\-alpha\-\_\-row().
+
+\hypertarget{wigner_8h_a6722aa3212be1361b531751a850056f6}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-beta@{S\-O3\-\_\-beta}}
+\index{S\-O3\-\_\-beta@{S\-O3\-\_\-beta}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-beta}]{\setlength{\rightskip}{0pt plus 5cm}double S\-O3\-\_\-beta (
+\begin{DoxyParamCaption}
+\item[{int}]{k, }
+\item[{int}]{m, }
+\item[{int}]{l}
+\end{DoxyParamCaption}
+)}}\label{wigner_8h_a6722aa3212be1361b531751a850056f6}
+
+
+Computes three-\/term recurrence coefficients $\beta_l^{km}$ of Wigner-\/d functions. 
+
+\begin{DoxyItemize}
+\item k The order $k$ \item m The order $m$ \item l The degree $l$ \end{DoxyItemize}
+
+
+Definition at line 52 of file wigner.\-c.
+
+
+
+Referenced by S\-O3\-\_\-beta\-\_\-all(), S\-O3\-\_\-beta\-\_\-matrix(), and S\-O3\-\_\-beta\-\_\-row().
+
+\hypertarget{wigner_8h_a6b13b24d727910800b9f1c0da29f5f73}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-gamma@{S\-O3\-\_\-gamma}}
+\index{S\-O3\-\_\-gamma@{S\-O3\-\_\-gamma}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-gamma}]{\setlength{\rightskip}{0pt plus 5cm}double S\-O3\-\_\-gamma (
+\begin{DoxyParamCaption}
+\item[{int}]{k, }
+\item[{int}]{m, }
+\item[{int}]{l}
+\end{DoxyParamCaption}
+)}}\label{wigner_8h_a6b13b24d727910800b9f1c0da29f5f73}
+
+
+Computes three-\/term recurrence coefficients $\gamma_l^{km}$ of Wigner-\/d functions. 
+
+\begin{DoxyItemize}
+\item k The order $k$ \item m The order $m$ \item l The degree $l$ \end{DoxyItemize}
+
+
+Definition at line 73 of file wigner.\-c.
+
+
+
+Referenced by S\-O3\-\_\-gamma\-\_\-all(), S\-O3\-\_\-gamma\-\_\-matrix(), and S\-O3\-\_\-gamma\-\_\-row().
+
+\hypertarget{wigner_8h_ae9c3c9a11f1da35bb0cfbed1fb828ad2}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-alpha\-\_\-row@{S\-O3\-\_\-alpha\-\_\-row}}
+\index{S\-O3\-\_\-alpha\-\_\-row@{S\-O3\-\_\-alpha\-\_\-row}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-alpha\-\_\-row}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-alpha\-\_\-row (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{alpha, }
+\item[{int}]{N, }
+\item[{int}]{m, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_ae9c3c9a11f1da35bb0cfbed1fb828ad2}
+
+
+Compute three-\/term-\/recurrence coefficients $ \alpha_{l}^{km}$ of Wigner-\/d functions for all degrees $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$ \item m the first order \item n the second order \item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 88 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-alpha().
+
+\hypertarget{wigner_8h_a1b82e072be0c3e0d45426ed56e4e6a9d}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-beta\-\_\-row@{S\-O3\-\_\-beta\-\_\-row}}
+\index{S\-O3\-\_\-beta\-\_\-row@{S\-O3\-\_\-beta\-\_\-row}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-beta\-\_\-row}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-beta\-\_\-row (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{beta, }
+\item[{int}]{N, }
+\item[{int}]{m, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_a1b82e072be0c3e0d45426ed56e4e6a9d}
+
+
+Compute three-\/term-\/recurrence coefficients $ \beta_{l}^{km}$ of Wigner-\/d functions for all degrees $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$ \item m the first order \item n the second order \item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 96 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-beta().
+
+\hypertarget{wigner_8h_a46516d6ec71efab3c80eecd459ad20ee}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-gamma\-\_\-row@{S\-O3\-\_\-gamma\-\_\-row}}
+\index{S\-O3\-\_\-gamma\-\_\-row@{S\-O3\-\_\-gamma\-\_\-row}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-gamma\-\_\-row}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-gamma\-\_\-row (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{gamma, }
+\item[{int}]{N, }
+\item[{int}]{m, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_a46516d6ec71efab3c80eecd459ad20ee}
+
+
+Compute three-\/term-\/recurrence coefficients $ \gamma_{l}^{km}$ of Wigner-\/d functions for all degrees $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$ \item m the first order \item n the second order \item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 104 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-gamma().
+
+\hypertarget{wigner_8h_a9ab913c454dd078bed0db8b4aa9365e1}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-alpha\-\_\-matrix@{S\-O3\-\_\-alpha\-\_\-matrix}}
+\index{S\-O3\-\_\-alpha\-\_\-matrix@{S\-O3\-\_\-alpha\-\_\-matrix}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-alpha\-\_\-matrix}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-alpha\-\_\-matrix (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{alpha, }
+\item[{int}]{N, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_a9ab913c454dd078bed0db8b4aa9365e1}
+
+
+Compute three-\/term-\/recurrence coefficients $ \alpha_{l}^{km}$ of Wigner-\/d functions for all order $ m = -N,\ldots,N $ and degrees $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$ \item n the second order \item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 114 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-alpha().
+
+\hypertarget{wigner_8h_a742f6babb80797e003835bc66cfe9080}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-beta\-\_\-matrix@{S\-O3\-\_\-beta\-\_\-matrix}}
+\index{S\-O3\-\_\-beta\-\_\-matrix@{S\-O3\-\_\-beta\-\_\-matrix}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-beta\-\_\-matrix}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-beta\-\_\-matrix (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{beta, }
+\item[{int}]{N, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_a742f6babb80797e003835bc66cfe9080}
+
+
+Compute three-\/term-\/recurrence coefficients $ \beta_{l}^{km}$ of Wigner-\/d functions for all order $ m = -N,\ldots,N $ and degrees $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$ \item n the second order \item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 128 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-beta().
+
+\hypertarget{wigner_8h_aa9850cfec93784e536a728f13db4c5cb}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-gamma\-\_\-matrix@{S\-O3\-\_\-gamma\-\_\-matrix}}
+\index{S\-O3\-\_\-gamma\-\_\-matrix@{S\-O3\-\_\-gamma\-\_\-matrix}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-gamma\-\_\-matrix}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-gamma\-\_\-matrix (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{gamma, }
+\item[{int}]{N, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_aa9850cfec93784e536a728f13db4c5cb}
+
+
+Compute three-\/term-\/recurrence coefficients $ \gamma_{l}^{km}$ of Wigner-\/d functions for all order $ m = -N,\ldots,N $ and degrees $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$ \item n the second order \item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 142 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-gamma().
+
+\hypertarget{wigner_8h_aef802fd511b566392a8b2cbb9fcd6678}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-alpha\-\_\-all@{S\-O3\-\_\-alpha\-\_\-all}}
+\index{S\-O3\-\_\-alpha\-\_\-all@{S\-O3\-\_\-alpha\-\_\-all}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-alpha\-\_\-all}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-alpha\-\_\-all (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{alpha, }
+\item[{int}]{N}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_aef802fd511b566392a8b2cbb9fcd6678}
+
+
+Compute three-\/term-\/recurrence coefficients $\alpha_{l}^{km}$ of Wigner-\/d functions for all $ k,m = -N,\ldots,N $ and $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$\end{DoxyItemize}
+\begin{DoxyItemize}
+\item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 158 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-alpha().
+
+\hypertarget{wigner_8h_aa981c92edca3fac2f04a7d3524b8425a}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-beta\-\_\-all@{S\-O3\-\_\-beta\-\_\-all}}
+\index{S\-O3\-\_\-beta\-\_\-all@{S\-O3\-\_\-beta\-\_\-all}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-beta\-\_\-all}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-beta\-\_\-all (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{beta, }
+\item[{int}]{N}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_aa981c92edca3fac2f04a7d3524b8425a}
+
+
+Compute three-\/term-\/recurrence coefficients $\beta_{l}^{km}$ of Wigner-\/d functions for all $ k,m = -N,\ldots,N $ and $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$\end{DoxyItemize}
+\begin{DoxyItemize}
+\item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 181 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-beta().
+
+\hypertarget{wigner_8h_a4ff3aa0c3afb226613100df410cbef7f}{\index{wigner.\-h@{wigner.\-h}!S\-O3\-\_\-gamma\-\_\-all@{S\-O3\-\_\-gamma\-\_\-all}}
+\index{S\-O3\-\_\-gamma\-\_\-all@{S\-O3\-\_\-gamma\-\_\-all}!wigner.h@{wigner.\-h}}
+\subsubsection[{S\-O3\-\_\-gamma\-\_\-all}]{\setlength{\rightskip}{0pt plus 5cm}void S\-O3\-\_\-gamma\-\_\-all (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{gamma, }
+\item[{int}]{N}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_a4ff3aa0c3afb226613100df410cbef7f}
+
+
+Compute three-\/term-\/recurrence coefficients $\gamma_{l}^{km}$ of Wigner-\/d functions for all $ k,m = -N,\ldots,N $ and $ l= 0,\ldots,N $. 
+
+\begin{DoxyItemize}
+\item alpha A pointer to an array of doubles of size $(2N+1)^2(N+1)$\end{DoxyItemize}
+\begin{DoxyItemize}
+\item N The upper bound $N$. \end{DoxyItemize}
+
+
+Definition at line 198 of file wigner.\-c.
+
+
+
+References S\-O3\-\_\-gamma().
+
+\hypertarget{wigner_8h_a86975b8841ed9b6bb3e1484130658f19}{\index{wigner.\-h@{wigner.\-h}!eval\-\_\-wigner@{eval\-\_\-wigner}}
+\index{eval\-\_\-wigner@{eval\-\_\-wigner}!wigner.h@{wigner.\-h}}
+\subsubsection[{eval\-\_\-wigner}]{\setlength{\rightskip}{0pt plus 5cm}void eval\-\_\-wigner (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{x, }
+\item[{double $\ast$}]{y, }
+\item[{int}]{size, }
+\item[{int}]{l, }
+\item[{double $\ast$}]{alpha, }
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{gamma}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_a86975b8841ed9b6bb3e1484130658f19}
+
+
+Evaluates Wigner-\/d functions $d_l^{km}(x,c)$ using the Clenshaw-\/algorithm. 
+
+\begin{DoxyItemize}
+\item x A pointer to an array of nodes where the function is to be evaluated \item y A pointer to an array where the function values are returned \item size The length of x and y \item l The degree $l$ \item alpha A pointer to an array containing the recurrence coefficients $\alpha_c^{km},\ldots,\alpha_{c+l}^{km}$ \item beta A pointer to an array containing the recurrence coefficients $\beta_c^{km},\ldots,\beta_{c+l}^{km}$ \item gamma A pointer to an array containing the recurrence coefficients $\gamma_c^{km},\ldots,\gamma_{c+l}^{km}$ \end{DoxyItemize}
+
+
+Definition at line 215 of file wigner.\-c.
+
+\hypertarget{wigner_8h_ae5933af03f4536a70ddfc744f16c9c55}{\index{wigner.\-h@{wigner.\-h}!eval\-\_\-wigner\-\_\-thresh@{eval\-\_\-wigner\-\_\-thresh}}
+\index{eval\-\_\-wigner\-\_\-thresh@{eval\-\_\-wigner\-\_\-thresh}!wigner.h@{wigner.\-h}}
+\subsubsection[{eval\-\_\-wigner\-\_\-thresh}]{\setlength{\rightskip}{0pt plus 5cm}int eval\-\_\-wigner\-\_\-thresh (
+\begin{DoxyParamCaption}
+\item[{double $\ast$}]{x, }
+\item[{double $\ast$}]{y, }
+\item[{int}]{size, }
+\item[{int}]{l, }
+\item[{double $\ast$}]{alpha, }
+\item[{double $\ast$}]{beta, }
+\item[{double $\ast$}]{gamma, }
+\item[{double}]{threshold}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [inline]}}}\label{wigner_8h_ae5933af03f4536a70ddfc744f16c9c55}
+
+
+Evaluates Wigner-\/d functions $d_l^{km}(x,c)$ using the Clenshaw-\/algorithm if it not exceeds a given threshold. 
+
+\begin{DoxyItemize}
+\item x A pointer to an array of nodes where the function is to be evaluated \item y A pointer to an array where the function values are returned \item size The length of x and y \item l The degree $l$ \item alpha A pointer to an array containing the recurrence coefficients $\alpha_c^{km},\ldots,\alpha_{c+l}^{km}$ \item beta A pointer to an array containing the recurrence coefficients $\beta_c^{km},\ldots,\beta_{c+l}^{km}$ \item gamma A pointer to an array containing the recurrence coefficients $\gamma_c^{km},\ldots,\gamma_{c+l}^{km}$ \item threshold The threshold \end{DoxyItemize}
+
+
+Definition at line 260 of file wigner.\-c.
+
+\hypertarget{wigner_8h_a6c43c1f82cf3efa9cb1343ec9dcd07ed}{\index{wigner.\-h@{wigner.\-h}!wigner\-\_\-start@{wigner\-\_\-start}}
+\index{wigner\-\_\-start@{wigner\-\_\-start}!wigner.h@{wigner.\-h}}
+\subsubsection[{wigner\-\_\-start}]{\setlength{\rightskip}{0pt plus 5cm}double wigner\-\_\-start (
+\begin{DoxyParamCaption}
+\item[{int}]{n1, }
+\item[{int}]{n2, }
+\item[{double}]{theta}
+\end{DoxyParamCaption}
+)}}\label{wigner_8h_a6c43c1f82cf3efa9cb1343ec9dcd07ed}
+
+
+A method used for debugging, gives the values to start the \char`\"{}old\char`\"{} three-\/term recurrence generates $ d^{km}_l(cos(theta)) $ W\-H\-E\-R\-E T\-H\-E D\-E\-G\-R\-E\-E l O\-F T\-H\-E F\-U\-N\-C\-T\-I\-O\-N I\-S E\-Q\-U\-A\-L T\-O T\-H\-E M\-A\-X\-I\-M\-U\-M O\-F I\-T\-S O\-R\-D\-E\-R\-S. 
+
+\begin{DoxyItemize}
+\item theta the argument of \item n1 the first order \item n2 the second order\end{DoxyItemize}
+\begin{DoxyReturn}{Returns}
+the function value $ d^{km}_l(cos(theta)) $ 
+\end{DoxyReturn}
+
+
+Definition at line 317 of file wigner.\-c.
+
