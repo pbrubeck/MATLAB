@@ -14,6 +14,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 am__is_gnu_make = test -n '$(MAKEFILE_LIST)' && test -n '$(MAKELEVEL)'
 am__make_running_with_option = \
@@ -78,9 +79,9 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = matlab
+subdir = matlab/nfsft
 DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
-	$(top_srcdir)/config/depcomp README
+	$(top_srcdir)/config/depcomp $(dist_nfsftmatlab_DATA)
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/m4/ax_apple_gcc_archflag.m4 \
 	$(top_srcdir)/m4/ax_cc_maxopt.m4 \
@@ -104,17 +105,47 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-LTLIBRARIES = $(noinst_LTLIBRARIES)
-libmatlab_la_LIBADD =
-am_libmatlab_la_OBJECTS = libmatlab_la-args.lo libmatlab_la-malloc.lo
-libmatlab_la_OBJECTS = $(am_libmatlab_la_OBJECTS)
+am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
+am__vpath_adj = case $$p in \
+    $(srcdir)/*) f=`echo "$$p" | sed "s|^$$srcdirstrip/||"`;; \
+    *) f=$$p;; \
+  esac;
+am__strip_dir = f=`echo $$p | sed -e 's|^.*/||'`;
+am__install_max = 40
+am__nobase_strip_setup = \
+  srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*|]/\\\\&/g'`
+am__nobase_strip = \
+  for p in $$list; do echo "$$p"; done | sed -e "s|$$srcdirstrip/||"
+am__nobase_list = $(am__nobase_strip_setup); \
+  for p in $$list; do echo "$$p $$p"; done | \
+  sed "s| $$srcdirstrip/| |;"' / .*\//!s/ .*/ ./; s,\( .*\)/[^/]*$$,\1,' | \
+  $(AWK) 'BEGIN { files["."] = "" } { files[$$2] = files[$$2] " " $$1; \
+    if (++n[$$2] == $(am__install_max)) \
+      { print $$2, files[$$2]; n[$$2] = 0; files[$$2] = "" } } \
+    END { for (dir in files) print dir, files[dir] }'
+am__base_list = \
+  sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
+  sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
+am__uninstall_files_from_dir = { \
+  test -z "$$files" \
+    || { test ! -d "$$dir" && test ! -f "$$dir" && test ! -r "$$dir"; } \
+    || { echo " ( cd '$$dir' && rm -f" $$files ")"; \
+         $(am__cd) "$$dir" && rm -f $$files; }; \
+  }
+am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(nfsftmatlabdir)"
+LTLIBRARIES = $(lib_LTLIBRARIES)
+am__DEPENDENCIES_1 =
+libnfsft_la_DEPENDENCIES = $(top_builddir)/libnfft3_matlab.la \
+	$(top_builddir)/matlab/libmatlab.la $(am__DEPENDENCIES_1)
+am_libnfsft_la_OBJECTS = libnfsft_la-nfsftmex.lo
+libnfsft_la_OBJECTS = $(am_libnfsft_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
 am__v_lt_0 = --silent
 am__v_lt_1 = 
-libmatlab_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
-	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libmatlab_la_CFLAGS) \
-	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
+libnfsft_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(libnfsft_la_CFLAGS) \
+	$(CFLAGS) $(libnfsft_la_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -149,8 +180,8 @@ AM_V_CCLD = $(am__v_CCLD_@AM_V@)
 am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
-SOURCES = $(libmatlab_la_SOURCES)
-DIST_SOURCES = $(libmatlab_la_SOURCES)
+SOURCES = $(libnfsft_la_SOURCES)
+DIST_SOURCES = $(libnfsft_la_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
 	install-data-recursive install-dvi-recursive \
@@ -164,6 +195,7 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
+DATA = $(dist_nfsftmatlab_DATA)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
 am__recursive_targets = \
@@ -191,7 +223,7 @@ am__define_uniq_tagged_files = \
   done | $(am__uniquify_input)`
 ETAGS = etags
 CTAGS = ctags
-DIST_SUBDIRS = . nfft nfct nfst nfsft nfsoft nnfft fastsum
+DIST_SUBDIRS = $(SUBDIRS)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 am__relativize = \
   dir0=`pwd`; \
@@ -392,25 +424,30 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-@HAVE_NFSFT_FALSE@DIR_NFSFT = 
-@HAVE_NFSFT_TRUE@DIR_NFSFT = nfsft
-@HAVE_NFSOFT_FALSE@DIR_NFSOFT = 
-@HAVE_NFSOFT_TRUE@DIR_NFSOFT = nfsoft
-DIR_NFFT = nfft
-@HAVE_NFCT_FALSE@DIR_NFCT = 
-@HAVE_NFCT_TRUE@DIR_NFCT = nfct
-@HAVE_NFST_FALSE@DIR_NFST = 
-@HAVE_NFST_TRUE@DIR_NFST = nfst
-@HAVE_NNFFT_FALSE@DIR_NNFFT = 
-@HAVE_NNFFT_TRUE@DIR_NNFFT = nnfft
-@HAVE_APPLICATIONS_FALSE@DIR_FASTSUM = 
-@HAVE_APPLICATIONS_TRUE@DIR_FASTSUM = fastsum
-SUBDIRS = . $(DIR_NFFT) $(DIR_NFCT) $(DIR_NFST) $(DIR_NFSFT) $(DIR_NFSOFT) $(DIR_NNFFT) $(DIR_FASTSUM)
-AM_CPPFLAGS = -I$(top_srcdir)/include $(matlab_CPPFLAGS)
-noinst_LTLIBRARIES = libmatlab.la
-libmatlab_la_SOURCES = args.c malloc.c imex.h
-@HAVE_MATLAB_THREADS_TRUE@libmatlab_la_CFLAGS = $(OPENMP_CFLAGS)
-EXTRA_DIST = README
+SUBDIRS = @f_hat
+
+# compiler flags
+AM_CPPFLAGS = -I$(top_srcdir)/include -I$(top_srcdir)/matlab $(matlab_CPPFLAGS)
+
+# matlab wrapper directory
+nfsftmatlabdir = $(datadir)/nfft/matlab/nfsft
+
+# library
+lib_LTLIBRARIES = libnfsft.la
+libnfsft_la_SOURCES = nfsftmex.c
+libnfsft_la_LIBADD = $(top_builddir)/libnfft3_matlab.la @matlab_fftw3_LIBS@ $(top_builddir)/matlab/libmatlab.la $(matlab_LIBS)
+libnfsft_la_LDFLAGS = -no-undefined -module -shared -shrext $(matlab_mexext) -avoid-version @matlab_fftw3_LDFLAGS@ $(matlab_LDFLAGS)
+@HAVE_MATLAB_THREADS_TRUE@libnfsft_la_CFLAGS = $(OPENMP_CFLAGS)
+dist_nfsftmatlab_DATA = cc.m Contents.m f_hat_index.m ndsft_adjoint.m ndsft_trafo.m \
+        nfsft_adjoint.m nfsft_finalize.m nfsft_forget.m nfsft_get_f_hat.m \
+        nfsft_get_f.m nfsft_get_x.m nfsft_init_advanced.m nfsft_init_guru.m \
+        nfsft_init.m NFSFT_NO_DIRECT_ALGORITHM.m NFSFT_NO_FAST_ALGORITHM.m \
+        NFSFT_NORMALIZED.m nfsft_precompute_x.m nfsft_precompute.m \
+        NFSFT_PRESERVE_F_HAT.m nfsft_set_f_hat.m nfsft_set_f.m nfsft_set_x.m \
+        nfsft_trafo.m NFSFT_USE_DPT.m NFSFT_USE_NDFT.m gl.m simple_test.m \
+        nfsft_get_f_hat_linear.m nfsft_set_f_hat_linear.m projection.m \
+	nfsft_get_num_threads.m
+
 all: all-recursive
 
 .SUFFIXES:
@@ -424,9 +461,9 @@ $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.am  $(am__confi
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu matlab/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu matlab/nfsft/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu matlab/Makefile
+	  $(AUTOMAKE) --gnu matlab/nfsft/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -446,9 +483,33 @@ $(ACLOCAL_M4): @MAINTAINER_MODE_TRUE@ $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 
-clean-noinstLTLIBRARIES:
-	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
-	@list='$(noinst_LTLIBRARIES)'; \
+install-libLTLIBRARIES: $(lib_LTLIBRARIES)
+	@$(NORMAL_INSTALL)
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
+	list2=; for p in $$list; do \
+	  if test -f $$p; then \
+	    list2="$$list2 $$p"; \
+	  else :; fi; \
+	done; \
+	test -z "$$list2" || { \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(libdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(libdir)" || exit 1; \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 '$(DESTDIR)$(libdir)'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=install $(INSTALL) $(INSTALL_STRIP_FLAG) $$list2 "$(DESTDIR)$(libdir)"; \
+	}
+
+uninstall-libLTLIBRARIES:
+	@$(NORMAL_UNINSTALL)
+	@list='$(lib_LTLIBRARIES)'; test -n "$(libdir)" || list=; \
+	for p in $$list; do \
+	  $(am__strip_dir) \
+	  echo " $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f '$(DESTDIR)$(libdir)/$$f'"; \
+	  $(LIBTOOL) $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=uninstall rm -f "$(DESTDIR)$(libdir)/$$f"; \
+	done
+
+clean-libLTLIBRARIES:
+	-test -z "$(lib_LTLIBRARIES)" || rm -f $(lib_LTLIBRARIES)
+	@list='$(lib_LTLIBRARIES)'; \
 	locs=`for p in $$list; do echo $$p; done | \
 	      sed 's|^[^/]*$$|.|; s|/[^/]*$$||; s|$$|/so_locations|' | \
 	      sort -u`; \
@@ -457,8 +518,8 @@ clean-noinstLTLIBRARIES:
 	  rm -f $${locs}; \
 	}
 
-libmatlab.la: $(libmatlab_la_OBJECTS) $(libmatlab_la_DEPENDENCIES) $(EXTRA_libmatlab_la_DEPENDENCIES) 
-	$(AM_V_CCLD)$(libmatlab_la_LINK)  $(libmatlab_la_OBJECTS) $(libmatlab_la_LIBADD) $(LIBS)
+libnfsft.la: $(libnfsft_la_OBJECTS) $(libnfsft_la_DEPENDENCIES) $(EXTRA_libnfsft_la_DEPENDENCIES) 
+	$(AM_V_CCLD)$(libnfsft_la_LINK) -rpath $(libdir) $(libnfsft_la_OBJECTS) $(libnfsft_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -466,8 +527,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmatlab_la-args.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libmatlab_la-malloc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libnfsft_la-nfsftmex.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -490,25 +550,39 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
-libmatlab_la-args.lo: args.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmatlab_la_CFLAGS) $(CFLAGS) -MT libmatlab_la-args.lo -MD -MP -MF $(DEPDIR)/libmatlab_la-args.Tpo -c -o libmatlab_la-args.lo `test -f 'args.c' || echo '$(srcdir)/'`args.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmatlab_la-args.Tpo $(DEPDIR)/libmatlab_la-args.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='args.c' object='libmatlab_la-args.lo' libtool=yes @AMDEPBACKSLASH@
+libnfsft_la-nfsftmex.lo: nfsftmex.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libnfsft_la_CFLAGS) $(CFLAGS) -MT libnfsft_la-nfsftmex.lo -MD -MP -MF $(DEPDIR)/libnfsft_la-nfsftmex.Tpo -c -o libnfsft_la-nfsftmex.lo `test -f 'nfsftmex.c' || echo '$(srcdir)/'`nfsftmex.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libnfsft_la-nfsftmex.Tpo $(DEPDIR)/libnfsft_la-nfsftmex.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='nfsftmex.c' object='libnfsft_la-nfsftmex.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmatlab_la_CFLAGS) $(CFLAGS) -c -o libmatlab_la-args.lo `test -f 'args.c' || echo '$(srcdir)/'`args.c
-
-libmatlab_la-malloc.lo: malloc.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmatlab_la_CFLAGS) $(CFLAGS) -MT libmatlab_la-malloc.lo -MD -MP -MF $(DEPDIR)/libmatlab_la-malloc.Tpo -c -o libmatlab_la-malloc.lo `test -f 'malloc.c' || echo '$(srcdir)/'`malloc.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/libmatlab_la-malloc.Tpo $(DEPDIR)/libmatlab_la-malloc.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='malloc.c' object='libmatlab_la-malloc.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmatlab_la_CFLAGS) $(CFLAGS) -c -o libmatlab_la-malloc.lo `test -f 'malloc.c' || echo '$(srcdir)/'`malloc.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libnfsft_la_CFLAGS) $(CFLAGS) -c -o libnfsft_la-nfsftmex.lo `test -f 'nfsftmex.c' || echo '$(srcdir)/'`nfsftmex.c
 
 mostlyclean-libtool:
 	-rm -f *.lo
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-dist_nfsftmatlabDATA: $(dist_nfsftmatlab_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(dist_nfsftmatlab_DATA)'; test -n "$(nfsftmatlabdir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(nfsftmatlabdir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(nfsftmatlabdir)" || exit 1; \
+	fi; \
+	for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; \
+	done | $(am__base_list) | \
+	while read files; do \
+	  echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(nfsftmatlabdir)'"; \
+	  $(INSTALL_DATA) $$files "$(DESTDIR)$(nfsftmatlabdir)" || exit $$?; \
+	done
+
+uninstall-dist_nfsftmatlabDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(dist_nfsftmatlab_DATA)'; test -n "$(nfsftmatlabdir)" || list=; \
+	files=`for p in $$list; do echo $$p; done | sed -e 's|^.*/||'`; \
+	dir='$(DESTDIR)$(nfsftmatlabdir)'; $(am__uninstall_files_from_dir)
 
 # This directory's subdirectories are mostly independent; you can cd
 # into them and run 'make' without going through this Makefile.
@@ -666,9 +740,12 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(nfsftmatlabdir)"; do \
+	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
+	done
 install: install-recursive
 install-exec: install-exec-recursive
 install-data: install-data-recursive
@@ -699,9 +776,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
-clean: clean-recursive
-
-clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
+clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-recursive
@@ -722,14 +797,15 @@ info: info-recursive
 
 info-am:
 
-install-data-am:
+install-data-am: install-dist_nfsftmatlabDATA
 
 install-dvi: install-dvi-recursive
 
 install-dvi-am:
 
-install-exec-am:
-
+install-exec-am: install-libLTLIBRARIES
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) install-exec-hook
 install-html: install-html-recursive
 
 install-html-am:
@@ -768,25 +844,47 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am:
-
-.MAKE: $(am__recursive_targets) install-am install-strip
+uninstall-am: uninstall-dist_nfsftmatlabDATA uninstall-libLTLIBRARIES
+	@$(NORMAL_INSTALL)
+	$(MAKE) $(AM_MAKEFLAGS) uninstall-hook
+.MAKE: $(am__recursive_targets) install-am install-exec-am \
+	install-strip uninstall-am
 
 .PHONY: $(am__recursive_targets) CTAGS GTAGS TAGS all all-am check \
-	check-am clean clean-generic clean-libtool \
-	clean-noinstLTLIBRARIES cscopelist-am ctags ctags-am distclean \
+	check-am clean clean-generic clean-libLTLIBRARIES \
+	clean-libtool cscopelist-am ctags ctags-am distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am install-man \
-	install-pdf install-pdf-am install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	installdirs-am maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-compile mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-am uninstall \
-	uninstall-am
+	install install-am install-data install-data-am \
+	install-dist_nfsftmatlabDATA install-dvi install-dvi-am \
+	install-exec install-exec-am install-exec-hook install-html \
+	install-html-am install-info install-info-am \
+	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
+	install-ps install-ps-am install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic mostlyclean mostlyclean-compile \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags tags-am uninstall uninstall-am \
+	uninstall-dist_nfsftmatlabDATA uninstall-hook \
+	uninstall-libLTLIBRARIES
 
+
+# target all-am builds .libs/libnfsft@matlab_mexext@
+nfsftmex@matlab_mexext@: all-am 
+	rm -f ./nfsftmex@matlab_mexext@
+	$(LN_S) .libs/libnfsft@matlab_mexext@ ./nfsftmex@matlab_mexext@
+
+all: all-am nfsftmex@matlab_mexext@
+
+clean: clean-am
+	rm -f ./nfsftmex@matlab_mexext@
+
+install-exec-hook:
+	rm -f $(libdir)/nfsftmex@matlab_mexext@
+	$(LN_S) $(libdir)/libnfsft@matlab_mexext@ $(libdir)/nfsftmex@matlab_mexext@
+
+uninstall-hook:
+	rm -f $(libdir)/nfsftmex@matlab_mexext@
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

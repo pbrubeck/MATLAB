@@ -93,7 +93,7 @@ uuu=permute(um,[1,2,4,3]);
 figure(1); zoom off; pan off; rotate3d off;
 for i=1:size(uuu,4)
     modegallery(xx+x0(i),yy+y0(i),uuu(:,:,:,i));
-    if i==1, hold on; end;
+    if i==1, hold on; end
 end
 hold off;
 colormap(jet(256)); shading interp; camlight; view(2);

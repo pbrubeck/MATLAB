@@ -1,105 +1,51 @@
-LIBTOOL_DEPS = @LIBTOOL_DEPS@
-
-libtool: $(LIBTOOL_DEPS)
-	$(SHELL) ./config.status --recheck
-
-# Subdirectories
-DIST_SUBDIRS=3rdparty include kernel . tests examples applications matlab support doxygen
-
-if HAVE_EXAMPLES
-  EXAMPLE_DIRS=examples
+if HAVE_NFSFT
+  DIR_NFSFT=nfsft
 else
-  EXAMPLE_DIRS=
+  DIR_NFSFT=
+endif
+
+if HAVE_NFSOFT
+  DIR_NFSOFT=nfsoft
+else
+  DIR_NFSOFT=
+endif
+
+DIR_NFFT=nfft
+
+if HAVE_NFCT
+  DIR_NFCT=nfct
+else
+  DIR_NFCT=
+endif
+
+if HAVE_NFST
+  DIR_NFST=nfst
+else
+  DIR_NFST=
+endif
+
+if HAVE_NNFFT
+  DIR_NNFFT=nnfft
+else
+  DIR_NNFFT=
 endif
 
 if HAVE_APPLICATIONS
-  APPLICATION_DIRS=applications
+  DIR_FASTSUM=fastsum
 else
-  APPLICATION_DIRS=
+  DIR_FASTSUM=
 endif
 
-if HAVE_MATLAB
-  MATLAB_DIRS=matlab
-  LIBNFFT3_MATLAB_LA=libnfft3@PREC_SUFFIX@_matlab.la
-else
-  MATLAB_DIRS=
-  LIBNFFT3_MATLAB_LA=
-endif
+SUBDIRS = . $(DIR_NFFT) $(DIR_NFCT) $(DIR_NFST) $(DIR_NFSFT) $(DIR_NFSOFT) $(DIR_NNFFT) $(DIR_FASTSUM)
 
-if HAVE_THREADS
-  LIBNFFT3_THREADS_LA = libnfft3@PREC_SUFFIX@_threads.la
-else
-  LIBNFFT3_THREADS_LA =
-endif
+AM_CPPFLAGS = -I$(top_srcdir)/include $(matlab_CPPFLAGS)
 
-SUBDIRS= 3rdparty include kernel . tests $(EXAMPLE_DIRS) $(APPLICATION_DIRS) $(MATLAB_DIRS)
+noinst_LTLIBRARIES = libmatlab.la
 
-lib_LTLIBRARIES = libnfft3@PREC_SUFFIX@.la $(LIBNFFT3_THREADS_LA)
-noinst_LTLIBRARIES = $(LIBNFFT3_MATLAB_LA)
+libmatlab_la_SOURCES = args.c malloc.c imex.h
 
-libnfft3@PREC_SUFFIX@_la_SOURCES =
-libnfft3@PREC_SUFFIX@_la_LIBADD = 3rdparty/lib3rdparty.la kernel/libkernel.la @fftw3_LIBS@ -lm
-libnfft3@PREC_SUFFIX@_la_LDFLAGS = -no-undefined -version-info @SHARED_VERSION_INFO@ @fftw3_LDFLAGS@
-
-if HAVE_THREADS
-libnfft3@PREC_SUFFIX@_threads_la_SOURCES =
-libnfft3@PREC_SUFFIX@_threads_la_LIBADD = 3rdparty/lib3rdparty.la kernel/libkernel_threads.la @fftw3_threads_LIBS@ -lm
-libnfft3@PREC_SUFFIX@_threads_la_LDFLAGS = -no-undefined -version-info @SHARED_VERSION_INFO@ @fftw3_LDFLAGS@
-if HAVE_OPENMP
-  libnfft3@PREC_SUFFIX@_threads_la_CFLAGS = $(OPENMP_CFLAGS)
-endif
-endif
-
-if HAVE_MATLAB
-  libnfft3@PREC_SUFFIX@_matlab_la_SOURCES =
 if HAVE_MATLAB_THREADS
-    libnfft3@PREC_SUFFIX@_matlab_la_LIBADD = 3rdparty/lib3rdparty.la kernel/libkernel_threads.la @matlab_fftw3_LIBS@ -lm
-else
-    libnfft3@PREC_SUFFIX@_matlab_la_LIBADD = 3rdparty/lib3rdparty.la kernel/libkernel.la @matlab_fftw3_LIBS@ -lm
-endif
-  libnfft3@PREC_SUFFIX@_matlab_la_LDFLAGS = @matlab_fftw3_LDFLAGS@
+  libmatlab_la_CFLAGS = $(OPENMP_CFLAGS)
 endif
 
-EXTRA_DIST = bootstrap.sh doxygen.dox nfft3.pc.in doc
-
-if HAVE_NON_DOUBLE_PRECISION
-nfft3@PREC_SUFFIX@.pc: nfft3.pc
-	cp -f nfft3.pc nfft3@PREC_SUFFIX@.pc
-endif
-
-pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = nfft3@PREC_SUFFIX@.pc
-
-install-data-hook:
-	if test -f "$(abs_top_builddir)/doc/html/index.html"; then \
-		$(MKDIR_P) $(DESTDIR)$(docdir); \
-		cp -Rf $(abs_top_builddir)/doc/html $(DESTDIR)$(docdir)/; \
-	elif test -f "$(abs_top_srcdir)/doc/html/index.html"; then \
-		$(MKDIR_P) $(DESTDIR)$(docdir); \
-		cp -Rf $(abs_top_srcdir)/doc/html $(DESTDIR)$(docdir)/; \
-	fi
-
-uninstall-hook:
-	chmod -Rf u+rwX $(DESTDIR)$(docdir)
-	rm -Rf $(DESTDIR)$(docdir)
-
-clean-local:
-	rm -f $(abs_top_builddir)/doc/doxygen_sqlite3.db
-	rm -f $(abs_top_builddir)/doc/nfft.pdf
-	rm -f $(abs_top_builddir)/doc/nfft.tag
-	rm -Rf $(abs_top_builddir)/doc/html
-	rm -Rf $(abs_top_builddir)/doc/latex
-
-dist-hook: doc
-	rm -f @DX_DOCDIR@/@PACKAGE@.tag
-	cp -R $(abs_top_builddir)/doc $(distdir)/
-	rm -Rf `find $(distdir) -name .svn -type d`
-
-include aminclude.am
-
-doc: doxygen-doc
-
-# Flags to be passed to aclocal.
-ACLOCAL_AMFLAGS = -I m4
-
-AM_DISTCHECK_CONFIGURE_FLAGS = --enable-all
+EXTRA_DIST = README

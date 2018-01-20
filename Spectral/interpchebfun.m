@@ -2,39 +2,39 @@ function [ E ] = interpchebfun(n,xx)
 % Interpolation operator from Chebyshev nodes to any other grid [-1,1]
 
 % Non-equispaced FFT
+dim=1;
 xx=xx(:);
 m=length(xx);
-M=2*m-2;
 N=2*n-2;
-plan=nfft(1,N,M);
-plan.x=acos([xx; -xx(end-1:-1:2)])/(2*pi);
-nfft_precompute_psi(plan);
+plan=nfct(1,n,m);
+plan.x=acos(xx)/(2*pi);
 
 function [uhat]=adjoint(u)
-    f=zeros(M,1); f(1:m)=u(:);
-    plan.f=f;
-    nfft_adjoint(plan);
+    plan.f=u(1:m);
+    nfct_adjoint(plan);
     uhat=plan.fhat;
 end
 
 function [uu]=trafo(uhat)
-    plan.fhat=uhat(:);
-    nfft_trafo(plan);
-    uu=plan.f(1:m);
+    plan.fhat=uhat(1:n);
+    nfct_trafo(plan);
+    uu=plan.f;
 end
 
 function [uu]=Efun(u,tflag)
     if strcmp(tflag, 'transp')
-        vhat=cellfun(@adjoint, num2cell(u, 1), 'UniformOutput', false);
-        vv=fftshift(ifft((conj(cat(2, vhat{:}))),[],1));
-        uu=vv(1:n,:); uu(2:end-1,:)=uu(2:end-1,:)+vv(N:-1:n+1,:);
-        uu=real(uu);
+        vhat=cellfun(@adjoint, num2cell(u,1), 'UniformOutput', false);
+        vv=ifft(cat(2, vhat{:}),N,1,'symmetric');
+        uu=vv(1:n,:); uu(2:end-1,:)=uu(2:end-1,:)+vv(end:-1:n+1,:);
+        c=1+(m-1)*(xx(1)==1);
+        uu(1,:)=uu(1,:)-u(c,:);
+        uu(end,:)=uu(end,:)+u(c,:);
     else
-        dim=1;
-        uhat=fftshift(ifft([u; u(end-1:-1:2,:)],[],dim,'symmetric'),dim); 
+        uhat=ifft(u,N,dim,'symmetric');
+        uhat(2:n-1,:)=2*uhat(2:n-1,:);
         uucell=cellfun(@trafo, num2cell(uhat, dim), 'UniformOutput', false);
         uu=ipermute(cat(ndims(u), uucell{:}), [dim, setdiff(1:ndims(u), dim)]);
-        uu=real(uu);
+        uu(xx==-1,:)=u(end,:);
     end
 end
 E=@Efun;

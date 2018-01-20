@@ -1,6 +1,6 @@
 function [zz,jac,g11,g12,g22]=mapquad(Z,x,y)
 % Bilinear map from [-1,1]^2 to arbitrary quadrilaterals
-% Z=[z++, z+-; z-+, z--]
+% Z=[z(EN), z(ES); z(WN), z(WS)]
 T=[1,1;1,-1]/2;
 A=T'*Z*T;
 J=imag(conj(A(:,2))*A(2,:));

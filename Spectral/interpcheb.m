@@ -21,8 +21,9 @@ function [uu]=trafo(uhat)
 end
 
 uhat=fftshift(ifft(u,N,dim,'symmetric'),dim);
-uucell=cellfun(@trafo, num2cell(uhat, dim), 'UniformOutput', false);
-uu=ipermute(cat(ndims(u), uucell{:}), [dim, setdiff(1:ndims(u), dim)]);
+uucell=cellfun(@trafo,  num2cell(uhat, dim), 'UniformOutput', false);
+sz=size(u); sz(dim)=m;
+uu=reshape(cell2mat(uucell), sz);
 if isreal(u)
     uu=real(uu);
 end
