@@ -114,7 +114,7 @@ fig1=figure(1);
 h=cell(size(uuu,3),1);
 for i=1:size(uuu,3)
     h{i}=surf(xx+x0(i), yy+y0(i), real(uuu(:,:,i)));
-    if i==1, hold on; end;
+    if i==1, hold on; end
 end
 hold off;
 colormap(jet(256)); 

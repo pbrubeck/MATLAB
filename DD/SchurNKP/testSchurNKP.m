@@ -5,6 +5,9 @@ kd1=2:m-1; rd1=[1,m];
 kd2=2:n-1; rd2=[1,n];
 vec=@(x) x(:);
 
+tol=1E-11;
+maxit=100;
+
 % Differential operators
 [Dx,x]=chebD(m);
 [Dy,y]=chebD(n);
@@ -167,21 +170,30 @@ function [u] = Rtransp(uu)
     u(1+p)=sum(uu(1,1,:));
 end
 
-function [b] = afun(u)
-    b=Rtransp(fullop(stiff, assembly(u)));
+function [u] = afun(u)
+    for r=1:size(u,2)
+        u(:,r)=Rtransp(fullop(stiff, assembly(u(:,r))));
+    end
 end
+
+function [u] = bfun(u)
+    for r=1:size(u,2)
+        u(:,r)=Rtransp(fullop(mass, assembly(u(:,r))));
+    end
+end
+
 pcalls=0;
-function [u] = pfun(b)
-    pcalls=pcalls+1;
-    u=pick(precond(b));
+function [u] = pfun(u)
+    for r=1:size(u,2)
+        pcalls=pcalls+1;
+        u(:,r)=pick(precond(u(:,r)));
+    end    
 end
 
 function [uu,flag,relres,iter]=poissonSolver(F,ub)
     if nargin==1
         ub=zeros(size(F));
     end
-    tol=10*eps;
-    maxit=10;
     rhs=Rtransp(fullop(mass,F)-fullop(stiff,ub));
     uu=pfun(rhs);
     [uu,flag,relres,iter]=gmres(@afun,rhs,7,tol,maxit,[],@pfun,uu);
@@ -194,13 +206,12 @@ yq=linspace(-1,1,Nq); %yq=y;
 [xx,yy]=ndgrid(xq,yq);
 
 if nargin>1
-    [U,lam]=eigs(@poissonSolver, m*n*ndom, k, 'sm');
-    lam=diag(lam);
-    [~,id]=sort(real(lam),'ascend');
-    lam=lam(id);
-    U=U(:,id);
-    um=reshape(real(U*diag(1./max(complex(U)))), m, n, [], k);
-    uuu=permute(um,[1,2,4,3]);
+    [U,lam,~,~,relres]=lobpcg(rand(dofs,k),@afun,@bfun,@pfun,[],tol,maxit);
+    uuu=zeros(m,n,ndom,k);
+    for j=1:k
+        uuu(:,:,:,j)=assembly(U(:,j));
+    end
+    uuu=ipermute(uuu,[1,2,4,3]);
     
     figure(1); zoom off; pan off; rotate3d off;
     for j=1:size(uuu,4)
@@ -230,6 +241,7 @@ shading interp; camlight;
 dx=diff(xlim());
 dy=diff(ylim());
 pbaspect([dx,dy,min(dx,dy)]);
+display(pcalls);
 end
 
 function [net]=topo(adj)
