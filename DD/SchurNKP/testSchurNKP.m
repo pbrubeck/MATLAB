@@ -5,8 +5,9 @@ kd1=2:m-1; rd1=[1,m];
 kd2=2:n-1; rd2=[1,n];
 vec=@(x) x(:);
 
-tol=1E-11;
+tol=1E-15;
 maxit=100;
+restart=7;
 
 % Differential operators
 [Dx,x]=chebD(m);
@@ -24,12 +25,14 @@ C2=diag(a(2,:))*C2+diag(b(2,:))*Dy(rd2,:);
 % (xxx,yyy) is two dimensional, here we evaluate the equation coefficients
 [xxx,yyy]=ndgrid(xx,yy);
 
+
+
 % Vertices
-v0=[2i;-1;1];                                             % Isoceles
+
 v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
 v0=[-2+3i;0;2];                                           % Scalene
-v0=[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
-%4/sqrt(3*sqrt(3))*
+v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
+v0=[2i;-1;1];                                             % Isoceles
 
 L=abs(v0([3,1,2])-v0([2,3,1])); % Sides
 V=eye(3)+diag((sum(L)/2-L)./L([2,3,1]))*[-1,0,1; 1,-1,0; 0,1,-1];
@@ -71,7 +74,7 @@ S22=sparse(d(3),d(3));
 % Evaluate Jacobian determinant J and metric tensor [E, F; F, G]
 % Galerkin stiffness and mass (matrix-free) operators, with their NKP
 % Update NKP Schur complement and compute local Green functions
-for j=1:3
+for j=1:ndom
 [~,jac,g11,g12,g22]=mapquad(Z(:,:,j),xxx,yyy);
 [stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,jac,g11,g12,g22);
 [S11,S12,S21,S22,nkp{j},gf{j}]=feedSchurNKP(S11,S12,S21,S22,net(j,:),A1,B1,A2,B2,C1,C2);
@@ -123,7 +126,7 @@ function [u] = precond(rhs)
 
     % Solve for interior nodes with the given BCs
     u=zeros(size(v));
-    for r=1:size(adj,1)
+    for r=1:ndom
         u(:,:,r)=gf{r}(RHS(:,:,r), b1(:,net(r,1:2))', b1(:,net(r,3:4)), b0);
     end
     u=u(:);
@@ -196,7 +199,7 @@ function [uu,flag,relres,iter]=poissonSolver(F,ub)
     end
     rhs=Rtransp(fullop(mass,F)-fullop(stiff,ub));
     uu=pfun(rhs);
-    [uu,flag,relres,iter]=gmres(@afun,rhs,7,tol,maxit,[],@pfun,uu);
+    [uu,flag,relres,iter]=gmres(@afun,rhs,restart,tol,ceil(maxit/restart),[],@pfun,uu);
     uu=ub+reshape(assembly(uu),size(ub));  
 end
 
