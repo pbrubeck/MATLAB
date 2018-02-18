@@ -1,5 +1,5 @@
 % Sizes
-n=32;    % Chebyshev grid
+n=16;    % Chebyshev grid
 nj=16;    % Derivative jumps enforced
 Nq=1024; % Interpolation grid
 
@@ -7,8 +7,8 @@ Nq=1024; % Interpolation grid
 a=0;     % Lower limit
 b=5;     % Upper limit
 xi=10/3; % Discontinuity
-[D,x]=chebD(n);
-x=(b-a)/2*(x+1)+a;
+[D,x0]=chebD(n);
+x=(b-a)/2*(x0+1)+a;
 xx=linspace(a,b,Nq)';
 
 % Piecewise Function
@@ -30,11 +30,8 @@ end
 s=piecewiseLagrange(x,jumps);
 P=interpcheb(eye(n),linspace(-1,1,Nq));
 
-figure(3)
-imagesc((xx'>=xi).*(xi>x)-(xx'<xi).*(xi<x))
-
 u=fun(x);
-y=P*u+diag(P*s(xx',xi));
+y=P*u+sum(P.*s(xx',xi)', 2);
 
 figure(1);
 plot(xx,y, xx,fun(xx));
@@ -43,3 +40,16 @@ title('Interpolation');
 figure(2);
 plot(xx,fun(xx)-y);
 title('Error');
+
+% Another demo
+jumps=zeros(nj,1);
+jumps(1)=1;
+
+% Interpolate
+s=piecewiseLagrange(x,jumps);
+P=interpcheb(eye(n),linspace(-1,1,Nq));
+y=sum(P.*s(xx',xi)', 2);
+
+figure(3);
+plot(xx,y);
+title('Jump function');

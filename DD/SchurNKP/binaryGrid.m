@@ -1,6 +1,6 @@
 r1 = 1;
-r2=2.5;
-h = 4;
+r2 = 2.5;
+h = 5;
 k = 1.5;
 
 y0 = 2*max(r1,r2);
@@ -18,14 +18,13 @@ phi = pi/6*(0:11)';
 
 rightC = h+r1*exp(1i*theta); % inner circle right side
 leftC = -h+r2*exp(1i*theta); % inner circle left side
-R = h+R0*exp(1i*theta); % outer circle right
-S = -h+R0*exp(1i*theta); % outer circle left
-outerC = [R(1:4); S(3:7); R(6:8)]; % outer circle
+R =  h+R0*exp(1i*theta); % mid circle right
+S = -h+R0*exp(1i*theta); % mid circle left
+outerC = [R(1:4); S(3:7); R(6:8)]; % outermost circle
 outerE = a.*exp(1i*phi);
-hold on;
 
 points = [rightC;leftC;outerC;outerE;0];
-% figure(1); clf;
+figure(1); clf;
 % plot(points,'*');
 % axis equal;
 
@@ -40,7 +39,7 @@ quad(:,2) = quad([8,1:7,16,9:15,28,17:27],1);
 % key: [East, West, North, South] = [1, 2, 3, 4].
 % i.e. fence(i,:)= [3,8,4,1].
 % interface i is on North (3) of Quad 8, and South (4) of Quad 1.
-% in this example, fence(i,1) is the side of quad 1 found on the interface i.
+% fence(i,1) is the side of quad 1 found on interface i.
 % fence(i,2) is quad 1.
 % fence(i,3) is the side of quad 2 found on interface i.
 % fence(i,4) is quad 2.
@@ -57,7 +56,7 @@ fence(29:40,4) = [1:3,10:15,6:8];
 fence(41,:) = [1,4,1,9];
 fence(42,:) = [1,5,1,16];
 
-hold on
+
 X=real(points(quad(:,[2,1,3,4])'));
 Y=imag(points(quad(:,[2,1,3,4])'));
 colormap(jet(size(quad,1)));
@@ -65,4 +64,3 @@ C = 1:size(quad,1);
 patch(X,Y,C)
 axis equal;
 grid on;
-hold off

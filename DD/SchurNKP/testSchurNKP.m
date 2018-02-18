@@ -5,7 +5,7 @@ kd1=2:m-1; rd1=[1,m];
 kd2=2:n-1; rd2=[1,n];
 vec=@(x) x(:);
 
-tol=1E-15;
+tol=1E-16;
 maxit=100;
 restart=7;
 
@@ -28,11 +28,12 @@ C2=diag(a(2,:))*C2+diag(b(2,:))*Dy(rd2,:);
 
 
 % Vertices
-
-v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
 v0=[-2+3i;0;2];                                           % Scalene
 v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
 v0=[2i;-1;1];                                             % Isoceles
+v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
+
+
 
 L=abs(v0([3,1,2])-v0([2,3,1])); % Sides
 V=eye(3)+diag((sum(L)/2-L)./L([2,3,1]))*[-1,0,1; 1,-1,0; 0,1,-1];
@@ -209,6 +210,7 @@ yq=linspace(-1,1,Nq); %yq=y;
 [xx,yy]=ndgrid(xq,yq);
 
 if nargin>1
+    tol=1E-11;
     [U,lam,~,~,relres]=lobpcg(rand(dofs,k),@afun,@bfun,@pfun,[],tol,maxit);
     uuu=zeros(m,n,ndom,k);
     for j=1:k
