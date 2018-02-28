@@ -22,7 +22,7 @@ J=diff(xb)/2; % Jacobian
 x1=kron(J, x0)+kron((xb(1:end-1)+xb(2:end))/2, ones(p,1));
 x1(p+1:p:end)=[];
 
-% Spectral element assembly / prolongation operator
+% Spectral element assembly
 w1=conv(mask,w0);
 M1=conv2(diag(mask), M0*J(1));
 K1=conv2(diag(mask), K0);

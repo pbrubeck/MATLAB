@@ -1,5 +1,5 @@
 % Sizes
-n=16;    % Chebyshev grid
+n=32;    % Chebyshev grid
 nj=16;    % Derivative jumps enforced
 Nq=1024; % Interpolation grid
 
@@ -18,38 +18,26 @@ f2=@(x) LegendreP(coef,xi)*real(LegendreQ(coef,x));
 fun=@(x) (x<xi).*f1(x)+(x>=xi).*f2(x);
 
 % Get jumps
-x0=ainit(xi,nj-1);
-y1=f1(x0);
-y2=f2(x0);
+z0=ainit(xi,nj-1);
+y1=f1(z0);
+y2=f2(z0);
 jumps=zeros(nj,1);
 for r=1:nj
     jumps(r)=y2{r-1}-y1{r-1};
 end
 
 % Interpolate
-s=piecewiseLagrange(x,jumps);
-P=interpcheb(eye(n),linspace(-1,1,Nq));
-
-u=fun(x);
-y=P*u+sum(P.*s(xx',xi)', 2);
+[s1,s2]=piecewiseLagrange(x,xi,jumps);
+P=interpcheb(eye(n),linspace(-1,1,Nq)');
+y=fun(x);
+yy=zeros(size(xx));
+yy(xx<=xi)=P(xx<=xi,:)*(y+s1);
+yy(xx>=xi)=P(xx>=xi,:)*(y+s2);
 
 figure(1);
-plot(xx,y, xx,fun(xx));
+plot(x,y,'.k', xx,yy,'r');
 title('Interpolation');
 
 figure(2);
-plot(xx,fun(xx)-y);
+plot(xx,fun(xx)-yy);
 title('Error');
-
-% Another demo
-jumps=zeros(nj,1);
-jumps(1)=1;
-
-% Interpolate
-s=piecewiseLagrange(x,jumps);
-P=interpcheb(eye(n),linspace(-1,1,Nq));
-y=sum(P.*s(xx',xi)', 2);
-
-figure(3);
-plot(xx,y);
-title('Jump function');

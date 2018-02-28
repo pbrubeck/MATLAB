@@ -33,7 +33,7 @@ S=zeros(n,n-2);
 S(rd,:)=G*S(kd,:);
 omega=sqrt(L);
 
-% Initiall conditions
+% Initial conditions
 u=3-x.^2+2*x;
 v=0*(1-x.^2);
 bc=B*u;
