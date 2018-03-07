@@ -74,14 +74,15 @@ y=linspace(-1,1,N)';
 f0=@(r) exp(-r.^2/2).*(1-r.^2);
 f=@(z) f0(abs(z-h)/r1)+f0(abs(z+h)/r2);
 
-figure(1);  
+figure(2);  
 for k=1:nquad
     F = curvedquad(points(quad(k,:)), curv(k,:));
     [jac,G11,G12,G22] = diffgeom(F,x,y); 
     zz = F(xx,yy);
-    surf(real(zz), imag(zz), jac*0+k); hold on;
+    dd = abs(zz-h)-abs(zz+h);
+    surf(real(zz), imag(zz), dd); hold on;
 end
-colormap(prism(nquad));
+colormap(jet(256));
 hold off;
 axis square;
 % shading interp

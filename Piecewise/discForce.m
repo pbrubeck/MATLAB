@@ -48,7 +48,7 @@ err(rd)=0;
 
 % Interpolate jump function
 jumps=zeros(nj,1);
-jumps(2)=1;
+jumps(4)=1;
 Nq=2048;
 xxx=linspace(-1,1,Nq)';
 [s1,s2]=piecewiseLagrange(x0,xi,jumps);

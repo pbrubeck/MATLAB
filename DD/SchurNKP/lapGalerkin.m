@@ -1,4 +1,4 @@
-function [stiff,mass,A1,B1,A2,B2] = lapGalerkin(Dx,Dy,xx,yy,wx,wy,jac,g11,g12,g22)
+function [stiff,mass,A1,B1,A2,B2] = lapGalerkin(Dx,Dy,x0,y0,xx,yy,wx,wy,jac,g11,g12,g22)
 % Stiffness matrix from Laplacian given a metric 
 % Assumes oversampled coefficients
 % Also returns nearest Kronecker product approximation
@@ -11,8 +11,8 @@ C11=diag(wx)*( g22./jac)*diag(wy);
 C12=diag(wx)*(-g12./jac)*diag(wy);
 C22=diag(wx)*( g11./jac)*diag(wy);
 
-E1=interpcheb(eye(m), xx);
-E2=interpcheb(eye(n), yy);
+E1=chebC(x0, xx);
+E2=chebC(y0, yy);
 
 function vv=stiffFun(uu)
     uu=reshape(uu,[m,n]);

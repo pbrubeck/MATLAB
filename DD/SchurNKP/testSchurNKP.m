@@ -5,13 +5,13 @@ kd1=2:m-1; rd1=[1,m];
 kd2=2:n-1; rd2=[1,n];
 vec=@(x) x(:);
 
-tol=1E-16;
+tol=1E-15;
 maxit=100;
 restart=7;
 
 % Differential operators
-[Dx,x]=chebD(m);
-[Dy,y]=chebD(n);
+[Dx,x0]=chebD(m);
+[Dy,y0]=chebD(n);
 % Constraint operator
 a=[1,1;1,1];
 b=[0,0;0,0];
@@ -77,7 +77,7 @@ S22=sparse(d(3),d(3));
 % Update NKP Schur complement and compute local Green functions
 for j=1:ndom
 [~,jac,g11,g12,g22]=mapquad(Z(:,:,j),xxx,yyy);
-[stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,xx,yy,wx,wy,jac,g11,g12,g22);
+[stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,x0,y0,xx,yy,wx,wy,jac,g11,g12,g22);
 [S11,S12,S21,S22,nkp{j},gf{j}]=feedSchurNKP(S11,S12,S21,S22,net(j,:),A1,B1,A2,B2,C1,C2);
 end
 
