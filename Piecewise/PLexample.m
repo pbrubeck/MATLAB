@@ -1,6 +1,6 @@
 % Sizes
 n=32;    % Chebyshev grid
-nj=16;    % Derivative jumps enforced
+nj=32;    % Derivative jumps enforced
 Nq=1024; % Interpolation grid
 
 % Domain

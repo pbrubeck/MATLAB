@@ -22,7 +22,6 @@ SD=D(:,kd)+D(:,rd)*G;
 V=VandermondeLeg(x);
 Minv=(V*V');
 SM=E'*(Minv\E);
-SM=(SM+SM')/2;
 
 % Stiffness matrix
 SK=SD'*diag(w)*SD-G'*diag([1,-1])*SD(rd,:);

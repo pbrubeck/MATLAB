@@ -24,11 +24,10 @@ C2=diag(a(2,:))*C2+diag(b(2,:))*Dy(rd2,:);
 [yy,wy]=gauleg(-1,1,n);
 
 % Vertices
-v0=[2i;-1;1];                                             % Isoceles
-v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
 v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
+v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
+v0=[2i;-1;1];                                             % Isoceles
 v0=[-2+3i;0;2];                                           % Scalene
-
 
 L=abs(v0([3,1,2])-v0([2,3,1])); % Sides
 V=eye(3)+diag((sum(L)/2-L)./L([2,3,1]))*[-1,0,1; 1,-1,0; 0,1,-1];
@@ -45,11 +44,7 @@ curv=zeros(size(quads)); curv(:)=-inf;
 %[z0, quads, curv]=bingrid();
 
 % Topology
-adj=zeros(3,4);
-adj(1:3,[1,3])=[2,1; 3,2; 1,3]; % [E,W,N,S]
-net=topo(adj);
-corners=zeros(size(net));
-corners(:,1)=1;                 % [EN,WN,ES,WS]
+[net, adj, corners] = meshtopo(quads);
 net=[net, corners];
 ndom=size(quads,1);
 d=[ndom*(m-2)^2, size(adj,1)*(m-2), max(corners(:))];
@@ -89,6 +84,25 @@ drawnow;
 
 net(net==0)=max(net(:))+1; 
 
+function [m11,m12,m21,m22]=mapToAssembled(edge)
+    m11=rd1(edge(1)==[1,2]);
+    m12=rd2(edge(1)==[3,4]);     
+    m21=rd1(edge(3)==[1,2]);
+    m22=rd2(edge(3)==[3,4]);
+    if numel(m11)==0
+        m11=kd1;
+    end
+    if numel(m12)==0
+        m12=kd2;
+    end
+    if numel(m21)==0
+        m21=kd1;
+    end
+    if numel(m22)==0
+        m22=kd2;
+    end
+end
+
 function [vv] = fullop(op,uu)
     vv=reshape(uu,m,n,[]);
     for r=1:size(vv,3)
@@ -100,16 +114,16 @@ end
 function [u] = precond(rhs)
     RHS=reshape(rhs(1:d(1)), m-2, n-2, []);
     v=zeros(m,n,size(RHS,3));
-    for r=1:size(adj,1)
+    for r=1:size(v,3)
         v(:,:,r)=gf{r}(RHS(:,:,r),0,0,0);
     end
     p=d(1);
     s1=zeros(m-2, size(adj,1));
     for r=1:size(adj,1)
+        [m11,m12,m21,m22]=mapToAssembled(adj(r,:));
         s1(:,r)=rhs(1+p:p+m-2) + ...
-                -vec(nkp{adj(r,1)}(v(:,:,adj(r,1)),1,kd2)) + ...
-                -vec(nkp{adj(r,3)}(v(:,:,adj(r,3)),kd1,1));
-            
+                -vec(nkp{adj(r,2)}(v(:,:,adj(r,2)),m11,m12)) + ...
+                -vec(nkp{adj(r,4)}(v(:,:,adj(r,4)),m21,m22));
         p=p+m-2;
     end
     s0=rhs(p+1)-nkp{1}(v(:,:,1),1,1)-nkp{2}(v(:,:,2),1,1)-nkp{3}(v(:,:,3),1,1);
@@ -119,7 +133,7 @@ function [u] = precond(rhs)
     bb=Uschur\(Lschur\srhs(pschur));
     b1=reshape(bb(1:end-corners), m-2, []);
     b1=[b1, zeros(m-2,1)];
-    b0=zeros(2,2); 
+    b0=zeros(2,2);
     b0(1,1)=bb(end-corners+1:end);
 
     % Solve for interior nodes with the given BCs
@@ -136,8 +150,12 @@ function [u] = pick(uu)
     u(1:d(1))=uu(kd1,kd2,:);
     p=d(1);
     for r=1:size(adj,1)
-        bx=rd1(adj(r,1:2)>0);
-        u(1+p:p+m-2)=vec(uu(bx,kd2,adj(r,1)));
+        [m11,m12,m21,m22]=mapToAssembled(adj(r,:));
+        if numel(m11)==1
+            u(1+p:p+m-2)=vec(uu(m11,m12,adj(r,2)));
+        else
+            u(1+p:p+m-2)=vec(uu(m21,m22,adj(r,4)));
+        end
         p=p+m-2;
     end
     u(1+p)=uu(1,1,1);
@@ -147,11 +165,10 @@ function [uu] = assembly(u)
     uu=zeros(m,n,ndom);
     p=ndom*(m-2)^2;
     uu(kd1,kd2,:)=reshape(u(1:p), m-2,n-2,[]);
-    for r=1:size(adj,1)
-        bx=rd1(adj(r,1:2)>0);
-        by=rd2(adj(r,3:4)>0);
-        uu(bx,kd2,adj(r,1))=reshape(u(1+p:p+m-2),n-2,[])';
-        uu(kd1,by,adj(r,3))=reshape(u(1+p:p+m-2),m-2,[]);
+    for r=1:size(adj,1) 
+        [m11,m12,m21,m22]=mapToAssembled(adj(r,:));
+        uu(m11,m12,adj(r,2))=reshape(u(1+p:p+m-2),m-2,[]);
+        uu(m21,m22,adj(r,4))=reshape(u(1+p:p+m-2),m-2,[]);
         p=p+m-2;
     end
     uu(1,1,:)=u(1+p);
@@ -163,9 +180,8 @@ function [u] = Rtransp(uu)
     u(1:d(1))=uu(kd1,kd2,:);
     p=d(1);
     for r=1:size(adj,1)
-        bx=rd1(adj(r,1:2)>0);
-        by=rd2(adj(r,3:4)>0);
-        u(1+p:p+m-2)=vec(uu(bx,kd2,adj(r,1)))+vec(uu(kd1,by,adj(r,3)));
+        [m11,m12,m21,m22]=mapToAssembled(adj(r,:));
+        u(1+p:p+m-2)=vec(uu(m11,m12,adj(r,2)))+vec(uu(m21,m22,adj(r,4)));
         p=p+m-2;
     end
     u(1+p)=sum(uu(1,1,:));
@@ -200,6 +216,7 @@ function [uu,flag,relres,iter]=poissonSolver(F,ub)
     [uu,flag,relres,iter]=gmres(@afun,rhs,restart,tol,ceil(maxit/restart),[],@pfun,uu);
     uu=ub+reshape(assembly(uu),size(ub));  
 end
+
 [xx,yy]=ndgrid(x0,y0);
 
 if nargin>1
@@ -243,14 +260,4 @@ dx=diff(xlim());
 dy=diff(ylim());
 pbaspect([dx,dy,min(dx,dy)]);
 display(pcalls);
-end
-
-function [net]=topo(adj)
-% Inverts adjacency map from inter->doms to dom->inters (E,W,N,S)
-ndoms=max(adj(:));
-net=zeros(ndoms,4);
-net(adj(adj(:,1)>0,1),1)=find(adj(:,1)>0);
-net(adj(adj(:,2)>0,2),2)=find(adj(:,2)>0);
-net(adj(adj(:,3)>0,3),3)=find(adj(:,3)>0);
-net(adj(adj(:,4)>0,4),4)=find(adj(:,4)>0);
 end

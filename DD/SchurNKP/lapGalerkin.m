@@ -11,8 +11,8 @@ C11=diag(wx)*( g22./jac)*diag(wy);
 C12=diag(wx)*(-g12./jac)*diag(wy);
 C22=diag(wx)*( g11./jac)*diag(wy);
 
-E1=chebC(x0, xx);
-E2=chebC(y0, yy);
+E1=legC(x0, xx);
+E2=legC(y0, yy);
 
 function vv=stiffFun(uu)
     uu=reshape(uu,[m,n]);

@@ -31,8 +31,8 @@ K1=D1'*diag(w)*D1-E1(rd,:)'*diag([1,-1])*D1(rd,:);
 F=(D1'*diag(w)*D(:,rd)-E1(rd,:)'*diag([1,-1])*D(rd,rd))/B(:,rd);
 
 % Initial conditions
-u=exp(-100*x.^2).*(1-100*x.^2);
-v=0*(1-x.^2).^2;
+u=sin(abs(x));
+v=cos(abs(x));
 bc=B*u;
 
 % Force
@@ -46,8 +46,8 @@ h2=plot(x,u); hold off;
 % ylim([-2,2]);
 
 t=0; tf=2;
-nsteps=1000; 
-dt=tf/nsteps; dt^8
+nsteps=1000;
+dt=tf/nsteps;
 
 A = -M1\K1;
 L=[zeros(size(A)), I(kd,kd); A, zeros(size(A))];
@@ -108,7 +108,7 @@ for i=1:nsteps
     v(kd) = v1(kd);
     u1 = u0 + E1*u(kd);
     c(1)=(v(kd)'*M1*v(kd)+u(kd)'*K1*u(kd))/2;
-    set(h1, 'YData', 0*u1);
+    set(h1, 'YData', u1);
     
     % Direct solver
     w=HL\(HR*w);

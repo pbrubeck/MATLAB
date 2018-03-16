@@ -79,7 +79,7 @@ u=u0+cumsum(du);
 end
 
 function u=herm4(f,t,u0)
-% 6th order Hermite rule
+% 4th order Hermite rule
 difforder = 1;
 t1 = ainit(t(1:end-1), difforder);
 t2 = ainit(t(2:end),   difforder);
@@ -93,7 +93,7 @@ u=u0+cumsum(du);
 end
 
 function u=herm6(f,t,u0)
-% 4th order Hermite rule
+% 6th order Hermite rule
 difforder = 2;
 t1 = ainit(t(1:end-1), difforder);
 t2 = ainit(t(2:end),   difforder);
