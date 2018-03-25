@@ -37,6 +37,7 @@ P12=lowrank(C12,1);
 P22=lowrank(C22,1);
 
 % Block-to-row permuted operator (Van Loan, 1993)
+% Here we use some nifty algebra to optimize the computation
 function b=laphat(x, tflag)
     X=reshape(x,floor(sqrt(numel(x))),[]).';
     if strcmp(tflag,'transp')
@@ -57,14 +58,35 @@ end
 % Nearest Kronecker Product using Lanczos SVD
 [B,S,A]=svds(@laphat, [n*n, m*m], 2);
 s=sqrt(diag(S));
-% This transformation ensures positive-definitiveness (I don't know how)
-p=-1; q=1;
-Q1=[1  p;  q 1]/sqrt(1-p*q);
-Q2=[1 -q; -p 1]/sqrt(1-p*q);
-A(:,1:2)=A(:,1:2)*diag(s)*Q1;
-B(:,1:2)=B(:,1:2)*diag(s)*Q2;
-A1=reshape(A(:,1),[m,m]); A1=sign(A(1,2))*(A1+A1')/2;
-B1=reshape(B(:,1),[n,n]); B1=sign(B(1,1))*(B1+B1')/2;
-A2=reshape(A(:,2),[m,m]); A2=sign(A(1,2))*(A2+A2')/2;
-B2=reshape(B(:,2),[n,n]); B2=sign(B(1,1))*(B2+B2')/2;
+
+% This transformation ensures positive-definitiveness (I don't know how) 
+A(:,1:2)=A(:,1:2)*diag(s);
+B(:,1:2)=B(:,1:2)*diag(s);
+
+A0=A;
+B0=B;
+
+Q=[1,1;1,-1];
+cond = true;
+i=0;
+while(cond)
+    Q=Q/sqrt(abs(det(Q)));
+    A(:,1:2)=A0(:,1:2)*Q;
+    B(:,1:2)=B0(:,1:2)/Q';
+    A1=reshape(A(:,1),[m,m]);
+    B1=reshape(B(:,1),[n,n]);
+    A2=reshape(A(:,2),[m,m]);
+    B2=reshape(B(:,2),[n,n]);
+    DA=[diag(A1), diag(A2)];
+    DB=[diag(B1), diag(B2)];
+    
+    cond = any([DA(:); DB(:)]<=0);
+    if(cond && mod(i,2)==0)
+        Q=-Q;
+    elseif(cond)
+        % I hate this, but I am not able to fix it >:(
+        Q=2*rand(2)-1; Q=(Q+Q')/2;
+    end
+    i=i+1;
+end
 end

@@ -7,13 +7,10 @@ J=imag(conj(A(:,2))*A(2,:));
 E=real(A(:,2)*A(:,2)');
 F=real(conj(A(:,2))*A(2,:));
 G=real(A(2,:)'*A(2,:));
-
 % Transformation
 zz=A(1,1)+A(2,1)*x+A(1,2)*y+A(2,2)*x.*y;
-
 % Jacobian
 jac=J(1,1)+J(2,1)*x+J(1,2)*y;
-
 % Metric
 g11=E(1,1)+(E(2,1)+E(1,2))*y+E(2,2)*y.^2;
 g12=F(1,1)+F(1,2)*x+F(2,1)*y+F(2,2)*x.*y;

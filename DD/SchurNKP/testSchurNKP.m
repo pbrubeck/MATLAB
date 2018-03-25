@@ -25,10 +25,9 @@ C2=diag(a(2,:))*C2+diag(b(2,:))*Dy(rd2,:);
 
 % Vertices
 v0=[2i;-1;1];                                             % Isoceles
-v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
 v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
 v0=[-2+3i;0;2];                                           % Scalene
-
+v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
 
 L=abs(v0([3,1,2])-v0([2,3,1])); % Sides
 V=eye(3)+diag((sum(L)/2-L)./L([2,3,1]))*[-1,0,1; 1,-1,0; 0,1,-1];
@@ -50,7 +49,7 @@ adj(1:3,[1,3])=[2,1; 3,2; 1,3]; % [E,W,N,S]
 net=topo(adj);
 corners=zeros(size(net));
 corners(:,1)=1;                 % [EN,WN,ES,WS]
-net=[net, corners];
+edges=[1,0;1,0;1,0];
 ndom=size(quads,1);
 d=[ndom*(m-2)^2, size(adj,1)*(m-2), max(corners(:))];
 dofs=sum(d);
@@ -62,10 +61,7 @@ nkp  =cell(ndom,1); % block NKP
 gf   =cell(ndom,1); % block NKP Green's function
 
 % Construct Schur NKP preconditioner
-S11=sparse(d(2),d(2));
-S12=sparse(d(2),d(3));
-S21=sparse(d(3),d(2));
-S22=sparse(d(3),d(3));
+S=sparse(m*size(adj,1), m*size(adj,1));
 
 % Evaluate Jacobian determinant J and metric tensor [E, F; F, G]
 % Galerkin stiffness and mass (matrix-free) operators, with their NKP
@@ -74,18 +70,34 @@ for j=1:ndom
 F=curvedquad(z0(quads(j,:)),curv(j,:));
 [jac,g11,g12,g22] = diffgeom(F,xx,yy);
 [stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,x0,y0,xx,yy,wx,wy,jac,g11,g12,g22);
-[S11,S12,S21,S22,nkp{j},gf{j}]=feedSchurNKP(S11,S12,S21,S22,net(j,:),A1,B1,A2,B2,C1,C2);
+[S,nkp{j},gf{j}]=feedSchurNKP(S,net(j,:),A1,B1,A2,B2,C1,C2);
 end
 
 % Schur LU decomposition
-S=[S11,S12;S21,S22];
+ix=1:size(S,2);
+iy=zeros(m,size(adj,1));
+e=ones(size(iy));
+e([1,end],:)=1/2;
+
+iy(2:end-1,:)=reshape(1:d(2),m-2,[]);
+edges(edges==0)=-d(2);
+iy([1,end],:)=d(2)+edges';
+
+iy=reshape(iy, size(ix));
+e=reshape(e, size(ix));
+e(iy==0)=[];
+ix(iy==0)=[];
+iy(iy==0)=[];
+Rschur=sparse(ix,iy,e, size(S,2), d(2)+d(3));
+S=Rschur'*S*Rschur;
 [Lschur, Uschur, pschur]=lu(S,'vector');
 
 figure(2);
 imagesc(log(abs(S)));
-title(sprintf('cond(\\Sigma) = %.3f\ncond(\\Sigma_{11}) = %.3f', condest(S), condest(S11)));
+title(sprintf('cond(\\Sigma) = %.3f', condest(S)));
 colormap(gray(256)); colorbar; axis square;
 drawnow;
+
 
 net(net==0)=max(net(:))+1; 
 

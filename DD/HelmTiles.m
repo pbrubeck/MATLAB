@@ -3,13 +3,13 @@ function [lam] = HelmTiles( m, k )
 % by squares
 n=m;
 
-% L-shaped membrane
-adjx=[2 1];
-adjy=[3 1];
-
 % UIUC block-I
 adjx=[3 4; 4 5; 6 7; 7 8];
 adjy=[4 2; 2 1; 1 7];
+
+% L-shaped membrane
+adjx=[2 1];
+adjy=[3 1];
 
 
 % adjx=[3 4; 4 5; 6 7; 7 8; 10 11; 11 12; 12 13];

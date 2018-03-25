@@ -1,4 +1,4 @@
-function [S11,S12,S21,S22,nkp,gf,kd,gb] = feedSchurNKP(S11,S12,S21,S22,net,A1,B1,A2,B2,C1,C2)
+function [S,nkp,gf,kd,gb] = feedSchurNKP(S,net,A1,B1,A2,B2,C1,C2)
 % Updates SchurNKP S given domain topology net (EWNS) and NKP (A1,B1,A2,B2)
 % Returns preconditioned Green's function gf and constrained basis gb = kd'
 m=size(A1,1);
@@ -31,13 +31,11 @@ kd=@(uu) reshape(E1(:,kd1)'*uu*E2(:,kd2),[],1);
 gb=@(uu) E1(:,kd1)*reshape(uu,length(kd1),length(kd2))*E2(:,kd2)';
 
 % Schur complement
-blocks=size(S11,1)/length(kd1);
-corners=size(S22,1);
+blocks=size(S,1)/m;
 mask=@(x,y) sparse(x,y,1,blocks,blocks);
 
 T1=net(1:2);
 T2=net(3:4);
-T3=net(5:8);
 
 % Building blocks
 VTA1=V1(:,kd1)'*A1*E1;
@@ -58,11 +56,7 @@ for i=1:numel(I)
     AXX=AXX-VTB1'*diag(X12(:,i))*VTB2;
     AXX=AXX-VTB2'*diag(X21(:,i))*VTB1;
     AXX=AXX-VTB2'*diag(X22(:,i))*VTB2;
-    
-    S11=S11+kron(mask(x(i),y(i)), AXX(kd2,kd2));
-    S12=S12+kron(sparse(x(i),T3(T3>0),1/2,blocks,corners), AXX(kd2,J(T3>0)));
-    S21=S21+kron(sparse(T3(T3>0),y(i),1/2,corners,blocks), AXX(I(T3>0),kd2));
-    S22=S22+sparse(T3(T3>0),T3(T3>0),AXX(I(T3>0),J(T3>0))/4,corners,corners);
+    S=S+kron(mask(x(i),y(i)), AXX);
 end
 
 % [N S] x [N S]
@@ -78,11 +72,7 @@ for i=1:numel(I)
     AYY=AYY-VTA1'*diag(Y12(:,i))*VTA2;
     AYY=AYY-VTA2'*diag(Y21(:,i))*VTA1;
     AYY=AYY-VTA2'*diag(Y22(:,i))*VTA2;
-    
-    S11=S11+kron(mask(x(i),y(i)), AYY(kd1,kd1));
-    S12=S12+kron(sparse(x(i),T3(T3>0),1/2,blocks,corners), AYY(kd1,J(T3>0)));
-    S21=S21+kron(sparse(T3(T3>0),y(i),1/2,corners,blocks), AYY(I(T3>0),kd1));
-    S22=S22+sparse(T3(T3>0),T3(T3>0),AYY(I(T3>0),J(T3>0))/4,corners,corners);
+    S=S+kron(mask(x(i),y(i)), AYY);
 end
 
 % [E W] x [N S]
@@ -94,11 +84,7 @@ for i=1:numel(I)
     AXY=AXY-VTB2'*((VTB1(:,J(i))*VTA2(:,I(i))').*LL)*VTA1;
     AXY=AXY-VTB1'*((VTB2(:,J(i))*VTA1(:,I(i))').*LL)*VTA2;
     AXY=AXY-VTB2'*((VTB2(:,J(i))*VTA2(:,I(i))').*LL)*VTA2;
-    
-    S11=S11+kron(mask(x(i),y(i)), AXY(kd2,kd1));
-    S12=S12+kron(sparse(x(i),T3(T3>0),1/2,blocks,corners), AXY(kd2,J(T3>0)));
-    S21=S21+kron(sparse(T3(T3>0),y(i),1/2,corners,blocks), AXY(I(T3>0),kd1));
-    S22=S22+sparse(T3(T3>0),T3(T3>0),AXY(I(T3>0),J(T3>0))/4,corners,corners);
+    S=S+kron(mask(x(i),y(i)), AXY);
 end
 
 % [N S] x [E W]
@@ -110,11 +96,7 @@ for i=1:numel(I)
     AYX=AYX-VTA2'*((VTA1(:,J(i))*VTB2(:,I(i))').*LL')*VTB1;
     AYX=AYX-VTA1'*((VTA2(:,J(i))*VTB1(:,I(i))').*LL')*VTB2;
     AYX=AYX-VTA2'*((VTA2(:,J(i))*VTB2(:,I(i))').*LL')*VTB2;
-    
-    S11=S11+kron(mask(x(i),y(i)), AYX(kd1,kd2));
-    S12=S12+kron(sparse(x(i),T3(T3>0),1/2,blocks,corners), AYX(kd1,J(T3>0)));
-    S21=S21+kron(sparse(T3(T3>0),y(i),1/2,corners,blocks), AYX(I(T3>0),kd2));
-    S22=S22+sparse(T3(T3>0),T3(T3>0),AYX(I(T3>0),J(T3>0))/4,corners,corners);
+    S=S+kron(mask(x(i),y(i)), AYX);
 end
 end
 
@@ -135,6 +117,7 @@ SM=E'*M*E;
 % Eigenfunctions
 V=zeros(m);
 [V(kd,kd),L]=eig(SK(kd,kd), SM(kd,kd), 'vector');
-%V(kd,kd)=bsxfun(@rdivide, V(kd,kd), sqrt(diag(V(kd,kd)'*SM(kd,kd)*V(kd,kd)))');
+V(kd,kd)=bsxfun(@rdivide, V(kd,kd), sqrt(diag(V(kd,kd)'*SM(kd,kd)*V(kd,kd)))');
+V(kd,kd)=bsxfun(@rdivide, V(kd,kd), sign(V(kd(1),kd)));
 V(rd,kd)=E(rd,kd)*V(kd,kd);
 end
