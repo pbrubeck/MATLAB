@@ -54,7 +54,7 @@ nkp  =cell(ndom,1); % block NKP
 gf   =cell(ndom,1); % block NKP Green's function
 
 % Construct Schur NKP preconditioner
-Sig=sparse(m*size(adj,1), m*size(adj,1));
+S=sparse(m*size(adj,1), m*size(adj,1));
 
 % Evaluate Jacobian determinant J and metric tensor [g11, g12; g12, g22]
 % Galerkin stiffness and mass (matrix-free) operators, with their NKP
@@ -65,29 +65,28 @@ for j=1:ndom
 F=curvedquad(z0(quads(j,:)),curv(j,:));
 [jac,g11,g12,g22] = diffgeom(F,xx,yy);
 [stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,Dy,x0,y0,xx,yy,wx,wy,jac,g11,g12,g22);
-[Sig,nkp{j},gf{j}]=feedSchurNKP(Sig,net(j,:),A1,B1,A2,B2,C1,C2);
+[S,nkp{j},gf{j}]=feedSchurNKP(S,net(j,:),A1,B1,A2,B2,C1,C2);
 end
 
-% Schur LU decomposition
-ix=1:size(Sig,2);
+% Schur Cholesky decomposition
+ix=1:size(S,2);
 iy=zeros(m,size(adj,1));
 e=ones(size(iy));
-e([1,end],:)=1/2;
 iy(2:end-1,:)=reshape(1:d(2),m-2,[]);
 edges(edges==0)=-d(2);
 iy([1,end],:)=d(2)+edges';
-
+e([1,end],:)=1/2;
 iy=reshape(iy, size(ix));
 e=reshape(e, size(ix));
 e(iy==0)=[];
 ix(iy==0)=[];
 iy(iy==0)=[];
-Rschur=sparse(ix,iy,e, size(Sig,2), d(2)+d(3));
-Sig=Rschur'*Sig*Rschur;
-[Lschur, Uschur, pschur]=lu(Sig,'vector');
+Rschur=sparse(ix,iy,e, size(S,2), d(2)+d(3));
+S=Rschur'*S*Rschur;
+Uschur=chol(S,'upper');
 
 figure(2);
-imagesc(log(abs(Sig)));
+imagesc(log(abs(S)));
 title(sprintf('NKP Schur complement \\Sigma\ncond(\\Sigma) = %.3f', condest(S)));
 colormap(gray(256)); colorbar; axis square;
 drawnow;
@@ -152,7 +151,7 @@ function [u] = precond(rhs)
     srhs=[s1(:); s0(:)];
 
     % Solve for boundary nodes
-    bb=Uschur\(Lschur\srhs(pschur));
+    bb=Uschur\(Uschur'\srhs);
     b1=reshape(bb(1:d(2)), m-2, []);
     b1=[zeros(m-2,1), b1];
     b2=[0; bb(d(2)+1:end)];

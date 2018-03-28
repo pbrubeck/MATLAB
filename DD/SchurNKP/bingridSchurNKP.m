@@ -1,4 +1,4 @@
-function [lam] = bingridSchurNKP( m, k )
+function [lam] = bingridSchurNKP(m,ref,k)
 % Schur complement of the NKP preconditioner with quadrileteral domains.
 n=m;
 kd1=2:m-1; rd1=[1,m];
@@ -6,7 +6,7 @@ kd2=2:n-1; rd2=[1,n];
 vec=@(x) x(:);
 
 tol=1E-15;
-maxit=100;
+maxit=200;
 restart=7;
 
 % Differential operators
@@ -25,13 +25,14 @@ C2=diag(a(2,:))*C2+diag(b(2,:))*Dy(rd2,:);
 
 % Assemble quads [NE, NW, SE, SW]
 z0=[0; 1; 1+1i; 1i; -1+1i; -1; -1-1i; -1i];
+z0=real(z0)+2i*imag(z0);
 quads=[3,4,2,1; 4,5,1,6; 1,6,8,7];
-curv=zeros(size(quads)); curv(:)=inf;
+curv=zeros(size(quads)); curv(:,:)=inf;
 
-%[z0,quads,curv]=bingrid();
+[z0,quads,curv]=bingrid();
 
 % Refinement and Topology
-for ref=1:3
+for j=1:ref
     [net, adj, corners, edges, bnd] = meshtopo(quads);
     [z0,quads,curv]=quadmeshrefine(z0,quads,curv,adj,bnd);
 end
@@ -62,7 +63,7 @@ F=curvedquad(z0(quads(j,:)),curv(j,:));
 [S,nkp{j},gf{j}]=feedSchurNKP(S,net(j,:),A1,B1,A2,B2,C1,C2);
 end
 
-% Schur LU decomposition
+% Schur Cholesky decomposition
 ix=1:size(S,2);
 iy=zeros(m,size(adj,1));
 e=ones(size(iy));
@@ -77,13 +78,15 @@ ix(iy==0)=[];
 iy(iy==0)=[];
 Rschur=sparse(ix,iy,e, size(S,2), d(2)+d(3));
 S=Rschur'*S*Rschur;
-[Lschur, Uschur, pschur]=lu(S,'vector');
 
 figure(2);
 imagesc(log(abs(S)));
 title(sprintf('NKP Schur complement \\Sigma\ncond(\\Sigma) = %.3f', condest(S)));
-colormap(gray(256)); colorbar; axis square;
+colormap(gray(256)); colorbar; 
+axis square;
 drawnow;
+
+[Lschur,Uschur]=lu(S);
 
 function [m1,m2]=mapToCornerIndex(id)
     m1=rd1(bitand(id-1,1)==[0,1]);
@@ -145,7 +148,7 @@ function [u] = precond(rhs)
     srhs=[s1(:); s0(:)];
 
     % Solve for boundary nodes
-    bb=Uschur\(Lschur\srhs(pschur));
+    bb=Uschur\(Lschur\srhs);
     b1=reshape(bb(1:d(2)), m-2, []);
     b1=[zeros(m-2,1), b1];
     b2=[0; bb(d(2)+1:end)];
@@ -244,7 +247,7 @@ end
 
 [xx,yy]=ndgrid(x0,y0);
 
-if nargin>1
+if nargin>2
     tol=1E-11;
     [U,lam,~,~,relres]=lobpcg(rand(dofs,k),@afun,@bfun,@pfun,[],tol,maxit);
     relres=relres(:,end);
@@ -271,7 +274,7 @@ else
     lam=[];
     
     % Testing preconditioner
-    %uu=reshape(precond(Rtransp(fullop(mass,F))),size(F));  
+    % uu=reshape(precond(Rtransp(fullop(mass,F))),size(F));  
     
     figure(1);
     for j=1:ndom

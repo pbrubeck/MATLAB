@@ -32,13 +32,23 @@ function B=lowrank(A,r)
 end
 
 % This is so crucial, and I don't know why
+P0=lowrank(vol,1);
 P11=lowrank(C11,1);
 P12=lowrank(C12,1);
 P22=lowrank(C22,1);
 
 % Block-to-row permuted operator (Van Loan, 1993)
 % Here we use some nifty algebra to optimize the computation
-function b=laphat(x, tflag)
+function b=mass_hat(x, tflag)
+    X=reshape(x,floor(sqrt(numel(x))),[]).';
+    if strcmp(tflag,'transp')
+        b=reshape(E1'*diag(P0*diag(E2*X*E2'))*E1,[],1);
+    else
+        b=reshape(E2'*diag(diag(E1*X*E1').'*P0)*E2,[],1);
+    end
+end
+
+function b=stiff_hat(x, tflag)
     X=reshape(x,floor(sqrt(numel(x))),[]).';
     if strcmp(tflag,'transp')
         v11=Dx'*(E1'*diag(P11*diag(E2*(   X    )*E2'))*E1)*Dx;
@@ -56,37 +66,17 @@ function b=laphat(x, tflag)
 end
 
 % Nearest Kronecker Product using Lanczos SVD
-[B,S,A]=svds(@laphat, [n*n, m*m], 2);
+[B,S,A]=svds(@stiff_hat, [n*n, m*m], 2);
 s=sqrt(diag(S));
+A(:,1:2)=A(:,1:2)*diag(s(1:2));
+B(:,1:2)=B(:,1:2)*diag(s(1:2));
 
-% This transformation ensures positive-definitiveness (I don't know how) 
-A(:,1:2)=A(:,1:2)*diag(s);
-B(:,1:2)=B(:,1:2)*diag(s);
-
-A0=A;
-B0=B;
-
-Q=[1,1;1,-1];
-cond = true;
-i=0;
-while(cond)
-    Q=Q/sqrt(abs(det(Q)));
-    A(:,1:2)=A0(:,1:2)*Q;
-    B(:,1:2)=B0(:,1:2)/Q';
-    A1=reshape(A(:,1),[m,m]);
-    B1=reshape(B(:,1),[n,n]);
-    A2=reshape(A(:,2),[m,m]);
-    B2=reshape(B(:,2),[n,n]);
-    DA=[diag(A1), diag(A2)];
-    DB=[diag(B1), diag(B2)];
-    
-    cond = any([DA(:); DB(:)]<=0);
-    if(cond && mod(i,2)==0)
-        Q=-Q;
-    elseif(cond)
-        % I hate this, but I am not able to fix it >:(
-        Q=2*rand(2)-1; Q=(Q+Q')/2;
-    end
-    i=i+1;
-end
+A1=reshape(A(:,1),[m,m]);
+B1=reshape(B(:,1),[n,n]);
+A2=reshape(A(:,2),[m,m]);
+B2=reshape(B(:,2),[n,n]);
+A1=sign(A(1,1))*(A1+A1')/2; 
+B1=sign(B(1,1))*(B1+B1')/2;
+A2=sign(A(1,1))*(A2+A2')/2;
+B2=sign(B(1,1))*(B2+B2')/2;
 end

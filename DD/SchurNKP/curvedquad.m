@@ -7,7 +7,7 @@ c=(b+a)/2;
 d=(b-a)/2;
 h=sqrt(r.^2-abs(d).^2);
 w=atan2(sign(r).*abs(d), h);
-s=1i*sign(r).*d./abs(d);
+s=1i*sign(r.*d);
 f=cell(4,1);
 for i=1:4
     if isinf(r(i))

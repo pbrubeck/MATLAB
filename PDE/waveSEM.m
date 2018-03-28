@@ -44,10 +44,16 @@ E(rd,kd)=-B(:,kd);
 E(rd,:)=B(:,rd)\E(rd,:);
 E1=E(:,kd); %E2=E(:,rd);
 
-M2=E1'*kron([1,0;0,1],M1)*E1;
-K2=E1'*kron([0,1;1,0],K1)*E1;
+M2=E1'*kron([1,0; 0,1],M1)*E1;
+K2=E1'*kron([0,1; 1,0],K1)*E1;
 
 A=-M2\K2;
+
+figure(5);
+imagesc(log(abs(K2-K2')));
+colormap(gray(256));
+colorbar();
+
 
 % Initial condition
 u=1/2*cos(abs(x1));

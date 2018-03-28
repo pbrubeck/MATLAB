@@ -44,7 +44,7 @@ function [interfaces, boundaries]=faces_to_edges(quad)
 end
 
 function [net,adj]=adjacency(adj, nquad)
-% This sorts the interface numbering such that we ge minimum fill in the
+% This sorts the interface numbering such that we get minimum fill in the
 % Schur complement.
 [x11,y11]=ndgrid(adj(:,2), adj(:,2));
 [x12,y12]=ndgrid(adj(:,2), adj(:,4));

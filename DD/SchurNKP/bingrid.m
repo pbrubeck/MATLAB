@@ -1,4 +1,4 @@
-function [points,quad,curv] = bingrid()
+function [points,quads,curv] = bingrid()
 r1 = 1;
 r2 = 1;
 h = 5;
@@ -34,11 +34,10 @@ quad_outer=[41,17,44,20; 42,38,41,17; 43,39,42,38; 44,20,43,39];
 % Cores
 quad_core=[1,2,4,3; 21,22,24,23];
 % Gather all quads
-quad=[quad_inner;quad_mid;quad_outer;quad_core];
-nquad=size(quad,1);
+quads=[quad_inner;quad_mid;quad_outer;quad_core];
 
 % Radius of curvature
-curv=zeros(nquad,4);
+curv=zeros(size(quads));
 curv(:,:)=inf;
 % Inner right shells
 curv(1 :4 ,3)=R_right(2);
@@ -70,21 +69,27 @@ curv(35,3:4)=[-rc, rc];
 curv(36:39,4)=R1;
 curv(36:39,3)=R2;
 
+% ref=3;
+% for j=1:ref
+%     [net, adj, corners, edges, bnd] = meshtopo(quads);
+%     [points,quads,curv]=quadmeshrefine(points,quads,curv,adj,bnd);
+% end
+
 % Sample gird
-N=20;
+N=10;
 x=linspace(-1,1,N)';
 y=linspace(-1,1,N)';
 [xx,yy]=ndgrid(x,y);
 
 figure(1); clf;
-for k=1:nquad
-    F = curvedquad(points(quad(k,:)), curv(k,:));
+for k=1:size(quads,1)
+    F = curvedquad(points(quads(k,:)), curv(k,:));
     %[jac,G11,G12,G22] = diffgeom(F,x,y); 
     zz = F(xx,yy);
     dd = abs(zz-h)-abs(zz+h);
-    surf(real(zz), imag(zz), dd); hold on;
+    surf(real(zz), imag(zz), dd*0+rand(1)); hold on;
 end
-colormap(jet(256));
+colormap(hsv(8));
 hold off;
 axis square;
 %shading interp
