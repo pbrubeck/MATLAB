@@ -1,8 +1,4 @@
-function [points,quads,curv] = bingrid()
-r1 = 1;
-r2 = 1;
-h = 5;
-
+function [points,quads,curv] = bingrid(r1,r2,h)
 a=1/6;
 r0=a*h+(1-a)*max(r1,r2);
 rc=h/sqrt(2);
@@ -39,60 +35,34 @@ quads=[quad_inner;quad_mid;quad_outer;quad_core];
 % Radius of curvature
 curv=zeros(size(quads));
 curv(:,:)=inf;
+
 % Inner right shells
-curv(1 :4 ,3)=R_right(2);
-curv(5 :8 ,4)=R_right(2);
-curv(5 :8 ,3)=R_right(3);
-curv(9 :12,4)=R_right(3);
-curv(9 :12,3)=R_right(4);
-curv(13:16,4)=R_right(4);
-curv(15,3)=rc;
-curv(13,3)=R1;
+curv(1 :4 ,1)=R_right(2);
+curv(5 :8 ,2)=R_right(2);
+curv(5 :8 ,1)=R_right(3);
+curv(9 :12,2)=R_right(3);
+curv(9 :12,1)=R_right(4);
+curv(13:16,2)=R_right(4);
+curv(15,1)=rc;
+curv(13,1)=R1;
 
 % Inner left shells
-curv(17:20,3)=R_left(2);
-curv(21:24,4)=R_left(2);
-curv(21:24,3)=R_left(3);
-curv(25:28,4)=R_left(3);
-curv(25:28,3)=R_left(4);
-curv(29:32,4)=R_left(4);
-curv(29,3)=rc;
-curv(31,3)=R1;
+curv(17:20,1)=R_left(2);
+curv(21:24,2)=R_left(2);
+curv(21:24,1)=R_left(3);
+curv(25:28,2)=R_left(3);
+curv(25:28,1)=R_left(4);
+curv(29:32,2)=R_left(4);
+curv(29,1)=rc;
+curv(31,1)=R1;
 
 % Middle Patches
-curv(33,3:4)=[R1, rc];
-curv(34,3:4)=[R1, rc];
-curv(35,1:2)=[-rc, rc];
+curv(33,1:2)=[R1, rc];
+curv(34,1:2)=[R1, rc];
 curv(35,3:4)=[-rc, rc];
+curv(35,1:2)=[-rc, rc];
 
 % Outer shell
-curv(36:39,4)=R1;
-curv(36:39,3)=R2;
-
-% ref=3;
-% for j=1:ref
-%     [net, adj, corners, edges, bnd] = meshtopo(quads);
-%     [points,quads,curv]=quadmeshrefine(points,quads,curv,adj,bnd);
-% end
-
-% Sample gird
-N=10;
-x=linspace(-1,1,N)';
-y=linspace(-1,1,N)';
-[xx,yy]=ndgrid(x,y);
-
-figure(1); clf;
-for k=1:size(quads,1)
-    F = curvedquad(points(quads(k,:)), curv(k,:));
-    %[jac,G11,G12,G22] = diffgeom(F,x,y); 
-    zz = F(xx,yy);
-    dd = abs(zz-h)-abs(zz+h);
-    surf(real(zz), imag(zz), dd*0+rand(1)); hold on;
-end
-colormap(hsv(8));
-hold off;
-axis square;
-%shading interp
-%camlight;
-view(2);
+curv(36:39,2)=R1;
+curv(36:39,1)=R2;
 end

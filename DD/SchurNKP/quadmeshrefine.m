@@ -3,12 +3,11 @@ edges=[adj(:,1:2); bnd(:,1:2)];
 nedges=size(edges,1);
 nquads=size(quads,1);
 
-perm=[3,4,1,2];
 ewns=[1,3; 2,4; 1,2; 3,4];
 zedge=zeros(size(edges,1),1);
 for r=1:size(edges,1)
     pts=z(quads(edges(r,2), ewns(edges(r,1),:)));
-    rad=curv(edges(r,2), perm(edges(r,1)));
+    rad=curv(edges(r,2), edges(r,1));
     zedge(r)=mean(pts);
     if ~isinf(rad)
         d=diff(pts)/2;
@@ -20,7 +19,7 @@ end
 zcntr=mean(z(quads), 2);
 for q=1:nquads
     for j=1:4
-        rad=curv(q, perm(j));
+        rad=curv(q, j);
         if ~isinf(rad)
             pts=z(quads(q, ewns(j,:)));
             d=diff(pts)/2;
@@ -54,19 +53,18 @@ quads=qnew;
 
 curvnew=zeros(size(quads));
 curvnew(1:4:end,[1,3])=curv(:,[1,3]);
-curvnew(2:4:end,[1,4])=curv(:,[1,4]);
-curvnew(3:4:end,[2,3])=curv(:,[2,3]);
+curvnew(2:4:end,[2,3])=curv(:,[2,3]);
+curvnew(3:4:end,[1,4])=curv(:,[1,4]);
 curvnew(4:4:end,[2,4])=curv(:,[2,4]);
 
-curvnew(1:4:end,4)=mean(curv(:,3:4),2);
-curvnew(2:4:end,3)=mean(curv(:,3:4),2);
-curvnew(3:4:end,4)=mean(curv(:,3:4),2);
-curvnew(4:4:end,3)=mean(curv(:,3:4),2);
-
-curvnew(1:4:end,2)=mean(curv(:,1:2),2);
-curvnew(2:4:end,2)=mean(curv(:,1:2),2);
-curvnew(3:4:end,1)=mean(curv(:,1:2),2);
-curvnew(4:4:end,1)=mean(curv(:,1:2),2);
+curvnew(1:4:end,2)=mean(curv(:,[1,2]),2);
+curvnew(1:4:end,4)=mean(curv(:,[3,4]),2);
+curvnew(2:4:end,1)=mean(curv(:,[1,2]),2);
+curvnew(2:4:end,4)=mean(curv(:,[3,4]),2);
+curvnew(3:4:end,2)=mean(curv(:,[1,2]),2);
+curvnew(3:4:end,3)=mean(curv(:,[3,4]),2);
+curvnew(4:4:end,1)=mean(curv(:,[1,2]),2);
+curvnew(4:4:end,3)=mean(curv(:,[3,4]),2);
 
 curvnew(curvnew==0)=inf;
 curv=curvnew;

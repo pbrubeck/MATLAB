@@ -20,16 +20,18 @@ C2=zeros(2,n); C2(:,rd2)=eye(2);
 C1=diag(a(1,:))*C1+diag(b(1,:))*Dx(rd1,:);
 C2=diag(a(2,:))*C2+diag(b(2,:))*Dy(rd2,:);
 % (xx,yy) fine grid for over-integration
-[xx,wx]=gauleg(-1,1,m); 
-[yy,wy]=gauleg(-1,1,n);
+[xx,wx]=gauleg(-1,1,m); xx=xx(end:-1:1);
+[yy,wy]=gauleg(-1,1,n); yy=yy(end:-1:1);
 
 % Assemble quads [NE, NW, SE, SW]
 z0=[0; 1; 1+1i; 1i; -1+1i; -1; -1-1i; -1i];
-z0=real(z0)+2i*imag(z0);
+%z0=z0*exp(1i*pi/6);
+%z0=real(z0)+2i*imag(z0);
 quads=[3,4,2,1; 4,5,1,6; 1,6,8,7];
 curv=zeros(size(quads)); curv(:,:)=inf;
 
-[z0,quads,curv]=bingrid();
+%[z0,quads,curv]=bingrid(1,1,3);
+[z0,quads,curv]=coregrid(1);
 
 % Refinement and Topology
 for j=1:ref
@@ -63,7 +65,7 @@ F=curvedquad(z0(quads(j,:)),curv(j,:));
 [S,nkp{j},gf{j}]=feedSchurNKP(S,net(j,:),A1,B1,A2,B2,C1,C2);
 end
 
-% Schur Cholesky decomposition
+% Schur LU decomposition
 ix=1:size(S,2);
 iy=zeros(m,size(adj,1));
 e=ones(size(iy));
@@ -274,7 +276,7 @@ else
     lam=[];
     
     % Testing preconditioner
-    % uu=reshape(precond(Rtransp(fullop(mass,F))),size(F));  
+    %uu=reshape(precond(Rtransp(fullop(mass,F))),size(F));  
     
     figure(1);
     for j=1:ndom

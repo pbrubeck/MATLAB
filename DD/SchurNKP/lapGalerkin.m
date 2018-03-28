@@ -39,15 +39,6 @@ P22=lowrank(C22,1);
 
 % Block-to-row permuted operator (Van Loan, 1993)
 % Here we use some nifty algebra to optimize the computation
-function b=mass_hat(x, tflag)
-    X=reshape(x,floor(sqrt(numel(x))),[]).';
-    if strcmp(tflag,'transp')
-        b=reshape(E1'*diag(P0*diag(E2*X*E2'))*E1,[],1);
-    else
-        b=reshape(E2'*diag(diag(E1*X*E1').'*P0)*E2,[],1);
-    end
-end
-
 function b=stiff_hat(x, tflag)
     X=reshape(x,floor(sqrt(numel(x))),[]).';
     if strcmp(tflag,'transp')
@@ -70,7 +61,6 @@ end
 s=sqrt(diag(S));
 A(:,1:2)=A(:,1:2)*diag(s(1:2));
 B(:,1:2)=B(:,1:2)*diag(s(1:2));
-
 A1=reshape(A(:,1),[m,m]);
 B1=reshape(B(:,1),[n,n]);
 A2=reshape(A(:,2),[m,m]);

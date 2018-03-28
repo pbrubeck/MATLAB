@@ -48,9 +48,8 @@ function [net,adj]=adjacency(adj, nquad)
 % Schur complement.
 [x11,y11]=ndgrid(adj(:,2), adj(:,2));
 [x12,y12]=ndgrid(adj(:,2), adj(:,4));
-[x21,y21]=ndgrid(adj(:,4), adj(:,2));
 [x22,y22]=ndgrid(adj(:,4), adj(:,4));
-mask=(x11==y11)+(x12==y12)+(x21==y21)+(x22==y22);
+mask=(x11==y11)+(x12==y12)+(x12==y12)'+(x22==y22);
 p=symamd(mask);
 adj=adj(p,:);
 

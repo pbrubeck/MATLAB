@@ -1,4 +1,4 @@
-function [lam] = meshSchurNKP( m, k )
+function [lam] = meshSchurNKP( m, ref, k )
 % Schur complement of the NKP preconditioner with quadrileteral domains.
 n=m;
 kd1=2:m-1; rd1=[1,m];
@@ -24,10 +24,10 @@ C2=diag(a(2,:))*C2+diag(b(2,:))*Dy(rd2,:);
 [yy,wy]=gauleg(-1,1,n);
 
 % Vertices
-v0=[-2+3i;0;2];                                           % Scalene
 v0=[2i;-1;1];                                             % Isoceles
-v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
 v0=4/sqrt(3*sqrt(3))*[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
+v0=[-2+3i;0;2];                                           % Scalene
+v0=2/(2-sqrt(2))*[1i;0;1];                                % Right angle
 
 L=abs(v0([3,1,2])-v0([2,3,1])); % Sides
 V=eye(3)+diag((sum(L)/2-L)./L([2,3,1]))*[-1,0,1; 1,-1,0; 0,1,-1];
@@ -41,7 +41,12 @@ z0(7)=(L'*v0)/sum(L); % Incenter
 quads=[7,5,4,1; 7,6,5,2; 7,4,6,3];
 curv=zeros(size(quads)); curv(:)=inf;
 
-% Topology
+% Refinement and Topology
+for j=1:ref
+    [net, adj, corners, edges, bnd] = meshtopo(quads);
+    [z0,quads,curv]=quadmeshrefine(z0,quads,curv,adj,bnd);
+end
+
 [net, adj, corners, edges] = meshtopo(quads);
 ndom=size(quads,1);
 d=[ndom*(m-2)^2, size(adj,1)*(m-2), max(corners(:))];
@@ -83,7 +88,7 @@ ix(iy==0)=[];
 iy(iy==0)=[];
 Rschur=sparse(ix,iy,e, size(S,2), d(2)+d(3));
 S=Rschur'*S*Rschur;
-Uschur=chol(S,'upper');
+[Lschur,Uschur]=lu(S);
 
 figure(2);
 imagesc(log(abs(S)));
@@ -151,7 +156,7 @@ function [u] = precond(rhs)
     srhs=[s1(:); s0(:)];
 
     % Solve for boundary nodes
-    bb=Uschur\(Uschur'\srhs);
+    bb=Uschur\(Lschur\srhs);
     b1=reshape(bb(1:d(2)), m-2, []);
     b1=[zeros(m-2,1), b1];
     b2=[0; bb(d(2)+1:end)];
@@ -250,7 +255,7 @@ end
 
 [xx,yy]=ndgrid(x0,y0);
 
-if nargin>1
+if nargin>2
     tol=1E-11;
     [U,lam,~,~,relres]=lobpcg(rand(dofs,k),@afun,@bfun,@pfun,[],tol,maxit);
     relres=relres(:,end);
