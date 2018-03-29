@@ -1,30 +1,30 @@
-function [stiff,mass,A1,B1,A2,B2] = lapGalerkin(Dx,Dy,x0,y0,xx,yy,wx,wy,jac,g11,g12,g22)
+function [stiff,mass,A1,B1,A2,B2] = lapGalerkin(Dx,x0,xx,wx,jac,g11,g12,g22)
 % Stiffness matrix from Laplacian given a metric 
 % Assumes oversampled coefficients
 % Also returns nearest Kronecker product approximation
 
 m=size(Dx,1);
-n=size(Dy,1);
 
-vol=diag(wx)*( jac)*diag(wy);
-C11=diag(wx)*( g22./jac)*diag(wy);
-C12=diag(wx)*(-g12./jac)*diag(wy);
-C22=diag(wx)*( g11./jac)*diag(wy);
+vol=diag(wx)*( jac)*diag(wx);
+C11=diag(wx)*( g22./jac)*diag(wx);
+C12=diag(wx)*(-g12./jac)*diag(wx);
+C22=diag(wx)*( g11./jac)*diag(wx);
 
-E1=legC(x0, xx);
-E2=legC(y0, yy);
+E=legC(x0, xx);
+ED=E*Dx;
 
 function vv=stiffFun(uu)
-    uu=reshape(uu,[m,n]);
-    v11=Dx'*(E1'*(C11.*(E1*(Dx*uu    )*E2'))*E2);
-    v12=Dx'*(E1'*(C12.*(E1*(   uu*Dy')*E2'))*E2);
-    v21=    (E1'*(C12.*(E1*(Dx*uu    )*E2'))*E2)*Dy;
-    v22=    (E1'*(C22.*(E1*(   uu*Dy')*E2'))*E2)*Dy;
-    vv=reshape(v11+v12+v21+v22, size(uu));
+    uu=reshape(uu,[m,m]);
+    vv=zeros(size(uu));
+    vv=vv+(ED'*(C11.*(ED*uu*E'))*E);
+    vv=vv+(ED'*(C12.*(E*uu*ED'))*E);
+    vv=vv+(E'*(C12.*(ED*uu*E'))*ED);
+    vv=vv+(E'*(C22.*(E*uu*ED'))*ED);
+    vv=reshape(vv, size(uu));
 end
 stiff=@stiffFun;
 
-mass=@(uu) reshape(E1'*(vol.*(E1*reshape(uu,[m,n])*E2'))*E2,size(uu));
+mass=@(uu) reshape(E'*(vol.*(E*reshape(uu,[m,m])*E'))*E,size(uu));
 
 function B=lowrank(A,r)
     [U0,S0,V0]=svds(A,r);
@@ -32,41 +32,39 @@ function B=lowrank(A,r)
 end
 
 % This is so crucial, and I don't know why
-P0=lowrank(vol,1);
 P11=lowrank(C11,1);
 P12=lowrank(C12,1);
 P22=lowrank(C22,1);
 
 % Block-to-row permuted operator (Van Loan, 1993)
 % Here we use some nifty algebra to optimize the computation
+% v11=(ED1'*diag(P11*diag(E2*X*E2'))*ED1);
+
+
 function b=stiff_hat(x, tflag)
     X=reshape(x,floor(sqrt(numel(x))),[]).';
+    b=zeros(size(X));
     if strcmp(tflag,'transp')
-        v11=Dx'*(E1'*diag(P11*diag(E2*(   X    )*E2'))*E1)*Dx;
-        v12=    (E1'*diag(P12*diag(E2*(   X*Dy')*E2'))*E1)*Dx;
-        v21=Dx'*(E1'*diag(P12*diag(E2*(Dy*X    )*E2'))*E1);
-        v22=    (E1'*diag(P22*diag(E2*(Dy*X*Dy')*E2'))*E1);
-        b=reshape(v11+v12+v21+v22,[],1);
+        b=b+ED'*diag(P11*sum(( E*X).* E, 2))*ED;
+        b=b+ E'*diag(P12*sum(( E*X).*ED, 2))*ED;
+        b=b+ED'*diag(P12*sum((ED*X).* E, 2))*E;
+        b=b+ E'*diag(P22*sum((ED*X).*ED, 2))*E;
     else
-        v11=    (E2'*diag(diag(E1*(Dx*X*Dx')*E1').'*P11)*E2);
-        v12=Dy'*(E2'*diag(diag(E1*(Dx*X    )*E1').'*P12)*E2);
-        v21=    (E2'*diag(diag(E1*(   X*Dx')*E1').'*P12)*E2)*Dy;
-        v22=Dy'*(E2'*diag(diag(E1*(   X    )*E1').'*P22)*E2)*Dy;
-        b=reshape(v11+v12+v21+v22,[],1);
+        b=b+ E'*diag(sum((ED*X).*ED, 2).'*P11)* E;
+        b=b+ED'*diag(sum((ED*X).* E, 2).'*P12)* E;
+        b=b+ E'*diag(sum(( E*X).*ED, 2).'*P12)*ED;
+        b=b+ED'*diag(sum(( E*X).* E, 2).'*P22)*ED;
     end
+    b=reshape(b,[],1);
 end
 
 % Nearest Kronecker Product using Lanczos SVD
-[B,S,A]=svds(@stiff_hat, [n*n, m*m], 2);
+[B,S,A]=svds(@stiff_hat, [m*m, m*m], 2);
 s=sqrt(diag(S));
 A(:,1:2)=A(:,1:2)*diag(s(1:2));
 B(:,1:2)=B(:,1:2)*diag(s(1:2));
-A1=reshape(A(:,1),[m,m]);
-B1=reshape(B(:,1),[n,n]);
-A2=reshape(A(:,2),[m,m]);
-B2=reshape(B(:,2),[n,n]);
-A1=sign(A(1,1))*(A1+A1')/2; 
-B1=sign(B(1,1))*(B1+B1')/2;
-A2=sign(A(1,1))*(A2+A2')/2;
-B2=sign(B(1,1))*(B2+B2')/2;
+A1=reshape(A(:,1),[m,m]); A1=sign(A(1,1))*(A1+A1')/2;
+B1=reshape(B(:,1),[m,m]); B1=sign(B(1,1))*(B1+B1')/2;
+A2=reshape(A(:,2),[m,m]); A2=sign(A(1,1))*(A2+A2')/2;
+B2=reshape(B(:,2),[m,m]); B2=sign(B(1,1))*(B2+B2')/2;
 end

@@ -84,18 +84,6 @@ for i=1:numel(I)
     AXY=AXY-KV2*((KV2(J(i),:)'*MV1(I(i),:)).*LL')*MV1';
     S=S+kron(mask(x(i),y(i)), AXY)+kron(mask(y(i),x(i)), AXY');
 end
-
-% [N S] x [E W]
-% [x,y]=meshgrid(T2(T2>0), T1(T1>0) );
-% [I,J]=meshgrid(rd2(T2>0),rd1(T1>0));
-% for i=1:numel(I)
-%     AYX=A1(:,J(i))*B1(I(i),:)+A2(:,J(i))*B2(I(i),:);
-%     AYX=AYX-MV1*((MV1(J(i),:)'*KV2(I(i),:)).*LL)*KV2';
-%     AYX=AYX-KV1*((MV1(J(i),:)'*MV2(I(i),:)).*LL)*KV2';
-%     AYX=AYX-MV1*((KV1(J(i),:)'*KV2(I(i),:)).*LL)*MV2';
-%     AYX=AYX-KV1*((KV1(J(i),:)'*MV2(I(i),:)).*LL)*MV2';
-%     S=S+kron(mask(x(i),y(i)), AYX);
-% end
 end
 
 function [E,V,L,D]=eigenfunctions(K,M,C)
