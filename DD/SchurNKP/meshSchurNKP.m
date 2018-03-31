@@ -1,17 +1,41 @@
-function [lam] = meshSchurNKP(z0, quads, curv, m, k)
+function [lam] = meshSchurNKP(m, z0, quads, curv, prob, F, metric)
 % Schur complement of the NKP preconditioner with quadrileteral domains.
-kd=2:m-1; 
-rd=[1,m];
-vec=@(x) x(:);
+% m = Number of gridpoints in one direction per element
+% z0 = Mesh vertices
+% quads = Mesh quadrangulation
+% curv = Radius of curvature at each quadrilateral side
+% prob = Problem type 0 = Poisson, 1 = Eigenmodes
+% F = Poisson right-hand side
+% metric = conformal factor on top of a flat 2D metric
 
+if(nargin<7)
+    metric=@(x,y) 1+0*x+0*y;
+elseif(nargin<6)
+    F=@(x,y) 1+0*x+0*y;
+elseif(nargin<5)
+    prob=0;
+end
+
+% gmres options
 tol=1E-15;
 maxit=200;
 restart=7;
 
-% Differential operators
+% kept and removed degrees of freedom
+kd=2:m-1; 
+rd=[1,m];
+vec=@(x) x(:);
+
+% Mapped nodes
+X=zeros(m,m,size(quads,1));
+Y=zeros(m,m,size(quads,1));
+
+% Differential operator
 [Dx,x0]=legD(m); 
 Dx=Dx(end:-1:1,end:-1:1); 
 x0=x0(end:-1:1);
+[xx0,yy0]=ndgrid(x0);
+
 % Constraint operator
 a=[1,1;1,1];
 b=[0,0;0,0];
@@ -19,83 +43,77 @@ C1=zeros(2,m); C1(:,rd)=eye(2);
 C2=zeros(2,m); C2(:,rd)=eye(2);
 C1=diag(a(1,:))*C1+diag(b(1,:))*Dx(rd,:);
 C2=diag(a(2,:))*C2+diag(b(2,:))*Dx(rd,:);
-% xx fine grid for over-integration
-[xx,wx]=gauleg(-1,1,m); xx=xx(end:-1:1);
 
-[net, adj, corners, edges] = meshtopo(quads);
-ndom=size(quads,1);
-d=[ndom*(m-2)^2, size(adj,1)*(m-2), max(corners(:))];
-dofs=sum(d);
+% xq fine grid for over-integration
+[xq,wq]=gauleg(-1,1,m+32); xq=xq(end:-1:1);
+[xxq,yyq]=ndgrid(xq);
+
+% Mesh topology
+[corners, adj] = meshtopo(quads);
+
+% Local to global indexing
+[GID,nschur]=loc2glob(m,corners,adj);
+nquads=size(quads,1);
+idof=nquads*(m-2)^2;
+tdof=idof+size(adj,1)*(m-2)+max(corners(:));
 
 % Function handles
-stiff=cell(ndom,1); % block stiffness
-mass =cell(ndom,1); % block mass
-nkp  =cell(ndom,1); % block NKP
-gf   =cell(ndom,1); % block NKP Green's function
+stiff=cell(nquads,1); % block stiffness
+mass =cell(nquads,1); % block mass
+nkp  =cell(nquads,1); % block NKP
+gf   =cell(nquads,1); % block NKP Green's function
 
 % Construct Schur NKP preconditioner
-S=sparse(m*size(adj,1), m*size(adj,1));
+ischur=zeros(m*m,16,nquads);
+jschur=zeros(m*m,16,nquads);
+eschur=zeros(m*m,16,nquads);
 
-% Evaluate Jacobian determinant J and metric tensor [g11, g12; g12, g22]
+
+for j=1:nquads
+map=curvedquad(z0(quads(j,:)),curv(j,:));
+% Map collocation nodes
+zc=map(xx0,yy0);
+X(:,:,j)=real(zc);
+Y(:,:,j)=imag(zc);
+% Map quadtrature nodes
+zq=map(xxq,yyq);
+uuq=real(zq);
+vvq=imag(zq);
+% Evaluate Jacobian determinant jac and metric tensor [g11, g12; g12, g22]
+[jac,g11,g12,g22] = diffgeom(map,xq,xq);
 % Galerkin stiffness and mass (matrix-free) operators, with their NKP
+[stiff{j},mass{j},A1,B1,A2,B2]=saldoGalerkin(metric(uuq,vvq),Dx,x0,xq,wq,jac,g11,g12,g22);
 % Update NKP Schur complement and compute local Green functions
-% This for loop is highly parallelizable, the bottleneck are the updates to
-% the Schur complement sparse matrix.
-for j=1:ndom
-F=curvedquad(z0(quads(j,:)),curv(j,:));
-[jac,g11,g12,g22] = diffgeom(F,xx,xx);
-[stiff{j},mass{j},A1,B1,A2,B2]=lapGalerkin(Dx,x0,xx,wx,jac,g11,g12,g22);
-[S,nkp{j},gf{j}]=feedSchurNKP(S,net(j,:),A1,B1,A2,B2,C1,C2);
+[is,js,es,nkp{j},gf{j}]=feedSchurNKP(GID(:,:,j),A1,B1,A2,B2,C1,C2);
+ischur(:,:,j)=is;
+jschur(:,:,j)=js;
+eschur(:,:,j)=es;
 end
+b=(ischur>0)&(jschur>0);
+ischur=ischur(b);
+jschur=jschur(b);
+eschur=eschur(b);
 
 % Schur LU decomposition
-ix=1:size(S,2);
-iy=zeros(m,size(adj,1));
-e=ones(size(iy));
-iy(2:end-1,:)=reshape(1:d(2),m-2,[]);
-edges(edges==0)=-d(2);
-iy([1,end],:)=d(2)+edges';
-e([1,end],:)=1/2;
-iy=reshape(iy, size(ix));
-e=reshape(e, size(ix));
-e(iy==0)=[];
-ix(iy==0)=[];
-iy(iy==0)=[];
-Rschur=sparse(ix,iy,e, size(S,2), d(2)+d(3));
-S=Rschur'*S*Rschur;
-
-if(size(S,1) < 12E5)
-    figure(2);
-    imagesc(log(abs(S)));
-    title(sprintf('NKP Schur complement \\Sigma\ncond(\\Sigma) = %.3f', condest(S)));
-    colormap(gray(256)); colorbar; 
-    axis square;
-    drawnow;
-end
-
+S=sparse(ischur,jschur,eschur,nschur,nschur);
 [Lschur,Uschur]=lu(S);
 
-function [m1,m2]=mapToCornerIndex(id)
-    m1=rd(bitand(id-1,1)==[0,1]);
-    m2=rd(bitand(id-1,2)==[0,2]);
-end
 
-function [m11,m12,m21,m22]=mapToEdgeIndex(edge)
-    m11=rd(edge(1)==[1,2]);
-    m12=rd(edge(1)==[3,4]);     
-    m21=rd(edge(3)==[1,2]);
-    m22=rd(edge(3)==[3,4]);
-    if numel(m11)==0
-        m11=kd;
-    end
-    if numel(m12)==0
-        m12=kd;
-    end
-    if numel(m21)==0
-        m21=kd;
-    end
-    if numel(m22)==0
-        m22=kd;
+function [I,J]=glob2loc(adj)
+    s=adj(1);
+    q=adj(2);
+    if(s>2)
+        % Vertical edge
+        J=rd(s-2);
+        dr=1-2*(GID(1,J,q)>GID(m,J,q));
+        I=abs(min(dr,dr*m)):dr:abs(max(dr,dr*m));
+        I=I(GID(I,J,q)>0);
+    else
+        % Horizontal edge
+        I=rd(s);
+        dr=1-2*(GID(I,1,q)>GID(I,m,q));
+        J=abs(min(dr,dr*m)):dr:abs(max(dr,dr*m));
+        J=J(GID(I,J,q)>0);
     end
 end
 
@@ -108,98 +126,60 @@ function [vv] = fullop(op,uu)
 end
 
 function [u] = precond(rhs)
-    RHS=reshape(rhs(1:d(1)), m-2, m-2, []);
+    RHS=reshape(rhs(1:idof), m-2, m-2, []);
     v=zeros(m,m,size(RHS,3));
     for r=1:size(v,3)
-        v(:,:,r)=gf{r}(RHS(:,:,r),0,0,0);
+        v(:,:,r)=gf{r}(RHS(:,:,r), 0);
     end
-    p=d(1);
-    s1=zeros(m-2, size(adj,1));
-    for r=1:size(adj,1) % Parallelizable
-        [m11,m12,m21,m22]=mapToEdgeIndex(adj(r,:));
-        s1(:,r)=rhs(1+p:p+m-2) + ...
-                -vec(nkp{adj(r,2)}(v(:,:,adj(r,2)),m11,m12)) + ...
-                -vec(nkp{adj(r,4)}(v(:,:,adj(r,4)),m21,m22));
-        p=p+m-2;
+    
+    srhs=rhs(1+idof:end);
+    for r=1:size(adj,1)
+        [I1,J1]=glob2loc(adj(r,1:2));
+        [I2,J2]=glob2loc(adj(r,3:4));
+        gid=GID(I1,J1,adj(r,2));
+        srhs(gid)=srhs(gid)-vec(nkp{adj(r,2)}(v(:,:,adj(r,2)),I1,J1)) + ...
+                           -vec(nkp{adj(r,4)}(v(:,:,adj(r,4)),I2,J2));
     end
-    s0=rhs(p+1:end);
-    [m1, m2] = ndgrid(rd,rd); 
-    for r=1:size(corners,1)
-        for t=1:size(corners,2)
-            c=corners(r,t);
-            if(c>0)
-                s0(c) = s0(c)-nkp{r}(v(:,:,r),m1(t),m2(t));
-            end
-        end
-    end
-    srhs=[s1(:); s0(:)];
-
+    
     % Solve for boundary nodes
-    bb=Uschur\(Lschur\srhs);
-    b1=reshape(bb(1:d(2)), m-2, []);
-    b1=[zeros(m-2,1), b1];
-    b2=[0; bb(d(2)+1:end)];
+    ub=Uschur\(Lschur\srhs);
+    u=zeros(size(GID));
+    u(GID>0)=ub(GID(GID>0));
     
     % Solve for interior nodes with the given BCs
-    u=zeros(size(v));
-    for r=1:ndom % This is the most parallelizable loop
-        b0=reshape(b2(1+corners(r,:)),[2,2]);
-        u(:,:,r)=gf{r}(RHS(:,:,r), b1(:,1+net(r,1:2))', b1(:,1+net(r,3:4)), b0);
+    for r=1:nquads
+        u(:,:,r)=gf{r}(RHS(:,:,r), u(:,:,r));
     end
     u=u(:);
 end
 
-function [u] = pick(uu)
-    uu=reshape(uu,m,m,[]);
-    u=zeros(dofs,1);
-    u(1:d(1))=uu(kd,kd,:);
-    p=d(1);
-    for r=1:size(adj,1)
-        [m1,m2]=mapToEdgeIndex(adj(r,:));
-        u(1+p:p+m-2)=vec(uu(m1,m2,adj(r,2)));
-        p=p+m-2;
-    end
-    for r=1:max(corners(:))
-        [q,c]=find(corners==r,1,'first');
-        [m1,m2]=mapToCornerIndex(c);
-        u(1+p)=uu(m1,m2,q);
-        p=p+1;
-    end
-end
-
 function [uu] = assembly(u)
-    uu=zeros(m,m,ndom);
-    uu(kd,kd,:)=reshape(u(1:d(1)), m-2,m-2,[]);
-    ub=u(1+d(1):d(1)+d(2));
-    ub=reshape(ub, m-2, []);
-    ub=[zeros(m-2,1), ub];
-    uc=u(1+d(1)+d(2):end);
-    uc=[0;uc];
-    for r=1:size(uu,3)
-        uu(rd,kd,r)=ub(:,1+net(r,1:2))';
-        uu(kd,rd,r)=ub(:,1+net(r,3:4));
-        uu(rd,rd,r)=reshape(uc(1+corners(r,:)),[2,2]);
-    end
+    uu=zeros(m,m,nquads);
+    uu(kd,kd,:)=reshape(u(1:idof), m-2,m-2,[]);
+    ub=u(1+idof:end);
+    uu(GID>0)=ub(GID(GID>0));
 end
 
 function [u] = Rtransp(uu)
     uu=reshape(uu,m,m,[]);
-    u=zeros(dofs,1);
-    u(1:d(1))=uu(kd,kd,:);
-    p=d(1);
+    ub=zeros(nschur,1);
     for r=1:size(adj,1)
-        [m11,m12,m21,m22]=mapToEdgeIndex(adj(r,:));
-        u(1+p:p+m-2)=vec(uu(m11,m12,adj(r,2)))+vec(uu(m21,m22,adj(r,4)));
-        p=p+m-2;
+        [I1,J1]=glob2loc(adj(r,1:2));
+        [I2,J2]=glob2loc(adj(r,3:4));
+        gid=GID(I1,J1,adj(r,2));
+        ub(gid)=ub(gid)+vec(uu(I1,J1,adj(r,2)))+vec(uu(I2,J2,adj(r,4)));
     end
-    for r=1:max(corners(:))
-        [q,c]=find(corners==r);
-        for t=1:numel(c)
-            [m1,m2]=mapToCornerIndex(c(t));
-            u(1+p)=u(1+p)+uu(m1,m2,q(t));
-        end
-        p=p+1;
+    u=[vec(uu(kd,kd,:)); ub];
+end
+
+function [u] = pick(uu)
+    uu=reshape(uu,m,m,[]);
+    ub=zeros(nschur,1);
+    for r=1:size(adj,1)
+        [I,J]=glob2loc(adj(r,1:2));
+        ub(GID(I,J,adj(r,2)))=vec(uu(I,J,adj(r,2)));
     end
+    u=[vec(uu(kd,kd,:)); ub];
 end
 
 function [u] = afun(u)
@@ -232,15 +212,30 @@ function [uu,flag,relres,iter]=poissonSolver(F,ub)
     uu=ub+reshape(assembly(uu),size(ub));  
 end
 
-[xx,yy]=ndgrid(x0);
-
-if nargin>4
+if(prob==0)
+    [uu,~,relres,~]=poissonSolver(F(X,Y));
+    display(nquads);
+    display(relres);
+    lam=[];
+    % Testing preconditioner
+    %uu=reshape(precond(Rtransp(fullop(mass,F(X,Y)))),size(X));
+    
+    figure(1);
+    for j=1:nquads
+        surf(X(:,:,j), Y(:,:,j), uu(:,:,j));
+        if j==1, hold on; end
+    end 
+    hold off;
+else
+    k=prob;
+    
     tol=1E-11;
-    [U,lam,~,~,relres]=lobpcg(rand(dofs,k),@afun,@bfun,@pfun,[],tol,maxit);
+    [U,lam,~,~,relres]=lobpcg(rand(tdof,k),@afun,@bfun,@pfun,[],tol,maxit);
     relres=relres(:,end);
+    display(nquads);
     display(relres);
     
-    uuu=zeros(m,m,ndom,k);
+    uuu=zeros(m,m,nquads,k);
     for j=1:k
         uuu(:,:,:,j)=assembly(U(:,j));
     end
@@ -248,29 +243,10 @@ if nargin>4
     
     figure(1); zoom off; pan off; rotate3d off;
     for j=1:size(uuu,4)
-        mapping=curvedquad(z0(quads(j,:)),curv(j,:));
-        ww=mapping(xx,yy);
-        modegallery(real(ww), imag(ww), uuu(:,:,:,j));
+        modegallery(X(:,:,j), Y(:,:,j), real(uuu(:,:,:,j)));
         if j==1, hold on; end
     end
     hold off;    
-else
-    F=ones(m,m,ndom);
-    [uu,~,relres,~]=poissonSolver(F);
-    display(relres);
-    lam=[];
-    
-    % Testing preconditioner
-    %uu=reshape(precond(Rtransp(fullop(mass,F))),size(F));  
-    
-    figure(1);
-    for j=1:ndom
-        mapping=curvedquad(z0(quads(j,:)),curv(j,:));
-        ww=mapping(xx,yy);
-        surf(real(ww), imag(ww), uu(:,:,j));
-        if j==1, hold on; end
-    end 
-    hold off;
 end
 
 colormap(jet(256));

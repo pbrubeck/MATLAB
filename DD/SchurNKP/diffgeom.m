@@ -18,5 +18,5 @@ gg=G{0};
 G11=reshape(gg(1,1,:), m,n);
 G12=reshape(gg(1,2,:), m,n);
 G22=reshape(gg(2,2,:), m,n);
-jac=reshape(sqrt(max(detG{0},0)), m,n);
+jac=reshape(sqrt(detG{0}), m,n);
 end

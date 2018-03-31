@@ -1,6 +1,6 @@
-function [S,nkp,gf,kd,gb] = feedSchurNKP(S,net,A1,B1,A2,B2,C1,C2)
+function [ischur,jschur,eschur,nkp,gf]=feedSchurNKP(GID,A1,B1,A2,B2,C1,C2)
 % Updates SchurNKP S given domain topology net (EWNS) and NKP (A1,B1,A2,B2)
-% Returns preconditioned Green's function gf and constrained basis gb = kd'
+% Returns preconditioned Green's function gf
 m=size(A1,1);
 n=size(B2,1);
 kd1=2:m-1; rd1=[1,m];
@@ -15,25 +15,19 @@ nkp=@(uu,I,J) A1(I,:)*uu*B1(J,:)'+A2(I,:)*uu*B2(J,:)';
 
 % Green's function
 LL=1./((L1.*D1)*D2'+D1*(L2.*D2)');
-function uu=greenF(F,b1,b2,b0)
-    uu=zeros(m,n);
-    uu(rd1,rd2)=b0;
-    uu(rd1,kd2)=b1;
-    uu(kd1,rd2)=b2;
+function uu=greenF(F,uu)
     uu=E1*uu*E2';
     rhs=F-E1(:,kd1)'*(A1*uu*B1'+A2*uu*B2')*E2(:,kd2);
     uu=uu+V1(:,kd1)*(LL.*(V1(kd1,kd1)'*rhs*V2(kd2,kd2)))*V2(:,kd2)';
 end
-gf=@(F,b1,b2,b0) greenF(F,b1,b2,b0);
-kd=@(uu) reshape(E1(:,kd1)'*uu*E2(:,kd2),[],1);
-gb=@(uu) E1(:,kd1)*reshape(uu,length(kd1),length(kd2))*E2(:,kd2)';
+gf=@(F,uu) greenF(F,uu);
 
 % Schur complement
-blocks=size(S,1)/m;
-mask=@(x,y) sparse(x,y,1,blocks,blocks);
-
-T1=net(1:2);
-T2=net(3:4);
+ischur=zeros(m*m,16);
+jschur=zeros(m*m,16);
+eschur=zeros(m*m,16);
+T1=rd1(any(GID(rd1,:),2));
+T2=rd2(any(GID(:,rd2),1));
 
 % Building blocks
 MV1=E1'*A2*V1(:,kd1);
@@ -42,8 +36,7 @@ MV2=E2'*B1*V2(:,kd2);
 KV2=E2'*B2*V2(:,kd2);
 
 % [E W] x [E W]
-[x,y]=meshgrid(T1(T1>0), T1(T1>0) );
-[I,J]=meshgrid(rd1(T1>0),rd1(T1>0));
+[I,J]=meshgrid(T1,T1);
 X11=(KV1(I(:),:).*KV1(J(:),:))*LL;
 X12=(KV1(I(:),:).*MV1(J(:),:))*LL;
 X21=(MV1(I(:),:).*KV1(J(:),:))*LL;
@@ -54,12 +47,15 @@ for i=1:numel(I)
     AXX=AXX-MV2*diag(X12(i,:))*KV2';
     AXX=AXX-KV2*diag(X21(i,:))*MV2';
     AXX=AXX-KV2*diag(X22(i,:))*KV2';
-    S=S+kron(mask(x(i),y(i)), (AXX+AXX')/2);
+    [x,y]=ndgrid(GID(I(i),:), GID(J(i),:));
+    
+    eschur(:,i)=AXX(:);
+    ischur(:,i)=x(:);
+    jschur(:,i)=y(:);
 end
 
 % [N S] x [N S]
-[x,y]=meshgrid(T2(T2>0) ,T2(T2>0) );
-[I,J]=meshgrid(rd2(T2>0),rd2(T2>0));
+[I,J]=meshgrid(T2,T2);
 Y11=(KV2(I(:),:).*KV2(J(:),:))*LL';
 Y12=(KV2(I(:),:).*MV2(J(:),:))*LL';
 Y21=(MV2(I(:),:).*KV2(J(:),:))*LL';
@@ -70,19 +66,32 @@ for i=1:numel(I)
     AYY=AYY-MV1*diag(Y12(i,:))*KV1';
     AYY=AYY-KV1*diag(Y21(i,:))*MV1';
     AYY=AYY-KV1*diag(Y22(i,:))*KV1';
-    S=S+kron(mask(x(i),y(i)), (AYY+AYY')/2);
+    [x,y]=ndgrid(GID(:,I(i)), GID(:,J(i)));
+    
+    eschur(:,i+4)=AYY(:);
+    ischur(:,i+4)=x(:);
+    jschur(:,i+4)=y(:);
 end
 
 % [E W] x [N S]
-[x,y]=meshgrid(T1(T1>0), T2(T2>0) );
-[I,J]=meshgrid(rd1(T1>0),rd2(T2>0));
+[I,J]=meshgrid(T1,T2);
 for i=1:numel(I)
     AXY=B1(:,J(i))*A1(I(i),:)+B2(:,J(i))*A2(I(i),:);
     AXY=AXY-MV2*((MV2(J(i),:)'*KV1(I(i),:)).*LL')*KV1';
     AXY=AXY-KV2*((MV2(J(i),:)'*MV1(I(i),:)).*LL')*KV1';
     AXY=AXY-MV2*((KV2(J(i),:)'*KV1(I(i),:)).*LL')*MV1';
     AXY=AXY-KV2*((KV2(J(i),:)'*MV1(I(i),:)).*LL')*MV1';
-    S=S+kron(mask(x(i),y(i)), AXY)+kron(mask(y(i),x(i)), AXY');
+    
+    [x,y]=ndgrid(GID(I(i),:), GID(:,J(i)));
+    eschur(:,i+8)=AXY(:);
+    ischur(:,i+8)=x(:);
+    jschur(:,i+8)=y(:);
+    
+    AXY=AXY';
+    [x,y]=ndgrid(GID(:,J(i)), GID(I(i),:));
+    eschur(:,i+12)=AXY(:);
+    ischur(:,i+12)=x(:);
+    jschur(:,i+12)=y(:);
 end
 end
 

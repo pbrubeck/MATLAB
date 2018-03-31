@@ -1,14 +1,14 @@
-function [stiff,mass,A1,B1,A2,B2] = lapGalerkin(Dx,x0,xx,wx,jac,g11,g12,g22)
+function [stiff,mass,A1,B1,A2,B2] = saldoGalerkin(metric,Dx,x0,xx,wx,jac,g11,g12,g22)
 % Stiffness matrix from Laplacian given a metric 
 % Assumes oversampled coefficients
 % Also returns nearest Kronecker product approximation
 
 m=size(Dx,1);
 
-vol=diag(wx)*( jac)*diag(wx);
-C11=diag(wx)*( g22./jac)*diag(wx);
-C12=diag(wx)*(-g12./jac)*diag(wx);
-C22=diag(wx)*( g11./jac)*diag(wx);
+vol=diag(wx)*( metric.*jac)*diag(wx);
+C11=diag(wx)*( metric.*g22./jac)*diag(wx);
+C12=diag(wx)*(-metric.*g12./jac)*diag(wx);
+C22=diag(wx)*( metric.*g11./jac)*diag(wx);
 
 E=legC(x0, xx);
 ED=E*Dx;
@@ -35,7 +35,8 @@ P22=lowrank(C22,1);
 
 % Block-to-row permuted operator (Van Loan, 1993)
 % Here we use some nifty algebra to optimize the computation
-% v11=(ED1'*diag(P11*diag(E2*X*E2'))*ED1);
+% eg. v11=(ED1'*diag(P11*diag(E2*X*E2'))*ED1);
+
 function b=stiff_hat(x, tflag)
     X=reshape(x,floor(sqrt(numel(x))),[]).';
     b=zeros(size(X));

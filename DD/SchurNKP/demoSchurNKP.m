@@ -1,4 +1,34 @@
-function [lam] = demoSchurNKP(shape, ref, m, k)
+function [lam] = demoSchurNKP(m, shape, ref)
+% m = Number of gridpoint in 1D per quadrilateral element
+% shape = 1, Equilateral triangle
+% shape = 2, Right triangle
+% shape = 3, Isoceles triangle
+% shape = 4, Scalene triangle
+% shape = 5, L shaped membrane
+% shape = 6, Unit disc
+% shape = 7, Newtonian binary stars
+% ref = Level of refinement (0 = no refinement)
+
+function F=myrhs(x,y)
+    F=1+0*x+0*y;
+end
+
+R1=1;
+R2=1;
+L=6;
+function F=binrhs(z,rho)
+    z1= L;
+    z2=-L;
+    r1=hypot(rho,z-z1);
+    r2=hypot(rho,z-z2);
+    F1=(r1<=R1).*sinc(pi*r1/R1);
+    F2=(r2<=R2).*sinc(pi*r2/R2);
+    F=F1+F2;
+end
+
+RHS=@myrhs;
+metric = @(x,y) 1+0*x+0*y;
+
 % Triangle Vertices
 tri=zeros(3,4);
 tri(:,1)=[1i;exp(1i*pi*7/6);exp(-1i*pi*1/6)]; % Equilateral
@@ -22,21 +52,19 @@ else
         case 2
             [z0,quads,curv]=coregrid(1);
         case 3
-            [z0,quads,curv]=bingrid(1,1,3);
+            [z0,quads,curv]=bingrid(R1,R2,L);
+            RHS=@binrhs;
+            metric = @(z,rho) abs(rho)+0*z;
     end
 end
 
 % Mesh refinement
 for j=1:ref
-    [~, adj, ~, ~, bnd] = meshtopo(quads);
+    [~, adj, bnd] = meshtopo(quads);
     [z0,quads,curv]=quadmeshrefine(z0,quads,curv,adj,bnd);
 end
 
-if nargin>3
-    lam = meshSchurNKP(z0, quads, curv, m, k);
-else
-    lam = meshSchurNKP(z0, quads, curv, m);
-end
+lam = meshSchurNKP(m, z0, quads, curv, 0, RHS, metric);
 
 % delete(findall(gcf,'Type','light'));
 % shading faceted;

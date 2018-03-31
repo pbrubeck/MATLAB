@@ -1,12 +1,17 @@
-function [net, adj, corners, edges, bnd] = meshtopo(quads)
-nquad=size(quads,1);
+function [corners, adj, bnd] = meshtopo(quads)
 [adj,bnd]=faces_to_edges(quads);
-[net,adj]=adjacency(adj, nquad);
+% This sorts the interface numbering such that we get minimum fill in the
+% Schur complement.
+[x11,y11]=ndgrid(adj(:,2), adj(:,2));
+[x12,y12]=ndgrid(adj(:,2), adj(:,4));
+[x22,y22]=ndgrid(adj(:,4), adj(:,4));
+mask=(x11==y11)+(x12==y12)+(x12==y12)'+(x22==y22);
+p=symamd(mask);
+adj=adj(p,:);
 
 [verts_faces, verts_vertices]=verts_from_quad(quads);
 loops=get_loops(verts_faces, verts_vertices);
 corners=loops_to_corners(loops, quads);
-edges=corners_to_edges(adj, corners);
 end
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -28,7 +33,7 @@ function edge=add_face_to_edge(edge_map, key, face)
     end
 end
 
-function [interfaces, boundaries]=faces_to_edges(quad)
+function [adj, bnd]=faces_to_edges(quad)
     edge_map = containers.Map;
     side = [1,3; 2,4; 1,2; 3,4];
     for q = 1:size(quad,1)
@@ -39,29 +44,8 @@ function [interfaces, boundaries]=faces_to_edges(quad)
     end
     edges_list = cell2mat(reshape(edge_map.values(),[],1));
     p = any(edges_list==0, 2);
-    interfaces = edges_list(~p,:);
-    boundaries = edges_list(p,1:2);
-end
-
-function [net,adj]=adjacency(adj, nquad)
-% This sorts the interface numbering such that we get minimum fill in the
-% Schur complement.
-[x11,y11]=ndgrid(adj(:,2), adj(:,2));
-[x12,y12]=ndgrid(adj(:,2), adj(:,4));
-[x22,y22]=ndgrid(adj(:,4), adj(:,4));
-mask=(x11==y11)+(x12==y12)+(x12==y12)'+(x22==y22);
-p=symamd(mask);
-adj=adj(p,:);
-
-s1=adj(:,1);
-q1=adj(:,2);
-s2=adj(:,3);
-q2=adj(:,4);
-net=zeros(nquad,4);
-for s=1:4
-    net(q1(s1==s),s)=find(s1==s);
-    net(q2(s2==s),s)=find(s2==s);
-end
+    adj = edges_list(~p,:);
+    bnd = edges_list(p,1:2);
 end
 
 
@@ -141,17 +125,4 @@ function [verts_faces, verts_vertices] = verts_from_quad(quads)
     
     verts_faces=verts_faces(1:num_verts);
     verts_vertices=verts_vertices(1:num_verts);
-end
-
-function edges=corners_to_edges(adj, corners)
-    edges=zeros(size(adj,1),2);
-    east =adj(:,1)==1;
-    west =adj(:,1)==2;
-    north=adj(:,1)==3;
-    south=adj(:,1)==4;
-    
-    edges(east, :)=corners(adj(east ,2), [1,3]);
-    edges(west, :)=corners(adj(west ,2), [2,4]);
-    edges(north,:)=corners(adj(north,2), [1,2]);
-    edges(south,:)=corners(adj(south,2), [3,4]);
 end
