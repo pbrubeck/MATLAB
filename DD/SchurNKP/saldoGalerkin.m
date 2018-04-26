@@ -1,16 +1,15 @@
-function [stiff,mass,A1,B1,A2,B2] = saldoGalerkin(metric,Dx,x0,xx,wx,jac,g11,g12,g22)
+function [stiff,mass,A1,B1,A2,B2] = saldoGalerkin(metric,Dx,x0,xq,wq,jac,g11,g12,g22)
 % Stiffness matrix from Laplacian given a metric 
 % Assumes oversampled coefficients
 % Also returns nearest Kronecker product approximation
 
 m=size(Dx,1);
+vol=diag(wq)*( metric.*jac)*diag(wq);
+C11=diag(wq)*( metric.*g22./jac)*diag(wq);
+C12=diag(wq)*(-metric.*g12./jac)*diag(wq);
+C22=diag(wq)*( metric.*g11./jac)*diag(wq);
 
-vol=diag(wx)*( metric.*jac)*diag(wx);
-C11=diag(wx)*( metric.*g22./jac)*diag(wx);
-C12=diag(wx)*(-metric.*g12./jac)*diag(wx);
-C22=diag(wx)*( metric.*g11./jac)*diag(wx);
-
-E=legC(x0, xx);
+E=legC(x0, xq);
 ED=E*Dx;
 
 function vv=stiffFun(uu)

@@ -21,7 +21,7 @@ M1=conv2(diag(mask.*J1), M0);
 K1=conv2(diag(mask./J1), K0);
 
 % Right hand side
-f=jumpForce(xi,xe,x0,x1,K0,[1;-1]);
+f=jumpForce(xi,xe,x0,x1,K0,[0;-1],1);
 
 % Degrees of freedom
 kd=2:N-1;
@@ -40,7 +40,7 @@ err=abs(1-u./uex);
 err(rd)=nan;
 
 % Interpolate jump function
-jumps=[1;1];
+jumps=[0;1];
 Nq=2049;
 xxx=linspace(-1,1,Nq)';
 [s1,s2]=piecewiseLagrange(x0,xi,jumps);

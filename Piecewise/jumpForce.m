@@ -1,7 +1,14 @@
-function [f] = jumpForce(xi,xe,x0,x1,A0,jumps)
+function [f] = jumpForce(xi,xe,x0,x1,A0,jumps,dirac,gamma)
 % Computes the right hand side for a dirac Delta function 
+if(nargin<7)
+    dirac=zeros(1,size(jumps,2));
+end
+if(nargin<8)
+    gamma=1;
+end
+
 if any(xe==xi)
-    f=(x1==xi);
+    f=(x1==xi)*dirac;
 else
     p=size(A0,1);
     d1=1:p;
@@ -10,7 +17,6 @@ else
     [~,imax]=max(xe>xi);
     j=imax-1;
     jd=(1+(j-1)*(p-1)):(1+j*(p-1));
-    
     % Subdomain
     xa=x1(jd(1));
     xb=x1(jd(end));
@@ -27,15 +33,12 @@ else
     xx=2/(xb-xa)*(xs-(xb+xa)/2);
     xi0=2/(xb-xa)*(xi-(xb+xa)/2);
     % Compute piecewise corrections
-    jumps=jumps.*(h0.^(-1:numel(jumps)-2))';
     [s1,s2]=piecewiseLagrange(x0,xi0,jumps);
     % Interpolator operator
     C=legC(x0,xx);
     % Compute force
-    fdisc=-C'*[(h0/h1)*A0*C(d1,:)*s1; (h0/h2)*A0*C(d2,:)*s2];
-    f0=fdisc+jumps(2)*C(p+1,:)';
-    f=zeros(size(x1));
-    f(jd)=f0;
+    fdisc=-C'*[(h0/h1)^gamma*A0*C(d1,:)*s1; (h0/h2)^gamma*A0*C(d2,:)*s2];
+    f=zeros(length(x1),size(jumps,2));
+    f(jd,:)=fdisc+C(p+1,:)'*dirac;
 end
 end
-

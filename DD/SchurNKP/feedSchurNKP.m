@@ -1,4 +1,4 @@
-function [ischur,jschur,eschur,nkp,gf]=feedSchurNKP(GID,A1,B1,A2,B2,C1,C2)
+function [ischur,jschur,eschur,nkp,gf]=feedSchurNKP(GID,A1,B1,A2,B2)
 % Updates SchurNKP S given domain topology net (EWNS) and NKP (A1,B1,A2,B2)
 % Returns preconditioned Green's function gf
 m=size(A1,1);
@@ -10,14 +10,13 @@ kd2=2:n-1; rd2=[1,n];
 nkp=@(uu,I,J) A1(I,:)*uu*B1(J,:)'+A2(I,:)*uu*B2(J,:)';
 
 % Eigenfunctions
-[E1,V1,L1,D1]=eigenfunctions(A1, A2, C1);
-[E2,V2,L2,D2]=eigenfunctions(B2, B1, C2);
+[V1,L1,D1]=eigenfunctions(A1, A2);
+[V2,L2,D2]=eigenfunctions(B2, B1);
 
 % Green's function
 LL=1./((L1.*D1)*D2'+D1*(L2.*D2)');
 function uu=greenF(F,uu)
-    uu=E1*uu*E2';
-    rhs=F-E1(:,kd1)'*(A1*uu*B1'+A2*uu*B2')*E2(:,kd2);
+    rhs=F-(A1(kd1,:)*uu*B1(kd2,:)'+A2(kd1,:)*uu*B2(kd2,:)');
     uu=uu+V1(:,kd1)*(LL.*(V1(kd1,kd1)'*rhs*V2(kd2,kd2)))*V2(:,kd2)';
 end
 gf=@(F,uu) greenF(F,uu);
@@ -30,10 +29,10 @@ T1=rd1(any(GID(rd1,:),2));
 T2=rd2(any(GID(:,rd2),1));
 
 % Building blocks
-MV1=E1'*A2*V1(:,kd1);
-KV1=E1'*A1*V1(:,kd1);
-MV2=E2'*B1*V2(:,kd2);
-KV2=E2'*B2*V2(:,kd2);
+MV1=A2*V1(:,kd1);
+KV1=A1*V1(:,kd1);
+MV2=B1*V2(:,kd2);
+KV2=B2*V2(:,kd2);
 
 % [E W] x [E W]
 [I,J]=meshgrid(T1,T1);
@@ -95,27 +94,17 @@ for i=1:numel(I)
 end
 end
 
-function [E,V,L,D]=eigenfunctions(K,M,C)
+function [V,L,D]=eigenfunctions(K,M,C)
 % Computes stiffness SK and mass SM matrices in the constrained basis E and
 % constrainded eigenfunctions V and eigenvalues L
 m=size(K,1);
 kd=2:m-1;
-rd=[1,m];
-
-% Constrained basis
-E=eye(m);
-E(rd,kd)=-C(:,kd);
-E(rd,:)=C(:,rd)\E(rd,:);
-SK=E'*K*E;
-SM=E'*M*E;
-
 % Eigenfunctions
 V=zeros(m);
-[V(kd,kd),L]=eig(SK(kd,kd), SM(kd,kd), 'vector');
+[V(kd,kd),L]=eig(K(kd,kd), M(kd,kd), 'vector');
 % Diagonalized mass matrix
 % D=diag(V(kd,kd)'*SM(kd,kd)*V(kd,kd));
-D=sum(V(kd,kd).*(SM(kd,kd)*V(kd,kd)), 1).';
-V(rd,kd)=E(rd,kd)*V(kd,kd);
+D=sum(V(kd,kd).*(M(kd,kd)*V(kd,kd)), 1).';
 V(kd,kd)=bsxfun(@rdivide, V(kd,kd), sqrt(abs(D)).');
 V(kd,kd)=bsxfun(@rdivide, V(kd,kd), sign(V(kd(1),kd)));
 D=sign(D);

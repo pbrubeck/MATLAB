@@ -3,7 +3,7 @@ function [err,h] = femquadratic(gmshfile,n)
 z0=[0; 1; 1i; 0.5; 0.5+0.5i; 0.5i];
 x0=real(z0);
 y0=imag(z0);
-P0=[ones(size(x0)), 2*x0, 2*y0, x0.^2, 2*x0.*y0, y0.^2];
+P0=[ones(size(x0)), 2*x0, 2*y0, x0.^2, 2*x0.*y0, y0.^2]; 
 R=full(sparse(1:9,[1,2,3,2,4,5,3,5,6],1,9,6));
 
 % Permutation operator (maps [a,b;c,d] to [d,-b;-c,a])
@@ -15,18 +15,11 @@ Perm=full(sparse(1:4,[4,2,3,1],[1,-1,-1,1],4,4));
 Vq=[ones(size(zq)), real(zq), imag(zq)];
 
 % Interpolation to quadrature points, evaluate quadratic
-H=R/P0;
-E=zeros(length(wq), 6);
-for ej=1:6
-    E(:,ej)=sum((Vq*reshape(H(:,ej),[3,3])).*Vq,2);
-end
+E=(kron(Vq,ones(1,3)).*kron(ones(1,3),Vq))*(R/P0);
 
 % Derivative of cardinal basis functions, evaluate linear
-Dx=full(sparse(1:3,[2,4,5],2,3,6));
-Dy=full(sparse(1:3,[3,5,6],2,3,6));
-Dx=Vq*(Dx/P0);
-Dy=Vq*(Dy/P0);
-
+Dx=Vq*(full(sparse(1:3,[2,4,5],2,3,6))/P0);
+Dy=Vq*(full(sparse(1:3,[3,5,6],2,3,6))/P0);
 
 [tri, vert, bnd] = loadgmsh(gmshfile);
 N=size(vert,1);
@@ -46,7 +39,7 @@ for e=1:T
     
     % Element vertices
     ze=vert(nodes);
-
+    
     % Element mapping
     He=reshape(R*(P0\ze), 3,3);
     Je=2*He(:,2:3);
@@ -62,7 +55,7 @@ for e=1:T
     Me=E'*((wq.*jac).*E);
     Ke=Dx'*((wq.*Ge(:,1)).*Dx+(wq.*Ge(:,2)).*Dy) + ...
        Dy'*((wq.*Ge(:,3)).*Dx+(wq.*Ge(:,4)).*Dy);
-
+   
     idx=(m*m)*(e-1)+1:(m*m)*e;
     [ni,nj]=ndgrid(nodes);
     ei(idx)=ni(:);

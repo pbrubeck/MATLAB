@@ -10,7 +10,7 @@ kd2=2:n-1; rd2=[1,n];
 
 % Boundary conditions
 a=[1,1;1,1];
-b=0*[0,1;0,1];
+b=[0,1;0,1];
 
 [K1,M1,E1,V1,L1,x]=GalerkinGLL(m,a(1,:),b(1,:));
 [K2,M2,E2,V2,L2,y]=GalerkinGLL(n,a(2,:),b(2,:));
@@ -21,8 +21,7 @@ function uu=greenF(F,b1,b2)
     uu(rd1,:)=b1;
     uu(:,rd2)=b2;
     rhs=M1*F*M2'-(K1*uu*M2'+M1*uu*K2');
-    uu(kd1,kd2)=V1(kd1,kd1)*((V1(kd1,kd1)'*rhs(kd1,kd2)*V2(kd2,kd2))./LL)*V2(kd2,kd2)';
-    uu=E1*uu*E2';
+    uu=V1(:,kd1)*((V1(kd1,kd1)'*rhs(kd1,kd2)*V2(kd2,kd2))./LL)*V2(:,kd2)';
 end
 
 y=y';

@@ -1,4 +1,4 @@
-function [tri, vert, bnd] = loadgmsh(gmshfile)
+function [tri, vert, bnd, edges] = loadgmsh(gmshfile)
 enodes=zeros(51,1);
 enodes([1:9,11,15])=[2;3;4;4;8;6;5;3;6;10;1];
 
@@ -18,6 +18,8 @@ fgetl(fileID); % $EndNodes
 fgetl(fileID); % $Elements
 ntri = fscanf(fileID, '%d', 1);
 tri=zeros(ntri,6);
+bnd=zeros(nvert,1);
+edges=zeros(0,2);
 for i=1:ntri
     eid = fscanf(fileID, '%d', 1);
     etype = fscanf(fileID, '%d', 1);
@@ -29,7 +31,9 @@ for i=1:ntri
     fscanf(fileID, '\n', 1);
     
     if(etype==8)
-        bnd(nodes)=1;
+        bnd(nodes)=1; 
+        edges(end+1,:)=nodes([1,3]);
+        edges(end+1,:)=nodes([2,3]);
     end
     
 end

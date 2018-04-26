@@ -124,9 +124,17 @@ view(2);
 xl=xlim(); dx=xl(2)-xl(1);
 yl=ylim(); dy=yl(2)-yl(1);
 pbaspect([dx,dy,min(dx,dy)]);
-axis manual;
+axis manual; grid off; axis off;
 zl=[-1,1]; 
 center=true;
+set(gcf, 'Position', [100, 100, 720, 920]);
+
+
+% Create .gif file
+filename='schrod.gif';
+im=frame2im(getframe(gcf));
+[imind,cm]=rgb2ind(im,256);
+imwrite(imind,cm,filename,'gif','DelayTime',0,'Loopcount',inf);
 
 function timeEvol(obj,event,time)
     uuu=propagate(uuu);
@@ -157,6 +165,10 @@ function timeEvol(obj,event,time)
     end
     set(fig1,'Name',sprintf('N = %d, %d fps',numel(uuu),round(1/tmr.InstantPeriod)));
     drawnow;
+    
+    im=frame2im(getframe(gcf));
+    [imind,cm]=rgb2ind(im,256);
+    imwrite(imind,cm,filename,'gif','DelayTime',0,'WriteMode','append');
 end
 fps=20;
 tf=10;
