@@ -17,7 +17,7 @@ elseif(nargin<5)
 end
 
 % gmres options
-tol=1E-15;
+tol=1E-11;
 maxit=100;
 restart=30;
 

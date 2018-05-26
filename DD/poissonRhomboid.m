@@ -1,6 +1,13 @@
 function [] = poissonRhomboid(m)
+% Single element Nearest Kronecker Product preconditioner
+
+% Low rank = k
+k=3;
+
+% Angle of rhomboid = phi
 phi=pi/4;
 
+% Mapping
 [xv,yv]=ndgrid([-1;1]);
 zvert=xv(:)+1i*yv(:);
 zvert=exp(1i*phi)*zvert;
@@ -11,6 +18,7 @@ map=curvedquad(zvert,rad);
 rd=[1,m];
 kd=2:m-1;
 
+% Set up SEM
 [D0,x0]=legD(m);
 D0=D0(end:-1:1,end:-1:1);
 x0=x0(end:-1:1);
@@ -23,6 +31,7 @@ M0=E10'*diag(w1)*E10;
 K0=D0'*M0*D0;
 S0=M0*D0;
 
+% Boundary conditions
 a=[1,1];
 b=[0,0];
 C=diag(a)*I0(rd,:)+diag(b)*D0(rd,:);
@@ -33,6 +42,8 @@ G(rd,:)=C(:,rd)\G(rd,:);
 M=G'*M0*G;
 K=G'*K0*G;
 S=G'*S0*G;
+
+% Eigenvectors
 V1=zeros(m,m);
 V2=zeros(m,m);
 [V1(kd,kd),LK]=eig(K(kd,kd),M(kd,kd),'vector');
@@ -41,15 +52,18 @@ V1(kd,kd)=V1(kd,kd)./sqrt(sum(V1(kd,kd).*(M(kd,kd)*V1(kd,kd)),1));
 V1(kd,kd)=V1(kd,kd(p));
 V1(rd,kd)=G(rd,kd)*V1(kd,kd);
 
+% Metric coefficients
 [jac,g11,g12,g22]=diffgeom(map,0,0);
 
 c11= g22/sqrt(jac);
 c12=-g12/sqrt(jac);
 c22= g11/sqrt(jac);
 
+% Restriction matrix
 R=zeros(m,m-2);
 R(kd,:)=eye(m-2);
 
+% Matrix-free operators
 function [vv]=assembly(uu)
     uu=reshape(uu,[m-2,m-2]);
     vv=R*uu*R';
@@ -74,17 +88,16 @@ function [L]=lapfullop()
         L(:,j)=reshape(fullop(I(:,j)),[],1);
     end
 end
+
+% Full operator
 L=lapfullop();
 
-
+% Singular Value Decomposition
 Lhat=reshape(permute(reshape(L,[m-2,m-2,m-2,m-2]),[1,3,2,4]),[(m-2)*(m-2),(m-2)*(m-2)]);
-
-k=3;
 [UU,SS,VV]=svds(Lhat,k);
 UU=reshape(UU,m-2,m-2,k);
 VV=reshape(VV,m-2,m-2,k);
 SS=diag(SS);
-
 Lnkp=zeros(size(L));
 for i=1:k
     Lnkp = Lnkp + SS(i)*kron(UU(:,:,i),VV(:,:,i));  

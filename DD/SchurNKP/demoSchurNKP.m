@@ -67,8 +67,7 @@ for j=1:ref
     [z0,quads,curv]=quadmeshrefine(z0,quads,curv,adj,bnd);
 end
 
-k=32;
-[lam, uu, X, Y, relres, pcalls] = meshSchurNKP(m, z0, quads, curv, k, RHS, metric);
+[lam, uu, X, Y, relres, pcalls] = meshSchurNKP(m, z0, quads, curv, 0, RHS, metric);
 delete(findall(gcf,'Type','light'));
 % shading faceted;
 display(relres);
