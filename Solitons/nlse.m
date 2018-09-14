@@ -4,7 +4,7 @@ function [] = nlse(N, t1, t2, L, init, method)
 %
 % N: number of collocation points
 % t1: initial time
-% t2: final time
+% t2: final timen
 % L: spatial window
 % init: bright, dark1, dark2, peregrine, breather
 % method: cheb, herm, fft, dst
@@ -29,7 +29,7 @@ end
 beta=-1;
 switch(init)
     case {0, 'bright'}
-        u=nlsebright(2,-5,0,x,t1)+nlsebright(-2,5,pi/3,x,t1);
+        u=nlsebright(2,-5,0,x,t1)+nlsebright(-2,5,0,x,t1);
     case {1, 'dark1'}
         beta=1;
         u=nlsedark(0, pi/4, -5, 0, x, t1)+nlsedark(0, -pi/4, 5, 0, x, t1);
@@ -48,7 +48,7 @@ P=1i/2*w'*(u.*linprop(D,conj(u))-conj(u).*linprop(D,u)); display(P);
 E=w'*(abs(linprop(D,u)).^2+abs(u).^4);                   display(E);
 
 f1=figure(1);
-h=plot(x, abs(u), '.b', 'LineWidth', 2);
+h=plot(x, abs(u), 'b', 'LineWidth', 2);
 xlim([-L,L]); ylim([0,Amax]); axis manual;
 set(gca, 'XTick', [-L,0,L]);
 set(gca, 'YTick', [0,Amax/2,Amax]);
