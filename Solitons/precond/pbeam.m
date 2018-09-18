@@ -1,24 +1,25 @@
-function [] = pbeam(m,n)
-L=10;
-u0=vnlsetp2(m,n,L);
+function [] = pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f)
 
+L=max(sqrt((xx(:).^2+yy(:).^2)/2));
+ii=1:size(u,1);
+jj=[1:size(u,2),1];
 
-beta=-1;
-lam=0.5;
-pot=@(r) -30*(besselj(1,5*r)).^2;
-[U,H,P,Q,rr,th]=pnlse2(m,n,sqrt(2)*L,lam,pot);
-xx=rr.*cos(th);
-yy=rr.*sin(th);
+function [ufu]=expval(f,u)
+    ju=J1*u*J2';
+    u2=abs(ju).^2;
+    fu=jac.*f(u2).*ju;
+    ufu=ju(:)'*fu(:);
+end
 
-u=u0;
 t=0;
-E=real(H(u,u)+Q(u,(beta/2)*abs(u).^2,u));
-p=real(P(u,u));
+E=real(H(u,u)+expval(f,u))/2;
+P=real(M(u,u));
 display(E);
 
-setlatex();
 figure(1);
-hs=surf(xx(:,[1:end,1]),yy(:,[1:end,1]),abs(u(:,[1:end,1])).^2);
+setlatex();
+mytitle='$z = %f$, $E = %f$, $P = %f$';
+h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj)).^2);
 xlim([-L,L]);
 ylim([-L,L]);
 colormap(magma(256));
@@ -26,26 +27,37 @@ colorbar();
 shading interp;
 axis square;
 view(2);
-title(sprintf('$z = %f$, $E = %f$, $P = %f$',t,E,p));
+title(sprintf(mytitle,t,E,P));
+
+
+figure(2);
+h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
+xlim([-L,L]);
+ylim([-L,L]);
+colormap(hsv(256));
+colorbar();
+shading interp;
+axis square;
+view(2);
+title(sprintf(mytitle,t,E,P));
+
 drawnow;
 
-
-T=2*pi;
-nframes=1000;
 dt=T/nframes;
 umax=zeros(nframes+1,1);
 umax(1)=max(abs(u(:)).^2);
 for i=1:nframes
     u=U(dt/2,u);
-    u=u.*exp(-1i*beta*dt*(abs(u).^2));
+    u=u.*exp(-2i*dt*f(abs(u).^2));
     u=U(dt/2,u);
     t=t+dt;
 
-    E=real(H(u,u)+Q(u,(beta/2)*abs(u).^2,u));
-    p=real(P(u,u));
-
-    set(hs,'ZData',abs(u(:,[1:end,1])).^2);
-    title(sprintf('$z = %f$, $E = %f$, $P = %f$',t,E,p));
+    E=real(H(u,u)+expval(f,u))/2;
+    P=real(M(u,u));
+    set(h1,'ZData',abs(u(ii,jj)).^2);
+    title(get(1,'CurrentAxes'),sprintf(mytitle,t,E,P));
+    set(h2,'ZData',angle(u(ii,jj)));
+    title(get(2,'CurrentAxes'),sprintf(mytitle,t,E,P));
     drawnow;
     
     umax(i+1)=max(abs(u(:)).^2);
@@ -57,4 +69,3 @@ plot(tt,umax-mean(umax),'b');
 title('$\max|\psi|-\langle\max|\psi|\rangle$');
 xlabel('$z$');
 end
-

@@ -1,7 +1,7 @@
-function [] = vnlsetp2(m,n,L)
+function [] = vnlsete2(m,n,a,b)
 % Variational Nonlinear Schrodinger Equation
 % Tensor-preconditioned Newton-Krylov method
-% Polar coordinates
+% Elliptic coordinates
 % m Gauss-Legendre-Lobatto nodes
 % n Fourier modes, must be even
 
@@ -10,10 +10,15 @@ function [] = vnlsetp2(m,n,L)
 %spin=1; del=pi/4; ep=pi/4; a0=0.7830; a1=2.7903; a2=a1;
 %spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
 %spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
+%spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
+
+
+a=a*sqrt(2);
+b=b*sqrt(2);
+
 spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
 
 % Nonlinear potential
-s=0.05;
 f=@(u2) -u2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
@@ -22,11 +27,14 @@ VN=zeros(m,n);
 % Linear Hamiltonian
 lam=0.5;
 VL=@(r) -15*(besselj(0,1*r)).^2;
-[rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
+[xi,eta,jac,M,H,U,hshuff,J1,J2]=schrodell(m,n,a,b,lam);
 
 % Physical domain
-xx=rr.*cos(th);
-yy=rr.*sin(th);
+c=sqrt(a^2-b^2);
+xx=c*cosh(xi).*cos(eta);
+yy=c*sinh(xi).*sin(eta);
+rr=hypot(yy,xx);
+th=atan2(yy,xx);
 ii=1:m;
 jj=[1:n,1];
 
@@ -35,16 +43,22 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
+etq=2*pi/n*(0:n-1);
+zq=gauleg(0,acos(c/a),2*m);
+zq=zq(:);
+xq=c*cosh(zq)*cos(etq);
+yq=c*sinh(zq)*sin(etq);
+rq=hypot(yq,xq);
+bess=-30*(besselj(1,5*rq)).^2;
+
 function U=pot(ju)
     u2=abs(ju).^2;
-    U=f(u2)+u2.*(5*f1(u2)+2*ju.*f2(u2));
-    %U(u2<1e-4)=f(0);
+    U=bess+f(u2)+u2.*(5*f1(u2)+2*ju.*f2(u2));
 end
 
 function F=src(ju)
     u2=abs(ju).^2;
-    F=f(u2)+u2.*f1(u2);
-    %F(u2<1e-4)=f(0);
+    F=bess+f(u2)+u2.*f1(u2);
 end
 
 
@@ -161,23 +175,23 @@ display(E);
 setlatex();
 figure(1);
 h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj)).^2);
-xlim([-L,L]);
-ylim([-L,L]);
+xlim([-a,a]/sqrt(2));
+ylim([-b,b]/sqrt(2));
+pbaspect([a,b,sqrt((a^2+b^2)/2)]);
 colormap(magma(256));
 colorbar();
 shading interp;
-axis square;
 view(2);
 title(num2str(E,'$E = %f$'));
 
 figure(2);
 h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
-xlim([-L,L]);
-ylim([-L,L]);
+xlim([-a,a]/sqrt(2));
+ylim([-b,b]/sqrt(2));
+pbaspect([a,b,sqrt((a^2+b^2)/2)]);
 colormap(hsv(256));
 colorbar();
 shading interp;
-axis square;
 view(2);
 title(num2str(E,'$E = %f$'));
 
@@ -186,7 +200,7 @@ h3=semilogy(1:10,1:10,'--*b');
 title('Residual History');
 
 it=0;
-itnr=40;
+itnr=100;
 etol=1e-9;
 du=ones(size(u));
 while (abs(energy(u,du))>etol && it<itnr ) 
@@ -207,15 +221,19 @@ while (abs(energy(u,du))>etol && it<itnr )
     drawnow;
 end
 
+id=find(yy==0);
+[~,ip]=sort(xx(id));
+id=id(ip);
+
 figure(4);
-plot(rr(:,1),abs(u(:,1)),'r',rr(:,1),abs(u0(:,1)),'--b');
-xlim([0,L]);
+plot(xx(id),abs(u(id)),'r',xx(id),abs(u0(id)),'--b');
+xlim([0,a/sqrt(2)]);
 yl=ylim();
 ylim([0,yl(2)]);
 display(E);
 
 
 T=2*pi;
-nframes=1000;
-pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
+nframes=0;
+%pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
 end

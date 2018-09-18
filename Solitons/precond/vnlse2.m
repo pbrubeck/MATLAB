@@ -1,58 +1,65 @@
-function [E] = vnlse2(n)
-% Stiffness matrix
-[D,z,w]=legD(n);
-hx=10;
-x=hx*(z);
-wx=hx*w;
-K1=D'*diag(w/hx)*D;
-M1=diag(wx);
-B1=diag(wx);
+function [E] = vnlse2(m,n,L)
 
-hy=10;
-y=hy*(z);
-wy=hy*w;
-K2=D'*diag(w/hy)*D;
-M2=diag(wy);
+% Ansatz
+%spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1;
+%spin=1; del=pi/4; ep=pi/4; a0=0.7830; a1=2.7903; a2=a1;
+%spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
+%spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
+spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
 
-lam=1/2;
-H1=K1+lam*B1;
-H2=K2;
+% Nonlinear potential
+s=0.05;
+h=@(x) exp(-x*1E8);
+g=@(x) (log(x+1)./x-1);
+f=@(u2) -u2/2+0*g(s*u2)/s;
 
-[xx,yy]=ndgrid(x,y);
-rr=hypot(yy,xx);
-tt=atan2(yy,xx);
+% Linear Hamiltonian
+lam=0.5;
+VL=@(r) -15*(besselj(0,1*r)).^2;
+[rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
 
-H=@(psi) reshape( H1*psi*M2' + M1*psi*H2',[],1);
+% Physical domain
+xx=rr.*cos(th);
+yy=rr.*sin(th);
+ii=1:m;
+jj=[1:n,1];
 
-% Nonlinear term
-bess=-0*besselj(1,5*rr).^2;
-nl=@(psi2) -psi2.^2/2+bess.*psi2;
-% Lagrangian
-lag=@(psi) (psi(:)'*H(psi) + wx'*nl(psi.*conj(psi))*wy)/2;
+psi=@(a0,a1,a2) a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
+             ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
+             (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th));
 
-% Wavefunction ansatz
-spin=0;
-psi=@(a1,a2) real(a1*exp(1i*spin*tt-(rr/a2).^2).*(rr.^spin));
-% Cost function
-f=@(a1,a2) lag(psi(a1,a2));
+function [ufu]=expval(f,u)
+    ju=J1*u*J2';
+    u2=conj(ju).*ju;
+    fu=jac.*f(u2).*ju;
+    ufu=ju(:)'*fu(:);
+end
 
-% Initial guess
-a=[(0.5767/2)^((spin+1)/2); 3.456];
-a=[sqrt(2); 2];
+% Energy
+energy=@(u) (H(u,u)+expval(f,u))/2;
+cost=@(a0,a1,a2) energy(psi(a0,a1,a2));
+
+a=[a0;a1;a2];
 vars=num2cell(a);
+E=real(cost(vars{:}));
 
 setlatex();
 figure(1);
-hp=surf(xx,yy,reshape(abs(psi(vars{:})),[n,n]));
+u=psi(vars{:});
+hp=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj)).^2);
 shading interp;
-axis tight;
+axis square;
+xlim([-L,L]);
+ylim([-L,L]);
 colormap(magma(256));
-view(2);
 colorbar();
+view(2);
+title(num2str(E,'$E = %f$'))
+drawnow;
 
 % Newton-Raphson for gradient
-g=agrad(f,length(a));
-J=ahess(f,length(a));
+g=agrad(cost,length(a));
+J=ahess(cost,length(a));
 iter=0;
 y=ones(size(a));
 tol=1e-12;
@@ -62,13 +69,13 @@ while( norm(y)>tol && iter<60 )
     a=a-J(vars{:})\y;
     iter=iter+1;
     
-    set(hp,'ZData',abs(psi(vars{:})));
-    E=real(f(vars{:}));
+    u=psi(vars{:});
+    set(hp,'ZData',abs(u(ii,jj)).^2);
+    E=real(cost(vars{:}));
     title(num2str(E,'$E = %f$'))
     drawnow;
 end
 
 display(iter);
-display(y);
 display(a);
 end

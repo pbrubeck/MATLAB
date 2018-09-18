@@ -4,13 +4,13 @@ function [E] = vnlset(n)
 
 %% Spectral element setup
 [D,x,w]=legD(n);
-hx=4;
-x=hx*(x+1);
-D=D/hx;
-w=x.*w*hx;
+L=4;
+x=L*(x+1);
+D=D/L;
+w=x.*w*L;
 K=D'*diag(w)*D;
 M=diag(w);
-lam=1/2;
+lam=0.5;
 H=K+lam*M;
 
 % Potential term

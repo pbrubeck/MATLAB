@@ -1,50 +1,44 @@
-function [] = vnlsetp2(m,n,L)
+function [] = vnlsetc2(m,L)
 % Variational Nonlinear Schrodinger Equation
 % Tensor-preconditioned Newton-Krylov method
-% Polar coordinates
+% Cartesian coordinates
 % m Gauss-Legendre-Lobatto nodes
 % n Fourier modes, must be even
 
 % Ansatz
-%spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1;
-%spin=1; del=pi/4; ep=pi/4; a0=0.7830; a1=2.7903; a2=a1;
-%spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
-%spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
-spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
+%spin=0; a0=(4/2)^((spin+1)/2); a1=2;
+%spin=1; a0=(0.7830/2)^((spin+1)/2); a1=2.7903;
+%spin=2; a0=(0.5767/2)^((spin+1)/2); a1=3.4560;
+spin=2; a0=0.218858020937638; a1=3.458266856012636;
 
 % Nonlinear potential
-s=0.05;
-f=@(u2) -u2/2;
+VN=zeros(m,m);
+s=0.005;
+f=@(u2) -u2/2+0*(log(s*u2+1)-s*u2)/s^2;
 f1=adiff(f,1);
 f2=adiff(f,2);
-VN=zeros(m,n);
 
 % Linear Hamiltonian
 lam=0.5;
-VL=@(r) -15*(besselj(0,1*r)).^2;
-[rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
+VX=@(x) 0*x;
+VY=@(y) 0*y;
+[xx,yy,jac,M,H,U,hshuff,J]=schrodcart(m,L,lam,VX,VY);
+rr=hypot(yy,xx);
+th=atan2(yy,xx);
 
-% Physical domain
-xx=rr.*cos(th);
-yy=rr.*sin(th);
-ii=1:m;
-jj=[1:n,1];
-
-% Ansatz
-u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
-   ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
-   (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
+zq=gauleg(-L,L,2*m);
+[xq,yq]=ndgrid(zq,zq);
+rq=hypot(yq,xq);
+bess=-30*(besselj(1,5*rq)).^2;
 
 function U=pot(ju)
     u2=abs(ju).^2;
-    U=f(u2)+u2.*(5*f1(u2)+2*ju.*f2(u2));
-    %U(u2<1e-4)=f(0);
+    U=bess+f(u2)+u2.*(5*f1(u2)+2*ju.*f2(u2));
 end
 
 function F=src(ju)
     u2=abs(ju).^2;
-    F=f(u2)+u2.*f1(u2);
-    %F(u2<1e-4)=f(0);
+    F=bess+f(u2)+u2.*f1(u2);
 end
 
 
@@ -64,11 +58,11 @@ end
 function [Y]=ashuff(X,tflag)
     Y=hshuff(X,tflag);
     if strcmp(tflag,'transp')
-        X=reshape(X,[n,n]);
-        Y=Y+shuff(1,J2,J1,VN,J2,J1,X);
+        X=reshape(X,[m,m]);
+        Y=Y+shuff(1,J,J,VN,J,J,X);
     else
         X=reshape(X,[m,m]);
-        Y=Y+shuff(2,J2,J1,VN,J2,J1,X);
+        Y=Y+shuff(2,J,J,VN,J,J,X);
     end
 end
 
@@ -90,12 +84,12 @@ end
 
 %% Matrix-free solver
 V1=zeros(m,m);
-V2=zeros(n,n);
-LL=zeros(m,n);
+V2=zeros(m,m);
+LL=zeros(m,m);
 
 function [f]=stiff(b,u)
-    uu=reshape(u,m,n);
-    f=H(uu)+J1'*(b.*(J1*uu*J2'))*J2;
+    uu=reshape(u,m,m);
+    f=H(uu)+J'*(b.*(J*uu*J'))*J;
 end
 
 function [au]=afun(u)
@@ -104,63 +98,63 @@ function [au]=afun(u)
 end
 
 function [pu]=pfun(u)
-    uu=reshape(u,m,n);
+    uu=reshape(u,m,m);
     pu=fdm2(LL,V1,V2,uu);
     pu=pu(:);
 end
 
 function [r]=force(u)
-    ju=J1*u*J2';
+    ju=J*u*J';
     F=jac.*src(ju);
     r=stiff(F,u);
     r=r(:);
 end
 
 function [E]=energy(psi,u)
-    ju=J1*psi*J2';
-    u2=abs(ju).^2;
-    Vf=jac.*f(u2);
+    ju=J*psi*J';
+    Vf=jac.*(bess+f(abs(ju).^2));
     hu=stiff(Vf,u);
     E=real(u(:)'*hu(:))/2;
 end
 
 %% Newton Raphson
 tol=1e-12;
-maxit=3;
-restart=200;
+maxit=2;
+restart=100;
 function [du,flag,relres,iter,resvec]=newton(r,u,ref)
     % Set potential
-    ju=J1*u*J2';
+    ju=J*u*J';
     VN=jac.*pot(ju);
     
     if(ref)
     % Low-Rank Approximate Jacobian
-    [B,sig,A]=svds(@ashuff,[n*n,m*m],2);
+    [B,sig,A]=svds(@ashuff,[m*m,m*m],2);
     sig=sqrt(diag(sig)); 
     A=reshape(A*diag(sig),[m,m,2]);
-    B=reshape(B*diag(sig),[n,n,2]);
+    B=reshape(B*diag(sig),[m,m,2]);
     
     % Fast diagonalization
     [V1,L1,D1]=fdm1(A(:,:,1),A(:,:,2),1:m);
-    [V2,L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
+    [V2,L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:m);
     LL=L1*D2.'+D1*L2.';
     end
     
     % Krylov projection solver
     [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],r);
-    du=reshape(x,[m,n]);
+    du=reshape(x,[m,m]);
 end
 
-
+% Ansatz
+u0=real(a0*exp(1i*spin*th-(rr/a1).^2).*(rr.^spin));
 u=u0;
 
-VN=jac.*pot(J1*u*J2');
+VN=jac.*pot(J*u*J');
 E=energy(u,u);
 display(E);
 
 setlatex();
 figure(1);
-h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj)).^2);
+h1=surf(xx,yy,abs(u).^2);
 xlim([-L,L]);
 ylim([-L,L]);
 colormap(magma(256));
@@ -171,7 +165,7 @@ view(2);
 title(num2str(E,'$E = %f$'));
 
 figure(2);
-h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
+h2=surf(xx,yy,angle(u));
 xlim([-L,L]);
 ylim([-L,L]);
 colormap(hsv(256));
@@ -190,16 +184,16 @@ itnr=40;
 etol=1e-9;
 du=ones(size(u));
 while (abs(energy(u,du))>etol && it<itnr ) 
-    ref= true;
+    ref= true ;
     [du,flag,relres,iter,resvec]=newton(force(u),u,ref);
     u=u-du;
-    it=it+1;    
+    it=it+1;
     
-    E=energy(u,u);
-    set(h1,'ZData',abs(u(ii,jj)).^2);
-    title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'));
-    set(h2,'ZData',angle(u(ii,jj)));
-    title(get(2,'CurrentAxes'),num2str(E,'$E = %f$'));
+    E=energy(u,u)/(2*pi);
+    set(h1,'ZData',abs(u).^2);
+    title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'))
+    set(h2,'ZData',angle(u));
+    title(get(2,'CurrentAxes'),num2str(E,'$E = %f$'))
     
     set(h3,'XData',1:length(resvec));
     set(h3,'YData',resvec);
@@ -207,15 +201,16 @@ while (abs(energy(u,du))>etol && it<itnr )
     drawnow;
 end
 
+
 figure(4);
-plot(rr(:,1),abs(u(:,1)),'r',rr(:,1),abs(u0(:,1)),'--b');
+k=ceil(m/2);
+plot(xx(:,k),abs(u(:,k)),'r',xx(:,k),abs(u0(:,k)),'--b');
 xlim([0,L]);
 yl=ylim();
 ylim([0,yl(2)]);
 display(E);
 
-
 T=2*pi;
 nframes=1000;
-pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
+pbeam(T,nframes,u,xx,yy,jac,M,H,U,J,J,f);
 end
