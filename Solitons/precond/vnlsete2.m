@@ -12,11 +12,10 @@ function [] = vnlsete2(m,n,a,b)
 %spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
 %spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
 
+spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
 
 a=a*sqrt(2);
 b=b*sqrt(2);
-
-spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
 
 % Nonlinear potential
 f=@(u2) -u2/2;
@@ -108,12 +107,12 @@ V2=zeros(n,n);
 LL=zeros(m,n);
 
 function [f]=stiff(b,u)
-    uu=reshape(u,m,n);
-    f=H(uu)+J1'*(b.*(J1*uu*J2'))*J2;
+    f=H(u)+J1'*(b.*(J1*u*J2'))*J2;
 end
 
 function [au]=afun(u)
-    au=stiff(VN,u);
+    uu=reshape(u,m,n);
+    au=stiff(VN,uu);
     au=au(:);
 end
 
@@ -130,10 +129,10 @@ function [r]=force(u)
     r=r(:);
 end
 
-function [E]=energy(psi,u)
-    ju=J1*psi*J2';
+function [E]=energy(u)
+    ju=J1*u*J2';
     u2=abs(ju).^2;
-    Vf=jac.*f(u2);
+    Vf=jac.*(bess+f(u2));
     hu=stiff(Vf,u);
     E=real(u(:)'*hu(:))/2;
 end
@@ -142,7 +141,7 @@ end
 tol=1e-12;
 maxit=3;
 restart=200;
-function [du,flag,relres,iter,resvec]=newton(r,u,ref)
+function [du,err,flag,relres,iter,resvec]=newton(r,u,ref)
     % Set potential
     ju=J1*u*J2';
     VN=jac.*pot(ju);
@@ -163,13 +162,11 @@ function [du,flag,relres,iter,resvec]=newton(r,u,ref)
     % Krylov projection solver
     [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],r);
     du=reshape(x,[m,n]);
+    err=abs(x'*afun(x));
 end
 
-
 u=u0;
-
-VN=jac.*pot(J1*u*J2');
-E=energy(u,u);
+E=energy(u);
 display(E);
 
 setlatex();
@@ -200,16 +197,16 @@ h3=semilogy(1:10,1:10,'--*b');
 title('Residual History');
 
 it=0;
-itnr=100;
-etol=1e-9;
-du=ones(size(u));
-while (abs(energy(u,du))>etol && it<itnr ) 
-    ref= true;
-    [du,flag,relres,iter,resvec]=newton(force(u),u,ref);
+itnr=40;
+etol=10*eps;
+err=1;
+while ( err>etol && it<itnr ) 
+    ref= true ;
+    [du,err,flag,relres,iter,resvec]=newton(force(u),u,ref);
     u=u-du;
     it=it+1;    
     
-    E=energy(u,u);
+    E=energy(u);
     set(h1,'ZData',abs(u(ii,jj)).^2);
     title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'));
     set(h2,'ZData',angle(u(ii,jj)));
@@ -219,6 +216,12 @@ while (abs(energy(u,du))>etol && it<itnr )
     set(h3,'YData',resvec);
     title(get(3,'CurrentAxes'),sprintf('Newton step %d Iterations $ = %d$',it,length(resvec)))
     drawnow;
+    
+    if(abs(E)>1e5)
+        disp('Aborting, solution blew up.');
+        display(E);
+        return
+    end
 end
 
 id=find(yy==0);

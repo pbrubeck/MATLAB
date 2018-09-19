@@ -13,7 +13,6 @@ function [] = vnlsetp2(m,n,L)
 spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
 
 % Nonlinear potential
-s=0.05;
 f=@(u2) -u2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
@@ -94,12 +93,12 @@ V2=zeros(n,n);
 LL=zeros(m,n);
 
 function [f]=stiff(b,u)
-    uu=reshape(u,m,n);
-    f=H(uu)+J1'*(b.*(J1*uu*J2'))*J2;
+    f=H(u)+J1'*(b.*(J1*u*J2'))*J2;
 end
 
 function [au]=afun(u)
-    au=stiff(VN,u);
+    uu=reshape(u,m,n);
+    au=stiff(VN,uu);
     au=au(:);
 end
 
@@ -116,8 +115,8 @@ function [r]=force(u)
     r=r(:);
 end
 
-function [E]=energy(psi,u)
-    ju=J1*psi*J2';
+function [E]=energy(u)
+    ju=J1*u*J2';
     u2=abs(ju).^2;
     Vf=jac.*f(u2);
     hu=stiff(Vf,u);
@@ -128,7 +127,7 @@ end
 tol=1e-12;
 maxit=3;
 restart=200;
-function [du,flag,relres,iter,resvec]=newton(r,u,ref)
+function [du,err,flag,relres,iter,resvec]=newton(r,u,ref)
     % Set potential
     ju=J1*u*J2';
     VN=jac.*pot(ju);
@@ -149,13 +148,11 @@ function [du,flag,relres,iter,resvec]=newton(r,u,ref)
     % Krylov projection solver
     [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],r);
     du=reshape(x,[m,n]);
+    err=abs(x'*afun(x));
 end
 
-
 u=u0;
-
-VN=jac.*pot(J1*u*J2');
-E=energy(u,u);
+E=energy(u);
 display(E);
 
 setlatex();
@@ -187,15 +184,15 @@ title('Residual History');
 
 it=0;
 itnr=40;
-etol=1e-9;
-du=ones(size(u));
-while (abs(energy(u,du))>etol && it<itnr ) 
-    ref= true;
-    [du,flag,relres,iter,resvec]=newton(force(u),u,ref);
+etol=10*eps;
+err=1;
+while ( err>etol && it<itnr ) 
+    ref=true;
+    [du,err,flag,relres,iter,resvec]=newton(force(u),u,ref);
     u=u-du;
     it=it+1;    
     
-    E=energy(u,u);
+    E=energy(u);
     set(h1,'ZData',abs(u(ii,jj)).^2);
     title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'));
     set(h2,'ZData',angle(u(ii,jj)));
@@ -205,6 +202,12 @@ while (abs(energy(u,du))>etol && it<itnr )
     set(h3,'YData',resvec);
     title(get(3,'CurrentAxes'),sprintf('Newton step %d Iterations $ = %d$',it,length(resvec)))
     drawnow;
+    
+    if(abs(E)>1e5)
+        disp('Aborting, solution blew up.');
+        display(E);
+        return
+    end
 end
 
 figure(4);
