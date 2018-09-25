@@ -40,7 +40,7 @@ bess=-30*(besselj(1,5*rq)).^2;
 
 function U=pot(ju)
     u2=abs(ju).^2;
-    U=bess+f(u2)+u2.*(5*f1(u2)+2*ju.*f2(u2));
+    U=bess+f(u2)+u2.*(5*f1(u2)+2*u2.*f2(u2));
 end
 
 function F=src(ju)

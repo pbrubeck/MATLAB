@@ -10,7 +10,15 @@ function [] = vnlsetp2(m,n,L)
 %spin=1; del=pi/4; ep=pi/4; a0=0.7830; a1=2.7903; a2=a1;
 %spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
 %spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
-spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
+%spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
+
+del=0; 
+ep=pi/4;
+
+spin=0;
+a0=1;
+a1=1;
+a2=1;
 
 % Nonlinear potential
 f=@(u2) -u2/2;
@@ -19,8 +27,9 @@ f2=adiff(f,2);
 VN=zeros(m,n);
 
 % Linear Hamiltonian
-lam=0.5;
-VL=@(r) -15*(besselj(0,1*r)).^2;
+omega=2;
+lam=-omega.^2;
+VL=@(r) (a0*besselj(spin,omega*r)).^2;
 [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
 
 % Physical domain
@@ -34,16 +43,16 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
+u0=a0*besselj(spin,omega*rr).*cos(spin*th);
+
 function U=pot(ju)
     u2=abs(ju).^2;
-    U=f(u2)+u2.*(5*f1(u2)+2*ju.*f2(u2));
-    %U(u2<1e-4)=f(0);
+    U=f(u2)+u2.*(5*f1(u2)+2*u2.*f2(u2));
 end
 
 function F=src(ju)
     u2=abs(ju).^2;
     F=f(u2)+u2.*f1(u2);
-    %F(u2<1e-4)=f(0);
 end
 
 
@@ -206,19 +215,23 @@ while ( err>etol && it<itnr )
     if(abs(E)>1e5)
         disp('Aborting, solution blew up.');
         display(E);
+        
+        figure(4);
+        plot(rr(:,1),real(u0(:,1)),'--b');
+        xlim([0,L]);
+        display(E);
         return
     end
 end
 
+
 figure(4);
-plot(rr(:,1),abs(u(:,1)),'r',rr(:,1),abs(u0(:,1)),'--b');
+plot(rr(:,1),real(u(:,1)),'r',rr(:,1),real(u0(:,1)),'--b');
 xlim([0,L]);
-yl=ylim();
-ylim([0,yl(2)]);
 display(E);
 
 
 T=2*pi;
-nframes=1000;
+nframes=0;
 pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
 end

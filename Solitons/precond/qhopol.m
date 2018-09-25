@@ -1,6 +1,6 @@
 function [] = qhopol(m,n)
-L=10;
-omega=2/10;
+L=20;
+omega=2/L;
 lam=0;
 VL=@(r) (omega*r).^2; 
 
@@ -10,10 +10,18 @@ yy=rr.*sin(th);
 ii=1:m;
 jj=[1:n,1];
 
-nx=0;
-ny=0;
+nx=3;
+ny=3;
 u0 = HermitePsi([zeros(nx,1);1],xx*sqrt(omega)).*...
      HermitePsi([zeros(ny,1);1],yy*sqrt(omega));
+
+nr=7; 
+l=5;
+w=omega*rr.^2;
+c=[zeros(1,(nr-abs(l))/2),1];
+u0 = LaguerreL(c,abs(l),w).*exp(-w/2).*...
+     (w.^(abs(l)/2)).*exp(1i*l*th);
+u0 = (u0);
 u=u0/sqrt(M(u0,u0));
 
 t=0;
@@ -33,7 +41,10 @@ P=real(M(u,u));
 title(sprintf(mytitle,t,E,P));
 drawnow;
 
-nframes=0;
+display(E);
+display(omega);
+
+nframes=100;
 T=2*pi/omega;
 dt=T/nframes;
 for k=1:nframes

@@ -5,7 +5,7 @@ function [rr,th,jac,M,H,U,Ht,J1,J2] = schrodpol(m,n,L,lam,VL)
 % Quadrature grid excludes origin!
 R=L/sqrt(2);
 [Dz,z]=legD(m);
-[zq,wq]=gauleg(-1,1,2*m); 
+[zq,wq]=gauleg(-1,1,2*m);
 J1=legC(z,zq);
 D=J1*Dz;
 
