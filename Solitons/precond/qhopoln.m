@@ -5,7 +5,6 @@ function [] = qhopoln(n,m)
 
 L=20;
 omega=0.1;
-
 VL=@(r) (omega*r).^2; 
 
 [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,0,VL);
@@ -14,7 +13,7 @@ yy=rr.*sin(th);
 ii=1:m;
 jj=[1:n,1];
 
-skw=1.3;
+skw=1.4;
  
 nx=3;
 ny=3;
@@ -27,7 +26,12 @@ w=skw*omega*rr.^2;
 c=[zeros(1,(nr-abs(l))/2),1];
 u0 = LaguerreL(c,abs(l),w).*exp(-w/2).*...
      (w.^(abs(l)/2)).*exp(1i*l*th);
-u0 = real(u0); 
+
+ 
+%u0 = besselj(l,omega*rr).*exp(1i*l*th);
+u0 = real(u0);
+u0 = u0/sqrt(M(u0,u0));
+
 
 
 function [E]=energy(u)
@@ -151,6 +155,8 @@ figure(2);
 h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
 xlim([-L,L]);
 ylim([-L,L]);
+caxis manual;
+caxis([-pi,pi]);
 colormap(hsv(256));
 colorbar();
 shading interp;
@@ -164,17 +170,18 @@ title('Residual History');
 
 it=0;
 itnr=40;
-etol=10*eps;
+etol=1e-12;
 err=1;
 itgmres=0;
 while ( err>etol && it<itnr ) 
     [du,err,flag,relres,iter,resvec]=newton(u);
     u=u-du;
-    it=it+1;    
+    it=it+1;
+    itgmres=itgmres+length(resvec);
     
     E=energy(u);
     P=M(u,u);
-    
+
     set(h1,'ZData',abs(u(ii,jj)).^2);
     title(get(1,'CurrentAxes'),sprintf(mytitle,it,E,P));
     set(h2,'ZData',angle(u(ii,jj)));
@@ -184,8 +191,6 @@ while ( err>etol && it<itnr )
     set(h3,'YData',resvec);
     title(get(3,'CurrentAxes'),sprintf('Newton step %d Iterations $ = %d$',it,length(resvec)))
     drawnow;
-    
-    itgmres=itgmres+length(resvec);
     
     if(abs(P)>1e5)
         figure(4);
@@ -201,6 +206,14 @@ end
 E=energy(u);
 display(E);
 display(itgmres);
+
+
+figure(4);
+plot(J1*rr(:,1),J1*real(u(:,1)),'r',J1*rr(:,1),J1*real(u0(:,1)),'--b');
+%plot(rr(:,1),real(u(:,1)),'r',rr(:,1),real(u0(:,1)),'--b');
+xlim([0,L]);
+display(E);
+
 
 t=0;
 nframes=100;

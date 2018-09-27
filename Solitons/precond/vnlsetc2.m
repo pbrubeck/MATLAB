@@ -173,6 +173,8 @@ figure(2);
 h2=surf(xx,yy,angle(u));
 xlim([-L,L]);
 ylim([-L,L]);
+caxis manual;
+caxis([-pi,pi]);
 colormap(hsv(256));
 colorbar();
 shading interp;

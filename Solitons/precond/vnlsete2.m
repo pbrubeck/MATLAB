@@ -185,6 +185,8 @@ figure(2);
 h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
 xlim([-a,a]/sqrt(2));
 ylim([-b,b]/sqrt(2));
+caxis manual;
+caxis([-pi,pi]);
 pbaspect([a,b,sqrt((a^2+b^2)/2)]);
 colormap(hsv(256));
 colorbar();

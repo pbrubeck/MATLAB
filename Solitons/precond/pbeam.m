@@ -34,6 +34,8 @@ figure(2);
 h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
 xlim([-L,L]);
 ylim([-L,L]);
+caxis manual;
+caxis([-pi,pi]);
 colormap(hsv(256));
 colorbar();
 shading interp;
