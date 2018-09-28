@@ -1,4 +1,4 @@
-function [] = vnlsetp2(m,n,L)
+function [] = vnlsetp(m,n,L)
 % Variational Nonlinear Schrodinger Equation
 % Tensor-preconditioned Newton-Krylov method
 % Polar coordinates
@@ -15,7 +15,6 @@ function [] = vnlsetp2(m,n,L)
 spin=2; del=0; ep=pi/4; a0=sqrt(1); a1=1; a2=1;
 
 % Nonlinear potential
-dv=0;
 f=@(u2) -u2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
@@ -25,8 +24,8 @@ omega=2;
 lam=-omega^2;
 VL=@(r) (a0*besselj(spin,omega*r)).^2;
 [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
-VS=zeros(size(jac,1), size(jac,2));
-VN=zeros(size(jac,1), size(jac,2), 4,4);
+VS=zeros(size(jac,1),size(jac,2));
+VN=zeros(size(jac,1),size(jac,2),3);
 
 % Physical domain
 xx=rr.*cos(th);
@@ -40,35 +39,24 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
 skw=1.1;
-u0=zeros(m,n,2);
-u0(:,:,1)=(a0/sqrt(2))*besselj(spin,skw*omega*rr).*exp( 1i*spin*th);
-u0(:,:,2)=(a0/sqrt(2))*besselj(spin,skw*omega*rr).*exp(-1i*spin*th);
+u0=a0*besselj(spin,omega*rr).*exp(1i*spin*th);
 
 function F=src(psi)
-    psi2=sum(abs(psi).^2,3);
+    psi2=abs(psi).^2;
     F=f(psi2)+psi2.*f1(psi2);
 end
 
 function U=pot(psi)
-    uu=zeros(size(psi,1),size(psi,2),2*size(psi,3));
-    uu(:,:,1:2:end)=real(psi);
-    uu(:,:,2:2:end)=imag(psi);
-    psi2=sum(uu.^2,3);
+    u2=real(psi).^2;
+    v2=imag(psi).^2;
+    psi2=u2+v2;
     df0=f(psi2);
     df1=f1(psi2);
     df2=f2(psi2);
-
-    U=zeros(size(J1,1),size(J2,1),4,4);
-    for j=1:4
-        for i=1:4
-        U(:,:,i,j)=(2*uu(:,:,i).*uu(:,:,j)).*(2*df1+psi2.*df2);
-        end
-        U(:,:,j,j)=U(:,:,j,j)+df0+psi2.*df1;
-    end
-    U(:,:,1,1)=U(:,:,1,1)+dv;
-    U(:,:,2,2)=U(:,:,1,1)+dv;
-    U(:,:,3,3)=U(:,:,1,1)-dv;
-    U(:,:,4,4)=U(:,:,1,1)-dv;
+    U=zeros(size(J1,1),size(J2,1),3);
+    U(:,:,1)=df0+(4*u2+psi2).*df1+2*u2.*psi2.*df2;
+    U(:,:,2)=df0+(4*v2+psi2).*df1+2*v2.*psi2.*df2;
+    U(:,:,3)=2*real(psi).*imag(psi).*(2*df1+psi2.*df2);
 end
 
 
@@ -113,9 +101,9 @@ function [u]=fdm2(LL,V1,V2,f)
 end
 
 %% Matrix-free solver
-V1=zeros(m,m,4);
-V2=zeros(n,n,4);
-LL=zeros(m,n,4);
+V1=zeros(m,m,2);
+V2=zeros(n,n,2);
+LL=zeros(m,n,2);
 
 function [f]=stiff(b,u)
     f=H(u)+J1'*(b.*(J1*u*J2'))*J2;
@@ -126,48 +114,34 @@ function [f]=mass(b,u)
 end
 
 function [au]=afun(u)
-    uu=reshape(u,m,n,4);
-    au=zeros(m,n,4);
-    for i=1:4
-    au(:,:,i)=stiff(VN(:,:,i,i),uu(:,:,i));
-    for j=setdiff(1:4,i)
-    au(:,:,i)=au(:,:,i)+mass(VN(:,:,i,j),uu(:,:,j));
-    end
-    end
+    uu=reshape(u,m,n,2);
+    au=zeros(m,n,2);
+    au(:,:,1)=stiff(VN(:,:,1),uu(:,:,1))+mass(VN(:,:,3),uu(:,:,2));
+    au(:,:,2)=stiff(VN(:,:,2),uu(:,:,2))+mass(VN(:,:,3),uu(:,:,1));
     au=au(:);
 end
 
 function [pu]=pfun(u)
-    uu=reshape(u,m,n,4);
-    pu=zeros(m,n,4);
-    for i=1:4
-    pu(:,:,i)=fdm2(LL(:,:,i),V1(:,:,i),V2(:,:,i),uu(:,:,i));
-    end
+    uu=reshape(u,m,n,2);
+    pu=zeros(m,n,2);
+    pu(:,:,1)=fdm2(LL(:,:,1),V1(:,:,1),V2(:,:,1),uu(:,:,1));
+    pu(:,:,2)=fdm2(LL(:,:,2),V1(:,:,2),V2(:,:,2),uu(:,:,2));
     pu=pu(:);
 end
 
 function [r]=force(psi)
-    jpsi=zeros(size(J1,1),size(J2,1),2);
-    jpsi(:,:,1)=J1*psi(:,:,1)*J2';
-    jpsi(:,:,2)=J1*psi(:,:,2)*J2';
-    F1=jac.*(src(jpsi)+dv);
-    F2=jac.*(src(jpsi)-dv);
-    z1=stiff(F1,psi(:,:,1));
-    z2=stiff(F2,psi(:,:,2));
-    r=[real(z1(:)); imag(z1(:)); real(z2(:)); imag(z2(:))];
+    jpsi=J1*psi*J2';
+    F=jac.*src(jpsi);
+    z=stiff(F,psi);
+    r=[real(z(:)); imag(z(:))];
 end
 
-function [E]=energy(psi)
-    jpsi=zeros(size(J1,1),size(J2,1),2);
-    jpsi(:,:,1)=J1*psi(:,:,1)*J2';
-    jpsi(:,:,2)=J1*psi(:,:,2)*J2';
-    psi2=sum(abs(jpsi).^2,3);
-    Vf1=jac.*(f(psi2)+dv);
-    Vf2=jac.*(f(psi2)-dv);
-    hpsi=zeros(size(psi));
-    hpsi(:,:,1)=stiff(Vf1,psi(:,:,1));
-    hpsi(:,:,2)=stiff(Vf2,psi(:,:,2));
-    E=real(psi(:)'*hpsi(:))/2;
+function [E]=energy(u)
+    ju=J1*u*J2';
+    u2=abs(ju).^2;
+    Vf=jac.*f(u2);
+    hu=stiff(Vf,u);
+    E=real(u(:)'*hu(:))/2;
 end
 
 %% Newton Raphson
@@ -176,37 +150,40 @@ maxit=3;
 restart=200;
 function [dpsi,err,flag,relres,iter,resvec]=newton(r,psi)
     % Set potential
-    jpsi=zeros(size(J1,1),size(J2,1),2);
-    jpsi(:,:,1)=J1*psi(:,:,1)*J2';
-    jpsi(:,:,2)=J1*psi(:,:,2)*J2';
+    jpsi=J1*psi*J2';
     VN=pot(jpsi);
     for k=1:size(VN,3)
-        for l=1:size(VN,4)
-        VN(:,:,k,l)=jac.*VN(:,:,k,l);
-        end
+        VN(:,:,k)=jac.*VN(:,:,k);
     end
     
-    for k=1:4
-    VS=VN(:,:,k,k);
+    VS=VN(:,:,1);
     % Low-Rank Approximate Jacobian
     [B,sig,A]=svds(@ashuff,[n*n,m*m],2);
     sig=sqrt(diag(sig)); 
     A=reshape(A*diag(sig),[m,m,2]);
     B=reshape(B*diag(sig),[n,n,2]);
     % Fast diagonalization
-    [V1(:,:,k),L1,D1]=fdm1(A(:,:,1),A(:,:,2),1:m);
-    [V2(:,:,k),L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
-    LL(:,:,k)=L1*D2.'+D1*L2.';
-    end
+    [V1(:,:,1),L1,D1]=fdm1(A(:,:,1),A(:,:,2),1:m);
+    [V2(:,:,1),L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
+    LL(:,:,1)=L1*D2.'+D1*L2.';
+    
+    VS=VN(:,:,2);
+    % Low-Rank Approximate Jacobian
+    [B,sig,A]=svds(@ashuff,[n*n,m*m],2);
+    sig=sqrt(diag(sig)); 
+    A=reshape(A*diag(sig),[m,m,2]);
+    B=reshape(B*diag(sig),[n,n,2]);
+    % Fast diagonalization
+    [V1(:,:,2),L1,D1]=fdm1(A(:,:,1),A(:,:,2),1:m);
+    [V2(:,:,2),L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
+    LL(:,:,2)=L1*D2.'+D1*L2.';
     
     % Krylov projection solver
     [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],r);
     err=abs(x'*afun(x));
     
-    x=reshape(x,[m,n,4]);
-    dpsi=zeros(m,n,2);
-    dpsi(:,:,1)=x(:,:,1)+1i*x(:,:,2);
-    dpsi(:,:,2)=x(:,:,3)+1i*x(:,:,4);
+    x=reshape(x,[m,n,2]);
+    dpsi=x(:,:,1)+1i*x(:,:,2);
 end
 
 u=u0;
@@ -215,7 +192,7 @@ display(E);
 
 setlatex();
 figure(1);
-h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj,1)).^2+abs(u(ii,jj,2)).^2);
+h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj)).^2);
 xlim([-L,L]);
 ylim([-L,L]);
 colormap(magma(256));
@@ -226,7 +203,7 @@ view(2);
 title(num2str(E,'$E = %f$'));
 
 figure(2);
-h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj,1)));
+h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
 xlim([-L,L]);
 ylim([-L,L]);
 caxis manual;
@@ -254,9 +231,9 @@ while ( err>etol && it<itnr )
     itgmres=itgmres+length(resvec);
     
     E=energy(u);
-    set(h1,'ZData',abs(u(ii,jj,1)).^2+abs(u(ii,jj,2)).^2);
+    set(h1,'ZData',abs(u(ii,jj)).^2);
     title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'));
-    set(h2,'ZData',angle(u(ii,jj,1))-angle(u(ii,jj,2)));
+    set(h2,'ZData',angle(u(ii,jj)));
     title(get(2,'CurrentAxes'),num2str(E,'$E = %f$'));
     
     set(h3,'XData',1:length(resvec));
@@ -269,7 +246,7 @@ while ( err>etol && it<itnr )
         display(E);
         
         figure(4);
-        plot(rr(:,1),real(u0(:,1,1)),'--b');
+        plot(rr(:,1),real(u0(:,1)),'--b');
         xlim([0,L]);
         display(E);
         return
@@ -277,13 +254,13 @@ while ( err>etol && it<itnr )
 end
 
 figure(4);
-plot(J1*rr(:,1),J1*real(u(:,1,1)),'r',J1*rr(:,1),J1*real(u0(:,1,1)),'--b');
-%plot(rr(:,1),real(u(:,1,1)),'r',rr(:,1),real(u0(:,1,1)),'--b');
+plot(J1*rr(:,1),J1*real(u(:,1)),'r',J1*rr(:,1),J1*real(u0(:,1)),'--b');
+%plot(rr(:,1),real(u(:,1)),'r',rr(:,1),real(u0(:,1)),'--b');
 xlim([0,L]);
 display(E);
 display(itgmres);
 
-% T=2*pi;
-% nframes=1000;
-% pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
+T=2*pi;
+nframes=1000;
+pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
 end
