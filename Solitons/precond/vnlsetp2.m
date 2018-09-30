@@ -16,7 +16,7 @@ spin=2; del=0; ep=pi/4; a0=sqrt(1); a1=1; a2=1;
 
 % Nonlinear potential
 dv=0;
-f=@(u2) -u2/2;
+f=@(u2) -u2.^2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
 
@@ -46,7 +46,7 @@ u0(:,:,2)=(a0/sqrt(2))*besselj(spin,skw*omega*rr).*exp(-1i*spin*th);
 
 function F=src(psi)
     psi2=sum(abs(psi).^2,3);
-    F=f(psi2)+psi2.*f1(psi2);
+    F=f1(psi2);
 end
 
 function U=pot(psi)
@@ -54,21 +54,20 @@ function U=pot(psi)
     uu(:,:,1:2:end)=real(psi);
     uu(:,:,2:2:end)=imag(psi);
     psi2=sum(uu.^2,3);
-    df0=f(psi2);
     df1=f1(psi2);
     df2=f2(psi2);
 
     U=zeros(size(J1,1),size(J2,1),4,4);
     for j=1:4
         for i=1:4
-        U(:,:,i,j)=(2*uu(:,:,i).*uu(:,:,j)).*(2*df1+psi2.*df2);
+        U(:,:,i,j)=(2*uu(:,:,i).*uu(:,:,j)).*df2;
         end
-        U(:,:,j,j)=U(:,:,j,j)+df0+psi2.*df1;
+        U(:,:,j,j)=U(:,:,j,j)+df1;
     end
     U(:,:,1,1)=U(:,:,1,1)+dv;
-    U(:,:,2,2)=U(:,:,1,1)+dv;
-    U(:,:,3,3)=U(:,:,1,1)-dv;
-    U(:,:,4,4)=U(:,:,1,1)-dv;
+    U(:,:,2,2)=U(:,:,2,2)+dv;
+    U(:,:,3,3)=U(:,:,3,3)-dv;
+    U(:,:,4,4)=U(:,:,4,4)-dv;
 end
 
 
@@ -162,8 +161,8 @@ function [E]=energy(psi)
     jpsi(:,:,1)=J1*psi(:,:,1)*J2';
     jpsi(:,:,2)=J1*psi(:,:,2)*J2';
     psi2=sum(abs(jpsi).^2,3);
-    Vf1=jac.*(f(psi2)+dv);
-    Vf2=jac.*(f(psi2)-dv);
+    Vf1=jac.*(f1(psi2)+dv);
+    Vf2=jac.*(f1(psi2)-dv);
     hpsi=zeros(size(psi));
     hpsi(:,:,1)=stiff(Vf1,psi(:,:,1));
     hpsi(:,:,2)=stiff(Vf2,psi(:,:,2));
@@ -171,7 +170,7 @@ function [E]=energy(psi)
 end
 
 %% Newton Raphson
-tol=1e-11;
+tol=1e-10;
 maxit=3;
 restart=200;
 function [dpsi,err,flag,relres,iter,resvec]=newton(r,psi)
@@ -211,11 +210,14 @@ end
 
 u=u0;
 E=energy(u);
+[S1,S2,S3,S4]=stokesparams(u(:,:,1),u(:,:,2));
+stksphi=atan2(S2, S1)/2;
+stkschi=atan2(S3, hypot(S1,S2))/2;
 display(E);
 
 setlatex();
 figure(1);
-h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj,1)).^2+abs(u(ii,jj,2)).^2);
+h1=surf(xx(ii,jj),yy(ii,jj),S1(ii,jj));
 xlim([-L,L]);
 ylim([-L,L]);
 colormap(magma(256));
@@ -226,7 +228,7 @@ view(2);
 title(num2str(E,'$E = %f$'));
 
 figure(2);
-h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj,1)));
+h2=surf(xx(ii,jj),yy(ii,jj),stkschi(ii,jj));
 xlim([-L,L]);
 ylim([-L,L]);
 caxis manual;
@@ -254,9 +256,13 @@ while ( err>etol && it<itnr )
     itgmres=itgmres+length(resvec);
     
     E=energy(u);
-    set(h1,'ZData',abs(u(ii,jj,1)).^2+abs(u(ii,jj,2)).^2);
+    [S1,S2,S3,S4]=stokesparams(u(:,:,1),u(:,:,2));
+    stksphi=atan2(S2,S1)/2;
+    stkschi=atan2(S3,hypot(S1,S2))/2;
+    
+    set(h1,'ZData',S1(ii,jj));
     title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'));
-    set(h2,'ZData',angle(u(ii,jj,1))-angle(u(ii,jj,2)));
+    set(h2,'ZData',stkschi(ii,jj));
     title(get(2,'CurrentAxes'),num2str(E,'$E = %f$'));
     
     set(h3,'XData',1:length(resvec));

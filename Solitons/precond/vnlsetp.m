@@ -15,14 +15,16 @@ function [] = vnlsetp(m,n,L)
 spin=2; del=0; ep=pi/4; a0=sqrt(1); a1=1; a2=1;
 
 % Nonlinear potential
-f=@(u2) -u2/2;
+s=0.05;
+f=@(u2) -u2/s+log(1+s*u2)/s^2;
+%f=@(u2) -u2.^2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
 
 % Linear Hamiltonian
 omega=2;
 lam=-omega^2;
-VL=@(r) (a0*besselj(spin,omega*r)).^2;
+VL=@(r) -f1((a0*besselj(spin,omega*r)).^2);
 [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
 VS=zeros(size(jac,1),size(jac,2));
 VN=zeros(size(jac,1),size(jac,2),3);
@@ -39,24 +41,23 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
 skw=1.1;
-u0=a0*besselj(spin,omega*rr).*exp(1i*spin*th);
+u0=a0*besselj(spin,skw*omega*rr).*exp(1i*(spin+0.01)*th);
 
 function F=src(psi)
     psi2=abs(psi).^2;
-    F=f(psi2)+psi2.*f1(psi2);
+    F=f1(psi2);
 end
 
 function U=pot(psi)
     u2=real(psi).^2;
     v2=imag(psi).^2;
     psi2=u2+v2;
-    df0=f(psi2);
     df1=f1(psi2);
     df2=f2(psi2);
     U=zeros(size(J1,1),size(J2,1),3);
-    U(:,:,1)=df0+(4*u2+psi2).*df1+2*u2.*psi2.*df2;
-    U(:,:,2)=df0+(4*v2+psi2).*df1+2*v2.*psi2.*df2;
-    U(:,:,3)=2*real(psi).*imag(psi).*(2*df1+psi2.*df2);
+    U(:,:,1)=df1+2*u2.*df2;
+    U(:,:,2)=df1+2*v2.*df2;
+    U(:,:,3)=2*real(psi).*imag(psi).*df2;
 end
 
 
@@ -139,13 +140,13 @@ end
 function [E]=energy(u)
     ju=J1*u*J2';
     u2=abs(ju).^2;
-    Vf=jac.*f(u2);
+    Vf=jac.*f1(u2);
     hu=stiff(Vf,u);
     E=real(u(:)'*hu(:))/2;
 end
 
 %% Newton Raphson
-tol=1e-11;
+tol=1e-10;
 maxit=3;
 restart=200;
 function [dpsi,err,flag,relres,iter,resvec]=newton(r,psi)
@@ -262,5 +263,5 @@ display(itgmres);
 
 T=2*pi;
 nframes=1000;
-pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
+pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f1);
 end

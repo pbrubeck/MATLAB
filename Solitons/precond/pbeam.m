@@ -1,18 +1,24 @@
 function [] = pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f)
-
 L=max(sqrt((xx(:).^2+yy(:).^2)/2));
+
 ii=1:size(u,1);
 jj=[1:size(u,2),1];
 
-function [ufu]=expval(f,u)
-    ju=J1*u*J2';
-    u2=abs(ju).^2;
-    fu=jac.*f(u2).*ju;
-    ufu=ju(:)'*fu(:);
+function [f]=stiff(b,u)
+    f=H(u)+J1'*(b.*(J1*u*J2'))*J2;
 end
 
+function [E]=energy(u)
+    ju=J1*u*J2';
+    u2=abs(ju).^2;
+    Vf=jac.*f(u2);
+    hu=stiff(Vf,u);
+    E=real(u(:)'*hu(:))/2;
+end
+
+
 t=0;
-E=real(H(u,u)+expval(f,u))/2;
+E=energy(u);
 P=real(M(u,u));
 display(E);
 
@@ -50,11 +56,11 @@ umax=zeros(nframes+1,1);
 umax(1)=max(abs(u(:)).^2);
 for i=1:nframes
     u=U(dt/2,u);
-    u=u.*exp(-2i*dt*f(abs(u).^2));
+    u=u.*exp(-1i*dt*f(abs(u).^2));
     u=U(dt/2,u);
     t=t+dt;
 
-    E=real(H(u,u)+expval(f,u))/2;
+    E=energy(u);
     P=real(M(u,u));
     set(h1,'ZData',abs(u(ii,jj)).^2);
     title(get(1,'CurrentAxes'),sprintf(mytitle,t,E,P));
