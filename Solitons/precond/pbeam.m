@@ -3,19 +3,14 @@ L=max(sqrt((xx(:).^2+yy(:).^2)/2));
 
 ii=1:size(u,1);
 jj=[1:size(u,2),1];
-
-function [f]=stiff(b,u)
-    f=H(u)+J1'*(b.*(J1*u*J2'))*J2;
-end
+f1=adiff(f,1);
 
 function [E]=energy(u)
     ju=J1*u*J2';
     u2=abs(ju).^2;
-    Vf=jac.*f(u2);
-    hu=stiff(Vf,u);
-    E=real(u(:)'*hu(:))/2;
+    hu=H(u);
+    E=real(u(:)'*hu(:)+jac(:)'*f(u2(:)))/2;
 end
-
 
 t=0;
 E=energy(u);
@@ -56,7 +51,7 @@ umax=zeros(nframes+1,1);
 umax(1)=max(abs(u(:)).^2);
 for i=1:nframes
     u=U(dt/2,u);
-    u=u.*exp(-1i*dt*f(abs(u).^2));
+    u=u.*exp(-1i*dt*f1(abs(u).^2));
     u=U(dt/2,u);
     t=t+dt;
 

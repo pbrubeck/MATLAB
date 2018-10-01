@@ -16,14 +16,16 @@ spin=2; del=0; ep=pi/4; a0=sqrt(1); a1=1; a2=1;
 
 % Nonlinear potential
 dv=0;
-f=@(u2) -u2.^2/2;
+s=0.05;
+f=@(u2) -u2/s+log(1+s*u2)/s^2;
+%f=@(u2) -u2.^2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
 
 % Linear Hamiltonian
 omega=2;
 lam=-omega^2;
-VL=@(r) (a0*besselj(spin,omega*r)).^2;
+VL=@(r) -f1((a0*besselj(spin,omega*r)).^2);
 [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
 VS=zeros(size(jac,1), size(jac,2));
 VN=zeros(size(jac,1), size(jac,2), 4,4);
@@ -39,10 +41,9 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
-skw=1.1;
 u0=zeros(m,n,2);
-u0(:,:,1)=(a0/sqrt(2))*besselj(spin,skw*omega*rr).*exp( 1i*spin*th);
-u0(:,:,2)=(a0/sqrt(2))*besselj(spin,skw*omega*rr).*exp(-1i*spin*th);
+u0(:,:,1)=(a0/sqrt(2))./(1+omega*rr/2).*exp( 1i*spin*th);
+u0(:,:,2)=(a0/sqrt(2))./(1+omega*rr/2).*exp(-1i*spin*th);
 
 function F=src(psi)
     psi2=sum(abs(psi).^2,3);
@@ -56,7 +57,6 @@ function U=pot(psi)
     psi2=sum(uu.^2,3);
     df1=f1(psi2);
     df2=f2(psi2);
-
     U=zeros(size(J1,1),size(J2,1),4,4);
     for j=1:4
         for i=1:4
@@ -161,12 +161,10 @@ function [E]=energy(psi)
     jpsi(:,:,1)=J1*psi(:,:,1)*J2';
     jpsi(:,:,2)=J1*psi(:,:,2)*J2';
     psi2=sum(abs(jpsi).^2,3);
-    Vf1=jac.*(f1(psi2)+dv);
-    Vf2=jac.*(f1(psi2)-dv);
     hpsi=zeros(size(psi));
-    hpsi(:,:,1)=stiff(Vf1,psi(:,:,1));
-    hpsi(:,:,2)=stiff(Vf2,psi(:,:,2));
-    E=real(psi(:)'*hpsi(:))/2;
+    hpsi(:,:,1)=stiff(-dv*jac,psi(:,:,1));
+    hpsi(:,:,2)=stiff( dv*jac,psi(:,:,2));
+    E=real(psi(:)'*hpsi(:)+jac(:)'*(f(psi2(:))))/2;
 end
 
 %% Newton Raphson

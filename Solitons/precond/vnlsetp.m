@@ -40,8 +40,8 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
-skw=1.1;
-u0=a0*besselj(spin,skw*omega*rr).*exp(1i*(spin+0.01)*th);
+
+u0=a0*exp(1i*(spin)*th)./(1+omega*rr/2);
 
 function F=src(psi)
     psi2=abs(psi).^2;
@@ -140,9 +140,8 @@ end
 function [E]=energy(u)
     ju=J1*u*J2';
     u2=abs(ju).^2;
-    Vf=jac.*f1(u2);
-    hu=stiff(Vf,u);
-    E=real(u(:)'*hu(:))/2;
+    hu=H(u);
+    E=real(u(:)'*hu(:)+jac(:)'*f(u2(:)))/2;
 end
 
 %% Newton Raphson
@@ -256,12 +255,12 @@ end
 
 figure(4);
 plot(J1*rr(:,1),J1*real(u(:,1)),'r',J1*rr(:,1),J1*real(u0(:,1)),'--b');
-%plot(rr(:,1),real(u(:,1)),'r',rr(:,1),real(u0(:,1)),'--b');
 xlim([0,L]);
 display(E);
 display(itgmres);
 
+
 T=2*pi;
 nframes=1000;
-pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f1);
+pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
 end
