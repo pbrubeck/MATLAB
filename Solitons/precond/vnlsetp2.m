@@ -197,7 +197,7 @@ function [dpsi,err,flag,relres,iter,resvec]=newton(r,psi)
     end
     
     % Krylov projection solver
-    [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],r);
+    [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],pfun(r));
     err=abs(x'*afun(x));
     
     x=reshape(x,[m,n,4]);

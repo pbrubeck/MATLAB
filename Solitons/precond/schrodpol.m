@@ -38,11 +38,16 @@ end
 
 % Separation of variables
 lt=kt.^2;
+ii=zeros(m,m,n);
+jj=zeros(m,m,n);
 V=zeros(m,m,n);
 E=zeros(m,n);
 for k=1:n
     [V(:,:,k),E(:,k)]=fdm(K1+lt(k)*M1,B1,1:m);
+    %[ii(:,:,k),jj(:,:,k)]=ndgrid(n*(k-1)+1:n*k);
 end
+%VS=sparse(ii(:),jj(:),V(:));
+%VST=sparse(jj(:),ii(:),V(:));
 
 function mu=mfun(u,v)
     if(nargin==1)
@@ -69,10 +74,12 @@ end
 function u=ufun(dt,u)
     % u = V*exp(1i*dt*E)*V'*M*u
     u=fft(B1*u,[],2);
+    %u=reshape(VST*u(:),size(u));
     for j=1:n
        u(:,j)=V(:,:,j)'*u(:,j); 
     end
     u=exp(-1i*dt*E).*u;
+    %u=reshape(VS*u(:),size(u));
     for j=1:n
        u(:,j)=V(:,:,j)*u(:,j); 
     end

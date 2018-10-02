@@ -28,7 +28,7 @@ colorbar();
 shading interp;
 axis square;
 view(2);
-title(sprintf(mytitle,t,E,P));
+title(sprintf(mytitle,t/T,E,P));
 
 
 figure(2);
@@ -42,7 +42,7 @@ colorbar();
 shading interp;
 axis square;
 view(2);
-title(sprintf(mytitle,t,E,P));
+title(sprintf(mytitle,t/T,E,P));
 
 drawnow;
 
@@ -58,9 +58,9 @@ for i=1:nframes
     E=energy(u);
     P=real(M(u,u));
     set(h1,'ZData',abs(u(ii,jj)).^2);
-    title(get(1,'CurrentAxes'),sprintf(mytitle,t,E,P));
+    title(get(1,'CurrentAxes'),sprintf(mytitle,t/T,E,P));
     set(h2,'ZData',angle(u(ii,jj)));
-    title(get(2,'CurrentAxes'),sprintf(mytitle,t,E,P));
+    title(get(2,'CurrentAxes'),sprintf(mytitle,t/T,E,P));
     drawnow;
     
     umax(i+1)=max(abs(u(:)).^2);

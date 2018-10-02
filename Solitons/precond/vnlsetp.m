@@ -7,12 +7,12 @@ function [] = vnlsetp(m,n,L)
 
 % Ansatz
 %spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1;
-%spin=1; del=pi/4; ep=pi/4; a0=0.7830; a1=2.7903; a2=a1;
+%spin=1; del=pi/4; ep=pi/4; a0=1; a1=2.7903; a2=a1;
+spin=2; del=pi/4; ep=pi/4; a0=0.8156; a1=3.3941; a2=a1;
+%spin=3; del=pi/4; ep=pi/4; a0=0.5; a1=3; a2=a1;
 %spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
 %spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
 %spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
-
-spin=2; del=0; ep=pi/4; a0=sqrt(1); a1=1; a2=1;
 
 % Nonlinear potential
 s=0.05;
@@ -22,9 +22,8 @@ f1=adiff(f,1);
 f2=adiff(f,2);
 
 % Linear Hamiltonian
-omega=2;
-lam=-omega^2;
-VL=@(r) -f1((a0*besselj(spin,omega*r)).^2);
+lam=1/2;
+VL=@(r) -0*r;
 [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
 VS=zeros(size(jac,1),size(jac,2));
 VN=zeros(size(jac,1),size(jac,2),3);
@@ -40,8 +39,7 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
-
-u0=a0*exp(1i*(spin)*th)./(1+omega*rr/2);
+%u0=a0*exp(1i*(spin)*th).*(rr/a1).^spin.*exp(-(rr/a1).^2/2);
 
 function F=src(psi)
     psi2=abs(psi).^2;
@@ -155,31 +153,22 @@ function [dpsi,err,flag,relres,iter,resvec]=newton(r,psi)
     for k=1:size(VN,3)
         VN(:,:,k)=jac.*VN(:,:,k);
     end
-    
-    VS=VN(:,:,1);
+        
+    for k=1:2
+    VS=VN(:,:,k);
     % Low-Rank Approximate Jacobian
     [B,sig,A]=svds(@ashuff,[n*n,m*m],2);
     sig=sqrt(diag(sig)); 
     A=reshape(A*diag(sig),[m,m,2]);
     B=reshape(B*diag(sig),[n,n,2]);
     % Fast diagonalization
-    [V1(:,:,1),L1,D1]=fdm1(A(:,:,1),A(:,:,2),1:m);
-    [V2(:,:,1),L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
-    LL(:,:,1)=L1*D2.'+D1*L2.';
-    
-    VS=VN(:,:,2);
-    % Low-Rank Approximate Jacobian
-    [B,sig,A]=svds(@ashuff,[n*n,m*m],2);
-    sig=sqrt(diag(sig)); 
-    A=reshape(A*diag(sig),[m,m,2]);
-    B=reshape(B*diag(sig),[n,n,2]);
-    % Fast diagonalization
-    [V1(:,:,2),L1,D1]=fdm1(A(:,:,1),A(:,:,2),1:m);
-    [V2(:,:,2),L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
-    LL(:,:,2)=L1*D2.'+D1*L2.';
-    
+    [V1(:,:,k),L1,D1]=fdm1(A(:,:,1),A(:,:,2),1:m);
+    [V2(:,:,k),L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
+    LL(:,:,k)=L1*D2.'+D1*L2.';
+    end
+
     % Krylov projection solver
-    [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],r);
+    [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],pfun(r));
     err=abs(x'*afun(x));
     
     x=reshape(x,[m,n,2]);

@@ -192,6 +192,7 @@ while ( err>etol && it<itnr )
     title(get(3,'CurrentAxes'),sprintf('Newton step %d Iterations $ = %d$',it,length(resvec)))
     drawnow;
     
+    
     if(abs(P)>1e5)
         figure(4);
         plot(rr(:,1),real(u0(:,1)),'--b');
@@ -202,7 +203,7 @@ while ( err>etol && it<itnr )
     end
 end
 
-
+u=u/sqrt(P);
 E=energy(u);
 display(E);
 display(itgmres);
