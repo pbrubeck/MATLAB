@@ -3,7 +3,7 @@ function [rr,th,jac,M,H,U,Ht,J1,J2] = schrodpol(m,n,L,lam,VL)
 
 % Radial SEM
 % Quadrature grid excludes origin!
-R=L/sqrt(2);
+R=L/2;
 [Dz,z]=legD(m);
 [zq,wq]=gauleg(-1,1,2*m);
 J1=legC(z,zq);
@@ -38,8 +38,8 @@ end
 
 % Separation of variables
 lt=kt.^2;
-ii=zeros(m,m,n);
-jj=zeros(m,m,n);
+%ii=zeros(m,m,n);
+%jj=zeros(m,m,n);
 V=zeros(m,m,n);
 E=zeros(m,n);
 for k=1:n

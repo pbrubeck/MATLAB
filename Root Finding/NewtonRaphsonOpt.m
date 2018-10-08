@@ -3,11 +3,14 @@ function x = NewtonRaphsonOpt(f, x)
 g=agrad(f,length(x));
 H=ahess(f,length(x));
 i=0;
-y=1;
-while(norm(y)>2*eps && i<60)
+err=1;
+tol=10*eps;
+while(err>tol && i<60)
     vars=num2cell(x);
     y=g(vars{:});
-    x=x-H(vars{:})\y;
+    dx=H(vars{:})\y;
+    err=norm(dx'*y);
+    x=x-dx;
     i=i+1;
 end
 end

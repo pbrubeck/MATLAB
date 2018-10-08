@@ -6,9 +6,10 @@ function [] = vnlsetp(m,n,L)
 % n Fourier modes, must be even
 
 % Ansatz
-%spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1;
+spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1;
 %spin=1; del=pi/4; ep=pi/4; a0=1; a1=2.7903; a2=a1;
-spin=2; del=pi/4; ep=pi/4; a0=0.8156; a1=3.3941; a2=a1;
+%spin=2; del=pi/4; ep=pi/4; a0=1; a1=3.3941; a2=a1;
+
 %spin=3; del=pi/4; ep=pi/4; a0=0.5; a1=3; a2=a1;
 %spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
 %spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
@@ -16,15 +17,18 @@ spin=2; del=pi/4; ep=pi/4; a0=0.8156; a1=3.3941; a2=a1;
 
 % Nonlinear potential
 s=0.05;
-f=@(u2) -u2/s+log(1+s*u2)/s^2;
-%f=@(u2) -u2.^2/2;
+%f=@(u2) -u2/s+log(1+s*u2)/s^2;
+f=@(u2)  u2.^2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
 
 % Linear Hamiltonian
-lam=1/2;
-VL=@(r) -0*r;
-[rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,lam,VL);
+omega=0;
+
+VL=@(r) (omega*r).^2;
+[rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,0,VL);
+
+
 VS=zeros(size(jac,1),size(jac,2));
 VN=zeros(size(jac,1),size(jac,2),3);
 
@@ -39,8 +43,15 @@ u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
 
-%u0=a0*exp(1i*(spin)*th).*(rr/a1).^spin.*exp(-(rr/a1).^2/2);
 
+nr=1;
+omega=0.05;
+a0=2*omega/(nr+1);
+c0=[zeros(1,(nr-1)/2);a0];
+u0=LaguerreL(c0,2,omega*rr.^2).*exp(-omega*rr.^2/2).*exp(1i*th);
+
+
+% Gradient and Hessian
 function F=src(psi)
     psi2=abs(psi).^2;
     F=f1(psi2);
@@ -56,6 +67,19 @@ function U=pot(psi)
     U(:,:,1)=df1+2*u2.*df2;
     U(:,:,2)=df1+2*v2.*df2;
     U(:,:,3)=2*real(psi).*imag(psi).*df2;
+end
+
+function [r]=force(lam,psi)
+    jpsi=J1*psi*J2';
+    F=jac.*(src(jpsi)-lam);
+    z=stiff(F,psi);
+    r=[real(z(:)); imag(z(:))];
+end
+
+function [E]=energy(psi)
+    jpsi=J1*psi*J2';
+    psi2=abs(jpsi).^2;
+    E=real(H(psi,psi)+jac(:)'*f(psi2(:)))/2;
 end
 
 
@@ -128,32 +152,19 @@ function [pu]=pfun(u)
     pu=pu(:);
 end
 
-function [r]=force(psi)
-    jpsi=J1*psi*J2';
-    F=jac.*src(jpsi);
-    z=stiff(F,psi);
-    r=[real(z(:)); imag(z(:))];
-end
-
-function [E]=energy(u)
-    ju=J1*u*J2';
-    u2=abs(ju).^2;
-    hu=H(u);
-    E=real(u(:)'*hu(:)+jac(:)'*f(u2(:)))/2;
-end
-
 %% Newton Raphson
 tol=1e-10;
 maxit=3;
 restart=200;
-function [dpsi,err,flag,relres,iter,resvec]=newton(r,psi)
+function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
+
     % Set potential
     jpsi=J1*psi*J2';
     VN=pot(jpsi);
-    for k=1:size(VN,3)
-        VN(:,:,k)=jac.*VN(:,:,k);
-    end
-        
+    VN(:,:,1)=jac.*(VN(:,:,1)-lam);
+    VN(:,:,2)=jac.*(VN(:,:,2)-lam);
+    VN(:,:,3)=jac.*(VN(:,:,3));
+       
     for k=1:2
     VS=VN(:,:,k);
     % Low-Rank Approximate Jacobian
@@ -166,18 +177,37 @@ function [dpsi,err,flag,relres,iter,resvec]=newton(r,psi)
     [V2(:,:,k),L2,D2]=fdm1(B(:,:,2),B(:,:,1),1:n);
     LL(:,:,k)=L1*D2.'+D1*L2.';
     end
-
-    % Krylov projection solver
-    [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],pfun(r));
-    err=abs(x'*afun(x));
     
-    x=reshape(x,[m,n,2]);
-    dpsi=x(:,:,1)+1i*x(:,:,2);
+    % Krylov projection solver
+    mu=M(psi);
+    r1=[real(mu(:)); imag(mu(:))];    
+    [x1,flag,relres,iter,resvec]=gmres(@afun,r1,restart,tol,maxit,@pfun,[],pfun(r1));
+    
+    r2=force(lam,psi);
+    [x2,flag,relres,iter,resvec]=gmres(@afun,r2,restart,tol,maxit,@pfun,[],pfun(r2));
+        
+    x1=reshape(x1,[],2)*[1;1i];
+    x2=reshape(x2,[],2)*[1;1i];
+    y=real(((P0-psi(:)'*mu(:))/2+mu(:)'*x2(:))/(mu(:)'*x1(:)));
+    %y=0;
+    
+    
+    lam=lam+y;
+    x=x2-y*x1;
+    x=[real(x(:)); imag(x(:))];
+       
+    err=abs(x'*afun(x));
+    x=reshape(x,[],2)*[1;1i];
+    dpsi=reshape(x,[m,n]);
 end
 
 u=u0;
 E=energy(u);
+P=real(M(u,u));
+lam=E/2;
+P0=8*P;
 display(E);
+display(P);
 
 setlatex();
 figure(1);
@@ -214,11 +244,12 @@ etol=1e-13;
 err=1;
 itgmres=0;
 while ( err>etol && it<itnr )
-    [du,err,flag,relres,iter,resvec]=newton(force(u),u);
+    [lam,du,err,flag,relres,iter,resvec]=newton(lam,u);
     u=u-du;
     it=it+1;
     itgmres=itgmres+length(resvec);
-    
+
+    P=real(M(u,u));
     E=energy(u);
     set(h1,'ZData',abs(u(ii,jj)).^2);
     title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'));
@@ -229,11 +260,9 @@ while ( err>etol && it<itnr )
     set(h3,'YData',resvec);
     title(get(3,'CurrentAxes'),sprintf('Newton step %d Iterations $ = %d$',it,length(resvec)))
     drawnow;
-    
-    if(abs(E)>1e5)
-        disp('Aborting, solution blew up.');
-        display(E);
         
+    if(abs(E)>1e3)
+        disp('Aborting, solution blew up.');
         figure(4);
         plot(rr(:,1),real(u0(:,1)),'--b');
         xlim([0,L]);
@@ -249,7 +278,7 @@ display(E);
 display(itgmres);
 
 
-T=2*pi;
+T=2*pi/abs(lam/2);
 nframes=1000;
 pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
 end

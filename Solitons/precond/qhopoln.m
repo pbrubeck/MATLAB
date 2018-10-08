@@ -120,7 +120,7 @@ function [du,err,flag,relres,iter,resvec]=newton(u)
     r=mu(:);
     
     [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],pfun(r));
-    y=(1+u(:)'*mu(:))/(2*mu(:)'*x(:));
+    y=real((1+u(:)'*mu(:))/(2*mu(:)'*x(:)));
     lam2=lam+y;
     r=H(u)-lam2*mu;
     r=r(:);
