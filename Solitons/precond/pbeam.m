@@ -8,8 +8,7 @@ f1=adiff(f,1);
 function [E]=energy(u)
     ju=J1*u*J2';
     u2=abs(ju).^2;
-    hu=H(u);
-    E=real(u(:)'*hu(:)+jac(:)'*f(u2(:)))/2;
+    E=real(H(u,u)+jac(:)'*f(u2(:)))/2;
 end
 
 t=0;
@@ -50,9 +49,9 @@ dt=T/nframes;
 umax=zeros(nframes+1,1);
 umax(1)=max(abs(u(:)).^2);
 for i=1:nframes
-    u=U(dt/2,u);
-    u=u.*exp(-1i*dt*f1(abs(u).^2));
-    u=U(dt/2,u);
+    u=u.*exp(-1i*dt/2*f1(abs(u).^2));
+    u=U(dt,u);
+    u=u.*exp(-1i*dt/2*f1(abs(u).^2));
     t=t+dt;
 
     E=energy(u);

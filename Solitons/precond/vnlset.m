@@ -5,21 +5,24 @@ function [] = vnlset(m,n,L)
 % n Fourier modes, must be even
 
 % Ansatz
-%spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1;
-%spin=1; del=pi/4; ep=pi/4; a0=1; a1=2.7903; a2=a1;
-spin=2; del=pi/4; ep=pi/4; a0=1; a1=3.3941; a2=a1;
+%spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1; P0=0;
+%spin=1; del=pi/4; ep=pi/4; a0=2; a1=sqrt(8); a2=a1; P0=0;
 
-%spin=3; del=pi/4; ep=pi/4; a0=0.5; a1=3; a2=a1;
-%spin=2; del=0; ep=pi/4; a0=0.5767; a1=3.4560; a2=a1;
-%spin=4; del=pi/3; ep=pi/4; a0=0.421566597506070; a1=2.872534677296654; a2=a1;
-%spin=2; del=0; ep=5*pi/16; a0=1.2722; a1=2.2057; a2=1.3310;
+%spin=0; del=0; ep=pi/4; a0=1.863; a1=2.529;  a2=a1; P0=12;
+%spin=1; del=pi/4; ep=pi/4; a0=1.2; a1=4; a2=a1; P0=50;
+%spin=2; del=pi/4; ep=pi/4; a0=1; a1=3.3941; a2=a1; P0=100;
+%spin=3; del=pi/4; ep=pi/4; a0=1.65; a1=2.075; a2=a1; P0=100;
 
-P0=100;
+%spin=1; del=pi/4; ep=pi/4;a0=7.354225382634053; a1=0.161442173029839; a2=1; P0=110;   
 
+spin=2; del=pi/4; ep=pi/4; a0=1; a1=3.3941; a2=a1; P0=100;
+
+% Semifocal length
+c=1;
 % Nonlinear potential
 s=0.05;
 f=@(u2) -u2/s+log(1+s*u2)/s^2;
-%f=@(u2)  u2.^2/2;
+%f=@(u2) -u2.^2/2;
 f1=adiff(f,1);
 f2=adiff(f,2);
 
@@ -30,7 +33,7 @@ if (L(1)==L(2))
     VR=@(r) (omega*r).^2;
     [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L(1),0,VR);
     xx=rr.*cos(th);
-    yy=rr.*sin(th);
+    yy=rr.*sin(th);   
 else
     [xi,eta,jac,M,H,U,hshuff,J1,J2]=schrodell(m,n,L(1),L(2),0);
     c=sqrt(L(1)^2-L(2)^2);
@@ -44,16 +47,20 @@ VS=zeros(size(jac,1),size(jac,2));
 VN=zeros(size(jac,1),size(jac,2),3);
 
 % Ansatz
+function u0=ansatz(a0,a1,a2)
 u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
    ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
    (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
+%u0=a0*igbeam(xi,eta,rr,2,2,2,a1*c^2,a1,M);
+end
 
-% Gradient and Hessian
+% Gradient
 function F=src(psi)
     psi2=abs(psi).^2;
     F=f1(psi2);
 end
 
+% Hessian
 function U=pot(psi)
     u2=real(psi).^2;
     v2=imag(psi).^2;
@@ -66,6 +73,7 @@ function U=pot(psi)
     U(:,:,3)=2*real(psi).*imag(psi).*df2;
 end
 
+% RHS
 function [r]=force(lam,psi)
     jpsi=J1*psi*J2';
     F=jac.*(src(jpsi)-lam);
@@ -73,6 +81,7 @@ function [r]=force(lam,psi)
     r=[real(z(:)); imag(z(:))];
 end
 
+% Cost function
 function [E]=energy(psi)
     jpsi=J1*psi*J2';
     psi2=abs(jpsi).^2;
@@ -150,7 +159,7 @@ function [pu]=pfun(u)
 end
 
 %% Newton Raphson
-tol=1e-10;
+tol=1e-11;
 maxit=3;
 restart=200;
 function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
@@ -176,31 +185,48 @@ function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
     end
     
     % Krylov projection solver
+    r=force(lam,psi);
+    [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],pfun(r));
+    
+    if(P0>0)
     mu=M(psi);
     r1=[real(mu(:)); imag(mu(:))];    
-    [x1,flag,relres,iter,resvec]=gmres(@afun,r1,restart,tol,maxit,@pfun,[],pfun(r1));
-
-    r2=force(lam,psi);
-    [x2,flag,relres,iter,resvec]=gmres(@afun,r2,restart,tol,maxit,@pfun,[],pfun(r2));
-
+    [x1,flag1,relres1,iter1,resvec1]=gmres(@afun,r1,restart,tol,maxit,@pfun,[],pfun(r1));
+    x=reshape(x,[],2)*[1;1i];
     x1=reshape(x1,[],2)*[1;1i];
-    x2=reshape(x2,[],2)*[1;1i];
-    y=real(((P0-psi(:)'*mu(:))/2+mu(:)'*x2(:))/(mu(:)'*x1(:)));
-    %y=0;
-    
+    y=real(((P0-psi(:)'*mu(:))/2+mu(:)'*x(:))/(mu(:)'*x1(:)));
     lam=lam+y;
-    x=x2-y*x1;
+    x=x-y*x1;
     x=[real(x(:)); imag(x(:))];
-       
-    err=abs(x'*afun(x));
+    end
+    
+    err=abs(x'*r);
     x=reshape(x,[],2)*[1;1i];
     dpsi=reshape(x,[m,n]);
 end
 
+% b0=linspace(0.5,2.5,50);
+% b1=linspace(0.5,2.5,50);
+% ee=zeros(length(b0),length(b1));
+% for i=1:length(b0)
+%     for j=1:length(b1)
+%         ee(i,j)=energy(ansatz(b0(i),b1(j),b1(j)));
+%     end
+% end
+% figure(12);
+% imagesc(b0,b1,ee);
+% colormap(jet(256));
+% colorbar();
+
+u0=ansatz(a0,a1,a2);
 u=u0;
 E=energy(u);
 P=real(M(u,u));
-lam=E/2;
+if(P0==0)
+    lam=-1/2;
+else
+    lam=E/2;
+end
 display(E);
 display(P);
 ii=1:m;
@@ -218,6 +244,7 @@ shading interp;
 axis square;
 view(2);
 title(num2str(E,'$E = %f$'));
+drawnow;
 
 figure(2);
 h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
@@ -232,14 +259,17 @@ shading interp;
 axis square;
 view(2);
 title(num2str(E,'$E = %f$'));
+drawnow;
 
 figure(3);
-h3=semilogy(1:10,1:10,'--*b');
+h3=semilogy(1:10,ones(10,1),'--*b');
 title('Residual History');
+drawnow;
 
+%return;
 it=0;
-itnr=40;
-etol=1e-13;
+itnr=20;
+etol=tol;
 err=1;
 itgmres=0;
 while ( err>etol && it<itnr )
@@ -273,11 +303,13 @@ end
 figure(4);
 plot(J1*rr(:,1),J1*real(u(:,1)),'r',J1*rr(:,1),J1*real(u0(:,1)),'--b');
 xlim([0,L(1)]/sqrt(2));
+display(lam);
 display(E);
+display(P);
 display(itgmres);
 
 
-T=2*pi/abs(lam/2);
-nframes=1000;
+T=2*pi;
+nframes=1024;
 pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
 end

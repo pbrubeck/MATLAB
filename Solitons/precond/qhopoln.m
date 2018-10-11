@@ -1,36 +1,40 @@
-function [] = qhopoln(n,m)
+function [] = qhopoln(n,m,L,omega)
 % Quantum Harmonic Oscillator
 % Polar coordinates
 % Natural frequencies
 
-L=20;
-omega=0.1;
-VL=@(r) (omega*r).^2; 
-
+VL=@(r) (omega*r).^2;
 [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L,0,VL);
 xx=rr.*cos(th);
 yy=rr.*sin(th);
+c=2;
+zz=acosh((xx+1i*yy)/c);
+xi=real(zz);
+eta=imag(zz);
 ii=1:m;
 jj=[1:n,1];
 
-skw=1.4;
- 
-nx=3;
-ny=3;
-u0 = HermitePsi([zeros(nx,1);1],xx*sqrt(omega*skw)).*...
-     HermitePsi([zeros(ny,1);1],yy*sqrt(omega*skw));
- 
-nr=8; 
-l=4;
+
+
+skw=1.1;
+
+coord=3;
+if(coord==1)
+nx=3; ny=3;
+u0 = HermitePsi([zeros(nx,1);1],skw*xx*sqrt(omega)).*...
+     HermitePsi([zeros(ny,1);1],skw*yy*sqrt(omega));
+elseif(coord==2)
+nr=7; l=5;
 w=skw*omega*rr.^2;
 c=[zeros(1,(nr-abs(l))/2),1];
 u0 = LaguerreL(c,abs(l),w).*exp(-w/2).*...
      (w.^(abs(l)/2)).*exp(1i*l*th);
-
- 
-%u0 = besselj(l,omega*rr).*exp(1i*l*th);
-u0 = real(u0);
-u0 = u0/sqrt(M(u0,u0));
+elseif(coord==3)
+p=3; m1=3; m2=3;
+q=omega*c^2;
+u0 = igbeam(skw*xi,eta,rr,p,m1,m2,q,omega,M);
+end
+u0=u0/sqrt(M(u0,u0));
 
 
 
@@ -142,8 +146,8 @@ mytitle='$z = %f$, $E/\\omega = %f$, $P = %f$';
 
 figure(1);
 h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj)).^2);
-xlim([-L,L]);
-ylim([-L,L]);
+xlim([-L,L]/sqrt(2));
+ylim([-L,L]/sqrt(2));
 colormap(magma(256));
 colorbar();
 shading interp;
@@ -153,8 +157,8 @@ title(num2str(E/omega,'$E/\\omega = %f$'));
 
 figure(2);
 h2=surf(xx(ii,jj),yy(ii,jj),angle(u(ii,jj)));
-xlim([-L,L]);
-ylim([-L,L]);
+xlim([-L,L]/sqrt(2));
+ylim([-L,L]/sqrt(2));
 caxis manual;
 caxis([-pi,pi]);
 colormap(hsv(256));
@@ -165,7 +169,7 @@ view(2);
 title(num2str(E/omega,'$E/\\omega = %f$'));
 
 figure(3);
-h3=semilogy(1:10,1:10,'--*b');
+h3=semilogy(1:10,ones(1,10),'--*b');
 title('Residual History');
 
 it=0;
