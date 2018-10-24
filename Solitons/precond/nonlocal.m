@@ -1,91 +1,55 @@
-function [] = vnlset(m,n,L)
+function [] = nonlocal(m,n,L)
 % Variational Nonlinear Schrodinger Equation
 % Tensor-preconditioned Newton-Krylov method
 % m Gauss-Legendre-Lobatto nodes
 % n Fourier modes, must be even
 
-% Ansatz
-%spin=0; del=0; ep=pi/4; a0=2; a1=2; a2=a1; P0=0;
-%spin=1; del=pi/4; ep=pi/4; a0=2; a1=sqrt(8); a2=a1; P0=0;
 
-%spin=0; del=0; ep=pi/4; a0=1.863; a1=2.529;  a2=a1; P0=12;
-%spin=1; del=pi/4; ep=pi/4; a0=1.2; a1=4; a2=a1; P0=50;
-%spin=2; del=pi/4; ep=pi/4; a0=1; a1=3.3941; a2=a1; P0=100;
-%spin=3; del=pi/4; ep=pi/4; a0=1.65; a1=2.075; a2=a1; P0=100;
+a0=24.898728258915654; a1=3.407177603769343; a2=a1; P0=0^2; sigma=6;
+%a0=17.170511025351768; a1=2.602758930631574; a2=a1; P0=0^2; sigma=2;
+%a0=16.154363969351561; a1=2.591730322267837; a2=a1; P0=0^2; sigma=4/3;
 
-%spin=1; del=pi/4; ep=pi/4;a0=7.354225382634053; a1=0.161442173029839; a2=1; P0=110;   
-
-spin=1; del=pi/4; ep=pi/4; a0=2; a1=sqrt(8); a2=a1; P0=0;
-
-% Semifocal lenght
-c=1;
-% Nonlinear potential
-s=0.05;
-f=@(u2) -u2/s+log(1+s*u2)/s^2;
-f=@(u2) -u2.^2/2;
-f1=adiff(f,1);
-f2=adiff(f,2);
 
 % Linear Hamiltonian
 L(1:2)=L;
-if (L(1)==L(2))
-    omega=0;
-    VR=@(r) (omega*r).^2;
-    [rr,th,jac,M,H,U,hshuff,J1,J2]=schrodpol(m,n,L(1),0,VR);
-    xx=rr.*cos(th);
-    yy=rr.*sin(th);   
-else
-    [xi,eta,jac,M,H,U,hshuff,J1,J2]=schrodell(m,n,L(1),L(2),0);
-    c=sqrt(L(1)^2-L(2)^2);
-    xx=c*cosh(xi).*cos(eta);
-    yy=c*sinh(xi).*sin(eta);
-    rr=hypot(yy,xx);
-    th=atan2(yy,xx);
-end
+omega=0;
+VR=@(r) (omega*r).^2;
+[rr,th,jac,M,H,U,hshuff,J1,J2,K]=schrodpol(m,n,L(1),0,VR);
+xx=rr.*cos(th);
+yy=rr.*sin(th);
+
 
 VS=zeros(size(jac,1),size(jac,2));
-VN=zeros(size(jac,1),size(jac,2),3);
+VN=zeros(size(jac,1),size(jac,2));
+VP=zeros(size(jac,1),size(jac,2));
 
 % Ansatz
 function u0=ansatz(a0,a1,a2)
-u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
-   ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
-   (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
-%u0=a0*igbeam(xi,eta,rr,2,2,2,a1*c^2,a1,M);
+%u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
+%   ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
+%   (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
+
+u0=a0*lgbeam(rr,th,1,1,a1^-2);
 end
 
-% Gradient
-function F=src(psi)
+% Potential
+function [U]=pot(psi)
     psi2=abs(psi).^2;
-    F=f1(psi2);
-end
-
-% Hessian
-function U=pot(psi)
-    u2=real(psi).^2;
-    v2=imag(psi).^2;
-    psi2=u2+v2;
-    df1=f1(psi2);
-    df2=f2(psi2);
-    U=zeros(size(J1,1),size(J2,1),3);
-    U(:,:,1)=df1+2*u2.*df2;
-    U(:,:,2)=df1+2*v2.*df2;
-    U(:,:,3)=2*real(psi).*imag(psi).*df2;
+    U=-K(sigma,psi2);
 end
 
 % RHS
 function [r]=force(lam,psi)
-    jpsi=J1*psi*J2';
-    F=jac.*(src(jpsi)-lam);
-    z=stiff(F,psi);
+    z=stiff(VN,psi);
     r=[real(z(:)); imag(z(:))];
 end
 
 % Cost function
 function [E]=energy(psi)
     jpsi=J1*psi*J2';
-    psi2=abs(jpsi).^2;
-    E=real(H(psi,psi)+jac(:)'*f(psi2(:)))/2;
+    js=abs(jpsi).^2;
+    ks=jac.*K(sigma,js);
+    E=real(H(psi,psi)/2-js(:)'*ks(:)/4);
 end
 
 
@@ -142,12 +106,16 @@ function [f]=mass(b,u)
     f=J1'*(b.*(J1*u*J2'))*J2;
 end
 
-function [au]=afun(u)
-    uu=reshape(u,m,n,2);
-    au=zeros(m,n,2);
-    au(:,:,1)=stiff(VN(:,:,1),uu(:,:,1))+mass(VN(:,:,3),uu(:,:,2));
-    au(:,:,2)=stiff(VN(:,:,2),uu(:,:,2))+mass(VN(:,:,3),uu(:,:,1));
-    au=au(:);
+function [ar]=afun(r)
+    r=reshape(r,m,n,2);
+    js=real(VP).*(J1*r(:,:,1)*J2')+...
+       imag(VP).*(J1*r(:,:,2)*J2');
+    
+    fr=2*J1'*(VP.*(jac.*K(sigma,js)))*J2;
+    ar=zeros(m,n,2);
+    ar(:,:,1)=stiff(VN,r(:,:,1))-real(fr);
+    ar(:,:,2)=stiff(VN,r(:,:,2))-imag(fr);
+    ar=ar(:);
 end
 
 function [pu]=pfun(u)
@@ -159,20 +127,18 @@ function [pu]=pfun(u)
 end
 
 %% Newton Raphson
-tol=1e-11;
+tol=1e-10;
 maxit=3;
 restart=200;
 function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
 
     % Set potential
-    jpsi=J1*psi*J2';
-    VN=pot(jpsi);
-    VN(:,:,1)=jac.*(VN(:,:,1)-lam);
-    VN(:,:,2)=jac.*(VN(:,:,2)-lam);
-    VN(:,:,3)=jac.*(VN(:,:,3));
+    VP=J1*psi*J2';
+    VN=pot(VP);
+    VN=jac.*(VN-lam);
        
     for k=1:2
-    VS=VN(:,:,k);
+    VS=VN;
     % Low-Rank Approximate Jacobian
     [B,sig,A]=svds(@ashuff,[n*n,m*m],2);
     sig=sqrt(diag(sig)); 
@@ -196,6 +162,10 @@ function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
     x1=reshape(x1,[],2)*[1;1i];
     y=real(((P0-psi(:)'*mu(:))/2+mu(:)'*x(:))/(mu(:)'*x1(:)));
     lam=lam+y;
+    if(flag1==3)
+        flag=3;
+        y=0;
+    end
     x=x-y*x1;
     x=[real(x(:)); imag(x(:))];
     end
@@ -205,12 +175,13 @@ function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
     dpsi=reshape(x,[m,n]);
 end
 
+
 u0=ansatz(a0,a1,a2);
 u=u0;
 E=energy(u);
 P=real(M(u,u));
 if(P0==0)
-    lam=-1/2;
+    lam=-0.8;
 else
     lam=E/2;
 end
@@ -261,9 +232,13 @@ err=1;
 itgmres=0;
 while ( err>etol && it<itnr )
     [lam,du,err,flag,relres,iter,resvec]=newton(lam,u);
-    u=u-du;
-    it=it+1;
     itgmres=itgmres+length(resvec);
+    if(flag<3)
+        u=u-du;
+        it=it+1;
+    else
+        it=itnr;
+    end
 
     P=real(M(u,u));
     E=energy(u);
@@ -277,7 +252,7 @@ while ( err>etol && it<itnr )
     title(get(3,'CurrentAxes'),sprintf('Newton step %d Iterations $ = %d$',it,length(resvec)))
     drawnow;
         
-    if(abs(E)>1e3)
+    if(abs(E)>1e7)
         disp('Aborting, solution blew up.');
         figure(4);
         plot(rr(:,1),real(u0(:,1)),'--b');
@@ -296,7 +271,8 @@ display(P);
 display(itgmres);
 
 
-T=2*pi;
-nframes=1024;
-pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
+% T=2*pi;
+% nframes=1024;
+% pbeam(T,nframes,u,xx,yy,jac,M,H,U,J1,J2,f);
 end
+

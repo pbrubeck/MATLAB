@@ -1,4 +1,4 @@
-function [rr,th,jac,M,H,U,Ht,J1,J2] = schrodpol(m,n,L,lam,VL)
+function [rr,th,jac,M,H,U,Ht,J1,J2,K] = schrodpol(m,n,L,lam,VL)
 % Schrodinger equation separation in polar coordinates
 
 % Radial SEM
@@ -15,6 +15,11 @@ K1=D'*diag(jac/R^2)*D+J1'*diag(jac.*(lam+VL(rq)))*J1;
 M1=J1'*diag(jac./rq.^2)*J1;
 B1=J1'*diag(jac)*J1;
 
+% Gaussian convolution
+BB=diag(jac);
+jkrm=hankbess(n,rq);
+K=@(sig,js) convgauss(sig,BB,jkrm,rq,js);
+
 % Azimutal FFT
 FFT=dftmtx(n)/sqrt(n);
 kt=fftshift((-n/2):(n/2-1));
@@ -26,6 +31,8 @@ J2=eye(n);
 r=R*(z+1);
 jac=repmat((2*pi/n)*jac,1,n);
 [rr,th]=ndgrid(r,(2*pi/n)*(0:n-1));
+
+
 
 % Fast diagonalization
 function [V,E]=fdm(A,B,kd)

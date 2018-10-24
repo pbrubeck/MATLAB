@@ -6,6 +6,7 @@ q=omega*c^2;
 jac=w(:)*w(:)';
 
 rr=hypot(yy,xx);
+th=atan2(yy,xx);
 zz=acosh((xx+1i*yy)/c);
 xi=real(zz);
 eta=imag(zz);
