@@ -5,10 +5,12 @@ function [] = nonlocal(m,n,L)
 % n Fourier modes, must be even
 
 
-a0=24.898728258915654; a1=3.407177603769343; a2=a1; P0=0^2; sigma=6;
+%a0=24.898728258915654; a1=3.407177603769343; a2=a1; P0=0^2; sigma=6;
 %a0=17.170511025351768; a1=2.602758930631574; a2=a1; P0=0^2; sigma=2;
 %a0=16.154363969351561; a1=2.591730322267837; a2=a1; P0=0^2; sigma=4/3;
 
+a0=36.275423365074928; a1=3.890147311730516; a2=a1; P0=0^2; sigma=10;
+lam=-1;
 
 % Linear Hamiltonian
 L(1:2)=L;
@@ -25,11 +27,15 @@ VP=zeros(size(jac,1),size(jac,2));
 
 % Ansatz
 function u0=ansatz(a0,a1,a2)
-%u0=(a0.^((spin+1)/2)*exp(-(xx/a1).^2-(yy/a2).^2).*...
-%   ((cos(ep)*xx).^2+(sin(ep)*yy).^2).^(spin/2).*...
-%   (cos(del)*cos(spin*th)+1i*sin(del)*sin(spin*th)));
+om=1/a1^2;
+%u0=a0*lgbeam(rr,th,0,3,om);
 
-u0=a0*lgbeam(rr,th,1,1,a1^-2);
+c=sqrt(5);
+q=om*c^2;
+zz=acosh((xx+1i*yy)/c);
+xi=real(zz);
+eta=imag(zz);
+u0=a0*igbeam(xi,eta,rr,3,3,3,q,om,M);
 end
 
 % Potential
@@ -164,7 +170,6 @@ function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
     lam=lam+y;
     if(flag1==3)
         flag=3;
-        y=0;
     end
     x=x-y*x1;
     x=[real(x(:)); imag(x(:))];
@@ -180,11 +185,6 @@ u0=ansatz(a0,a1,a2);
 u=u0;
 E=energy(u);
 P=real(M(u,u));
-if(P0==0)
-    lam=-0.8;
-else
-    lam=E/2;
-end
 display(E);
 display(P);
 ii=1:m;
@@ -224,22 +224,19 @@ h3=semilogy(1:10,ones(10,1),'--*b');
 title('Residual History');
 drawnow;
 
-%return;
+
 it=0;
-itnr=20;
+itnr=40;
 etol=tol;
 err=1;
 itgmres=0;
 while ( err>etol && it<itnr )
     [lam,du,err,flag,relres,iter,resvec]=newton(lam,u);
     itgmres=itgmres+length(resvec);
-    if(flag<3)
-        u=u-du;
-        it=it+1;
-    else
-        it=itnr;
-    end
-
+    u=u-du;
+    display(err);
+    it=it+1;
+    
     P=real(M(u,u));
     E=energy(u);
     set(h1,'ZData',abs(u(ii,jj)).^2);
