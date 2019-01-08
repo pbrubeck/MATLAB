@@ -4,22 +4,22 @@ function [] = nonlocal(m,n,L)
 % m Gauss-Legendre-Lobatto nodes
 % n Fourier modes, must be even
 
-
 %a0=24.898728258915654; a1=3.407177603769343; a2=a1; P0=0^2; sigma=6;
 %a0=17.170511025351768; a1=2.602758930631574; a2=a1; P0=0^2; sigma=2;
 %a0=16.154363969351561; a1=2.591730322267837; a2=a1; P0=0^2; sigma=4/3;
+          
+a0=190.663053299538; a1=1.00498287433441; a2=a1; P0=0^2;
 
-a0=36.275423365074928; a1=3.890147311730516; a2=a1; P0=0^2; sigma=10;
-lam=-1;
+sigma=10;
+lam=-sigma^2;
+p=4;
 
 % Linear Hamiltonian
 L(1:2)=L;
-omega=0;
-VR=@(r) (omega*r).^2;
+VR=@(r) (0*r).^2;
 [rr,th,jac,M,H,U,hshuff,J1,J2,K]=schrodpol(m,n,L(1),0,VR);
 xx=rr.*cos(th);
 yy=rr.*sin(th);
-
 
 VS=zeros(size(jac,1),size(jac,2));
 VN=zeros(size(jac,1),size(jac,2));
@@ -28,14 +28,16 @@ VP=zeros(size(jac,1),size(jac,2));
 % Ansatz
 function u0=ansatz(a0,a1,a2)
 om=1/a1^2;
-%u0=a0*lgbeam(rr,th,0,3,om);
+%u0=a0*lgbeam(rr,th,0,0,om);
+%u0=a0*hgbeam(xx,yy,2,0,om);
 
-c=sqrt(5);
+c=a1*sqrt(4);
 q=om*c^2;
 zz=acosh((xx+1i*yy)/c);
 xi=real(zz);
 eta=imag(zz);
-u0=a0*igbeam(xi,eta,rr,3,3,3,q,om,M);
+u0=a0*igbeam(xi,eta,rr,p,p-2,p,q,om,M);
+%u0=sqrt(2)*real(u0);
 end
 
 % Potential
@@ -45,7 +47,7 @@ function [U]=pot(psi)
 end
 
 % RHS
-function [r]=force(lam,psi)
+function [r]=force(psi)
     z=stiff(VN,psi);
     r=[real(z(:)); imag(z(:))];
 end
@@ -157,7 +159,7 @@ function [lam,dpsi,err,flag,relres,iter,resvec]=newton(lam,psi)
     end
     
     % Krylov projection solver
-    r=force(lam,psi);
+    r=force(psi);
     [x,flag,relres,iter,resvec]=gmres(@afun,r,restart,tol,maxit,@pfun,[],pfun(r));
     
     if(P0>0)
@@ -185,12 +187,22 @@ u0=ansatz(a0,a1,a2);
 u=u0;
 E=energy(u);
 P=real(M(u,u));
+if(P0~=0)
+    VP=J1*u*J2';
+    VN=pot(VP);
+    VN=jac.*VN;
+    fu=stiff(VN,u);
+    lam=u(:)'*fu(:)/P;
+end
+display(lam);
 display(E);
 display(P);
 ii=1:m;
 jj=[1:n,1];
 
 setlatex();
+mytitle='$P=%f, E=%f, \\lambda=%f$';
+
 figure(1);
 h1=surf(xx(ii,jj),yy(ii,jj),abs(u(ii,jj)).^2);
 xlim([-L(1),L(1)]/sqrt(2));
@@ -201,7 +213,7 @@ colorbar();
 shading interp;
 axis square;
 view(2);
-title(num2str(E,'$E = %f$'));
+title(sprintf(mytitle,P,E,lam));
 drawnow;
 
 figure(2);
@@ -216,7 +228,7 @@ colorbar();
 shading interp;
 axis square;
 view(2);
-title(num2str(E,'$E = %f$'));
+title(sprintf(mytitle,P,E,lam));
 drawnow;
 
 figure(3);
@@ -240,16 +252,16 @@ while ( err>etol && it<itnr )
     P=real(M(u,u));
     E=energy(u);
     set(h1,'ZData',abs(u(ii,jj)).^2);
-    title(get(1,'CurrentAxes'),num2str(E,'$E = %f$'));
+    title(get(1,'CurrentAxes'),sprintf(mytitle,P,E,lam));
     set(h2,'ZData',angle(u(ii,jj)));
-    title(get(2,'CurrentAxes'),num2str(E,'$E = %f$'));
+    title(get(2,'CurrentAxes'),sprintf(mytitle,P,E,lam));
     
     set(h3,'XData',1:length(resvec));
     set(h3,'YData',resvec);
     title(get(3,'CurrentAxes'),sprintf('Newton step %d Iterations $ = %d$',it,length(resvec)))
     drawnow;
         
-    if(abs(E)>1e7)
+    if(abs(E)>1e8)
         disp('Aborting, solution blew up.');
         figure(4);
         plot(rr(:,1),real(u0(:,1)),'--b');
