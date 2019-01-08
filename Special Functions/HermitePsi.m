@@ -8,6 +8,6 @@ for k=n-2:-1:1
     y=a(k+1)+sqrt(2/(k+1))*x.*y-sqrt((k+1)/(k+2))*yy;
     yy=temp;
 end
-h0=pi^(-1/4)*exp(-x.^2/2);
+h0=(pi)^(-1/4)*exp(-x.^2/2);
 y=h0.*(a(1)+sqrt(2)*(x.*y-yy/2));
 end
