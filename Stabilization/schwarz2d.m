@@ -1,5 +1,6 @@
-function [A,B] = schwarz2d(n,no,nu,vx,vy,bc)
-CFL=0.3;
+function [A,B] = schwarz2d(n,no,hx,hy,nu,vx,vy,CFL,bc)
+nux=nu/hx;
+nuy=nu/hy;
 
 [Dhat,xhat,what]=legD(n);
 Qsvv=svvker(xhat);
@@ -10,14 +11,14 @@ Asvv=Dhat'*Qsvv*Dhat;
 F=bubfilt(xhat);
 HPF=Bhat*(eye(n)-F);
 
-peh=hypot(vx,vy)*max(diff(xhat))/(2*nu);
+peh=hypot(vx*hx,vy*hy)*max(diff(xhat))/(nu);
 dx=min(diff(xhat));
 dt=CFL*dx;
 idt=1/dt;
 nuh=0/(n-1);
 %nuh=dx;
 
-Astab=nu*Ahat+nuh*Asvv+idt*HPF;
+Astab=nuh*Asvv+idt*HPF;
 
 j1=1:no+1;
 j0=j1(end)+1:j1(end)+n;
@@ -32,38 +33,38 @@ J(:,j2)=J(:,j0(1:no+1));
 JX=J;
 JY=J;
 
-p=1.00;
+%peh=0;
 if(peh>1)
 if(vx>0)
-    JX(no+2:end,end)=p;
+    JX(no+2:end,end)=1;
 elseif(vx<0)
-    JX(1:n-no-1,1)=p;
+    JX(1:n-no-1,1)=1;
 elseif(vx==0&&vy~=0)
-    JX(no+2:end,end)=p;
-    JX(1:n-no-1,1)=p;    
+    %JX(no+2:end,end)=1;
+    %JX(1:n-no-1,1)=1;    
 end
 if(vy>0)
-    JY(no+2:end,end)=p;
+    JY(no+2:end,end)=1;
 elseif(vy<0)
-    JY(1:n-no-1,1)=p;
+    JY(1:n-no-1,1)=1;
 elseif(vy==0&&vx~=0)
-    JY(no+2:end,end)=p;
-    JY(1:n-no-1,1)=p;
+    %JY(no+2:end,end)=1;
+    %JY(1:n-no-1,1)=1;
 end
 end
-
-
 
 A=zeros(nxb,nxb,2);
-A(:,:,1)=J'*(Astab+vx*Chat)*JX;
-A(:,:,2)=J'*Bhat*JX;
+A(:,:,1)=J'*(Astab+nux*Ahat+vx*Chat)*JX;
+A(:,:,2)=J'*(hx*Bhat)*JX;
 A=schwarz1d(n,no,A,bc(1),bc(2));
 
 B=zeros(nxb,nxb,2);
-B(:,:,1)=J'*(Astab+vy*Chat)*JY;
-B(:,:,2)=J'*Bhat*JY;
+B(:,:,1)=J'*(Astab+nuy*Ahat+vy*Chat)*JY;
+B(:,:,2)=J'*(hy*Bhat)*JY;
 B=schwarz1d(n,no,B,bc(3),bc(4));
 
+
+return;
 Mbar=J'*Bhat*J;
 Mbar=schwarz1d(n,no,Mbar,2,2);
 R=Mbar*ones(size(Mbar,1),size(Mbar,1))*Mbar';

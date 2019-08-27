@@ -24,8 +24,8 @@ for k=1:size(A,3)
     if(rbc==0) % Neumann
         SA(i2(end-no+1:end),i2(end-no+1:end),k)=eye(no);
     elseif(rbc==1) % Dirichlet
-        SA(i2(end),:,k)=0;
-        SA(:,i2(end),k)=0;
+        SA(i2(1),:,k)=0;
+        SA(:,i2(1),k)=0;
         SA(i2,i2,k)=eye(no+1);
     elseif(rbc==2) % Overlap
         SA(i2,i2,k)=SA(i2,i2,k)+A(j2,j2,k);
