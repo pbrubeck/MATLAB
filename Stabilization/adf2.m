@@ -1,14 +1,18 @@
 function [relres,it,resvec] = adf2(n,ne,nu)
-
-bcbox=[1,0,1,0];
+maxit=40;
+tol=1e-10;
+bcbox=[1,0,0,0];
 
 ux=1;
-uy=1;
-CFL=0.02;
+uy=0;
+uz=0;
+CFL=1.0E-2;
 %CFL=inf;
 
-maxit=200;
-tol=1e-10;
+function [u]=vel(x,y,z,ijac)
+    u=ijac(:,:,:,:,1).*ux+ijac(:,:,:,:,2).*uy+ijac(:,:,:,:,3).*uz;
+end
+
 
 no=1;
 ns=n+2*no;
@@ -21,9 +25,6 @@ nel=nex*ney;
 
 % SEM hat
 [Dhat,zhat,what]=legD(n);
-Bhat=diag(what);
-Ahat=Dhat'*Bhat*Dhat;
-Chat=Bhat*Dhat;
 Jfem=[1-zhat, 1+zhat]/2;
 F=bubfilt(zhat);
 
@@ -65,6 +66,7 @@ bc(3,:,1  )=bcbox(3); % Bottom
 bc(4,:,end)=bcbox(4); % Top
 bc=reshape(bc,nfaces,nel);
 
+% Mask
 mask=ones(n*nex,n*ney);
 mask(1  ,:)=mask(1  ,:)*(1-bcbox(1));
 mask(end,:)=mask(end,:)*(1-bcbox(2));
@@ -72,6 +74,41 @@ mask(:,1  )=mask(:,1  )*(1-bcbox(3));
 mask(:,end)=mask(:,end)*(1-bcbox(4));
 mask=semreshape(mask,n,nex,ney);
 
+
+%--------------------------------------------------------------------------
+%  Coarse grid
+%--------------------------------------------------------------------------
+cmask=ones(2,2,nex,ney);
+cbnd=false(nex+1,ney+1);
+if(bcbox(1)==1)
+    cmask(1,:,1,:)=0;
+    cbnd(1,:)=true;
+end
+if(bcbox(2)==1)
+    cmask(end,:,end,:)=0;
+    cbnd(end,:)=true;
+end
+if(bcbox(3)==1)
+    cmask(:,1,:,1)=0;
+    cbnd(:,1)=true;
+end
+if(bcbox(4)==1)
+    cmask(:,end,:,end)=0;
+    cbnd(:,end)=true;
+end
+cbnd=cbnd(:);
+
+gidx=repmat((1:2)',1,nex)+repmat(0:nex-1,2,1);
+gidy=repmat((1:2)',1,ney)+repmat(0:ney-1,2,1);
+[gx,gy]=ndgrid(gidx(:),gidy(:));
+gid=gx+((2-1)*nex+1)*(gy-1);
+cid=reshape(permute(reshape(gid,2,nex,2,ney),[1,3,2,4]),2,2,nel);
+
+[Acrs,supg] = crs2(cid,hx,hy,nu,vx,vy);
+ibnd=(size(Acrs,1)+1)*(find(cbnd)-1)+1;
+Acrs(cbnd,:)=0;
+Acrs(:,cbnd)=0;
+Acrs(ibnd)=1;
 
 %--------------------------------------------------------------------------
 %  Forward operator
@@ -94,11 +131,11 @@ ky=repmat(1:length(yc),2,1);
 kx=kx(2:end-1);
 ky=ky(2:end-1);
 [xxc,yyc]=ndgrid(xc(kx),yc(ky),1);
-vert=reshape(permute(reshape(xxc+1i*yyc,[2,nex,2,ney]),[1,3,2,4]),[4,nex*ney]);
+pts=reshape(permute(reshape(xxc+1i*yyc,[2,nex,2,ney]),[1,3,2,4]),[4,nex*ney]);
 
 function [map]=mymap(e,x,y,z)
     rad=[inf;inf;inf;inf];
-    w=crvquad(vert([4,3,2,1],e),rad);
+    w=crvquad(pts([4,3,2,1],e),rad);
     map=[real(w(x,y)); imag(w(x,y)); z];
 end
 
@@ -112,10 +149,18 @@ for e=1:nel
 % Equation coefficients
 coord=@(x,y,z) mymap(e,x,y,z);
 [xd(:,:,:,e),yd(:,:,:,e),zd(:,:,:,e),ijac,bm1(:,:,:,e),G(:,:,:,:,e)]=gmfact(ndim,coord,xq,wq);
-C(:,:,:,1,e)=bm1(:,:,:,e).*ux;
-C(:,:,:,2,e)=bm1(:,:,:,e).*uy;
+ud=vel(xd(:,:,:,e),yd(:,:,:,e),zd(:,:,:,e),ijac);
+C(:,:,:,1,e)=bm1(:,:,:,e).*ud(:,:,:,1);
+C(:,:,:,2,e)=bm1(:,:,:,e).*ud(:,:,:,2);
+C(:,:,:,3,e)=bm1(:,:,:,e).*ud(:,:,:,3);
 end
 G=nu.*G;
+
+mult=1./dssum(ones(n,n,nel));
+
+function [d]=semdot(a,b)
+    d=(a(:).*mult(:))'*b(:);
+end
 
 function [u]=dssum(u)
     sz=size(u);
@@ -230,11 +275,36 @@ function [u]=psmooth(r)
 end
 
 function [u]=pcoarse(r)
+    sz=size(r);
+    r=reshape(r(:).*mult(:),n,n,[]);
+    rc=zeros(2,2,size(r,3));
+    for ie=1:size(r,3)
+        rc(:,:,ie)=Jfem'*r(:,:,ie)*Jfem;
+    end
+    uc=supg(Acrs,rc);
+    uc(:)=cmask(:).*uc(:);
     u=zeros(size(r));
+    for ie=1:size(r,3)
+        u(:,:,ie)=Jfem*uc(:,:,ie)*Jfem';
+    end
+    u=reshape(u,sz);
 end
 
+sigma=0;
 function [u]=pfun(r)
     u=psmooth(r);
+    u=u+pcoarse(r-afun(u));
+    %return;
+    
+    w=r-afun(u);
+    z=psmooth(w);
+    if(sigma==0)
+        az=afun(z);
+        sigma=semdot(az,w)/semdot(az,az);
+        sigma=min(1,sigma);
+        display(sigma);
+    end
+    u=u+sigma*z;
 end
 
 %--------------------------------------------------------------------------
@@ -242,7 +312,6 @@ end
 
 f=1*ones(n,n,nex,ney);
 ub=zeros(n,n,nex,ney);
-b=bfun(f);
 b=bfun(f)-afun(ub);
 
 
@@ -259,6 +328,10 @@ semplot2(x,y,u);
 %view(2);
 colormap(jet(256));
 colorbar;
+
+figure(3);
+semilogy(0:it,resvec/resvec(1),'.-b');
+ylim([tol/100,1]);
 end
 
 

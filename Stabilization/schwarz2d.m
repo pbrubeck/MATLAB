@@ -1,25 +1,31 @@
-function [A,B] = schwarz2d(n,no,hx,hy,nu,vx,vy,CFL,bc)
+function [A,B]=schwarz2d(n,no,hx,hy,nu,vx,vy,CFL,bc)
 nux=nu/hx;
 nuy=nu/hy;
 
+% SEM hat
 [Dhat,xhat,what]=legD(n);
-Qsvv=svvker(xhat);
 Bhat=diag(what);
+V=VandermondeLeg(xhat);
+Bhat=inv(V*V');
+
 Ahat=Dhat'*Bhat*Dhat;
 Chat=Bhat*Dhat;
-Asvv=Dhat'*Qsvv*Dhat;
+
+% Stablization
 F=bubfilt(xhat);
 HPF=Bhat*(eye(n)-F);
+Qsvv=svvker(xhat);
+Asvv=Dhat'*Qsvv*Dhat;
 
-peh=hypot(vx*hx,vy*hy)*max(diff(xhat))/(nu);
+peh=hypot(vx,vy)*hypot(hx,hy)*max(diff(xhat))/(nu);
 dx=min(diff(xhat));
 dt=CFL*dx;
 idt=1/dt;
 nuh=0/(n-1);
 %nuh=dx;
-
 Astab=nuh*Asvv+idt*HPF;
 
+% Omega_bar basis
 j1=1:no+1;
 j0=j1(end)+1:j1(end)+n;
 j2=j0(end)+1:j0(end)+1+no;
@@ -30,6 +36,7 @@ J(:,j0)=eye(n);
 J(:,j1)=J(:,j0(n-no:n));
 J(:,j2)=J(:,j0(1:no+1));
 
+% Neumann (constant extrapolation) for convection dominated
 JX=J;
 JY=J;
 
@@ -63,8 +70,10 @@ B(:,:,1)=J'*(Astab+nuy*Ahat+vy*Chat)*JY;
 B(:,:,2)=J'*(hy*Bhat)*JY;
 B=schwarz1d(n,no,B,bc(3),bc(4));
 
-
 return;
+
+
+% Debugging
 Mbar=J'*Bhat*J;
 Mbar=schwarz1d(n,no,Mbar,2,2);
 R=Mbar*ones(size(Mbar,1),size(Mbar,1))*Mbar';
