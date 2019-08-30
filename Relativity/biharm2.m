@@ -61,7 +61,10 @@ uu=kd(ub+gf(rhs));
 tol=8*eps;
 maxit=100;
 
-[uu,~,res,its]=bicgstab(afun,rhs,tol,maxit,pfun,[],uu);
+%[uu,flag,res,its,resvec]=bicgstab(afun,rhs,tol,maxit,pfun,[],uu);
+[uu,flag,res,its,resvec]=gmres(afun,rhs,maxit,tol,1,pfun,[],uu);
+
+
 uu=gb(uu)+ub;
 
 display(its);

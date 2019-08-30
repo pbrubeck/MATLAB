@@ -1,12 +1,18 @@
-function [B] = normc(A, G)
+function [B,a] = normc(A, G)
 % Normalizes columns of A with respect to metric G
 if(nargin==2)
     if numel(G)==length(G)
-        B=bsxfun(@rdivide, A, sqrt(G(:)'*(real(A).^2+imag(A).^2)));
+        a = sqrt(G(:)'*(real(A).^2+imag(A).^2));
+        B=bsxfun(@rdivide, A, a);
     else
-        B=bsxfun(@rdivide, A, sqrt(diag(A'*G*A)).');
+        a = sqrt(diag(A'*G*A)).';
+        B=bsxfun(@rdivide, A, a);
     end
 else
-    B=bsxfun(@rdivide, A, sqrt(sum(real(A).^2+imag(A).^2)));
+    B=reshape(A,[],size(A,ndims(A)));
+    a=sqrt(sum(real(B).^2+imag(B).^2));
+    a(a==0)=1;
+    B=bsxfun(@rdivide, B, a);
+    B=reshape(B,size(A));
 end
 end

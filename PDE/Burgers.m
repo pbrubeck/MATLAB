@@ -1,6 +1,6 @@
 function [] = Burgers(N)
 % Solve Burgers eq. u_t + uu_x - nu*u_xx = 0 on [-pi,pi] by
-% FFT with integrating factor v = exp(-nu*k^2*t)*u-hat.
+% FFT with integrating factor v = exp(-nu*k^2*t)*u_hat.
 
 % Set up grid and two-soliton initial data:
 nu=0.01;
@@ -10,12 +10,14 @@ u=zeros(size(x));
 u(x<0)=sin(x(x<0)).^2;
 v=fft(u);
 k=[0:N/2-1 0 -N/2+1:-1]';
-E=exp(-nu*dt*k.^2/2); E2 = E.^2;
+
+E=exp(-nu*dt*k.^2/2); 
+E2 = E.^2;
 g=-0.5i*dt*k;
 
 % Solve PDE and plot results:
-tmax=20; 
-nplt=floor((tmax/1000)/dt); 
+tmax=100; 
+nplt=floor((tmax/1000)/dt);
 nmax=round(tmax/dt);
 
 figure(1);

@@ -1,13 +1,15 @@
 function [A,supg] = crs2(vert,hx,hy,nu,vx,vy)
 
 % Rectangular domains
+% Piecewise constant velocities
 v=hypot(vx,vy);
-h=hypot(hx,hy);
+h=v./max(abs(vx./hx),abs(vy./hy));
+h(v==0)=hypot(hx(v==0),hy(v==0));
 peh=v.*h/nu;
 tau=(h./v).*(1-1./peh);
 tau(peh<=1)=0;
 
-% Piecewise constant velocities
+
 nel=size(vert,ndims(vert));
 N=2;
 n=N*N;

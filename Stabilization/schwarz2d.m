@@ -1,74 +1,76 @@
-function [A,B]=schwarz2d(n,no,hx,hy,nu,vx,vy,CFL,bc)
-nux=nu/hx;
-nuy=nu/hy;
+function [SA,SB]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc)
+% Assumes rectangular elements and constant velocity 
+
+nxb=n+2*(no+1);
+ns=nxb-2;
 
 % SEM hat
 [Dhat,xhat,what]=legD(n);
 Bhat=diag(what);
 V=VandermondeLeg(xhat);
 Bhat=inv(V*V');
-
 Ahat=Dhat'*Bhat*Dhat;
 Chat=Bhat*Dhat;
 
 % Stablization
-F=bubfilt(xhat);
-HPF=Bhat*(eye(n)-F);
-Qsvv=svvker(xhat);
-Asvv=Dhat'*Qsvv*Dhat;
+HPF=Bhat*(eye(n)-bubfilt(xhat))/dt;
 
-peh=hypot(vx,vy)*hypot(hx,hy)*max(diff(xhat))/(nu);
-dx=min(diff(xhat));
-dt=CFL*dx;
-idt=1/dt;
-nuh=0/(n-1);
-%nuh=dx;
-Astab=nuh*Asvv+idt*HPF;
+% grid Peclet number
+peh=(vx.^2+vy.^2)./max(abs(vx./hx),abs(vy./hy))*min(diff(xhat))./(2*nu);
+nel=numel(peh);
+%peh(:)=0;
+
 
 % Omega_bar basis
 j1=1:no+1;
 j0=j1(end)+1:j1(end)+n;
 j2=j0(end)+1:j0(end)+1+no;
 
-nxb=n+2*(no+1);
 J=zeros(n,nxb);
 J(:,j0)=eye(n);
 J(:,j1)=J(:,j0(n-no:n));
 J(:,j2)=J(:,j0(1:no+1));
 
+A=zeros(nxb,nxb,2);
+B=zeros(nxb,nxb,2);
+SA=zeros(ns,ns,2,nel);
+SB=zeros(ns,ns,2,nel);
+
+for e=1:nel
+nux=nu/hx(e);
+nuy=nu/hy(e);
+
 % Neumann (constant extrapolation) for convection dominated
 JX=J;
 JY=J;
 
-%peh=0;
-if(peh>1)
-if(vx>0)
+if(peh(e)>1)
+if(vx(e)>0)
     JX(no+2:end,end)=1;
-elseif(vx<0)
+elseif(vx(e)<0)
     JX(1:n-no-1,1)=1;
-elseif(vx==0&&vy~=0)
-    %JX(no+2:end,end)=1;
-    %JX(1:n-no-1,1)=1;    
+elseif(vx(e)==0)
+    JX(no+2:end,end)=1;
+    JX(1:n-no-1,1)=1;    
 end
-if(vy>0)
+if(vy(e)>0)
     JY(no+2:end,end)=1;
-elseif(vy<0)
+elseif(vy(e)<0)
     JY(1:n-no-1,1)=1;
-elseif(vy==0&&vx~=0)
-    %JY(no+2:end,end)=1;
-    %JY(1:n-no-1,1)=1;
+elseif(vy(e)==0)
+    JY(no+2:end,end)=1;
+    JY(1:n-no-1,1)=1;
 end
 end
 
-A=zeros(nxb,nxb,2);
-A(:,:,1)=J'*(Astab+nux*Ahat+vx*Chat)*JX;
-A(:,:,2)=J'*(hx*Bhat)*JX;
-A=schwarz1d(n,no,A,bc(1),bc(2));
+A(:,:,1)=J'*(nux*Ahat+vx(e)*Chat+hx(e)*HPF)*JX;
+A(:,:,2)=J'*(hx(e)*Bhat)*JX;
+SA(:,:,:,e)=schwarz1d(n,no,A,bc(1,e),bc(2,e));
 
-B=zeros(nxb,nxb,2);
-B(:,:,1)=J'*(Astab+nuy*Ahat+vy*Chat)*JY;
-B(:,:,2)=J'*(hy*Bhat)*JY;
-B=schwarz1d(n,no,B,bc(3),bc(4));
+B(:,:,1)=J'*(nuy*Ahat+vy(e)*Chat+hy(e)*HPF)*JY;
+B(:,:,2)=J'*(hy(e)*Bhat)*JY;
+SB(:,:,:,e)=schwarz1d(n,no,B,bc(3,e),bc(4,e));
+end
 
 return;
 
