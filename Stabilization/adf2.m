@@ -1,27 +1,23 @@
 function [relres,it,resvec] = adf2(n,ne,nu,opts)
 if(nargin==3)
-    opts=ones(1,3);
+    opts=ones(1,4);
 end
-opts=[opts(:)',ones(1,3-numel(opts))];
-ifras=logical(opts(1));
-no=opts(2);
+opts=[opts(:)',ones(1,4-numel(opts))];
+no=opts(1);
+ifras=logical(opts(2));
 ifneu=logical(opts(3));
-
-ifsweep=true;
-if(ifsweep)
-    no=0;
-end
+ifcrs=logical(opts(4));
+ifsweep=no<0;
+no=min(max(0,no),1);
 
 % GMRES settings
 maxit=100;
 tol=1e-10;
 
 % Problem settings
-bcbox=[1,0,1,1];
+bcbox=[1,0,1,0];
 UDATA=0;
 FDATA=1;
-
-% Velocity field
 ux=@(x,y,z) 1+0*y.*(1-x.^2);
 uy=@(x,y,z) 0-0*x.*(1-y.^2);
 uz=@(x,y,z) 0+0*x+0*y;
@@ -82,6 +78,19 @@ vy=uy(xm(:),ym(:),zm(:));
 bc=zeros(nfaces,nel);
 bc(:)=2; % Overlap
 
+if(ifsweep)
+    dex=repmat((1:nex)',1,ney);
+    dey=repmat((1:ney) ,ney,1);
+    depth=dex+0*(dey-1);
+    bc=reshape(bc,[],nex,ney);
+    bc(1,2:end  ,:)=1+(depth(2:end  ,:)<=depth(1:end-1,:)); 
+    bc(2,1:end-1,:)=1+(depth(1:end-1,:)<=depth(2:end  ,:)); 
+    bc(3,:,2:end  )=1+(depth(:,2:end  )<=depth(:,1:end-1)); 
+    bc(4,:,1:end-1)=1+(depth(:,1:end-1)<=depth(:,2:end  )); 
+    bc=reshape(bc,[],nel);
+    depth=reshape(depth,1,[]);
+end
+
 % Override with problem boundaries
 bc=reshape(bc,nfaces,nex,ney);
 bc(1,  1,:)=bcbox(1); % Left
@@ -89,10 +98,6 @@ bc(2,end,:)=bcbox(2); % Right
 bc(3,:,1  )=bcbox(3); % Bottom
 bc(4,:,end)=bcbox(4); % Top
 bc=reshape(bc,nfaces,nel);
-
-if(ifsweep)
-    bc(1,:)=1; % FIXME
-end
 
 % Mask
 mask=ones(n*nex,n*ney);
@@ -251,13 +256,20 @@ elseif(no==1)
 end
 wt=dssum(wt);
 wt(:)=1./wt(:);
-% Upwinding
-unx=zeros(n,n); unx(1,:)=-1; unx(end,:)=1;
-uny=zeros(n,n); uny(:,1)=-1; uny(:,end)=1;
-for e=1:nel
-    wt(:,:,e)=wt(:,:,e).*(1+sign(vx(e)*unx+vy(e)*uny));
+if(ifsweep)
+    wt(1,:,bc(1,:)==1)=0;
+    wt(n,:,bc(2,:)==1)=0;
+    wt(:,1,bc(3,:)==1)=0;
+    wt(:,n,bc(4,:)==1)=0;
+else
+    % Upwinding
+    unx=zeros(n,n); unx(1,:)=-1; unx(end,:)=1;
+    uny=zeros(n,n); uny(:,1)=-1; uny(:,end)=1;
+    for e=1:nel
+        wt(:,:,e)=wt(:,:,e).*(1+sign(vx(e)*unx+vy(e)*uny));
+    end
 end
-wt=wt./dssum(wt);
+wt=wt./dssum(wt); % ensure partition of unity
 wt(mask==0)=0;
 
 function [v1]=extrude(v1,l1,f1,v2,l2,f2)
@@ -269,28 +281,20 @@ function [v1]=extrude(v1,l1,f1,v2,l2,f2)
     v1(2:end-1,k1,:)=f1*v1(2:end-1,k1,:)+f2*v2(2:end-1,k2,:);
 end
 
-function [u]=psweep(r,dir)
-    if(nargin==1)
-        dir=1;
-    end
-    if(dir==0)
-        elems=(1:nel)';
-    elseif(dir==1)
-        elems=reshape(1:nel,nex,ney);
-    end
+function [u]=psweep(r)
     u=zeros(size(r));
     w=zeros(size(r));
-    for is=1:size(elems,1)
-        ie=elems(is,:);
+    for is=1:max(depth(:))
+        ie=find(depth==is);
         w(:,:,ie)=r(:,:,ie)-w(:,:,ie);
         z=pschwarz(w,ie);
         u(:,:,ie)=u(:,:,ie)+z(:,:,ie);
         u=wt.*u;
         u=dssum(u);
-        if(is<size(elems,1))
-            ie=[ie,elems(is+1,:)];
+        if(is<max(depth(:)))
+            je=[ie,find(depth==is+1)];
+            w=afun(u,je);
         end
-        w=afun(u,ie);
     end
 end
 
@@ -360,23 +364,20 @@ end
 
 function [u]=pfun(r)
     u=psmooth(r);
-    u=u+pcoarse(r-afun(u));
-    u(:)=mask(:).*u(:);
-    return;
-    
-    sigma=0.7;
-    u=u+sigma*psmooth(r-afun(u));
+    if(ifcrs)
+        u=u+pcoarse(r-afun(u));
+    end
 end
 
 %--------------------------------------------------------------------------
 
 
-f=FDATA*ones(n,n,nex,ney);
-ub=zeros(n,n,nex,ney);
+f=FDATA*ones(n,n,nel);
+ub=zeros(n,n,nel);
 ub(x==1)=UDATA;
 b=bfun(f)-afun(ub);
 
-u0=pfun(b(:));
+u0=pcoarse(b(:));
 u0(:)=0;
 
 restart=maxit;
@@ -384,17 +385,14 @@ restart=maxit;
 % relres=0; resvec=0; u=pfun(b);
 it=length(resvec)-1;
 
-u1=psmooth(b(:));
-for k=1:0
-u1=u1+psmooth(b(:)-afun(u1));
+u1=u0;
+for k=1:1
+u1=u1+pfun(b(:)-afun(u1));
 end
 u=u1;
 
 u=reshape(u,size(ub));
 u=u+ub;
-
-
-
 
 figure(2);
 semilogy(0:it,resvec*relres/resvec(end),'.-b');
