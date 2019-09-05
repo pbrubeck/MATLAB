@@ -1,4 +1,17 @@
-function [relres,it,resvec] = adf2(n,ne,nu)
+function [relres,it,resvec] = adf2(n,ne,nu,opts)
+if(nargin==3)
+    opts=ones(1,3);
+end
+opts=[opts(:)',ones(1,3-numel(opts))];
+ifras=logical(opts(1));
+no=opts(2);
+ifneu=logical(opts(3));
+
+ifsweep=true;
+if(ifsweep)
+    no=0;
+end
+
 % GMRES settings
 maxit=100;
 tol=1e-10;
@@ -24,8 +37,6 @@ if(nu<0)
     nu=1./abs(nu);
 end
 
-ifras=true;
-no=1;
 ns=n+2*no;
 ndim=2;
 nfaces=2*ndim;
@@ -79,6 +90,10 @@ bc(3,:,1  )=bcbox(3); % Bottom
 bc(4,:,end)=bcbox(4); % Top
 bc=reshape(bc,nfaces,nel);
 
+if(ifsweep)
+    bc(1,:)=1; % FIXME
+end
+
 % Mask
 mask=ones(n*nex,n*ney);
 mask(1  ,:)=mask(1  ,:)*(1-bcbox(1));
@@ -91,8 +106,6 @@ mask=semreshape(mask,n,nex,ney);
 %--------------------------------------------------------------------------
 %  Coarse grid
 %--------------------------------------------------------------------------
-
-%bcbox=[1,0,0,0]; % Override BCs
 
 cmask=ones(2,2,nex,ney);
 cbnd=false(nex+1,ney+1);
@@ -174,10 +187,6 @@ G=nu.*G;
 
 mult=1./dssum(ones(n,n,nel));
 
-function [d]=semdot(a,b)
-    d=(a(:).*mult(:))'*b(:);
-end
-
 function [u]=dssum(u)
     sz=size(u);
     u=reshape(u,size(u,1),size(u,2),nex,ney);
@@ -199,14 +208,14 @@ function [bx]=bfun(x)
     bx=reshape(bx,size(x));
 end
 
-function [au]=afun(u,ids)
+function [au]=afun(u,elems)
     if(nargin==1)
-        ids=1;
+        elems=1:nel;
     end
     sz=size(u);
     u=reshape(u,n,n,nel);
     au=zeros(size(u));
-    for ie=1:nel
+    for ie=elems
         fu=F*u(:,:,ie)*F';
         u_x=D*u(:,:,ie)*J';
         u_y=J*u(:,:,ie)*D';
@@ -216,28 +225,21 @@ function [au]=afun(u,ids)
                      (1/dt)*bm1(:,:,:,ie).*(J*(u(:,:,ie)-fu)*J'))*J;
     end
     au=dssum(au);
-    if(ids==1)
-        au(:)=mask(:).*au(:);
-    end
+    au(:)=mask(:).*au(:);
     au=reshape(au,sz);
 end
 
-function [fu]=ffun(u)
-    fu=reshape(u,n,n,nel);
-    for ie=1:nel
-        fu(:,:,ie)=F*fu(:,:,ie)*F';
-    end
-    fu=reshape(fu,size(u));
-end
 
 %--------------------------------------------------------------------------
 %  Preconditioner
 %--------------------------------------------------------------------------
-[A,B]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc);
+[A,B]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifneu);
 
 % Schwarz weight
 if(ifras)
-    wt=mask;
+    wt=ones(n,n,nel);
+elseif(no==0)
+    wt=ones(n,n,nel);
 elseif(no==1)
     wt1=ones(ns,ns,nel);
     wt2=ones(ns,ns,nel);
@@ -246,11 +248,17 @@ elseif(no==1)
     wt2=extrude(wt2,0,1.0,wt1,0,-1.0);
     wt2=extrude(wt2,2,1.0,wt2,0,1.0);
     wt=wt2(2:end-1,2:end-1,:);
-    wt=dssum(wt);
-    wt(:)=mask(:)./wt(:);
-elseif(no==0)
-    wt=reshape(mask(:).*mult(:),n,n,nel);
 end
+wt=dssum(wt);
+wt(:)=1./wt(:);
+% Upwinding
+unx=zeros(n,n); unx(1,:)=-1; unx(end,:)=1;
+uny=zeros(n,n); uny(:,1)=-1; uny(:,end)=1;
+for e=1:nel
+    wt(:,:,e)=wt(:,:,e).*(1+sign(vx(e)*unx+vy(e)*uny));
+end
+wt=wt./dssum(wt);
+wt(mask==0)=0;
 
 function [v1]=extrude(v1,l1,f1,v2,l2,f2)
     k1=[1+l1,size(v1,1)-l1];
@@ -261,21 +269,54 @@ function [v1]=extrude(v1,l1,f1,v2,l2,f2)
     v1(2:end-1,k1,:)=f1*v1(2:end-1,k1,:)+f2*v2(2:end-1,k2,:);
 end
 
-function [u]=pschwarz(r)
+function [u]=psweep(r,dir)
+    if(nargin==1)
+        dir=1;
+    end
+    if(dir==0)
+        elems=(1:nel)';
+    elseif(dir==1)
+        elems=reshape(1:nel,nex,ney);
+    end
     u=zeros(size(r));
-    for ie=1:size(u,3)
-        LA=A(:,:,2,ie)\A(:,:,1,ie);
-        LB=B(:,:,2,ie)\B(:,:,1,ie);
-        LR=A(:,:,2,ie)\r(:,:,ie)/B(:,:,2,ie)';
-        u(:,:,ie)=sylvester(LA,LB',LR);
+    w=zeros(size(r));
+    for is=1:size(elems,1)
+        ie=elems(is,:);
+        w(:,:,ie)=r(:,:,ie)-w(:,:,ie);
+        z=pschwarz(w,ie);
+        u(:,:,ie)=u(:,:,ie)+z(:,:,ie);
+        u=wt.*u;
+        u=dssum(u);
+        if(is<size(elems,1))
+            ie=[ie,elems(is+1,:)];
+        end
+        w=afun(u,ie);
     end
 end
 
+function [u]=pschwarz(r,elems)
+    if(nargin==1)
+        elems=1:size(r,3);
+    end
+    u=reshape(r,size(A,1),size(B,1),[]);
+    for ie=elems
+        LA=A(:,:,2,ie)\A(:,:,1,ie);
+        LB=B(:,:,2,ie)\B(:,:,1,ie);
+        LR=A(:,:,2,ie)\u(:,:,ie)/B(:,:,2,ie)';
+        u(:,:,ie)=sylvester(LA,LB',LR);
+    end
+    u=reshape(u,size(r));
+end
+
 function [u]=psmooth(r)
-    if(no==1)
+    if(ifsweep)
+    u=psweep(reshape(r,n,n,[]));
+    elseif(no==0)
+    u=pschwarz(reshape(r,n,n,[]));
+    elseif(no==1)
     % go to exteded array
     w1=zeros(ns,ns,nel);
-    w1(2:end-1,2:end-1,:)=reshape(wt(:).*r(:),n,n,[]);
+    w1(2:end-1,2:end-1,:)=reshape(r,n,n,[]);
     % exchange interior nodes
     w1=extrude(w1,0,0.0,w1,2,1.0);
     w1=dssum(w1);
@@ -291,14 +332,10 @@ function [u]=psmooth(r)
     end
     % go back to regular size array
     u=w2(2:end-1,2:end-1,:);
+    end
     % sum border nodes
+    u(:)=wt(:).*u(:);
     u=dssum(u);
-    elseif(no==0)
-    u=dssum(pschwarz(wt.*reshape(r,size(wt))));
-    end
-    if(ifras)
-    u(:)=mult(:).*u(:);
-    end
     u=reshape(u,size(r));
 end
 
@@ -312,6 +349,7 @@ function [u]=pcoarse(r)
     rc(:)=cmask(:).*rc(:);
     uc=supg(Acrs,rc);
     uc(:)=cmask(:).*uc(:);
+    
     u=zeros(size(r));
     for ie=1:size(r,3)
         u(:,:,ie)=Jfem*uc(:,:,ie)*Jfem';
@@ -319,23 +357,15 @@ function [u]=pcoarse(r)
     u=reshape(u,sz);
 end
 
-sigma=0;
+
 function [u]=pfun(r)
     u=psmooth(r);
     u=u+pcoarse(r-afun(u));
     u(:)=mask(:).*u(:);
-    %return;
-
-    sigma=2/3;
-    w=r-afun(u);
-    z=psmooth(w);
-    if(sigma==0)
-        az=afun(z);
-        sigma=semdot(az,w)/semdot(az,az);
-        sigma=min(1,sigma);
-        display(sigma);
-    end
-    u=u+sigma*z;
+    return;
+    
+    sigma=0.7;
+    u=u+sigma*psmooth(r-afun(u));
 end
 
 %--------------------------------------------------------------------------
@@ -346,34 +376,38 @@ ub=zeros(n,n,nex,ney);
 ub(x==1)=UDATA;
 b=bfun(f)-afun(ub);
 
-u0=pcoarse(b(:));
+u0=pfun(b(:));
 u0(:)=0;
-
-
-% restart=10;
-% [u1,flag,relres,it,resvec]=gmres(@afun,b(:),restart,tol,1,[],@pfun,u0(:));
-
 
 restart=maxit;
 [u,flag,relres,it,resvec]=gmres(@afun,b(:),restart,tol,1,[],@pfun,u0(:));
 % relres=0; resvec=0; u=pfun(b);
 it=length(resvec)-1;
 
-%u=u-pfun(b(:));
+u1=psmooth(b(:));
+for k=1:0
+u1=u1+psmooth(b(:)-afun(u1));
+end
+u=u1;
+
 u=reshape(u,size(ub));
 u=u+ub;
 
 
+
+
+figure(2);
+semilogy(0:it,resvec*relres/resvec(end),'.-b');
+ylim([tol/100,1]);
+drawnow;
+
+%return;
 figure(1);
 semplot2(x,y,u); 
 %shading interp; camlight;
 %view(2);
 colormap(jet(256));
 colorbar;
-
-figure(2);
-semilogy(0:it,resvec*relres/resvec(end),'.-b');
-ylim([tol/100,1]);
 end
 
 

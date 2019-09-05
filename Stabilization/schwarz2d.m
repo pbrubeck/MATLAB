@@ -1,5 +1,6 @@
-function [SA,SB]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc)
+function [SA,SB]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifneu)
 % Assumes rectangular elements and constant velocity 
+
 
 nxb=n+2*(no+1);
 ns=nxb-2;
@@ -18,8 +19,9 @@ HPF=Bhat*(eye(n)-bubfilt(xhat))/dt;
 % grid Peclet number
 peh=(vx.^2+vy.^2)./max(abs(vx./hx),abs(vy./hy))*min(diff(xhat))./(2*nu);
 nel=numel(peh);
-%peh(:)=0;
-
+if(~ifneu)
+    peh(:)=0;
+end
 
 % Omega_bar basis
 j1=1:no+1;
@@ -43,6 +45,7 @@ nuy=nu/hy(e);
 % Neumann (constant extrapolation) for convection dominated
 JX=J;
 JY=J;
+
 
 if(peh(e)>1)
 if(vx(e)>0)
@@ -80,8 +83,8 @@ Mbar=J'*Bhat*J;
 Mbar=schwarz1d(n,no,Mbar,2,2);
 R=Mbar*ones(size(Mbar,1),size(Mbar,1))*Mbar';
 
-AA=A(:,:,2)\A(:,:,1);
-BB=B(:,:,2)\B(:,:,1);
+AA=A(:,:,2,1)\A(:,:,1,1);
+BB=B(:,:,2,1)\B(:,:,1,1);
 RR=Mbar\R/Mbar';
 uu=sylvester(AA,BB',RR);
 
