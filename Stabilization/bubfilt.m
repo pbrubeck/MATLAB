@@ -10,8 +10,8 @@ end
 if(nargin==1)
 sigma = ones(N,1);
 p = 0.0;
-cut = max(1,ceil(N*p));
-alpha = 0.01;
+cut = max(2,ceil(N*p));
+alpha = 3E-2;
 for k=1:cut
     w = alpha*(((cut+1-k)/cut)^2);
     j = N+1-k;

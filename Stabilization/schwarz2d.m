@@ -28,10 +28,11 @@ J(:,j0)=eye(n);
 J(:,j1)=J(:,j0(n-no:n));
 J(:,j2)=J(:,j0(1:no+1));
 
-A=zeros(nxb,nxb,2);
-B=zeros(nxb,nxb,2);
-SA=zeros(ns,ns,2,nel);
-SB=zeros(ns,ns,2,nel);
+nmat=3;
+A=zeros(nxb,nxb,nmat);
+B=zeros(nxb,nxb,nmat);
+SA=zeros(ns,ns,nmat,nel);
+SB=zeros(ns,ns,nmat,nel);
 
 for e=1:nel
 nux=nu/hx(e);
@@ -49,11 +50,13 @@ JY(1:n-no-1,1)  =(vy(e)<0 || vy(e)==0 && peh(e)>1);
 end
 
 A(:,:,1)=J'*(nux*Ahat+vx(e)*Chat+hx(e)*HPF)*JX;
-A(:,:,2)=J'*(hx(e)*Bhat)*JX;
+A(:,:,2)=J'*(hx(e)*Bhat)*J;
+A(:,:,3)=J'*(-dt*hx(e)*HPF)*J;
 SA(:,:,:,e)=schwarz1d(n,no,A,bc(1,e),bc(2,e));
 
 B(:,:,1)=J'*(nuy*Ahat+vy(e)*Chat+hy(e)*HPF)*JY;
-B(:,:,2)=J'*(hy(e)*Bhat)*JY;
+B(:,:,2)=J'*(hy(e)*Bhat)*J;
+B(:,:,3)=J'*(hy(e)*HPF)*J;
 SB(:,:,:,e)=schwarz1d(n,no,B,bc(3,e),bc(4,e));
 end
 

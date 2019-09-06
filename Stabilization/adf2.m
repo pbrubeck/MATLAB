@@ -15,12 +15,10 @@ maxit=50;
 tol=1e-10;
 
 % Problem settings
-if(nu<0)
-    nu=1./abs(nu);
-end
-bcbox=[1,1,1,1];
-UDATA=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu)); FDATA=0;
-%UDATA=0; FDATA=1;
+if(nu<0), nu=1./abs(nu); end
+
+UDATA=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu)); FDATA=0; bcbox=[1,1,1,1];
+%UDATA=0; FDATA=1; bcbox=[1,0,1,0];
 ux=@(x,y,z) 0+0*y.*(1-x.^2);
 uy=@(x,y,z) 1-0*x.*(1-y.^2);
 uz=@(x,y,z) 0+0*x+0*y;
@@ -45,7 +43,6 @@ nel=nex*ney;
 [Dhat,zhat,what]=legD(n);
 Jfem=[1-zhat, 1+zhat]/2;
 F=bubfilt(zhat);
-%Ffem=bubfilt(zhat,[1;1;zeros(n-2,1)]);
 
 xc=linspace(-1,1,nex+1);
 yc=linspace(-1,1,ney+1);
@@ -326,7 +323,7 @@ function [u]=psweep(r)
         u=dssum(u);
 
         if(is<max(depth(:)))
-            je=[ie,find(depth==is+1),find(depth==is+2)];
+            je=find(depth==is|depth==is+1|depth==is+2);
             w=afun(u,je);
         end
         
@@ -346,6 +343,9 @@ function [u]=pschwarz(r,elems)
         LB=B(:,:,2,ie)\B(:,:,1,ie);
         LR=A(:,:,2,ie)\u(:,:,ie)/B(:,:,2,ie)';
         u(:,:,ie)=sylvester(LA,LB',LR);
+%         K=kron(B(:,:,2,ie),A(:,:,1,ie))+kron(B(:,:,1,ie),A(:,:,2,ie))+...
+%           kron(B(:,:,3,ie),A(:,:,3,ie));        
+%         u(:,:,ie)=reshape(K\reshape(u(:,:,ie),[],1),size(u(:,:,ie)));
     end
     u=reshape(u,size(r));
 end
