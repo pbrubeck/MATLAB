@@ -10,7 +10,7 @@ tau=(h./v).*(1-1./peh);
 tau(peh<=1)=0;
 
 
-nel=size(vert,ndims(vert));
+nel=numel(hx);
 N=2;
 n=N*N;
 [D1,x1]=legD(N);

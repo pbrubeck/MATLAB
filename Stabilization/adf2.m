@@ -15,15 +15,15 @@ maxit=100;
 tol=1e-10;
 
 % Problem settings
-bcbox=[1,0,1,0];
+bcbox=[1,1,1,1];
 UDATA=0;
-FDATA=1;
-ux=@(x,y,z) 1+0*y.*(1-x.^2);
-uy=@(x,y,z) 0-0*x.*(1-y.^2);
+FDATA=0;
+ux=@(x,y,z) 0+0*y.*(1-x.^2);
+uy=@(x,y,z) 1-0*x.*(1-y.^2);
 uz=@(x,y,z) 0+0*x+0*y;
 
 % Stabilization CFL
-CFL=1.0E-2;
+CFL=1.0E-2/2;
 %CFL=inf;
 
 function [u]=vel(x,y,z,ijac)
@@ -44,6 +44,7 @@ nel=nex*ney;
 [Dhat,zhat,what]=legD(n);
 Jfem=[1-zhat, 1+zhat]/2;
 F=bubfilt(zhat);
+%Ffem=bubfilt(zhat,[1;1;zeros(n-2,1)]);
 
 xc=linspace(-1,1,nex+1);
 yc=linspace(-1,1,ney+1);
@@ -77,11 +78,19 @@ vy=uy(xm(:),ym(:),zm(:));
 
 bc=zeros(nfaces,nel);
 bc(:)=2; % Overlap
+depth=1:nel;
 
 if(ifsweep)
     dex=repmat((1:nex)',1,ney);
-    dey=repmat((1:ney) ,ney,1);
-    depth=dex+0*(dey-1);
+    dey=repmat((1:ney) ,nex,1);
+    if(vx(1)>=0 && vy(1)==0)
+        depth=dex;      
+    elseif(vx(1)==0 && vy(1)>=0)
+        depth=dey;
+    elseif(vx(1)>=0 && vy(1)>=0)
+        depth=dex+dey-1;
+    end
+    
     bc=reshape(bc,[],nex,ney);
     bc(1,2:end  ,:)=1+(depth(2:end  ,:)<=depth(1:end-1,:)); 
     bc(2,1:end-1,:)=1+(depth(1:end-1,:)<=depth(2:end  ,:)); 
@@ -204,9 +213,13 @@ function [u]=dssum(u)
     u=reshape(u,sz);
 end
 
-function [bx]=bfun(x)
+
+function [bx]=bfun(x,elems)
+    if(nargin==1)
+        elems=1:nel;
+    end
     bx=reshape(x,n,n,nel);
-    for ie=1:nel
+    for ie=elems
         bx(:,:,ie)=J'*(bm1(:,:,:,ie).*(J*bx(:,:,ie)*J'))*J;
     end
     bx=dssum(bx);
@@ -282,6 +295,14 @@ function [v1]=extrude(v1,l1,f1,v2,l2,f2)
 end
 
 function [u]=psweep(r)
+    visit=zeros(nex,ney);
+    im=zeros(length(xc),length(yc));
+    figure(2); hv=pcolor(xc,yc,im');
+    colormap(gray(2));
+    caxis('manual'); caxis([0,1]);
+    set(gca,'YDir','normal');
+    title('Sweeping');
+    
     u=zeros(size(r));
     w=zeros(size(r));
     for is=1:max(depth(:))
@@ -291,10 +312,15 @@ function [u]=psweep(r)
         u(:,:,ie)=u(:,:,ie)+z(:,:,ie);
         u=wt.*u;
         u=dssum(u);
+
         if(is<max(depth(:)))
-            je=[ie,find(depth==is+1)];
+            je=[ie,find(depth==is+1),find(depth==is+2)];
             w=afun(u,je);
         end
+        
+        visit(ie)=visit(ie)+1;
+        im(1:nex,1:ney)=visit;
+        set(hv,'CData',im'); drawnow;        
     end
 end
 
@@ -337,7 +363,7 @@ function [u]=psmooth(r)
     % go back to regular size array
     u=w2(2:end-1,2:end-1,:);
     end
-    % sum border nodes
+    % sum border nodes    
     u(:)=wt(:).*u(:);
     u=dssum(u);
     u=reshape(u,size(r));
@@ -374,7 +400,11 @@ end
 
 f=FDATA*ones(n,n,nel);
 ub=zeros(n,n,nel);
-ub(x==1)=UDATA;
+%ub(x==1)=UDATA;
+
+uex=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu));
+ub(mask==0)=uex(x(mask==0),y(mask==0));
+
 b=bfun(f)-afun(ub);
 
 u0=pcoarse(b(:));
@@ -385,14 +415,16 @@ restart=maxit;
 % relres=0; resvec=0; u=pfun(b);
 it=length(resvec)-1;
 
-u1=u0;
-for k=1:1
-u1=u1+pfun(b(:)-afun(u1));
-end
-u=u1;
+% u1=u0;
+% for k=1:1
+% u1=u1+pfun(b(:)-afun(u1));
+% end
+% u=u1;
+
 
 u=reshape(u,size(ub));
 u=u+ub;
+% u=uex(x,y)-reshape(u,size(x));
 
 figure(2);
 semilogy(0:it,resvec*relres/resvec(end),'.-b');

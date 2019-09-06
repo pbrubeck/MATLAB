@@ -1,7 +1,5 @@
 function [SA,SB]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifneu)
 % Assumes rectangular elements and constant velocity 
-
-
 nxb=n+2*(no+1);
 ns=nxb-2;
 
@@ -22,6 +20,7 @@ nel=numel(peh);
 if(~ifneu)
     peh(:)=0;
 end
+%peh(:)=10; % always Neumann
 
 % Omega_bar basis
 j1=1:no+1;
