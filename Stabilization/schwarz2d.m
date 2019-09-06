@@ -17,10 +17,6 @@ HPF=Bhat*(eye(n)-bubfilt(xhat))/dt;
 % grid Peclet number
 peh=(vx.^2+vy.^2)./max(abs(vx./hx),abs(vy./hy))*min(diff(xhat))./(2*nu);
 nel=numel(peh);
-if(~ifneu)
-    peh(:)=0;
-end
-%peh(:)=10; % always Neumann
 
 % Omega_bar basis
 j1=1:no+1;
@@ -45,24 +41,11 @@ nuy=nu/hy(e);
 JX=J;
 JY=J;
 
-
-if(peh(e)>1)
-if(vx(e)>0)
-    JX(no+2:end,end)=1;
-elseif(vx(e)<0)
-    JX(1:n-no-1,1)=1;
-elseif(vx(e)==0)
-    JX(no+2:end,end)=1;
-    JX(1:n-no-1,1)=1;    
-end
-if(vy(e)>0)
-    JY(no+2:end,end)=1;
-elseif(vy(e)<0)
-    JY(1:n-no-1,1)=1;
-elseif(vy(e)==0)
-    JY(no+2:end,end)=1;
-    JY(1:n-no-1,1)=1;
-end
+if(ifneu)
+JX(no+2:end,end)=(vx(e)>0 || vx(e)==0 && peh(e)>1);
+JX(1:n-no-1,1)  =(vx(e)<0 || vx(e)==0 && peh(e)>1);
+JY(no+2:end,end)=(vy(e)>0 || vy(e)==0 && peh(e)>1);
+JY(1:n-no-1,1)  =(vy(e)<0 || vy(e)==0 && peh(e)>1);
 end
 
 A(:,:,1)=J'*(nux*Ahat+vx(e)*Chat+hx(e)*HPF)*JX;
@@ -88,12 +71,10 @@ RR=Mbar\R/Mbar';
 uu=sylvester(AA,BB',RR);
 
 xs=[xhat(n-no:n)-2;xhat(2:n-1);xhat(1:no+1)+2];
-
 xs=[xhat(n-no-1:n)-2;xhat(2:n-1);xhat(1:no+2)+2];
 vv=uu;
 uu=zeros(length(xs),length(xs));
 uu(2:end-1,2:end-1)=vv;
-
 [xx,yy]=ndgrid(xs);
 figure(1);
 surf(xx,yy,uu);

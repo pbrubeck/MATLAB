@@ -11,27 +11,28 @@ ifsweep=no<0;
 no=min(max(0,no),1);
 
 % GMRES settings
-maxit=100;
+maxit=50;
 tol=1e-10;
 
 % Problem settings
+if(nu<0)
+    nu=1./abs(nu);
+end
 bcbox=[1,1,1,1];
-UDATA=0;
-FDATA=0;
+UDATA=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu)); FDATA=0;
+%UDATA=0; FDATA=1;
 ux=@(x,y,z) 0+0*y.*(1-x.^2);
 uy=@(x,y,z) 1-0*x.*(1-y.^2);
 uz=@(x,y,z) 0+0*x+0*y;
 
 % Stabilization CFL
-CFL=1.0E-2/2;
+CFL=1.0E-2;
 %CFL=inf;
 
 function [u]=vel(x,y,z,ijac)
     u=ijac(:,:,:,:,1).*ux(x,y,z)+ijac(:,:,:,:,2).*uy(x,y,z)+ijac(:,:,:,:,3).*uz(x,y,z);
 end
-if(nu<0)
-    nu=1./abs(nu);
-end
+
 
 ns=n+2*no;
 ndim=2;
@@ -83,12 +84,23 @@ depth=1:nel;
 if(ifsweep)
     dex=repmat((1:nex)',1,ney);
     dey=repmat((1:ney) ,nex,1);
+    depth=inf(size(dex));
+    ex=[]; ey=[];
     if(vx(1)>=0 && vy(1)==0)
-        depth=dex;      
+        %depth=dex;
+        ex=1;
+        ey=(ney)/2;
     elseif(vx(1)==0 && vy(1)>=0)
-        depth=dey;
+        %depth=dey;
+        ex=(nex)/2;
+        ey=1;
     elseif(vx(1)>=0 && vy(1)>=0)
-        depth=dex+dey-1;
+        ex=1;
+        ey=1;
+    end
+    
+    for k=1:length(ex)
+        depth=min(depth,1+ceil(abs(dex-ex(k))+abs(dey-ey(k))));
     end
     
     bc=reshape(bc,[],nex,ney);
@@ -397,14 +409,18 @@ end
 
 %--------------------------------------------------------------------------
 
-
-f=FDATA*ones(n,n,nel);
 ub=zeros(n,n,nel);
-%ub(x==1)=UDATA;
-
-uex=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu));
-ub(mask==0)=uex(x(mask==0),y(mask==0));
-
+f=zeros(n,n,nel);
+if(isfloat(UDATA))
+    ub(x==1)=UDATA;
+else
+    ub(mask==0)=UDATA(x(mask==0),y(mask==0));
+end
+if(isfloat(FDATA))
+    f(:)=FDATA;
+else
+    f=FDATA(x(mask==0),y(mask==0));
+end
 b=bfun(f)-afun(ub);
 
 u0=pcoarse(b(:));
@@ -415,16 +431,16 @@ restart=maxit;
 % relres=0; resvec=0; u=pfun(b);
 it=length(resvec)-1;
 
-% u1=u0;
-% for k=1:1
-% u1=u1+pfun(b(:)-afun(u1));
-% end
-% u=u1;
+for k=1:0
+u0=u0+pfun(b(:)-afun(u0));
+end
+%u=u0;
 
 
 u=reshape(u,size(ub));
 u=u+ub;
-% u=uex(x,y)-reshape(u,size(x));
+%u=UDATA(x,y)-reshape(u,size(x));
+
 
 figure(2);
 semilogy(0:it,resvec*relres/resvec(end),'.-b');
@@ -451,7 +467,7 @@ x=reshape(x,size(u));
 y=reshape(y,size(u));
 nel = size(u,3);
 for e=1:nel
-    surf(x(:,:,e),y(:,:,e),u(:,:,e));hold on;
+    surf(x(:,:,e),y(:,:,e),u(:,:,e)); hold on; %drawnow;
 end
 hold off; 
 end
