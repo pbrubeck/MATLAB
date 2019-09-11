@@ -1,13 +1,16 @@
-function [SA,SB]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifneu)
+function [SA,SB]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifdeal,ifneu)
 % Assumes rectangular elements and constant velocity 
 nxb=n+2*(no+1);
 ns=nxb-2;
 
 % SEM hat
 [Dhat,xhat,what]=legD(n);
-Bhat=diag(what);
-V=VandermondeLeg(xhat);
-Bhat=inv(V*V');
+if(ifdeal)
+    V=VandermondeLeg(xhat);
+    Bhat=inv(V*V');
+else
+    Bhat=diag(what);
+end
 Ahat=Dhat'*Bhat*Dhat;
 Chat=Bhat*Dhat;
 
@@ -17,6 +20,7 @@ HPF=Bhat*(eye(n)-bubfilt(xhat))/dt;
 % grid Peclet number
 peh=(vx.^2+vy.^2)./max(abs(vx./hx),abs(vy./hy))*min(diff(xhat))./(2*nu);
 nel=numel(peh);
+
 
 % Omega_bar basis
 j1=1:no+1;
@@ -41,22 +45,21 @@ nuy=nu/hy(e);
 % Neumann (constant extrapolation) for convection dominated
 JX=J;
 JY=J;
-
 if(ifneu)
-JX(no+2:end,end)=(vx(e)>0 || vx(e)==0 && peh(e)>1);
-JX(1:n-no-1,1)  =(vx(e)<0 || vx(e)==0 && peh(e)>1);
-JY(no+2:end,end)=(vy(e)>0 || vy(e)==0 && peh(e)>1);
-JY(1:n-no-1,1)  =(vy(e)<0 || vy(e)==0 && peh(e)>1);
+    JX(no+2:end,end)=(vx(e)>0 || vx(e)==0 && peh(e)>1);
+    JX(1:n-no-1,1)  =(vx(e)<0 || vx(e)==0 && peh(e)>1);
+    JY(no+2:end,end)=(vy(e)>0 || vy(e)==0 && peh(e)>1);
+    JY(1:n-no-1,1)  =(vy(e)<0 || vy(e)==0 && peh(e)>1);
 end
 
 A(:,:,1)=J'*(nux*Ahat+vx(e)*Chat+hx(e)*HPF)*JX;
-A(:,:,2)=J'*(hx(e)*Bhat)*J;
-A(:,:,3)=J'*(-dt*hx(e)*HPF)*J;
+A(:,:,2)=J'*(hx(e)*Bhat)*JX;
+A(:,:,3)=J'*(-dt*hx(e)*HPF)*JX;
 SA(:,:,:,e)=schwarz1d(n,no,A,bc(1,e),bc(2,e));
 
 B(:,:,1)=J'*(nuy*Ahat+vy(e)*Chat+hy(e)*HPF)*JY;
-B(:,:,2)=J'*(hy(e)*Bhat)*J;
-B(:,:,3)=J'*(hy(e)*HPF)*J;
+B(:,:,2)=J'*(hy(e)*Bhat)*JY;
+B(:,:,3)=J'*(hy(e)*HPF)*JY;
 SB(:,:,:,e)=schwarz1d(n,no,B,bc(3,e),bc(4,e));
 end
 

@@ -1,34 +1,37 @@
 function [relres,it,resvec] = adf2(n,ne,nu,opts)
 if(nargin==3)
-    opts=ones(1,4);
+    opts=ones(1,5);
 end
-opts=[opts(:)',ones(1,4-numel(opts))];
+opts=[opts(:)',ones(1,5-numel(opts))];
 no=opts(1);
 ifras=logical(opts(2));
-ifneu=logical(opts(3));
-ifcrs=logical(opts(4));
+ifcrs=logical(opts(3));
+ifneu=logical(opts(4));
+ifdeal=logical(opts(5));
 ifsweep=no<0;
 no=min(max(0,no),1);
 
+ifplot=true;
+
 % GMRES settings
-maxit=50;
+maxit=100;
 tol=1e-10;
 
 % Problem settings
 if(nu<0), nu=1./abs(nu); end
 
-UDATA=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu)); FDATA=0; bcbox=[1,1,1,1];
-%UDATA=0; FDATA=1; bcbox=[1,0,1,0];
-ux=@(x,y,z) 0+0*y.*(1-x.^2);
-uy=@(x,y,z) 1-0*x.*(1-y.^2);
-uz=@(x,y,z) 0+0*x+0*y;
+%UDATA=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu)); FDATA=0; bcbox=[1,1,1,1];
+%UDATA=0; FDATA=1; bcbox=[1,1,1,0];
+UDATA=1; FDATA=0; bcbox=[1,1,1,1];
+ux=@(x,y) 0+2*y.*(1-x.^2);
+uy=@(x,y) 0-2*x.*(1-y.^2);
 
 % Stabilization CFL
 CFL=1.0E-2;
 %CFL=inf;
 
-function [u]=vel(x,y,z,ijac)
-    u=ijac(:,:,:,:,1).*ux(x,y,z)+ijac(:,:,:,:,2).*uy(x,y,z)+ijac(:,:,:,:,3).*uz(x,y,z);
+function [u]=vel(x,y,ijac)
+    u=ijac(:,:,:,:,1).*ux(x,y)+ijac(:,:,:,:,2).*uy(x,y);
 end
 
 
@@ -49,9 +52,9 @@ yc=linspace(-1,1,ney+1);
 hx=diff(xc)/2;
 hy=diff(yc)/2;
 
-x1=zhat*hx+repmat(conv(xc,[1,1]/2,'valid'),n,1);
-y1=zhat*hy+repmat(conv(yc,[1,1]/2,'valid'),n,1);
-[x,y]=ndgrid(x1,y1);
+x=zhat*hx+repmat(conv(xc,[1,1]/2,'valid'),n,1);
+y=zhat*hy+repmat(conv(yc,[1,1]/2,'valid'),n,1);
+[x,y]=ndgrid(x,y);
 x=semreshape(x,n,nex,ney);
 y=semreshape(y,n,nex,ney);
 
@@ -65,10 +68,8 @@ hy=hy(:);
 xm=conv(xc,[1,1]/2,'valid');
 ym=conv(yc,[1,1]/2,'valid');
 [xm,ym]=ndgrid(xm,ym);
-zm=zeros(size(xm));
-vx=ux(xm(:),ym(:),zm(:));
-vy=uy(xm(:),ym(:),zm(:));
-
+vx=ux(xm(:),ym(:));
+vy=uy(xm(:),ym(:));
 
 %--------------------------------------------------------------------------
 %  Boundary conditions
@@ -76,37 +77,47 @@ vy=uy(xm(:),ym(:),zm(:));
 
 bc=zeros(nfaces,nel);
 bc(:)=2; % Overlap
-depth=1:nel;
+icolor=1:nel;
 
 if(ifsweep)
-    dex=repmat((1:nex)',1,ney);
-    dey=repmat((1:ney) ,nex,1);
-    depth=inf(size(dex));
-    ex=[]; ey=[];
-    if(vx(1)>=0 && vy(1)==0)
-        %depth=dex;
-        ex=1;
-        ey=(ney)/2;
-    elseif(vx(1)==0 && vy(1)>=0)
-        %depth=dey;
-        ex=(nex)/2;
-        ey=1;
-    elseif(vx(1)>=0 && vy(1)>=0)
-        ex=1;
-        ey=1;
+
+    wx=hx';
+    wy=hy';
+    vx1=ux(x,y); 
+    vy1=uy(x,y); 
+    
+    px=2;
+    py=2;
+    npart=px*py;
+    perm=[4,2,1,3];
+    %perm=1:npart;
+    
+    elems=reshape(1:nel,nex/px,px,ney/py,py);
+    elems=permute(elems,[1,3,2,4]);
+    elems=reshape(elems,[],npart);
+    
+    itopo=box_topo(nex/px,ney/py);
+    icolor(:)=0;
+    isweep=zeros(size(icolor));
+
+    for k=perm(1:npart)
+        ncolor=max(icolor(:));
+        i1=elems(:,k);
+        iflux=get_graph(itopo,vx(i1),vy(i1),wx(i1),wy(i1));
+        [isweep(i1),icolor(i1),bc(:,i1)]=schwarz_toposort(itopo,iflux);
+        icolor(i1)=icolor(i1)+ncolor;
     end
     
-    for k=1:length(ex)
-        depth=min(depth,1+ceil(abs(dex-ex(k))+abs(dey-ey(k))));
-    end
+    bc=reshape(bc,[],nex,ney); 
+    icolor=reshape(icolor,nex,ney);
+    bc(1,2:end  ,:)=1+(icolor(2:end  ,:)<=icolor(1:end-1,:)); 
+    bc(2,1:end-1,:)=1+(icolor(1:end-1,:)<=icolor(2:end  ,:)); 
+    bc(3,:,2:end  )=1+(icolor(:,2:end  )<=icolor(:,1:end-1)); 
+    bc(4,:,1:end-1)=1+(icolor(:,1:end-1)<=icolor(:,2:end  ));    
     
-    bc=reshape(bc,[],nex,ney);
-    bc(1,2:end  ,:)=1+(depth(2:end  ,:)<=depth(1:end-1,:)); 
-    bc(2,1:end-1,:)=1+(depth(1:end-1,:)<=depth(2:end  ,:)); 
-    bc(3,:,2:end  )=1+(depth(:,2:end  )<=depth(:,1:end-1)); 
-    bc(4,:,1:end-1)=1+(depth(:,1:end-1)<=depth(:,2:end  )); 
     bc=reshape(bc,[],nel);
-    depth=reshape(depth,1,[]);
+    icolor=reshape(icolor,1,[]);
+
 end
 
 % Override with problem boundaries
@@ -165,8 +176,11 @@ Acrs(ibnd)=1;
 %--------------------------------------------------------------------------
 %  Forward operator
 %--------------------------------------------------------------------------
-
-nxd=ceil(3*n/2); %nxd=n;
+if(ifdeal)
+    nxd=ceil(3*n/2);
+else
+    nxd=n;
+end
 nyd=nxd; nzd=1;
 if(nxd==n)
     [xq,wq]=deal(zhat,what);
@@ -178,16 +192,14 @@ end
 D=J*Dhat;
 wq=reshape(kron(wq,wq),[nxd,nxd]);
 
-kx=repmat(1:length(xc),2,1);
-ky=repmat(1:length(yc),2,1);
-kx=kx(2:end-1);
-ky=ky(2:end-1);
+kx=repmat(1:length(xc),2,1); kx=kx(2:end-1);
+ky=repmat(1:length(yc),2,1); ky=ky(2:end-1);
 [xxc,yyc]=ndgrid(xc(kx),yc(ky),1);
-pts=reshape(permute(reshape(xxc+1i*yyc,[2,nex,2,ney]),[1,3,2,4]),[4,nex*ney]);
+quad=reshape(permute(reshape(xxc+1i*yyc,[2,nex,2,ney]),[1,3,2,4]),[4,nex*ney]);
 
 function [map]=mymap(e,x,y,z)
     rad=[inf;inf;inf;inf];
-    w=crvquad(pts([4,3,2,1],e),rad);
+    w=crvquad(quad([4,3,2,1],e),rad);
     map=[real(w(x,y)); imag(w(x,y)); z];
 end
 
@@ -197,18 +209,27 @@ zd=zeros(nxd,nyd,nzd,nel);
 bm1=zeros(nxd,nyd,nzd,nel);
 G=zeros(nxd,nyd,nzd,6,nel);
 C=zeros(nxd,nyd,nzd,3,nel);
-for e=1:nel
+
+iffast=(numel(uniquetol(vx,tol))==1)&(numel(uniquetol(vy,tol))==1)&...
+       (numel(uniquetol(hx,tol))==1)&(numel(uniquetol(hy,tol))==1);
+
+ncoef=nel;
+if(iffast), ncoef=1; end
+for e=1:ncoef
 % Equation coefficients
 coord=@(x,y,z) mymap(e,x,y,z);
 [xd(:,:,:,e),yd(:,:,:,e),zd(:,:,:,e),ijac,bm1(:,:,:,e),G(:,:,:,:,e)]=gmfact(ndim,coord,xq,wq);
-ud=vel(xd(:,:,:,e),yd(:,:,:,e),zd(:,:,:,e),ijac);
+ud=vel(xd(:,:,:,e),yd(:,:,:,e),ijac);
 C(:,:,:,1,e)=bm1(:,:,:,e).*ud(:,:,:,1);
 C(:,:,:,2,e)=bm1(:,:,:,e).*ud(:,:,:,2);
 C(:,:,:,3,e)=bm1(:,:,:,e).*ud(:,:,:,3);
 end
+if(iffast)
+    bm1=repmat(bm1(:,:,:,1),1,1,1,nel);
+    G=repmat(G(:,:,:,:,1),1,1,1,1,nel);
+    C=repmat(C(:,:,:,:,1),1,1,1,1,nel);
+end
 G=nu.*G;
-
-mult=1./dssum(ones(n,n,nel));
 
 function [u]=dssum(u)
     sz=size(u);
@@ -222,11 +243,11 @@ function [u]=dssum(u)
     u=reshape(u,sz);
 end
 
-
 function [bx]=bfun(x,elems)
     if(nargin==1)
         elems=1:nel;
     end
+    elems=mod(elems-1,nel)+1;
     bx=reshape(x,n,n,nel);
     for ie=elems
         bx(:,:,ie)=J'*(bm1(:,:,:,ie).*(J*bx(:,:,ie)*J'))*J;
@@ -242,6 +263,7 @@ function [au]=afun(u,elems)
     sz=size(u);
     u=reshape(u,n,n,nel);
     au=zeros(size(u));
+    elems=mod(elems-1,nel)+1;
     for ie=elems
         fu=F*u(:,:,ie)*F';
         u_x=D*u(:,:,ie)*J';
@@ -260,7 +282,7 @@ end
 %--------------------------------------------------------------------------
 %  Preconditioner
 %--------------------------------------------------------------------------
-[A,B]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifneu);
+[A,B]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifdeal,ifneu);
 
 % Schwarz weight
 if(ifras)
@@ -276,23 +298,24 @@ elseif(no==1)
     wt2=extrude(wt2,2,1.0,wt2,0,1.0);
     wt=wt2(2:end-1,2:end-1,:);
 end
-wt=dssum(wt);
-wt(:)=1./wt(:);
+
 if(ifsweep)
     wt(1,:,bc(1,:)==1)=0;
     wt(n,:,bc(2,:)==1)=0;
     wt(:,1,bc(3,:)==1)=0;
     wt(:,n,bc(4,:)==1)=0;
+    wt=reshape(wt,n,n,nel,[]);
 else
     % Upwinding
     unx=zeros(n,n); unx(1,:)=-1; unx(end,:)=1;
     uny=zeros(n,n); uny(:,1)=-1; uny(:,end)=1;
     for e=1:nel
-        wt(:,:,e)=wt(:,:,e).*(1+sign(vx(e)*unx+vy(e)*uny));
+        wt(:,:,e)=wt(:,:,e).*sign(1+sign(vx(e)*unx+vy(e)*uny));
     end
+    wt=wt./dssum(wt); % ensure partition of unity
+    wt(mask==0)=0;
 end
-wt=wt./dssum(wt); % ensure partition of unity
-wt(mask==0)=0;
+
 
 function [v1]=extrude(v1,l1,f1,v2,l2,f2)
     k1=[1+l1,size(v1,1)-l1];
@@ -310,26 +333,26 @@ function [u]=psweep(r)
     colormap(gray(2));
     caxis('manual'); caxis([0,1]);
     set(gca,'YDir','normal');
-    title('Sweeping');
+    title('Sweeping');  
     
     u=zeros(size(r));
     w=zeros(size(r));
-    for is=1:max(depth(:))
-        ie=find(depth==is);
+    ncolor=max(icolor);
+    for ic=1:ncolor
+        ie=find(icolor==ic);
         w(:,:,ie)=r(:,:,ie)-w(:,:,ie);
         z=pschwarz(w,ie);
         u(:,:,ie)=u(:,:,ie)+z(:,:,ie);
         u=wt.*u;
         u=dssum(u);
-
-        if(is<max(depth(:)))
-            je=find(depth==is|depth==is+1|depth==is+2);
-            w=afun(u,je);
-        end
-        
+        if(ic<ncolor)
+        je=find(icolor==ic|icolor==mod(ic,ncolor)+1|icolor==mod(ic+1,ncolor)+1);
+        w=afun(u,je);
+        end    
         visit(ie)=visit(ie)+1;
         im(1:nex,1:ney)=visit;
-        set(hv,'CData',im'); drawnow;        
+        set(hv,'CData',im');
+        drawnow;
     end
 end
 
@@ -339,13 +362,14 @@ function [u]=pschwarz(r,elems)
     end
     u=reshape(r,size(A,1),size(B,1),[]);
     for ie=elems
+        je=mod(ie-1,size(u,3))+1;
         LA=A(:,:,2,ie)\A(:,:,1,ie);
         LB=B(:,:,2,ie)\B(:,:,1,ie);
-        LR=A(:,:,2,ie)\u(:,:,ie)/B(:,:,2,ie)';
-        u(:,:,ie)=sylvester(LA,LB',LR);
+        LR=A(:,:,2,ie)\u(:,:,je)/B(:,:,2,ie)';
+        u(:,:,je)=sylvester(LA,LB',LR);
 %         K=kron(B(:,:,2,ie),A(:,:,1,ie))+kron(B(:,:,1,ie),A(:,:,2,ie))+...
 %           kron(B(:,:,3,ie),A(:,:,3,ie));        
-%         u(:,:,ie)=reshape(K\reshape(u(:,:,ie),[],1),size(u(:,:,ie)));
+%         u(:,:,je)=reshape(K\reshape(u(:,:,je),[],1),size(u(:,:,ie)));
     end
     u=reshape(u,size(r));
 end
@@ -409,6 +433,8 @@ end
 
 %--------------------------------------------------------------------------
 
+mult=1./dssum(ones(n,n,nel));
+
 ub=zeros(n,n,nel);
 f=zeros(n,n,nel);
 if(isfloat(UDATA))
@@ -428,8 +454,11 @@ u0(:)=0;
 
 restart=maxit;
 [u,flag,relres,it,resvec]=gmres(@afun,b(:),restart,tol,1,[],@pfun,u0(:));
-% relres=0; resvec=0; u=pfun(b);
+% relres=0; resvec=0; %u=pfun(b);
 it=length(resvec)-1;
+if(flag>0)
+    it=maxit;
+end
 
 for k=1:0
 u0=u0+pfun(b(:)-afun(u0));
@@ -443,17 +472,30 @@ u=u+ub;
 
 
 figure(2);
-semilogy(0:it,resvec*relres/resvec(end),'.-b');
+semilogy(0:length(resvec)-1,resvec*relres/resvec(end),'.-b');
 ylim([tol/100,1]);
 drawnow;
 
-%return;
+if(ifplot)
 figure(1);
 semplot2(x,y,u); 
 %shading interp; camlight;
 %view(2);
 colormap(jet(256));
 colorbar;
+end
+
+return;
+if(n*n*nel<=(5*8)^2)
+    figure(7);
+    gfun = @(x) afun(pfun(x))-x;
+    fullcond(gfun,n,nex,ney);
+    hold on;
+    plot(exp(1i*linspace(0,2*pi,512)),'k');
+    hold off;
+    axis equal;
+    title(sprintf('Spectrum of P^{-1}A-I, Pe=%1.1E',1/nu));
+end
 end
 
 
@@ -470,4 +512,42 @@ for e=1:nel
     surf(x(:,:,e),y(:,:,e),u(:,:,e)); hold on; %drawnow;
 end
 hold off; 
+end
+
+function [kap]=fullcond(afun,n,nex,ney)
+    
+    gidx = repmat((1:n)',1,nex)+(n-1)*repmat(0:nex-1,n,1);
+    gidy = repmat((1:n)',1,ney)+(n-1)*repmat(0:ney-1,n,1);
+    
+    
+    [gx,gy]=ndgrid(gidx(:),gidy(:));
+    gid=gx+((n-1)*nex+1)*(gy-1);
+    gid=reshape(permute(reshape(gid,n,nex,n,ney),[1,3,2,4]),n,n,nex,ney);
+    
+    mask=ones(size(gid));
+    mask(1,:,1,:)=0;
+    %mask(n,:,nex,:)=0;
+    mask(:,1,:,1)=0;
+    %mask(:,n,:,ney)=0;
+
+    ntot=max(gid(:));
+    x1=zeros(ntot,1);
+    y1=zeros(ntot,1);
+
+    amat=zeros(ntot,ntot);
+    for j=1:ntot
+        x1(j)=1;
+        y1(gid)=afun(x1(gid));
+        amat(:,j)=y1(:);
+        x1(j)=0;
+    end
+
+    x1(gid)=mask;
+    p=x1==1;
+    amat=amat(p,p);
+    
+    lam=eig(amat);
+    plot(real(lam),imag(lam),'.b');
+    kap=cond(amat);
+    %kap=0;
 end
