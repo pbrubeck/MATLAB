@@ -14,7 +14,7 @@ no=min(max(0,no),1);
 ifplot=true;
 
 % GMRES settings
-maxit=100;
+maxit=200;
 tol=1e-10;
 
 % Problem settings
@@ -80,44 +80,27 @@ bc(:)=2; % Overlap
 icolor=1:nel;
 
 if(ifsweep)
-
     wx=hx';
     wy=hy';
-    vx1=ux(x,y); 
-    vy1=uy(x,y); 
     
-    px=2;
-    py=2;
-    npart=px*py;
-    perm=[4,2,1,3];
-    %perm=1:npart;
-    
-    elems=reshape(1:nel,nex/px,px,ney/py,py);
-    elems=permute(elems,[1,3,2,4]);
-    elems=reshape(elems,[],npart);
-    
-    itopo=box_topo(nex/px,ney/py);
-    icolor(:)=0;
-    isweep=zeros(size(icolor));
+    itopo=box_topo(nex,ney);
+    iflux=get_graph(itopo,vx,vy,wx,wy);
+        
+    %ex=1; ey=1;
+    ex=floor(nex/2)+1; ey=ney;
+    e=ex+nex*(ey-1);
+    iflux(:,e)=max(0,iflux(:,e));
+    [isweep,icolor]=toposort_loops(itopo,iflux);
 
-    for k=perm(1:npart)
-        ncolor=max(icolor(:));
-        i1=elems(:,k);
-        iflux=get_graph(itopo,vx(i1),vy(i1),wx(i1),wy(i1));
-        [isweep(i1),icolor(i1),bc(:,i1)]=schwarz_toposort(itopo,iflux);
-        icolor(i1)=icolor(i1)+ncolor;
-    end
-    
     bc=reshape(bc,[],nex,ney); 
     icolor=reshape(icolor,nex,ney);
     bc(1,2:end  ,:)=1+(icolor(2:end  ,:)<=icolor(1:end-1,:)); 
     bc(2,1:end-1,:)=1+(icolor(1:end-1,:)<=icolor(2:end  ,:)); 
     bc(3,:,2:end  )=1+(icolor(:,2:end  )<=icolor(:,1:end-1)); 
     bc(4,:,1:end-1)=1+(icolor(:,1:end-1)<=icolor(:,2:end  ));    
-    
+        
     bc=reshape(bc,[],nel);
     icolor=reshape(icolor,1,[]);
-
 end
 
 % Override with problem boundaries
@@ -285,9 +268,14 @@ end
 [A,B]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifdeal,ifneu);
 
 % Schwarz weight
-if(ifras)
+if(ifsweep)
     wt=ones(n,n,nel);
-elseif(no==0)
+    wt(1,:,bc(1,:)==1)=0;
+    wt(n,:,bc(2,:)==1)=0;
+    wt(:,1,bc(3,:)==1)=0;
+    wt(:,n,bc(4,:)==1)=0;
+    wt=reshape(wt,n,n,nel,[]);
+elseif(ifras || no==0)
     wt=ones(n,n,nel);
 elseif(no==1)
     wt1=ones(ns,ns,nel);
@@ -298,24 +286,8 @@ elseif(no==1)
     wt2=extrude(wt2,2,1.0,wt2,0,1.0);
     wt=wt2(2:end-1,2:end-1,:);
 end
-
-if(ifsweep)
-    wt(1,:,bc(1,:)==1)=0;
-    wt(n,:,bc(2,:)==1)=0;
-    wt(:,1,bc(3,:)==1)=0;
-    wt(:,n,bc(4,:)==1)=0;
-    wt=reshape(wt,n,n,nel,[]);
-else
-    % Upwinding
-    unx=zeros(n,n); unx(1,:)=-1; unx(end,:)=1;
-    uny=zeros(n,n); uny(:,1)=-1; uny(:,end)=1;
-    for e=1:nel
-        wt(:,:,e)=wt(:,:,e).*sign(1+sign(vx(e)*unx+vy(e)*uny));
-    end
-    wt=wt./dssum(wt); % ensure partition of unity
-    wt(mask==0)=0;
-end
-
+wt=wt./dssum(wt); % ensure partition of unity
+wt(mask==0)=0;
 
 function [v1]=extrude(v1,l1,f1,v2,l2,f2)
     k1=[1+l1,size(v1,1)-l1];
@@ -346,7 +318,7 @@ function [u]=psweep(r)
         u=wt.*u;
         u=dssum(u);
         if(ic<ncolor)
-        je=find(icolor==ic|icolor==mod(ic,ncolor)+1|icolor==mod(ic+1,ncolor)+1);
+        je=find(icolor==ic|icolor==ic+1|icolor==ic+2);
         w=afun(u,je);
         end    
         visit(ie)=visit(ie)+1;

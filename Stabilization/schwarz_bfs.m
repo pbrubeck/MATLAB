@@ -22,6 +22,8 @@ end
 
 if(q==0)
     e=1;
+    nex=sqrt(nel); ney=nel/nex;
+    e=floor((nex/2)+1)+(ney-1)*nex;
     q=q+1;
     isweep(q)=e;
     icolor(e)=k;

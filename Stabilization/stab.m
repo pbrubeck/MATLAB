@@ -3,6 +3,7 @@ N=8;
 Ex=[20,40];
 Ey=[20,40];
 nu=[-25,-200,-800];
+%nu=-10.^(0:2:4);
 ifcrs=1;
 ifdeal=1; 
 
@@ -24,7 +25,7 @@ opts(:,5)=ifdeal;
 disp([Ex(:), Ey(:), nu(:)]);
 
 iter=zeros(length(nu),size(opts,1));
-for j=1:size(opts,1)
+for j=4:size(opts,1)
     for i=1:numel(nu)
         [relres,it,resvec]=adf2(N,[Ex(i),Ey(i)],nu(i),opts(j,:));
         iter(i,j)=it;
