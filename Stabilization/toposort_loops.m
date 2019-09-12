@@ -17,30 +17,32 @@ for e=1:nel
         icolor(e)=k;
     end
 end
-if(q==0) % could not find a root node, define arbitrary root
+
+if(q==0)
+    % could not find a root node
+    % define arbitrary root
     [fmax,e]=max(sum(min(0,iflux),1));
     q=q+1;
     isweep(q)=e;
     icolor(e)=k;
 end
+
 p1=1;
 p2=q;
-
 while(q<nel)
-[pmin,e]=min(parent);
-if(pmin<nel)
-    k=pmin+1;
-    q=q+1;
-    isweep(q)=e;
-    icolor(e)=k;
-    p1=q;
-    p2=q;
-end
+    if(p2<p1)
+        % frontier is empty
+        % break loop closest to the root
+        [pmin,e]=min(parent);
+        k=pmin+1;
+        q=q+1;
+        isweep(q)=e;
+        icolor(e)=k;
+        p1=q;
+        p2=q;
+    end
 
-qlag=0;
-while (q>qlag && q<nel)
     k=k+1;
-    qlag=q;
     for p=p1:p2
     e=isweep(p);   
     for f=1:nfaces
@@ -49,7 +51,7 @@ while (q>qlag && q<nel)
             ff=find(itopo(:,ee)==e);
             itopo(ff,ee)=ee;
             iflux(ff,ee)=0;
-            parent(ee)=k;
+            parent(ee)=k-1;
             
             itopo(f,e)=e;
             iflux(f,e)=0;
@@ -66,5 +68,5 @@ while (q>qlag && q<nel)
     p2=q;
 end
 
-end
+[~,isweep]=sort(icolor);
 end

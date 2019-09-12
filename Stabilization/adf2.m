@@ -1,4 +1,4 @@
-function [relres,it,resvec] = adf2(n,ne,nu,opts)
+function [relres,it,resvec,icolor] = adf2(n,ne,nu,opts)
 if(nargin==3)
     opts=ones(1,5);
 end
@@ -87,11 +87,11 @@ if(ifsweep)
     iflux=get_graph(itopo,vx,vy,wx,wy);
         
     %ex=1; ey=1;
-    ex=floor(nex/2)+1; ey=ney;
+    ex=floor((nex+1)/2)+1; ey=ney;
     e=ex+nex*(ey-1);
     iflux(:,e)=max(0,iflux(:,e));
     [isweep,icolor]=toposort_loops(itopo,iflux);
-
+  
     bc=reshape(bc,[],nex,ney); 
     icolor=reshape(icolor,nex,ney);
     bc(1,2:end  ,:)=1+(icolor(2:end  ,:)<=icolor(1:end-1,:)); 
