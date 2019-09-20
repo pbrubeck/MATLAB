@@ -1,4 +1,9 @@
-function [iflux] = get_graph(itopo,vx,vy,wx,wy)
+function [iflux] = get_graph(itopo,vx,vy,wx,wy,esrc)
+    if(nargin<6)
+        esrc=0;
+    end
+
+    tol=1e-6;
     nfaces=size(itopo,1);
     nel=size(itopo,2);    
     if(length(vx)==nel)
@@ -15,12 +20,18 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy)
         iflux(3,e)=-vy(1,:,e)*wy(:,e)/ay;
         iflux(4,e)=vy(end,:,e)*wy(:,e)/ay;
     end
-    iflux=sign(iflux);
+    iflux=sign(iflux).*(abs(iflux)>tol);
+    iflux(itopo==repmat(1:nel,nfaces,1))=0;
     
-    iheat=zeros(nel);
-    iheat(floor(nel/2))=1;
-    
-    itemp=-2*ones(nfaces,nel);
+    %return
+    iheat=zeros(nel,1);
+    if(esrc==0)
+        iheat(all(iflux>=0,2))=1;
+    else
+        iheat(esrc)=1;
+    end
+
+    itemp=-ones(nfaces,nel);
     isweep=zeros(nel,1);
     src=find(iheat>0);
     q=length(src);
@@ -36,7 +47,7 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy)
             for f=1:nfaces
                 ee=itopo(f,e);
                 if(iheat(ee)~=2)
-                    itemp(f,e)=2;
+                    itemp(f,e)=1;
                     if(iheat(ee)==0)
                         q=q+1;
                         isweep(q)=ee;
@@ -48,6 +59,7 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy)
         p1=p2+1;
         p2=q;
     end
+
     for e=1:nel
         for f=1:nfaces
             if(itopo(f,e)==e)

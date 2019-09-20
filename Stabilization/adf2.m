@@ -80,15 +80,13 @@ bc(:)=2; % Overlap
 icolor=1:nel;
 
 if(ifsweep)
-    wx=hx';
-    wy=hy';
-    
-    itopo=box_topo(nex,ney);
-    iflux=get_graph(itopo,vx,vy,wx,wy);
-        
-    %ex=1; ey=1;
+    ex=1; ey=1;
     ex=floor((nex+1)/2)+1; ey=ney;
+    %ex=floor((nex+1)/2)+1; ey=1;
     e=ex+nex*(ey-1);
+        
+    itopo=box_topo(nex,ney);
+    iflux=get_graph(itopo,vx,vy,hx',hy',e);    
     iflux(:,e)=max(0,iflux(:,e));
     [isweep,icolor]=toposort_loops(itopo,iflux);
   
@@ -110,6 +108,7 @@ bc(2,end,:)=bcbox(2); % Right
 bc(3,:,1  )=bcbox(3); % Bottom
 bc(4,:,end)=bcbox(4); % Top
 bc=reshape(bc,nfaces,nel);
+
 
 % Mask
 mask=ones(n*nex,n*ney);
@@ -193,8 +192,7 @@ bm1=zeros(nxd,nyd,nzd,nel);
 G=zeros(nxd,nyd,nzd,6,nel);
 C=zeros(nxd,nyd,nzd,3,nel);
 
-iffast=(numel(uniquetol(vx,tol))==1)&(numel(uniquetol(vy,tol))==1)&...
-       (numel(uniquetol(hx,tol))==1)&(numel(uniquetol(hy,tol))==1);
+iffast=(numel(uniquetol(hx,tol))==1)&(numel(uniquetol(hy,tol))==1);
 
 ncoef=nel;
 if(iffast), ncoef=1; end
@@ -210,7 +208,16 @@ end
 if(iffast)
     bm1=repmat(bm1(:,:,:,1),1,1,1,nel);
     G=repmat(G(:,:,:,:,1),1,1,1,1,nel);
-    C=repmat(C(:,:,:,:,1),1,1,1,1,nel);
+    [xxq,yyq]=ndgrid(xq);
+    for e=1:nel
+        zq=mymap(e,xxq(:)',yyq(:)',zeros(1,numel(xxq)));
+        xd(:,:,:,e)=reshape(zq(1,:),size(xd(:,:,:,e)));
+        yd(:,:,:,e)=reshape(zq(2,:),size(yd(:,:,:,e)));
+        ud=vel(xd(:,:,:,e),yd(:,:,:,e),ijac);
+        C(:,:,:,1,e)=bm1(:,:,:,e).*ud(:,:,:,1);
+        C(:,:,:,2,e)=bm1(:,:,:,e).*ud(:,:,:,2);
+        C(:,:,:,3,e)=bm1(:,:,:,e).*ud(:,:,:,3);
+    end
 end
 G=nu.*G;
 
@@ -298,14 +305,19 @@ function [v1]=extrude(v1,l1,f1,v2,l2,f2)
     v1(2:end-1,k1,:)=f1*v1(2:end-1,k1,:)+f2*v2(2:end-1,k2,:);
 end
 
+
+hv=[];
 function [u]=psweep(r)
     visit=zeros(nex,ney);
     im=zeros(length(xc),length(yc));
-    figure(2); hv=pcolor(xc,yc,im');
-    colormap(gray(2));
-    caxis('manual'); caxis([0,1]);
-    set(gca,'YDir','normal');
-    title('Sweeping');  
+    if(isempty(hv))
+        figure(2); 
+        hv=pcolor(xc,yc,im');
+        colormap(gray(2));
+        caxis('manual'); caxis([0,1]);
+        set(gca,'YDir','normal');
+        title('Sweeping');
+    end
     
     u=zeros(size(r));
     w=zeros(size(r));
@@ -320,7 +332,8 @@ function [u]=psweep(r)
         if(ic<ncolor)
         je=find(icolor==ic|icolor==ic+1|icolor==ic+2);
         w=afun(u,je);
-        end    
+        end  
+        
         visit(ie)=visit(ie)+1;
         im(1:nex,1:ney)=visit;
         set(hv,'CData',im');
@@ -429,7 +442,7 @@ restart=maxit;
 % relres=0; resvec=0; %u=pfun(b);
 it=length(resvec)-1;
 if(flag>0)
-    it=maxit;
+    it=-it;
 end
 
 for k=1:0
