@@ -1,4 +1,4 @@
-function [relres,it,resvec,icolor] = adf2(n,ne,nu,opts)
+function [relres,it,resvec] = adf2(n,ne,nu,opts)
 if(nargin==3)
     opts=ones(1,5);
 end
@@ -14,17 +14,19 @@ no=min(max(0,no),1);
 ifplot=true;
 
 % GMRES settings
-maxit=200;
+maxit=100;
 tol=1e-10;
+%maxit=0;
 
 % Problem settings
 if(nu<0), nu=1./abs(nu); end
 
 %UDATA=@(x,y) x.*(1-exp((y-1)/nu))./(1-exp(-2/nu)); FDATA=0; bcbox=[1,1,1,1];
-%UDATA=0; FDATA=1; bcbox=[1,1,1,0];
-UDATA=1; FDATA=0; bcbox=[1,1,1,1];
-ux=@(x,y) 0+2*y.*(1-x.^2);
-uy=@(x,y) 0-2*x.*(1-y.^2);
+UDATA=0; FDATA=1; bcbox=[0,0,1,0];
+%UDATA=1; FDATA=0; bcbox=[1,1,1,1];
+
+ux=@(x,y) 0+0*y.*(1-x.^2);
+uy=@(x,y) 1-0*x.*(1-y.^2);
 
 % Stabilization CFL
 CFL=1.0E-2;
@@ -46,6 +48,7 @@ nel=nex*ney;
 [Dhat,zhat,what]=legD(n);
 Jfem=[1-zhat, 1+zhat]/2;
 F=bubfilt(zhat);
+
 
 xc=linspace(-1,1,nex+1);
 yc=linspace(-1,1,ney+1);
@@ -80,14 +83,12 @@ bc(:)=2; % Overlap
 icolor=1:nel;
 
 if(ifsweep)
-    ex=1; ey=1;
     ex=floor((nex+1)/2)+1; ey=ney;
-    %ex=floor((nex+1)/2)+1; ey=1;
     e=ex+nex*(ey-1);
         
     itopo=box_topo(nex,ney);
-    iflux=get_graph(itopo,vx,vy,hx',hy',e);    
-    iflux(:,e)=max(0,iflux(:,e));
+    iflux=get_graph(itopo,vx,vy,hx',hy');    
+    %iflux(:,e)=max(0,iflux(:,e));
     [isweep,icolor]=toposort_loops(itopo,iflux);
   
     bc=reshape(bc,[],nex,ney); 
@@ -397,7 +398,7 @@ function [u]=pcoarse(r)
     for ie=1:size(r,3)
         rc(:,:,ie)=Jfem'*r(:,:,ie)*Jfem;
     end
-    rc(:)=cmask(:).*rc(:);
+    %rc(:)=cmask(:).*rc(:);
     uc=supg(Acrs,rc);
     uc(:)=cmask(:).*uc(:);
     
@@ -433,6 +434,7 @@ else
     f=FDATA(x(mask==0),y(mask==0));
 end
 b=bfun(f)-afun(ub);
+b(:)=mask(:).*b(:);
 
 u0=pcoarse(b(:));
 u0(:)=0;
@@ -445,21 +447,25 @@ if(flag>0)
     it=-it;
 end
 
-for k=1:0
-u0=u0+pfun(b(:)-afun(u0));
-end
-%u=u0;
+relres
+norm(b(:)-afun(u(:)))/norm(b(:))
 
+if(maxit==0)
+u=u0;
+for k=1:1
+u=u+pfun(b(:)-afun(u));
+end
+end
 
 u=reshape(u,size(ub));
 u=u+ub;
 %u=UDATA(x,y)-reshape(u,size(x));
 
-
 figure(2);
 semilogy(0:length(resvec)-1,resvec*relres/resvec(end),'.-b');
 ylim([tol/100,1]);
 drawnow;
+
 
 if(ifplot)
 figure(1);

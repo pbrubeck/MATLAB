@@ -39,14 +39,10 @@ while(q<nel)
             e=ifail(j);
         end
         k=-icolor(e);
-        p1=q+1;
-        while(j<=t && icolor(e)==-k)
-            q=q+1;
-            isweep(q)=e;
-            icolor(e)=k;
-            j=j+1;
-            e=ifail(j);
-        end
+        q=q+1;
+        isweep(q)=e;
+        icolor(e)=k;
+        p1=q;
         p2=q;
         t=0;
     end

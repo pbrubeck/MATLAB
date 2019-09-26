@@ -11,4 +11,5 @@ Xj=repmat(xleg', [length(x),1]);
 dX=X-Xj;
 C=(C0*(1./C1)')./dX;
 C(abs(dX)<10*eps)=1;
+%C=diag(1./sum(C,2))*C;
 end

@@ -9,6 +9,7 @@ peh=v.*h/nu;
 tau=(h./v).*(1-1./peh);
 tau(peh<=1)=0;
 
+
 nel=numel(hx);
 N=2;
 n=N*N;
@@ -39,6 +40,7 @@ for e=1:nel
     [ia(:,:,e),ja(:,:,e)]=ndgrid(kk(:,e));
 end
 A=sparse(ia(:),ja(:),aa(:));
+
 
 % SUPG solver
 function [u]=sfun(A,r)

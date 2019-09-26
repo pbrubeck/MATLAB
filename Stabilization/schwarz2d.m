@@ -2,6 +2,7 @@ function [SA,SB]=schwarz2d(n,no,hx,hy,nu,vx,vy,dt,bc,ifdeal,ifneu)
 % Assumes rectangular elements and constant velocity 
 nxb=n+2*(no+1);
 ns=nxb-2;
+tol=1e-6;
 
 % SEM hat
 [Dhat,xhat,what]=legD(n);
@@ -18,9 +19,9 @@ Chat=Bhat*Dhat;
 HPF=Bhat*(eye(n)-bubfilt(xhat))/dt;
 
 % grid Peclet number
-peh=(vx.^2+vy.^2)./max(abs(vx./hx),abs(vy./hy))*min(diff(xhat))./(2*nu);
+peh=(vx.^2+vy.^2)./max(abs(vx./hx),abs(vy./hy))*min(diff(xhat))./(nu);
 nel=numel(peh);
-
+peh(:)=10;
 
 % Omega_bar basis
 j1=1:no+1;
@@ -46,10 +47,10 @@ nuy=nu/hy(e);
 JX=J;
 JY=J;
 if(ifneu)
-    JX(no+2:end,end)=(vx(e)>0 || vx(e)==0 && peh(e)>1);
-    JX(1:n-no-1,1)  =(vx(e)<0 || vx(e)==0 && peh(e)>1);
-    JY(no+2:end,end)=(vy(e)>0 || vy(e)==0 && peh(e)>1);
-    JY(1:n-no-1,1)  =(vy(e)<0 || vy(e)==0 && peh(e)>1);
+    JX(no+2:end,end)=(vx(e)>0 || abs(vx(e))<tol && peh(e)>1);
+    JX(1:n-no-1,1)  =(vx(e)<0 || abs(vx(e))<tol && peh(e)>1);
+    JY(no+2:end,end)=(vy(e)>0 || abs(vy(e))<tol && peh(e)>1);
+    JY(1:n-no-1,1)  =(vy(e)<0 || abs(vy(e))<tol && peh(e)>1);
 end
 
 A(:,:,1)=J'*(nux*Ahat+vx(e)*Chat+hx(e)*HPF)*JX;
@@ -67,6 +68,11 @@ return;
 
 
 % Debugging
+e=1;
+P0=kron(SB(:,:,2,e),SA(:,:,1,e))+kron(SB(:,:,1,e),SA(:,:,2,e));
+save('P0','P0');
+return;
+
 Mbar=J'*Bhat*J;
 Mbar=schwarz1d(n,no,Mbar,2,2);
 R=Mbar*ones(size(Mbar,1),size(Mbar,1))*Mbar';

@@ -1,7 +1,4 @@
-function [iflux] = get_graph(itopo,vx,vy,wx,wy,esrc)
-    if(nargin<6)
-        esrc=0;
-    end
+function [iflux] = get_graph(itopo,vx,vy,wx,wy)
 
     tol=1e-6;
     nfaces=size(itopo,1);
@@ -11,6 +8,7 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy,esrc)
     vy=reshape(vy,1,1,nel);
     end
     
+    heat=zeros(nel,1);
     iflux=zeros(nfaces,nel);
     for e=1:nel
         ax=sum(wx(:,e)); 
@@ -19,21 +17,54 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy,esrc)
         iflux(2,e)=wx(:,e)'*vx(:,end,e)/ax;
         iflux(3,e)=-vy(1,:,e)*wy(:,e)/ay;
         iflux(4,e)=vy(end,:,e)*wy(:,e)/ay;
+        
+        vol=wx(:,e)'*ones(size(vx(:,:,e)))*wy(:,e);
+        ux=wx(:,e)'*vx(:,:,e)*wy(:,e)/vol;
+        uy=wx(:,e)'*vy(:,:,e)*wy(:,e)/vol;
+        heat(e)=ux*ux+uy*uy;
     end
+
+    %heat=-heat;
+    %heat(:)=0;
     iflux=sign(iflux).*(abs(iflux)>tol);
     iflux(itopo==repmat(1:nel,nfaces,1))=0;
     
-    %return
-    iheat=zeros(nel,1);
+    igrad=zeros(nfaces,nel);
+    for e=1:nel
+    for f=1:nfaces
+        ee=itopo(f,e);
+        if(heat(e)-heat(ee)>tol)
+            igrad(f,e)=1;
+        elseif(heat(ee)-heat(e)>tol)
+            igrad(f,e)=-1;
+        end
+    end
+    end
+    
+    for e=1:nel
+    for f=1:nfaces
+        if(itopo(f,e)==e)
+            iflux(f,e)=0;
+        elseif(iflux(f,e)==0)
+            iflux(f,e)=igrad(f,e);
+        end
+    end
+    end
+    
+    
+    
+    return
+    heat=zeros(nel,1);
+    esrc=1;
     if(esrc==0)
-        iheat(all(iflux>=0,2))=1;
+        heat(all(iflux>=0,2))=1;
     else
-        iheat(esrc)=1;
+        heat(esrc)=1;
     end
 
     itemp=-ones(nfaces,nel);
     isweep=zeros(nel,1);
-    src=find(iheat>0);
+    src=find(heat>0);
     q=length(src);
     isweep(1:q)=src;
     p1=1;
@@ -43,15 +74,15 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy,esrc)
         qlag=q;
         for p=p1:p2
             e=isweep(p);
-            iheat(e)=2;
+            heat(e)=2;
             for f=1:nfaces
                 ee=itopo(f,e);
-                if(iheat(ee)~=2)
+                if(heat(ee)~=2)
                     itemp(f,e)=1;
-                    if(iheat(ee)==0)
+                    if(heat(ee)==0)
                         q=q+1;
                         isweep(q)=ee;
-                        iheat(ee)=1;
+                        heat(ee)=1;
                     end
                 end
             end
