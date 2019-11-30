@@ -9,6 +9,7 @@ ifail=zeros(nel,1);
 
 k=1;
 q=0;
+% Detect root
 for e=1:nel
     if(all(iflux(:,e)>=0))
         q=q+1;
@@ -24,6 +25,14 @@ if(q==0)
     q=q+1;
     isweep(q)=e;
     icolor(e)=k;
+else
+    % apply greedy coloring of root (only needed for DG)
+    iroot=find(icolor==1); 
+    icolor=color_greedy(itopo,iroot);
+    iroot=find(icolor==1);
+    q=length(iroot);
+    isweep(1:q)=iroot;
+    icolor(icolor>1)=0;
 end
 
 t=0;
@@ -51,7 +60,7 @@ while(q<nel)
     e=isweep(p);   
     for f=1:nfaces
         ee=itopo(f,e);
-        if(iflux(f,e)>0 && ee~=e)
+        if(iflux(f,e)>=0 && ee~=e)
             ff=find(itopo(:,ee)==e);
             itopo(ff,ee)=ee;
             iflux(ff,ee)=0;
@@ -75,54 +84,3 @@ while(q<nel)
 end
 [~,isweep]=sort(icolor);
 end
-
-
-
-function [itopo,iflux]=cut_loops(itopo,iflux,i1,i2)
-    if(i2>i1)
-        % TODO check if DAG
-        j1=floor((i1+i2-1)/2);
-        j2=j1+1;
-        nfaces=size(itopo,1);
-        nab=0;
-        for e=i1:j1
-            for f=1:nfaces
-                ee=itopo(f,e);
-                if(j2<=ee && ee<=i2 && iflux(f,e)>0)
-                    nab=nab+1;
-                end
-            end
-        end
-        nba=0;
-        for e=j2:i2
-            for f=1:nfaces
-                ee=itopo(f,e);
-                if(i1<=ee && ee<=j1 && iflux(f,e)>0)
-                    nba=nba+1;
-                end
-            end
-        end
-        if(nba<nab)
-            n1=j2; n2=i2;
-            m1=i1; m2=j1;
-        else    
-            m1=j2; m2=i2;
-            n1=i1; n2=j1;
-        end
-        for e=m1:m2
-            for f=1:nfaces
-                ee=itopo(f,e);
-                if(n1<=ee && ee<=n2 && iflux(f,e)>0)
-                    ff=(itopo(:,ee)==e);
-                    iflux(ff,ee)=0;
-                    itopo(ff,ee)=ee;
-                    iflux(f,e)=0;
-                    itopo(f,e)=e;
-                end
-            end
-        end
-        [itopo,iflux]=cut_loops(itopo,iflux,m1,m2);
-        [itopo,iflux]=cut_loops(itopo,iflux,n1,n2);
-    end
-end
-

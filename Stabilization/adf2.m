@@ -14,8 +14,8 @@ no=min(max(0,no),1);
 ifplot=true;
 
 % GMRES settings
-maxit=100;
-tol=1e-10;
+maxit=10;
+tol=1e-9;
 %maxit=0;
 
 % Problem settings
@@ -29,7 +29,7 @@ ux=@(x,y) 0+0*y.*(1-x.^2);
 uy=@(x,y) 1-0*x.*(1-y.^2);
 
 % Stabilization CFL
-CFL=1.0E-2;
+CFL=3E-1/2;
 %CFL=inf;
 
 function [u]=vel(x,y,ijac)
@@ -338,7 +338,7 @@ function [u]=psweep(r)
         visit(ie)=visit(ie)+1;
         im(1:nex,1:ney)=visit;
         set(hv,'CData',im');
-        drawnow;
+%        drawnow;
     end
 end
 
