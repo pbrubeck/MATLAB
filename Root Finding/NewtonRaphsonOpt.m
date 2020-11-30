@@ -9,7 +9,7 @@ while(err>tol && i<60)
     vars=num2cell(x);
     y=g(vars{:});
     dx=H(vars{:})\y;
-    err=norm(dx'*y);
+    err=norm(y);
     x=x-dx;
     i=i+1;
 end

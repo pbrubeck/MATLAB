@@ -23,11 +23,9 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy)
         heat(e)=ux*ux+uy*uy;
     end
 
-    %heat=-heat;
-    %heat(:)=0;
     iflux=sign(iflux).*(abs(iflux)>tol);
     iflux(itopo==repmat(1:nel,nfaces,1))=0;
-    
+
     igrad=zeros(nfaces,nel);
     for e=1:nel
     for f=1:nfaces
@@ -50,4 +48,3 @@ function [iflux] = get_graph(itopo,vx,vy,wx,wy)
     end
     end
 end
-

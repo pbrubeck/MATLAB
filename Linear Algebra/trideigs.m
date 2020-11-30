@@ -1,6 +1,5 @@
 function [W, Z] = trideigs(D, E)
 % Calculates the eigenvalues and eigenvectors of a symmetric tridiagonal matrix.
-
 N=numel(D);
 IL=1; IU=N;
 M=N; LDZ=N;
@@ -13,8 +12,18 @@ W=zeros(N, 1);
 Z=zeros(LDZ, M);
 WORK=zeros(1, LWORK);
 
-out=lapack('dstevr','V','A',N,D,E,VL,VU,IL,IU,ABSTOL,M,W,Z,LDZ,ISUPPZ, ...
-    WORK,LWORK,IWORK,LIWORK,INFO);
-W=out{12};
-Z=out{13};
+if(nargout==2)
+    out=lapack('dstevr','V','A',N,D,E,VL,VU,IL,IU,ABSTOL,M,W,Z,LDZ,ISUPPZ, ...
+        WORK,LWORK,IWORK,LIWORK,INFO);
+    W=out{12};
+    Z=out{13};
+else
+%     out=lapack('dstevr','N','A',N,D,E,VL,VU,IL,IU,ABSTOL,M,W,Z,LDZ,ISUPPZ, ...
+%     WORK,LWORK,IWORK,LIWORK,INFO);
+%     W=out{12};
+%     Z=out{13};    
+    out=lapack('dsteqr','N',N,D,E,Z,LDZ,WORK,INFO);
+    W=out{3};
+    Z=out{5};
+end
 end

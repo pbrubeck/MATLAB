@@ -1,6 +1,5 @@
 function [isweep,icolor] = toposort_loops(itopo,iflux)
-ndim=2;
-nfaces=2*ndim;
+nfaces=size(itopo,1);
 nel=size(itopo,2);
 
 isweep=zeros(nel,1);
@@ -27,6 +26,7 @@ if(q==0)
     icolor(e)=k;
 else
     % apply greedy coloring of root (only needed for DG)
+    % FIXME greedy coloring of all neighbors
     iroot=find(icolor==1); 
     icolor=color_greedy(itopo,iroot);
     iroot=find(icolor==1);
@@ -60,7 +60,8 @@ while(q<nel)
     e=isweep(p);   
     for f=1:nfaces
         ee=itopo(f,e);
-        if(iflux(f,e)>=0 && ee~=e)
+        if(iflux(f,e)>=0 && ee~=e && ...
+            all(icolor(itopo(:,ee))<k))
             ff=find(itopo(:,ee)==e);
             itopo(ff,ee)=ee;
             iflux(ff,ee)=0;

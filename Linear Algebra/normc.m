@@ -5,7 +5,7 @@ if(nargin==2)
         a = sqrt(G(:)'*(real(A).^2+imag(A).^2));
         B=bsxfun(@rdivide, A, a);
     else
-        a = sqrt(diag(A'*G*A)).';
+        a = sqrt(sum(A.*(G*A)),2).';
         B=bsxfun(@rdivide, A, a);
     end
 else

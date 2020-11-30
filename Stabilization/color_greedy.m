@@ -7,7 +7,9 @@ elems=reshape(elems,1,[]);
 icolor=zeros(nel,1);
 for e=elems
     k=1;
-    while any(k==icolor(itopo(:,e)))
+    id=itopo(:,e);
+    id=id(id>0);
+    while any(k==icolor(id))
         k=k+1;
     end
     icolor(e)=k;

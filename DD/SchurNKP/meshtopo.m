@@ -115,7 +115,7 @@ function [verts_faces, verts_vertices] = verts_from_quad(quads)
             % Add attached face to the vertex
             verts_faces{vert} = add_face_to_vertex_faces(verts_faces{vert}, [corner, face_idx]);
             
-            % Add the neighboring vertices to the vertix
+            % Add the neighboring vertices to the vertex
             verts_vertices{vert}= add_vertex_to_vertex_vertices(verts_vertices{vert},  face_verts(bitxor(corner-1,1)+1));
             verts_vertices{vert}= add_vertex_to_vertex_vertices(verts_vertices{vert},  face_verts(bitxor(corner-1,2)+1));
             

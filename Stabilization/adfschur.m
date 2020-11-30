@@ -1,4 +1,4 @@
-function [outputArg1,outputArg2] = adfschur(n,nel,nu)
+function [] = adfschur(n,nel,nu)
 
 [D,x,w]=legD(n);
 
